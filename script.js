@@ -1,7 +1,7 @@
 /* ==========================================================================
-   Joy Digital Marketing - Brand Interactive Controller
+   Joy Digital Growth Agency - Client-Side Controller
    Author: Antigravity AI
-   Target: Form Validation, Active Tracking & FormSubmit.co Live Delivery
+   Target: Form Validation, Portfolio Filtering & FAQ Accordion
    ========================================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     window.addEventListener("scroll", handleScrollHeader);
-    handleScrollHeader(); // Trigger once on load in case page is refreshed halfway down
+    handleScrollHeader(); // Trigger on load in case of page refresh mid-page
 
     /* ==========================================================================
        2. Interactive Mobile Menu Toggle
@@ -34,11 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
         mobileMenuToggle.setAttribute("aria-expanded", "true");
         mobileMenuDrawer.classList.add("open");
         
-        // Create glass blur backdrop
+        // Create backdrop overlay
         menuBackdrop = document.createElement("div");
         menuBackdrop.className = "drawer-backdrop";
         document.body.appendChild(menuBackdrop);
-        document.body.style.overflow = "hidden"; // Prevent scrolling
+        document.body.style.overflow = "hidden"; // Disable scroll when menu is active
         
         menuBackdrop.addEventListener("click", closeMobileMenu);
     };
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
             menuBackdrop.remove();
             menuBackdrop = null;
         }
-        document.body.style.overflow = ""; // Re-enable scrolling
+        document.body.style.overflow = ""; // Restore scrolling
     };
 
     mobileMenuToggle.addEventListener("click", () => {
@@ -64,7 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Close mobile menu when clicking any nav link
     const mobileLinks = document.querySelectorAll(".mobile-nav-link");
     mobileLinks.forEach(link => {
         link.addEventListener("click", closeMobileMenu);
@@ -77,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const navLinks = document.querySelectorAll(".nav-link");
 
     const scrollSpyActiveLink = () => {
-        const scrollPosition = window.scrollY + 120; // Offset for header height and user eye focus
+        const scrollPosition = window.scrollY + 120; // Eye-line offset
 
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
@@ -98,13 +97,66 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("scroll", scrollSpyActiveLink);
 
     /* ==========================================================================
-       4. Preselect Service in Enquiry Form
+       4. FAQ Accordion Component Toggle
+       ========================================================================== */
+    const faqItems = document.querySelectorAll(".faq-item");
+
+    faqItems.forEach(item => {
+        const questionBtn = item.querySelector(".faq-question-btn");
+        const answerPane = item.querySelector(".faq-answer-pane");
+
+        questionBtn.addEventListener("click", () => {
+            const isOpen = item.classList.contains("active");
+
+            // Close all other FAQ items for a clean accordion effect
+            faqItems.forEach(otherItem => {
+                otherItem.classList.remove("active");
+                otherItem.querySelector(".faq-question-btn").setAttribute("aria-expanded", "false");
+                otherItem.querySelector(".faq-answer-pane").style.maxHeight = null;
+            });
+
+            if (!isOpen) {
+                item.classList.add("active");
+                questionBtn.setAttribute("aria-expanded", "true");
+                answerPane.style.maxHeight = answerPane.scrollHeight + "px"; // Expand based on content height
+            }
+        });
+    });
+
+    /* ==========================================================================
+       5. Portfolio Filtering Logic
+       ========================================================================== */
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const portfolioCards = document.querySelectorAll(".portfolio-card");
+
+    filterButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            // Toggle active filter button
+            filterButtons.forEach(btn => btn.classList.remove("active"));
+            button.classList.add("active");
+
+            const filterValue = button.getAttribute("data-filter");
+
+            portfolioCards.forEach(card => {
+                card.classList.remove("show");
+                card.classList.add("hide");
+
+                if (filterValue === "all" || card.classList.contains(filterValue)) {
+                    card.classList.remove("hide");
+                    card.classList.add("show");
+                }
+            });
+        });
+    });
+
+    /* ==========================================================================
+       6. Preselect Service in Enquiry Form
        ========================================================================== */
     window.preselectService = (serviceName) => {
         const serviceSelect = document.getElementById("service_required");
         if (serviceSelect) {
             serviceSelect.value = serviceName;
-            // Clear any lingering select validation errors
+            // Clear validation error on change
             const parentGroup = serviceSelect.closest(".form-group");
             if (parentGroup) {
                 parentGroup.classList.remove("invalid");
@@ -113,21 +165,19 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     /* ==========================================================================
-       5. Robust Form Validation & FormSubmit.co Live Delivery
+       7. Form Validation & AJAX Submission (FormSubmit.co)
        ========================================================================== */
     const enquiryForm = document.getElementById("enquiry-form");
     const submitBtn = document.getElementById("submit-btn");
     const submitText = submitBtn.querySelector(".submit-text");
     const submitLoader = submitBtn.querySelector(".submit-loader");
     
-    // Form Input References
     const userName = document.getElementById("user_name");
     const userMobile = document.getElementById("user_mobile");
     const userEmail = document.getElementById("user_email");
     const serviceRequired = document.getElementById("service_required");
     const userMessage = document.getElementById("user_message");
 
-    // Real-time error removal when user starts typing / editing
     const addInputListener = (inputElement) => {
         const parent = inputElement.closest(".form-group");
         const triggerEvent = inputElement.tagName === "SELECT" ? "change" : "input";
@@ -139,7 +189,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     [userName, userMobile, userEmail, serviceRequired, userMessage].forEach(addInputListener);
 
-    // Validation checks
     const validateForm = () => {
         let isFormValid = true;
         let firstInvalidField = null;
@@ -153,29 +202,29 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
 
-        // 1. Name Check
+        // 1. Name validation
         if (userName.value.trim() === "") {
             setInvalid(userName);
         }
 
-        // 2. Mobile Check (10-digit number, starts with 6-9)
+        // 2. Mobile validation (10-digit indian numbers)
         const mobileReg = /^[6-9]\d{9}$/;
         if (!mobileReg.test(userMobile.value.trim())) {
             setInvalid(userMobile);
         }
 
-        // 3. Email Check (valid standard pattern)
+        // 3. Email validation
         const emailReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!emailReg.test(userEmail.value.trim())) {
             setInvalid(userEmail);
         }
 
-        // 4. Service Selection Check
+        // 4. Service validation
         if (serviceRequired.value === "") {
             setInvalid(serviceRequired);
         }
 
-        // 5. Message Check
+        // 5. Message validation
         if (userMessage.value.trim() === "") {
             setInvalid(userMessage);
         }
@@ -187,63 +236,55 @@ document.addEventListener("DOMContentLoaded", () => {
         return isFormValid;
     };
 
-    // Modal success triggers
     const successModalOverlay = document.getElementById("success-modal-overlay");
     const successModalCloseBtn = document.getElementById("success-modal-close");
 
     const openSuccessModal = () => {
         successModalOverlay.classList.remove("hidden");
-        document.body.style.overflow = "hidden"; // Freeze scroll under modal
+        document.body.style.overflow = "hidden"; // Prevent scrolling
     };
 
     const closeSuccessModal = () => {
         successModalOverlay.classList.add("hidden");
-        document.body.style.overflow = ""; // restore scroll
+        document.body.style.overflow = ""; // Restore scrolling
     };
 
     successModalCloseBtn.addEventListener("click", closeSuccessModal);
     
-    // Close modal clicking overlay backdrop
     successModalOverlay.addEventListener("click", (e) => {
         if (e.target === successModalOverlay) {
             closeSuccessModal();
         }
     });
 
-    // Close modal on Escape Key
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && !successModalOverlay.classList.contains("hidden")) {
             closeSuccessModal();
         }
     });
 
-    // Handle Form Submit Event via FormSubmit.co (Zero-Configuration Free Routing)
     enquiryForm.addEventListener("submit", (e) => {
         e.preventDefault();
 
-        // 1. Run rigorous validation check
         if (!validateForm()) {
-            return; // Halt if validation fails
+            return;
         }
 
-        // 2. Enter loading state
         submitBtn.disabled = true;
         submitText.classList.add("hidden");
         submitLoader.classList.remove("hidden");
 
-        // 3. Prepare payload for FormSubmit.co JSON API
         const payload = {
             Name: userName.value.trim(),
             Mobile: userMobile.value.trim(),
             Email: userEmail.value.trim(),
             Service: serviceRequired.value,
             Message: userMessage.value.trim(),
-            _subject: "New Website Lead - Joy Digital Marketing",
-            _captcha: "false", // Disable captcha page for seamless AJAX submit
-            _template: "table" // Structured table format in email
+            _subject: "New Web Lead - Joy Digital Growth Agency",
+            _captcha: "false",
+            _template: "table"
         };
 
-        // 4. Send Live AJAX request to FormSubmit.co
         fetch("https://formsubmit.co/ajax/joydiigtals@gmail.com", {
             method: "POST",
             headers: {
@@ -254,28 +295,23 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error("Network response was not ok");
+                throw new Error("Form submission network error");
             }
             return response.json();
         })
         .then(data => {
-            console.log("FormSubmit.co send success!", data);
+            console.log("Lead dispatched via FormSubmit.co:", data);
             handleSubmissionSuccess();
         })
         .catch(error => {
-            console.error("FormSubmit.co send failed:", error);
-            alert("Form submission failed. Please check your internet connection or email us directly at joydiigtals@gmail.com.");
+            console.error("Failed to send lead payload:", error);
+            alert("Oops! Lead delivery failed. Please check your connectivity or mail us at joydiigtals@gmail.com.");
             restoreSubmitButtonState();
         });
 
         const handleSubmissionSuccess = () => {
-            // Reset form input values
             enquiryForm.reset();
-            
-            // Open the elegant Success feedback Modal
             openSuccessModal();
-            
-            // Restore button visual state
             restoreSubmitButtonState();
         };
 
