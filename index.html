@@ -31,13 +31,15 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts (Preload & Async loading) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"></noscript>
     
-    <!-- FontAwesome Icons for modern aesthetic -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FontAwesome Icons (Preload & Async loading) -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
@@ -80,7 +82,9 @@
         "closes": "19:00"
       },
       "sameAs": [
-        "https://wa.me/919080026133"
+        "https://wa.me/919080026133",
+        "https://www.facebook.com/profile.php?id=61590372457559",
+        "https://www.youtube.com/@Joydigital2026"
       ]
     }
     </script>
@@ -101,7 +105,7 @@
         },
         {
           "@type": "Question",
-          "name": "How long does it take to complete website development?",
+          "name": "How long does website development take?",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "A standard professional business website typically takes about 5 to 10 working days. More complex custom applications, dynamic e-commerce websites, or large portals can take 3 to 6 weeks depending on requirements and approvals."
@@ -109,7 +113,7 @@
         },
         {
           "@type": "Question",
-          "name": "What are Local SEO Services and how do they work?",
+          "name": "What is Local SEO and how does it help?",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Local SEO focuses on optimizing your online presence to rank higher in local search queries on Google Maps and localized search results. This involves targeting local keywords, building directory citations, managing reviews, and optimizing location pages."
@@ -117,7 +121,7 @@
         },
         {
           "@type": "Question",
-          "name": "How does Google Business Profile optimization help local businesses?",
+          "name": "How does Google Business Profile help businesses?",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Google Business Profile optimization helps your company rank in the top Google Maps local pack results. It increases your store visibility, triggers direct phone calls from mobile users, captures customer trust with reviews, and displays correct hours and directions."
@@ -141,7 +145,7 @@
     <header id="site-header" class="site-header">
         <div class="container navbar-container">
             <a href="#hero" class="brand-logo-container" id="nav-brand" title="Joy Digital Growth Agency - Home">
-                <img src="assets/images/logo.png" alt="Joy Digital Growth Agency Logo" class="brand-logo">
+                <img src="assets/images/logo.webp" alt="Joy Digital Growth Agency Logo" class="brand-logo" width="256" height="256" title="Joy Digital Growth Agency Logo">
             </a>
             
             <!-- Desktop Nav links -->
@@ -221,7 +225,7 @@
                 
                 <div class="hero-media">
                     <div class="hero-image-wrapper">
-                        <img src="assets/images/hero-banner.png" alt="Website Design and Digital Marketing dashboard for Local Businesses in Madurai" class="hero-image">
+                        <img src="assets/images/hero-banner.webp" alt="Website Design and Digital Marketing dashboard for Local Businesses in Madurai" class="hero-image" width="1024" height="1024" title="Website Design and Digital Marketing dashboard for Local Businesses in Madurai">
                         <div class="hero-badge hero-badge-1">
                             <div class="hero-badge-icon bg-blue"><i class="fa-solid fa-chart-line"></i></div>
                             <div class="hero-badge-info">
@@ -582,7 +586,7 @@
                     <div class="gbp-card-showcase">
                         <div class="map-mockup">
                             <div class="map-pin-pulse"></div>
-                            <img src="assets/images/gbp-showcase.png" alt="Google Business Profile Local SEO Ranking Showcase" class="gbp-showcase-img">
+                            <img src="assets/images/gbp-showcase.webp" alt="Google Business Profile Local SEO Ranking Showcase" class="gbp-showcase-img" width="1024" height="1024" title="Google Business Profile Local SEO Ranking Showcase">
                             <div class="map-rating-box">
                                 <span class="stars"><i class="fa-solid fa-star"></i> 4.9 Rating</span>
                                 <span class="calls"><i class="fa-solid fa-phone"></i> +240% Inquiries</span>
@@ -618,7 +622,7 @@
                     <!-- Project 1: Websites -->
                     <article class="portfolio-card websites">
                         <div class="portfolio-img-box">
-                            <img src="assets/images/hero-banner.png" alt="Corporate Business Website Project Showcase">
+                            <img src="assets/images/hero-banner.webp" alt="Corporate Business Website Project Showcase" width="1024" height="1024" title="Corporate Business Website Project Showcase">
                             <div class="portfolio-hover-overlay">
                                 <a href="#contact" class="btn btn-primary" title="Inquire About Similar Web Project">Learn More</a>
                             </div>
@@ -632,7 +636,7 @@
                     <!-- Project 2: Branding -->
                     <article class="portfolio-card branding">
                         <div class="portfolio-img-box">
-                            <img src="assets/images/logo.png" alt="Branding Logo Design Project Showcase" style="padding: 20px; background-color: var(--light);">
+                            <img src="assets/images/logo.webp" alt="Branding Logo Design Project Showcase" style="padding: 20px; background-color: var(--light);" width="256" height="256" title="Branding Logo Design Project Showcase">
                             <div class="portfolio-hover-overlay">
                                 <a href="#contact" class="btn btn-primary" title="Inquire About Logo Project">Learn More</a>
                             </div>
@@ -646,7 +650,7 @@
                     <!-- Project 3: Marketing -->
                     <article class="portfolio-card marketing">
                         <div class="portfolio-img-box">
-                            <img src="assets/images/hero-banner.png" alt="Local SEO & Lead Generation Campaign Showcase">
+                            <img src="assets/images/hero-banner.webp" alt="Local SEO & Lead Generation Campaign Showcase" width="1024" height="1024" title="Local SEO & Lead Generation Campaign Showcase">
                             <div class="portfolio-hover-overlay">
                                 <a href="#contact" class="btn btn-primary" title="Inquire About SEO Project">Learn More</a>
                             </div>
@@ -660,7 +664,7 @@
                     <!-- Project 4: Websites -->
                     <article class="portfolio-card websites">
                         <div class="portfolio-img-box">
-                            <img src="assets/images/hero-banner.png" alt="Startup Business Landing Page Showcase">
+                            <img src="assets/images/hero-banner.webp" alt="Startup Business Landing Page Showcase" width="1024" height="1024" title="Startup Business Landing Page Showcase">
                             <div class="portfolio-hover-overlay">
                                 <a href="#contact" class="btn btn-primary" title="Inquire About Similar Landing Project">Learn More</a>
                             </div>
@@ -674,7 +678,7 @@
                     <!-- Project 5: Branding -->
                     <article class="portfolio-card branding">
                         <div class="portfolio-img-box">
-                            <img src="assets/images/logo.png" alt="Corporate Visiting Card & Brochure Showcase" style="padding: 20px; background-color: var(--light);">
+                            <img src="assets/images/logo.webp" alt="Corporate Visiting Card & Brochure Showcase" style="padding: 20px; background-color: var(--light);" width="256" height="256" title="Corporate Visiting Card & Brochure Showcase">
                             <div class="portfolio-hover-overlay">
                                 <a href="#contact" class="btn btn-primary" title="Inquire About Print Assets Project">Learn More</a>
                             </div>
@@ -688,7 +692,7 @@
                     <!-- Project 6: Marketing -->
                     <article class="portfolio-card marketing">
                         <div class="portfolio-img-box">
-                            <img src="assets/images/hero-banner.png" alt="Google Business Profile Map Rankings Showcase">
+                            <img src="assets/images/hero-banner.webp" alt="Google Business Profile Map Rankings Showcase" width="1024" height="1024" title="Google Business Profile Map Rankings Showcase">
                             <div class="portfolio-hover-overlay">
                                 <a href="#contact" class="btn btn-primary" title="Inquire About GBP Ranking Project">Learn More</a>
                             </div>
@@ -1140,13 +1144,15 @@
             
             <div class="footer-brand-info">
                 <a href="#hero" class="brand-logo-container" title="Scroll to Top">
-                    <img src="assets/images/logo.png" alt="Joy Digital Growth Agency Logo" class="brand-logo footer-logo">
+                    <img src="assets/images/logo.webp" alt="Joy Digital Growth Agency Logo" class="brand-logo footer-logo" width="256" height="256" title="Joy Digital Growth Agency Logo">
                 </a>
                 <p class="footer-tagline">
                     Affordable Website Development | Local SEO Services | Google Business Profile Optimization | Branding | Startup Consulting | Custom Software in Madurai, Tamil Nadu
                 </p>
                 <div class="social-links-row">
                     <a href="https://wa.me/919080026133" target="_blank" class="social-icon-link" aria-label="WhatsApp" title="Connect on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61590372457559" target="_blank" class="social-icon-link" aria-label="Facebook" title="Like us on Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@Joydigital2026" target="_blank" class="social-icon-link" aria-label="YouTube" title="Subscribe to our YouTube Channel"><i class="fa-brands fa-youtube"></i></a>
                     <a href="tel:+919080026133" class="social-icon-link" aria-label="Phone" title="Call Us Directly"><i class="fa-solid fa-phone"></i></a>
                     <a href="mailto:joydiigtals@gmail.com" class="social-icon-link" aria-label="Email" title="Send an Email"><i class="fa-solid fa-envelope"></i></a>
                 </div>
