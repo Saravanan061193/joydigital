@@ -74,14 +74,26 @@ export default function LeadForm({
 
     setIsLoading(true);
     try {
-      const response = await fetch("/api/send-lead", {
+      const payload = {
+        Name: formData.name,
+        Mobile: formData.mobile,
+        Email: formData.email,
+        Service: formData.service,
+        Website: formData.website || "N/A",
+        Message: formData.message || "No details provided.",
+        Source: source,
+        _subject: `New Lead [${source}] - Joy Digital`,
+        _captcha: "false",
+        _template: "table",
+      };
+
+      const response = await fetch("https://formsubmit.co/ajax/joydiigtals@gmail.com", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          source,
-          subject: `New Lead [${source}] - Joy Digital`,
-        }),
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
