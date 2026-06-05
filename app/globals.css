@@ -34,8 +34,6 @@
   --shadow-glow: 0 10px 30px -5px hsla(25, 95%, 53%, 0.25);
   --animate-pulse-dot: pulse-dot 2s infinite;
   --animate-pulse-ring: pulse-ring 2.5s infinite;
-  --animate-float-y: float-y 5s ease-in-out infinite;
-  --animate-float-y-slow: float-y 6s ease-in-out infinite 0.5s;
 }
 
 :root {
@@ -56,11 +54,18 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Gradients */
+/* Gradients & Custom Background Grids */
 .text-gradient {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, hsla(222, 47%, 11%, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, hsla(222, 47%, 11%, 0.04) 1px, transparent 1px);
+  background-size: 30px 30px;
 }
 
 /* Animations from original stylesheet */
@@ -91,15 +96,5 @@ body {
   }
 }
 
-@keyframes float-y {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
+
 

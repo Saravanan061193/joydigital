@@ -15,7 +15,7 @@ const pageSchema = {
   "provider": {
     "@type": "LocalBusiness",
     "name": "Joy Digital Growth Agency",
-    "image": "https://joydigitalmarketing.in/assets/images/logo.png",
+    "image": "https://joydigitalmarketing.in/assets/images/logo.webp",
     "telephone": "+919080026133",
     "priceRange": "$$",
     "address": {

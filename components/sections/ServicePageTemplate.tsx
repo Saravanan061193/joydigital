@@ -96,7 +96,7 @@ export default function ServicePageTemplate({
             {/* Hero Text */}
             <div className="lg:col-span-7 flex flex-col items-start text-left">
               <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 px-4 py-1.5 rounded-full mb-6">
-                <span className="w-2 h-2 bg-accent rounded-full animate-ping" />
+                <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
                 <span className="text-xs font-bold text-accent-dark uppercase tracking-wider">
                   Premium Growth Service
                 </span>
