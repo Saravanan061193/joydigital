@@ -1,2 +1,22 @@
+# Dependency directories
 node_modules/
-style.original.css
+
+# Next.js build output
+.next/
+out/
+build/
+
+# Static backup
+backup-static-site/
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local env files
+.env*.local
+
+# Next.js telemetry / cache
+.eslintcache
