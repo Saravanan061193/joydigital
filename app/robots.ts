@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/admin/'],
     },
-    sitemap: 'https://joydigitalmarketing.in/sitemap.xml',
+    sitemap: 'https://joydigital.vercel.app/sitemap.xml',
   };
 }
