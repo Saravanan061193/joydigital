@@ -10,6 +10,20 @@ import Link from "next/link";
 const PORTFOLIO_ITEMS = [
   {
     category: "websites",
+    categoryLabel: "Website Design & Development",
+    title: "Ganesan Associates - LIC & Star Health Portal",
+    image: "/assets/images/ganesan-associates.png",
+    description: "A professional insurance and financial services advisory website, built with custom lead capture structures and fully responsive layouts.",
+  },
+  {
+    category: "marketing",
+    categoryLabel: "Local SEO & GBP Optimization",
+    title: "Joy Digital Local Maps Ranking Campaign",
+    image: "/assets/images/gbp-showcase.webp",
+    description: "Comprehensive Google Business Profile setup, local citations, and maps optimization to secure top ranks on local search results.",
+  },
+  {
+    category: "websites",
     categoryLabel: "Website Design",
     title: "E-commerce Marketplace Website",
     image: "/assets/images/hero-banner.webp",
@@ -42,13 +56,6 @@ const PORTFOLIO_ITEMS = [
     title: "Premium Executive Visiting Card",
     image: "/assets/images/logo.webp",
     description: "Double-sided layout designs for business cards, letterheads, and print stationery sets.",
-  },
-  {
-    category: "marketing",
-    categoryLabel: "Google Maps Ranking",
-    title: "Map Pack Placement & Audit",
-    image: "/assets/images/hero-banner.webp",
-    description: "Audit and keyword optimization of Google Business Profile that secured local map rankings.",
   },
 ];
 
