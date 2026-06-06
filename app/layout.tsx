@@ -12,6 +12,9 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://joydigitalmarketing.in"),
+  verification: {
+    google: "wLd7eTwSSKvDF-yFpvWNrWqicvOXKLY8_BLD7W-yyq0",
+  },
   title: {
     default: "Website Design & Digital Marketing in Madurai | Joy Digital",
     template: "%s | Joy Digital",
