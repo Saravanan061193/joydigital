@@ -198,6 +198,7 @@ export default function HomePage() {
                   <Link
                     href={service.href}
                     className="text-xs font-bold text-primary hover:text-accent flex items-center gap-1.5 mt-2"
+                    aria-label={`Learn more about ${service.title}`}
                   >
                     Learn More <i className="fa-solid fa-chevron-right text-[9px]" />
                   </Link>
