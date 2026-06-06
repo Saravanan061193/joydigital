@@ -23,6 +23,13 @@ const PORTFOLIO_ITEMS = [
     description: "Comprehensive Google Business Profile setup, local citations, and maps optimization to secure top ranks on local search results.",
   },
   {
+    category: "marketing",
+    categoryLabel: "Advertising & Poster Design",
+    title: "Joy Digital Marketing Campaign Poster",
+    image: "/assets/images/marketing-poster-mockup.png",
+    description: "High-impact advertising poster layout featuring website development pricing packages, client conversion statistics, and direct WhatsApp triggers.",
+  },
+  {
     category: "websites",
     categoryLabel: "Website Design",
     title: "E-commerce Marketplace Website",
@@ -37,11 +44,11 @@ const PORTFOLIO_ITEMS = [
     description: "Creative vector logo mark design for a modern technology consultancy, including custom color palettes.",
   },
   {
-    category: "marketing",
-    categoryLabel: "Digital Marketing",
-    title: "Madurai Local Business Lead Gen",
-    image: "/assets/images/hero-banner.webp",
-    description: "Local SEO mapping and directory citation campaign that increased organic map pack phone inquiries by 240%.",
+    category: "branding",
+    categoryLabel: "Corporate Identity & Business Cards",
+    title: "Wardiere Creative Designer Business Card",
+    image: "/assets/images/business-card-mockup.png",
+    description: "Modern, premium corporate visiting card design layout utilizing clean color blocks, contact detail columns, and abstract brand marks.",
   },
   {
     category: "websites",
@@ -49,13 +56,6 @@ const PORTFOLIO_ITEMS = [
     title: "Startup SaaS Landing Page",
     image: "/assets/images/hero-banner.webp",
     description: "Single-page responsive marketing landing page built using clean code structures and SEO variables.",
-  },
-  {
-    category: "branding",
-    categoryLabel: "Branding",
-    title: "Premium Executive Visiting Card",
-    image: "/assets/images/logo.webp",
-    description: "Double-sided layout designs for business cards, letterheads, and print stationery sets.",
   },
 ];
 
