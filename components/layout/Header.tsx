@@ -174,7 +174,7 @@ export default function Header() {
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setIsMobileOpen(!isMobileOpen)}
-            className="lg:hidden flex flex-col justify-between w-6 h-4 z-50 focus:outline-none"
+            className="lg:hidden flex flex-col justify-between w-6 h-4 z-[60] focus:outline-none"
             aria-label="Toggle navigation menu"
           >
             <span
@@ -198,18 +198,18 @@ export default function Header() {
 
       {/* Mobile Drawer Menu */}
       <div
-        className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 z-[55] bg-black/40 backdrop-blur-sm lg:hidden transition-opacity duration-300 ${
           isMobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsMobileOpen(false)}
       />
 
       <aside
-        className={`fixed top-0 right-0 w-4/5 max-w-sm h-full bg-white z-40 shadow-2xl flex flex-col p-8 pt-24 transition-transform duration-300 lg:hidden ${
+        className={`fixed top-0 right-0 w-4/5 max-w-sm h-full bg-white z-[55] shadow-2xl flex flex-col p-8 pt-24 transition-transform duration-300 lg:hidden ${
           isMobileOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <nav className="flex flex-col gap-6 overflow-y-auto">
+        <nav className="flex flex-col gap-6 overflow-y-auto pb-12">
           <Link
             href="/"
             className={`font-semibold text-lg border-b border-gray-100 pb-2 ${
