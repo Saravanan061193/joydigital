@@ -5,10 +5,10 @@ import Image from "next/image";
 export default function Footer() {
   return (
     <footer className="bg-gradient-to-br from-dark to-dark-slate text-white pt-20 pb-8 mt-auto">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 border-b border-white/10 pb-16">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 border-b border-white/10 pb-16">
         
         {/* Brand Info */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-1">
           <Link href="/" className="flex items-center gap-3">
             <Image
               src="/assets/images/logo.webp"
@@ -62,40 +62,69 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Directory Links */}
+        {/* Quick Links */}
         <div className="flex flex-col gap-6">
           <h4 className="text-lg font-bold relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
-            Core Services
+            Quick Links
           </h4>
           <ul className="flex flex-col gap-3.5 text-sm text-text-muted">
             <li>
+              <Link href="/" className="hover:text-accent-light hover:pl-1 transition-all">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link href="/about" className="hover:text-accent-light hover:pl-1 transition-all">
+                About Us
+              </Link>
+            </li>
+            <li>
               <Link href="/website-development" className="hover:text-accent-light hover:pl-1 transition-all">
-                Website Development
+                Services
               </Link>
             </li>
             <li>
-              <Link href="/web-design-services" className="hover:text-accent-light hover:pl-1 transition-all">
-                Web Design
+              <Link href="/portfolio" className="hover:text-accent-light hover:pl-1 transition-all">
+                Portfolio
               </Link>
             </li>
             <li>
-              <Link href="/seo-services" className="hover:text-accent-light hover:pl-1 transition-all">
-                SEO Services
+              <Link href="/contact" className="hover:text-accent-light hover:pl-1 transition-all">
+                Contact Us
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        {/* Legal Info */}
+        <div className="flex flex-col gap-6">
+          <h4 className="text-lg font-bold relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
+            Legal Info
+          </h4>
+          <ul className="flex flex-col gap-3.5 text-sm text-text-muted">
+            <li>
+              <Link href="/privacy-policy" className="hover:text-accent-light hover:pl-1 transition-all">
+                Privacy Policy
               </Link>
             </li>
             <li>
-              <Link href="/local-seo-services" className="hover:text-accent-light hover:pl-1 transition-all">
-                Local SEO
+              <Link href="/terms-and-conditions" className="hover:text-accent-light hover:pl-1 transition-all">
+                Terms & Conditions
               </Link>
             </li>
             <li>
-              <Link href="/google-business-profile-setup" className="hover:text-accent-light hover:pl-1 transition-all">
-                GBP Optimization
+              <Link href="/refund-policy" className="hover:text-accent-light hover:pl-1 transition-all">
+                Refund Policy
               </Link>
             </li>
             <li>
-              <Link href="/logo-design-services" className="hover:text-accent-light hover:pl-1 transition-all">
-                Logo & Branding
+              <Link href="/cookie-policy" className="hover:text-accent-light hover:pl-1 transition-all">
+                Cookie Policy
+              </Link>
+            </li>
+            <li>
+              <Link href="/disclaimer" className="hover:text-accent-light hover:pl-1 transition-all">
+                Disclaimer
               </Link>
             </li>
           </ul>
@@ -165,8 +194,8 @@ export default function Footer() {
           Copyright &copy; {new Date().getFullYear()} Joy Digital Growth Agency. All Rights Reserved.
         </p>
         <div className="flex gap-6">
-          <Link href="/privacy" className="hover:text-accent-light transition-colors">Privacy Policy</Link>
-          <Link href="/terms" className="hover:text-accent-light transition-colors">Terms of Service</Link>
+          <Link href="/privacy-policy" className="hover:text-accent-light transition-colors">Privacy Policy</Link>
+          <Link href="/terms-and-conditions" className="hover:text-accent-light transition-colors">Terms of Service</Link>
         </div>
       </div>
     </footer>
