@@ -1,25 +1,38 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const SERVICES_LINKS = [
-  { href: "/website-development", label: "Web Development" },
-  { href: "/web-design-services", label: "Web Design" },
-  { href: "/seo-services", label: "Global SEO" },
-  { href: "/local-seo-services", label: "Local SEO" },
-  { href: "/social-media-marketing", label: "Social Media Marketing" },
-  { href: "/logo-design-services", label: "Logo & Brand Design" },
-  { href: "/google-business-profile-setup", label: "GBP & Google Maps Setup" },
+  { href: "/website-development", label: "Web Development", localized: true },
+  { href: "/web-design-services", label: "Web Design", localized: false },
+  { href: "/seo-services", label: "Global SEO", localized: true },
+  { href: "/local-seo-services", label: "Local SEO", localized: false },
+  { href: "/social-media-marketing", label: "Social Media Marketing", localized: false },
+  { href: "/logo-design-services", label: "Logo & Brand Design", localized: false },
+  { href: "/google-business-profile-setup", label: "GBP & Google Maps Setup", localized: false },
+];
+
+const REGIONS = [
+  { code: "", label: "Global", flag: "🌐" },
+  { code: "us", label: "United States", flag: "🇺🇸" },
+  { code: "uk", label: "United Kingdom", flag: "🇬🇧" },
+  { code: "ae", label: "United Arab Emirates", flag: "🇦🇪" },
+  { code: "in", label: "India", flag: "🇮🇳" },
 ];
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+  const [isRegionDropdownOpen, setIsRegionDropdownOpen] = useState(false);
+  const [currentRegion, setCurrentRegion] = useState("");
+  
   const pathname = usePathname();
+  const router = useRouter();
+  const regionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,14 +45,71 @@ export default function Header() {
 
   // Close mobile drawer on route change
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMobileOpen(false);
   }, [pathname]);
 
+  // Click outside region selector handler
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (regionRef.current && !regionRef.current.contains(event.target as Node)) {
+        setIsRegionDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Detect current region from pathname
+  useEffect(() => {
+    const parts = pathname.split("/").filter(Boolean);
+    if (parts.length > 0 && ["us", "uk", "ae", "in"].includes(parts[0])) {
+      setCurrentRegion(parts[0]);
+    } else {
+      setCurrentRegion("");
+    }
+  }, [pathname]);
+
   const isActive = (path: string) => {
-    if (path === "/" && pathname !== "/") return false;
-    return pathname.startsWith(path);
+    const regionalPath = getRegionalHref(path);
+    if (path === "/" && pathname !== "/" && pathname !== "/us" && pathname !== "/uk" && pathname !== "/ae" && pathname !== "/in") return false;
+    return pathname === regionalPath;
   };
+
+  const getRegionalHref = (path: string) => {
+    const localizedPaths = ["/", "/seo-services", "/website-development", "/contact"];
+    if (localizedPaths.includes(path)) {
+      if (currentRegion === "") return path;
+      return `/${currentRegion}${path === "/" ? "" : path}`;
+    }
+    return path;
+  };
+
+  const handleRegionChange = (regionCode: string) => {
+    setIsRegionDropdownOpen(false);
+    
+    const parts = pathname.split("/").filter(Boolean);
+    let rootPath = parts[0];
+    
+    const hasRegion = ["us", "uk", "ae", "in"].includes(rootPath);
+    const cleanSegments = hasRegion ? parts.slice(1) : parts;
+    const cleanPath = "/" + cleanSegments.join("/");
+    
+    const localizedPaths = ["/", "/seo-services", "/website-development", "/contact"];
+    const isPathLocalized = localizedPaths.includes(cleanPath);
+    
+    let targetPath = "/";
+    if (isPathLocalized) {
+      targetPath = regionCode === "" 
+        ? cleanPath 
+        : `/${regionCode}${cleanPath === "/" ? "" : cleanPath}`;
+    } else {
+      targetPath = regionCode === "" ? "/" : `/${regionCode}`;
+    }
+    
+    router.push(targetPath);
+  };
+
+  const activeRegionObj = REGIONS.find(r => r.code === currentRegion) || REGIONS[0];
 
   return (
     <>
@@ -52,7 +122,7 @@ export default function Header() {
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" title="Joy Digital Home" className="flex items-center gap-3">
+          <Link href={getRegionalHref("/")} title="Joy Digital Home" className="flex items-center gap-3">
             <Image
               src="/assets/images/logo.webp"
               alt="Joy Digital Logo"
@@ -70,7 +140,7 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
             <Link
-              href="/"
+              href={getRegionalHref("/")}
               title="Home"
               className={`font-semibold text-sm transition-colors hover:text-accent ${
                 isActive("/") ? "text-accent" : "text-text-primary"
@@ -104,18 +174,21 @@ export default function Header() {
                     : "opacity-0 invisible -translate-y-2 pointer-events-none"
                 }`}
               >
-                {SERVICES_LINKS.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    title={link.label}
-                    className={`block px-4 py-2 text-sm transition-colors hover:bg-gray-50 hover:text-accent ${
-                      pathname === link.href ? "text-accent bg-gray-50/50" : "text-text-primary"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+                {SERVICES_LINKS.map((link) => {
+                  const targetHref = link.localized ? getRegionalHref(link.href) : link.href;
+                  return (
+                    <Link
+                      key={link.href}
+                      href={targetHref}
+                      title={link.label}
+                      className={`block px-4 py-2 text-sm transition-colors hover:bg-gray-50 hover:text-accent ${
+                        pathname === targetHref ? "text-accent bg-gray-50/50" : "text-text-primary"
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
 
@@ -160,7 +233,7 @@ export default function Header() {
             </Link>
 
             <Link
-              href="/contact"
+              href={getRegionalHref("/contact")}
               title="Contact Us"
               className={`font-semibold text-sm transition-colors hover:text-accent ${
                 isActive("/contact") ? "text-accent" : "text-text-primary"
@@ -170,39 +243,104 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* Desktop CTA Button */}
+          {/* Desktop Right Panel (Region Selector + CTA) */}
           <div className="hidden lg:flex items-center gap-4">
+            {/* Region Dropdown */}
+            <div className="relative" ref={regionRef}>
+              <button
+                onClick={() => setIsRegionDropdownOpen(!isRegionDropdownOpen)}
+                className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-lg text-sm font-medium hover:border-accent hover:text-accent transition-colors bg-white shadow-sm"
+              >
+                <span>{activeRegionObj.flag}</span>
+                <span className="uppercase text-xs">{activeRegionObj.code || "Global"}</span>
+                <i className={`fa-solid fa-chevron-down text-[8px] transition-transform duration-200 ${isRegionDropdownOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              <div
+                className={`absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded-lg shadow-lg py-1.5 transition-all duration-200 ${
+                  isRegionDropdownOpen
+                    ? "opacity-100 visible translate-y-0"
+                    : "opacity-0 invisible -translate-y-2 pointer-events-none"
+                }`}
+              >
+                {REGIONS.map((region) => (
+                  <button
+                    key={region.code}
+                    onClick={() => handleRegionChange(region.code)}
+                    className={`w-full flex items-center gap-3 px-4 py-2 text-left text-xs font-semibold transition-colors hover:bg-gray-50 hover:text-accent ${
+                      currentRegion === region.code ? "text-accent bg-gray-50/50" : "text-text-primary"
+                    }`}
+                  >
+                    <span className="text-sm">{region.flag}</span>
+                    <span>{region.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <Link
-              href="/contact"
+              href={getRegionalHref("/contact")}
               title="Book Free Consultation"
-              className="bg-gradient-to-r from-accent to-accent-light text-white font-bold text-sm px-6 py-2.5 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+              className="bg-gradient-to-r from-accent to-accent-light text-white font-bold text-sm px-5 py-2.5 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
             >
               Book Free Consultation
             </Link>
           </div>
 
-          {/* Mobile Menu Toggle Button */}
-          <button
-            onClick={() => setIsMobileOpen(!isMobileOpen)}
-            className="lg:hidden flex flex-col justify-between w-6 h-4 z-[60] focus:outline-none"
-            aria-label="Toggle navigation menu"
-          >
-            <span
-              className={`w-full h-0.5 bg-primary-dark rounded transition-all duration-300 ${
-                isMobileOpen ? "rotate-45 translate-y-1.5" : ""
-              }`}
-            />
-            <span
-              className={`w-full h-0.5 bg-primary-dark rounded transition-all duration-300 ${
-                isMobileOpen ? "opacity-0" : ""
-              }`}
-            />
-            <span
-              className={`w-full h-0.5 bg-primary-dark rounded transition-all duration-300 ${
-                isMobileOpen ? "-rotate-45 -translate-y-1.5" : ""
-              }`}
-            />
-          </button>
+          {/* Mobile Right Controls */}
+          <div className="flex lg:hidden items-center gap-3">
+            {/* Mobile Region Switcher (Minimal) */}
+            <div className="relative">
+              <button
+                onClick={() => setIsRegionDropdownOpen(!isRegionDropdownOpen)}
+                className="flex items-center justify-center w-8 h-8 border border-gray-200 rounded-lg text-sm bg-white shadow-sm"
+                aria-label="Select Country"
+              >
+                <span>{activeRegionObj.flag}</span>
+              </button>
+
+              {isRegionDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-44 bg-white border border-gray-100 rounded-lg shadow-lg py-1 z-[60]">
+                  {REGIONS.map((region) => (
+                    <button
+                      key={region.code}
+                      onClick={() => {
+                        handleRegionChange(region.code);
+                        setIsRegionDropdownOpen(false);
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-2.5 text-left text-xs font-semibold text-text-primary hover:bg-gray-50 hover:text-accent"
+                    >
+                      <span>{region.flag}</span>
+                      <span>{region.label}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Menu Toggle Button */}
+            <button
+              onClick={() => setIsMobileOpen(!isMobileOpen)}
+              className="flex flex-col justify-between w-6 h-4 z-[60] focus:outline-none"
+              aria-label="Toggle navigation menu"
+            >
+              <span
+                className={`w-full h-0.5 bg-primary-dark rounded transition-all duration-300 ${
+                  isMobileOpen ? "rotate-45 translate-y-1.5" : ""
+                }`}
+              />
+              <span
+                className={`w-full h-0.5 bg-primary-dark rounded transition-all duration-300 ${
+                  isMobileOpen ? "opacity-0" : ""
+                }`}
+              />
+              <span
+                className={`w-full h-0.5 bg-primary-dark rounded transition-all duration-300 ${
+                  isMobileOpen ? "-rotate-45 -translate-y-1.5" : ""
+                }`}
+              />
+            </button>
+          </div>
         </div>
       </header>
 
@@ -221,7 +359,7 @@ export default function Header() {
       >
         <nav className="flex flex-col gap-6 overflow-y-auto pb-12">
           <Link
-            href="/"
+            href={getRegionalHref("/")}
             title="Home"
             className={`font-semibold text-lg border-b border-gray-100 pb-2 ${
               isActive("/") ? "text-accent" : "text-primary-dark"
@@ -236,18 +374,21 @@ export default function Header() {
               Our Services
             </span>
             <div className="pl-4 flex flex-col gap-3 mt-2">
-              {SERVICES_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  title={link.label}
-                  className={`text-sm font-medium transition-colors hover:text-accent ${
-                    pathname === link.href ? "text-accent" : "text-text-secondary"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {SERVICES_LINKS.map((link) => {
+                const targetHref = link.localized ? getRegionalHref(link.href) : link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={targetHref}
+                    title={link.label}
+                    className={`text-sm font-medium transition-colors hover:text-accent ${
+                      pathname === targetHref ? "text-accent" : "text-text-secondary"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </div>
           </div>
 
@@ -292,7 +433,7 @@ export default function Header() {
           </Link>
 
           <Link
-            href="/contact"
+            href={getRegionalHref("/contact")}
             title="Contact Us"
             className={`font-semibold text-lg border-b border-gray-100 pb-2 ${
               isActive("/contact") ? "text-accent" : "text-primary-dark"
@@ -302,7 +443,7 @@ export default function Header() {
           </Link>
 
           <Link
-            href="/contact"
+            href={getRegionalHref("/contact")}
             title="Free Website Audit"
             className="bg-gradient-to-r from-accent to-accent-light text-white text-center font-bold px-6 py-3 rounded-lg shadow-md mt-4"
           >
@@ -313,3 +454,4 @@ export default function Header() {
     </>
   );
 }
+

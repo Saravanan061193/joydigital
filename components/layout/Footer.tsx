@@ -1,15 +1,48 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+
+const REGIONAL_SITES = [
+  { code: "", label: "Global / Default Site", flag: "🌐" },
+  { code: "us", label: "United States (USD)", flag: "🇺🇸" },
+  { code: "uk", label: "United Kingdom (GBP)", flag: "🇬🇧" },
+  { code: "ae", label: "United Arab Emirates (AED)", flag: "🇦🇪" },
+  { code: "in", label: "India (INR)", flag: "🇮🇳" },
+];
 
 export default function Footer() {
+  const pathname = usePathname();
+  const [currentRegion, setCurrentRegion] = useState("");
+
+  // Detect current region from pathname
+  useEffect(() => {
+    const parts = pathname.split("/").filter(Boolean);
+    if (parts.length > 0 && ["us", "uk", "ae", "in"].includes(parts[0])) {
+      setCurrentRegion(parts[0]);
+    } else {
+      setCurrentRegion("");
+    }
+  }, [pathname]);
+
+  const getRegionalHref = (path: string) => {
+    const localizedPaths = ["/", "/seo-services", "/website-development", "/contact"];
+    if (localizedPaths.includes(path)) {
+      if (currentRegion === "") return path;
+      return `/${currentRegion}${path === "/" ? "" : path}`;
+    }
+    return path;
+  };
+
   return (
     <footer className="bg-gradient-to-br from-dark to-dark-slate text-white pt-20 pb-8 mt-auto">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 border-b border-white/10 pb-16">
         
         {/* Brand Info */}
         <div className="flex flex-col gap-6 col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-1">
-          <Link href="/" title="Joy Digital Home" className="flex items-center gap-3">
+          <Link href={getRegionalHref("/")} title="Joy Digital Home" className="flex items-center gap-3">
             <Image
               src="/assets/images/logo.webp"
               alt="Joy Digital Logo"
@@ -22,8 +55,8 @@ export default function Footer() {
               Joy<span className="text-accent-light">Digital</span>
             </span>
           </Link>
-          <p className="text-text-muted text-sm leading-relaxed">
-            Economical, result-oriented digital solutions that empower startups and small-to-medium businesses. Offering expert web development, local maps placement, branding, and conversion audits.
+          <p className="text-text-muted text-xs leading-relaxed">
+            High-performance, global digital agency delivering SEO, custom website development, and conversion-focused systems for brands targeting the USA, UK, UAE, and India.
           </p>
           <div className="flex items-center gap-3">
             <a
@@ -63,35 +96,55 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Quick Links */}
+        {/* Global Regions / SEO Sitemap Backlinks */}
         <div className="flex flex-col gap-6">
-          <h4 className="text-lg font-bold relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
-            Quick Links
+          <h4 className="text-sm font-bold uppercase tracking-wider text-accent-light relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
+            Global Offices
           </h4>
-          <ul className="flex flex-col gap-3.5 text-sm text-text-muted">
+          <ul className="flex flex-col gap-3 text-xs text-text-muted">
+            {REGIONAL_SITES.map((site) => (
+              <li key={site.code}>
+                <Link
+                  href={site.code === "" ? "/" : `/${site.code}`}
+                  className="flex items-center gap-2 hover:text-accent-light hover:pl-1 transition-all"
+                >
+                  <span className="text-sm">{site.flag}</span>
+                  <span>{site.label}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Services / Dynamic Links */}
+        <div className="flex flex-col gap-6">
+          <h4 className="text-sm font-bold uppercase tracking-wider text-accent-light relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
+            Featured Services
+          </h4>
+          <ul className="flex flex-col gap-3.5 text-xs text-text-muted">
             <li>
-              <Link href="/" title="Home" className="hover:text-accent-light hover:pl-1 transition-all">
-                Home
+              <Link href={getRegionalHref("/seo-services")} className="hover:text-accent-light hover:pl-1 transition-all">
+                Search Engine Optimization
               </Link>
             </li>
             <li>
-              <Link href="/about" title="About Us" className="hover:text-accent-light hover:pl-1 transition-all">
-                About Us
+              <Link href={getRegionalHref("/website-development")} className="hover:text-accent-light hover:pl-1 transition-all">
+                Website Development
               </Link>
             </li>
             <li>
-              <Link href="/website-development" title="Web Development Services" className="hover:text-accent-light hover:pl-1 transition-all">
-                Services
+              <Link href="/web-design-services" className="hover:text-accent-light hover:pl-1 transition-all">
+                Website Design
               </Link>
             </li>
             <li>
-              <Link href="/portfolio" title="Portfolio" className="hover:text-accent-light hover:pl-1 transition-all">
-                Portfolio
+              <Link href="/local-seo-services" className="hover:text-accent-light hover:pl-1 transition-all">
+                Local SEO & Maps
               </Link>
             </li>
             <li>
-              <Link href="/contact" title="Contact Us" className="hover:text-accent-light hover:pl-1 transition-all">
-                Contact Us
+              <Link href="/social-media-marketing" className="hover:text-accent-light hover:pl-1 transition-all">
+                Social Media Marketing
               </Link>
             </li>
           </ul>
@@ -99,93 +152,65 @@ export default function Footer() {
 
         {/* Legal Info */}
         <div className="flex flex-col gap-6">
-          <h4 className="text-lg font-bold relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
-            Legal Info
+          <h4 className="text-sm font-bold uppercase tracking-wider text-accent-light relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
+            Company & Legal
           </h4>
-          <ul className="flex flex-col gap-3.5 text-sm text-text-muted">
+          <ul className="flex flex-col gap-3.5 text-xs text-text-muted">
             <li>
-              <Link href="/privacy-policy" title="Privacy Policy" className="hover:text-accent-light hover:pl-1 transition-all">
+              <Link href="/about" className="hover:text-accent-light hover:pl-1 transition-all">
+                About Our Agency
+              </Link>
+            </li>
+            <li>
+              <Link href="/case-studies" className="hover:text-accent-light hover:pl-1 transition-all">
+                Client Case Studies
+              </Link>
+            </li>
+            <li>
+              <Link href="/privacy-policy" className="hover:text-accent-light hover:pl-1 transition-all">
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link href="/terms-and-conditions" title="Terms & Conditions" className="hover:text-accent-light hover:pl-1 transition-all">
+              <Link href="/terms-and-conditions" className="hover:text-accent-light hover:pl-1 transition-all">
                 Terms & Conditions
               </Link>
             </li>
             <li>
-              <Link href="/refund-policy" title="Refund Policy" className="hover:text-accent-light hover:pl-1 transition-all">
-                Refund Policy
-              </Link>
-            </li>
-            <li>
-              <Link href="/cookie-policy" title="Cookie Policy" className="hover:text-accent-light hover:pl-1 transition-all">
-                Cookie Policy
-              </Link>
-            </li>
-            <li>
-              <Link href="/disclaimer" title="Disclaimer" className="hover:text-accent-light hover:pl-1 transition-all">
-                Disclaimer
+              <Link href="/free-audit" className="font-bold text-accent-light hover:text-accent hover:pl-1 transition-all">
+                Claim Free Website Audit
               </Link>
             </li>
           </ul>
         </div>
 
-        {/* Contact info */}
+        {/* Global Support Numbers */}
         <div className="flex flex-col gap-6">
-          <h4 className="text-lg font-bold relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
-            Direct Contacts
+          <h4 className="text-sm font-bold uppercase tracking-wider text-accent-light relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
+            Global Helpdesk
           </h4>
-          <ul className="flex flex-col gap-4 text-sm text-text-muted">
-            <li className="flex items-center gap-3">
-              <span className="text-accent text-base"><i className="fa-solid fa-phone"></i></span>
-              <a href="tel:+919080026133" className="hover:text-accent-light transition-colors">
-                +91 90800 26133
-              </a>
+          <ul className="flex flex-col gap-3 text-xs text-text-muted">
+            <li className="flex items-center gap-2">
+              <span>🇺🇸</span>
+              <span><strong>US Support:</strong> <a href="tel:+16508990122" className="hover:text-white transition-colors">+1 (650) 899-0122</a></span>
             </li>
-            <li className="flex items-center gap-3">
-              <span className="text-whatsapp-green text-base"><i className="fa-brands fa-whatsapp"></i></span>
-              <a href="https://wa.me/919080026133" target="_blank" rel="noopener noreferrer" className="hover:text-accent-light transition-colors">
-                +91 90800 26133
-              </a>
+            <li className="flex items-center gap-2">
+              <span>🇬🇧</span>
+              <span><strong>UK Support:</strong> <a href="tel:+442079460192" className="hover:text-white transition-colors">+44 20 7946 0192</a></span>
             </li>
-            <li className="flex items-center gap-3">
-              <span className="text-blue-400 text-base"><i className="fa-solid fa-envelope"></i></span>
-              <a href="mailto:joydiigtals@gmail.com" className="hover:text-accent-light transition-colors">
-                joydiigtals@gmail.com
-              </a>
+            <li className="flex items-center gap-2">
+              <span>🇦🇪</span>
+              <span><strong>UAE Support:</strong> <a href="tel:+97142345678" className="hover:text-white transition-colors">+971 4 234 5678</a></span>
             </li>
-            <li className="flex items-start gap-3">
-              <span className="text-accent text-base mt-0.5"><i className="fa-solid fa-map-location-dot"></i></span>
-              <span>Madurai Main Road, Madurai, Tamil Nadu, India - 625001</span>
+            <li className="flex items-center gap-2">
+              <span>🇮🇳</span>
+              <span><strong>India & WA:</strong> <a href="tel:+919080026133" className="hover:text-white transition-colors">+91 90800 26133</a></span>
+            </li>
+            <li className="flex items-center gap-2 border-t border-white/5 pt-3 mt-1">
+              <span className="text-accent-light"><i className="fa-solid fa-envelope" /></span>
+              <a href="mailto:joydiigtals@gmail.com" className="hover:text-white transition-colors">joydiigtals@gmail.com</a>
             </li>
           </ul>
-        </div>
-
-        {/* Location Map Embed */}
-        <div className="flex flex-col gap-6">
-          <h4 className="text-lg font-bold relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
-            Our Location
-          </h4>
-          <div className="w-full rounded-lg overflow-hidden border border-white/5 shadow-inner">
-            <iframe
-              src="https://maps.google.com/maps?q=9.927296037472392,78.1265955104797&t=&z=15&ie=UTF8&iwloc=&output=embed"
-              width="100%"
-              height="120"
-              style={{ border: 0, filter: "grayscale(100%) invert(90%) contrast(90%)" }}
-              allowFullScreen
-              loading="lazy"
-              title="Joy Digital Growth Agency Location Map"
-            />
-          </div>
-          <a
-            href="https://www.google.com/maps/search/?api=1&query=9.927296037472392,78.1265955104797"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 border border-white/10 hover:border-accent hover:bg-accent text-xs font-semibold px-4 py-2 rounded transition-all duration-300"
-          >
-            <i className="fa-solid fa-diamond-turn-right text-accent-light group-hover:text-white" /> Get Directions
-          </a>
         </div>
 
       </div>
@@ -195,10 +220,11 @@ export default function Footer() {
           Copyright &copy; {new Date().getFullYear()} Joy Digital Growth Agency. All Rights Reserved.
         </p>
         <div className="flex gap-6">
-          <Link href="/privacy-policy" title="Privacy Policy" className="hover:text-accent-light transition-colors">Privacy Policy</Link>
-          <Link href="/terms-and-conditions" title="Terms of Service" className="hover:text-accent-light transition-colors">Terms of Service</Link>
+          <Link href="/privacy-policy" className="hover:text-accent-light transition-colors">Privacy Policy</Link>
+          <Link href="/terms-and-conditions" className="hover:text-accent-light transition-colors">Terms of Service</Link>
         </div>
       </div>
     </footer>
   );
 }
+
