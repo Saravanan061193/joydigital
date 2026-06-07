@@ -6,10 +6,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const REGIONAL_SITES = [
-  { code: "", label: "Global / Default Site", flag: "🌐" },
-  { code: "us", label: "United States (USD)", flag: "🇺🇸" },
-  { code: "uk", label: "United Kingdom (GBP)", flag: "🇬🇧" },
-  { code: "ae", label: "United Arab Emirates (AED)", flag: "🇦🇪" },
   { code: "in", label: "India (INR)", flag: "🇮🇳" },
 ];
 
@@ -187,21 +183,9 @@ export default function Footer() {
         {/* Global Support Numbers */}
         <div className="flex flex-col gap-6">
           <h4 className="text-sm font-bold uppercase tracking-wider text-accent-light relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
-            Global Helpdesk
+            Helpdesk
           </h4>
           <ul className="flex flex-col gap-3 text-xs text-text-muted">
-            <li className="flex items-center gap-2">
-              <span>🇺🇸</span>
-              <span><strong>US Support:</strong> <a href="tel:+16508990122" className="hover:text-white transition-colors">+1 (650) 899-0122</a></span>
-            </li>
-            <li className="flex items-center gap-2">
-              <span>🇬🇧</span>
-              <span><strong>UK Support:</strong> <a href="tel:+442079460192" className="hover:text-white transition-colors">+44 20 7946 0192</a></span>
-            </li>
-            <li className="flex items-center gap-2">
-              <span>🇦🇪</span>
-              <span><strong>UAE Support:</strong> <a href="tel:+97142345678" className="hover:text-white transition-colors">+971 4 234 5678</a></span>
-            </li>
             <li className="flex items-center gap-2">
               <span>🇮🇳</span>
               <span><strong>India & WA:</strong> <a href="tel:+919080026133" className="hover:text-white transition-colors">+91 90800 26133</a></span>
