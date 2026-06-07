@@ -15,10 +15,7 @@ export const metadata: Metadata = {
   verification: {
     google: "yYfFlGYZPthQmXcw3V9yq2U2OlPPPxWBCtG7URIXDwQ",
   },
-  title: {
-    default: "Website Design & Digital Marketing in Madurai | Joy Digital",
-    template: "%s | Joy Digital",
-  },
+  title: "Website Design & Digital Marketing in Madurai | Joy Digital",
   description: "Joy Digital is the best website design company & digital marketing agency in Madurai. We offer local SEO, Google Business Profile setup, & branding.",
   alternates: {
     canonical: "./",
@@ -60,6 +57,18 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.variable} h-full antialiased`}>
       <head>
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZB05M3K3Z"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-LZB05M3K3Z');
+            `,
+          }}
+        />
         <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
         <FontAwesomeLoader />

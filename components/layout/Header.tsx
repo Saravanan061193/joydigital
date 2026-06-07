@@ -51,10 +51,11 @@ export default function Header() {
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
+          <Link href="/" title="Joy Digital Home" className="flex items-center gap-3">
             <Image
               src="/assets/images/logo.webp"
               alt="Joy Digital Logo"
+              title="Joy Digital Logo"
               width={isScrolled ? 50 : 60}
               height={isScrolled ? 50 : 60}
               className="object-contain transition-all duration-300"
@@ -69,6 +70,7 @@ export default function Header() {
           <nav className="hidden lg:flex items-center gap-8">
             <Link
               href="/"
+              title="Home"
               className={`font-semibold text-sm transition-colors hover:text-accent ${
                 isActive("/") ? "text-accent" : "text-text-primary"
               }`}
@@ -105,6 +107,7 @@ export default function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
+                    title={link.label}
                     className={`block px-4 py-2 text-sm transition-colors hover:bg-gray-50 hover:text-accent ${
                       pathname === link.href ? "text-accent bg-gray-50/50" : "text-text-primary"
                     }`}
@@ -117,6 +120,7 @@ export default function Header() {
 
             <Link
               href="/about"
+              title="About Us"
               className={`font-semibold text-sm transition-colors hover:text-accent ${
                 isActive("/about") ? "text-accent" : "text-text-primary"
               }`}
@@ -126,6 +130,7 @@ export default function Header() {
 
             <Link
               href="/portfolio"
+              title="Portfolio"
               className={`font-semibold text-sm transition-colors hover:text-accent ${
                 isActive("/portfolio") ? "text-accent" : "text-text-primary"
               }`}
@@ -135,6 +140,7 @@ export default function Header() {
 
             <Link
               href="/case-studies"
+              title="Case Studies"
               className={`font-semibold text-sm transition-colors hover:text-accent ${
                 isActive("/case-studies") ? "text-accent" : "text-text-primary"
               }`}
@@ -144,6 +150,7 @@ export default function Header() {
 
             <Link
               href="/blog"
+              title="Blog"
               className={`font-semibold text-sm transition-colors hover:text-accent ${
                 isActive("/blog") ? "text-accent" : "text-text-primary"
               }`}
@@ -153,6 +160,7 @@ export default function Header() {
 
             <Link
               href="/contact"
+              title="Contact Us"
               className={`font-semibold text-sm transition-colors hover:text-accent ${
                 isActive("/contact") ? "text-accent" : "text-text-primary"
               }`}
@@ -165,6 +173,7 @@ export default function Header() {
           <div className="hidden lg:flex items-center gap-4">
             <Link
               href="/contact"
+              title="Book Free Consultation"
               className="bg-gradient-to-r from-accent to-accent-light text-white font-bold text-sm px-6 py-2.5 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
             >
               Book Free Consultation
@@ -212,6 +221,7 @@ export default function Header() {
         <nav className="flex flex-col gap-6 overflow-y-auto pb-12">
           <Link
             href="/"
+            title="Home"
             className={`font-semibold text-lg border-b border-gray-100 pb-2 ${
               isActive("/") ? "text-accent" : "text-primary-dark"
             }`}
@@ -229,6 +239,7 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
+                  title={link.label}
                   className={`text-sm font-medium transition-colors hover:text-accent ${
                     pathname === link.href ? "text-accent" : "text-text-secondary"
                   }`}
@@ -241,6 +252,7 @@ export default function Header() {
 
           <Link
             href="/about"
+            title="About Us"
             className={`font-semibold text-lg border-b border-gray-100 pb-2 ${
               isActive("/about") ? "text-accent" : "text-primary-dark"
             }`}
@@ -250,6 +262,7 @@ export default function Header() {
 
           <Link
             href="/portfolio"
+            title="Portfolio"
             className={`font-semibold text-lg border-b border-gray-100 pb-2 ${
               isActive("/portfolio") ? "text-accent" : "text-primary-dark"
             }`}
@@ -259,6 +272,7 @@ export default function Header() {
 
           <Link
             href="/case-studies"
+            title="Case Studies"
             className={`font-semibold text-lg border-b border-gray-100 pb-2 ${
               isActive("/case-studies") ? "text-accent" : "text-primary-dark"
             }`}
@@ -268,6 +282,7 @@ export default function Header() {
 
           <Link
             href="/blog"
+            title="Blog"
             className={`font-semibold text-lg border-b border-gray-100 pb-2 ${
               isActive("/blog") ? "text-accent" : "text-primary-dark"
             }`}
@@ -277,6 +292,7 @@ export default function Header() {
 
           <Link
             href="/contact"
+            title="Contact Us"
             className={`font-semibold text-lg border-b border-gray-100 pb-2 ${
               isActive("/contact") ? "text-accent" : "text-primary-dark"
             }`}
@@ -286,6 +302,7 @@ export default function Header() {
 
           <Link
             href="/contact"
+            title="Free Website Audit"
             className="bg-gradient-to-r from-accent to-accent-light text-white text-center font-bold px-6 py-3 rounded-lg shadow-md mt-4"
           >
             Free Website Audit

@@ -9,10 +9,11 @@ export default function Footer() {
         
         {/* Brand Info */}
         <div className="flex flex-col gap-6 col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-1">
-          <Link href="/" className="flex items-center gap-3">
+          <Link href="/" title="Joy Digital Home" className="flex items-center gap-3">
             <Image
               src="/assets/images/logo.webp"
               alt="Joy Digital Logo"
+              title="Joy Digital Logo"
               width={70}
               height={70}
               className="object-contain"
@@ -69,27 +70,27 @@ export default function Footer() {
           </h4>
           <ul className="flex flex-col gap-3.5 text-sm text-text-muted">
             <li>
-              <Link href="/" className="hover:text-accent-light hover:pl-1 transition-all">
+              <Link href="/" title="Home" className="hover:text-accent-light hover:pl-1 transition-all">
                 Home
               </Link>
             </li>
             <li>
-              <Link href="/about" className="hover:text-accent-light hover:pl-1 transition-all">
+              <Link href="/about" title="About Us" className="hover:text-accent-light hover:pl-1 transition-all">
                 About Us
               </Link>
             </li>
             <li>
-              <Link href="/website-development" className="hover:text-accent-light hover:pl-1 transition-all">
+              <Link href="/website-development" title="Web Development Services" className="hover:text-accent-light hover:pl-1 transition-all">
                 Services
               </Link>
             </li>
             <li>
-              <Link href="/portfolio" className="hover:text-accent-light hover:pl-1 transition-all">
+              <Link href="/portfolio" title="Portfolio" className="hover:text-accent-light hover:pl-1 transition-all">
                 Portfolio
               </Link>
             </li>
             <li>
-              <Link href="/contact" className="hover:text-accent-light hover:pl-1 transition-all">
+              <Link href="/contact" title="Contact Us" className="hover:text-accent-light hover:pl-1 transition-all">
                 Contact Us
               </Link>
             </li>
@@ -103,27 +104,27 @@ export default function Footer() {
           </h4>
           <ul className="flex flex-col gap-3.5 text-sm text-text-muted">
             <li>
-              <Link href="/privacy-policy" className="hover:text-accent-light hover:pl-1 transition-all">
+              <Link href="/privacy-policy" title="Privacy Policy" className="hover:text-accent-light hover:pl-1 transition-all">
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link href="/terms-and-conditions" className="hover:text-accent-light hover:pl-1 transition-all">
+              <Link href="/terms-and-conditions" title="Terms & Conditions" className="hover:text-accent-light hover:pl-1 transition-all">
                 Terms & Conditions
               </Link>
             </li>
             <li>
-              <Link href="/refund-policy" className="hover:text-accent-light hover:pl-1 transition-all">
+              <Link href="/refund-policy" title="Refund Policy" className="hover:text-accent-light hover:pl-1 transition-all">
                 Refund Policy
               </Link>
             </li>
             <li>
-              <Link href="/cookie-policy" className="hover:text-accent-light hover:pl-1 transition-all">
+              <Link href="/cookie-policy" title="Cookie Policy" className="hover:text-accent-light hover:pl-1 transition-all">
                 Cookie Policy
               </Link>
             </li>
             <li>
-              <Link href="/disclaimer" className="hover:text-accent-light hover:pl-1 transition-all">
+              <Link href="/disclaimer" title="Disclaimer" className="hover:text-accent-light hover:pl-1 transition-all">
                 Disclaimer
               </Link>
             </li>
@@ -194,8 +195,8 @@ export default function Footer() {
           Copyright &copy; {new Date().getFullYear()} Joy Digital Growth Agency. All Rights Reserved.
         </p>
         <div className="flex gap-6">
-          <Link href="/privacy-policy" className="hover:text-accent-light transition-colors">Privacy Policy</Link>
-          <Link href="/terms-and-conditions" className="hover:text-accent-light transition-colors">Terms of Service</Link>
+          <Link href="/privacy-policy" title="Privacy Policy" className="hover:text-accent-light transition-colors">Privacy Policy</Link>
+          <Link href="/terms-and-conditions" title="Terms of Service" className="hover:text-accent-light transition-colors">Terms of Service</Link>
         </div>
       </div>
     </footer>
