@@ -11,9 +11,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://joydigital.vercel.app"),
+  metadataBase: new URL("https://joydigital.in"),
   verification: {
-    google: "wLd7eTwSSKvDF-yFpvWNrWqicvOXKLY8_BLD7W-yyq0",
+    google: "yYfFlGYZPthQmXcw3V9yq2U2OlPPPxWBCtG7URIXDwQ",
   },
   title: {
     default: "Website Design & Digital Marketing in Madurai | Joy Digital",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://joydigital.vercel.app",
+    url: "https://joydigital.in",
     siteName: "Joy Digital Growth Agency",
     title: "Website Design & Digital Marketing in Madurai | Joy Digital",
     description: "Joy Digital is the best website design company & digital marketing agency in Madurai. We offer local SEO, Google Business Profile setup, & branding.",

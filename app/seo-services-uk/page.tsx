@@ -15,7 +15,7 @@ const pageSchema = {
   "provider": {
     "@type": "LocalBusiness",
     "name": "Joy Digital Growth Agency",
-    "image": "https://joydigital.vercel.app/assets/images/logo.webp",
+    "image": "https://joydigital.in/assets/images/logo.webp",
     "telephone": "+919080026133",
     "priceRange": "$$",
     "address": {

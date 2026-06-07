@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://joydigital.vercel.app';
+  const baseUrl = 'https://joydigital.in';
   
   // Define static pages
   const routes = [
