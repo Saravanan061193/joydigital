@@ -13,9 +13,6 @@ export const metadata: Metadata = {
 
 export default async function BlogIndexPage() {
   const posts = getAllPosts();
-  
-  // Extract unique categories
-  const categories = Array.from(new Set(posts.map((post) => post.category)));
 
   return (
     <>

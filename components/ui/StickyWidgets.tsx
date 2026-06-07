@@ -47,6 +47,17 @@ export default function StickyWidgets() {
         <span className="absolute top-0 left-0 w-full h-full bg-whatsapp-green rounded-full -z-1 opacity-70 animate-pulse-ring"></span>
         <i className="fa-brands fa-whatsapp relative z-10" />
       </a>
+
+      {/* Scroll to Top Button */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className={`fixed bottom-36 lg:bottom-24 right-8 w-10 h-10 bg-primary-dark text-white rounded-full flex items-center justify-center text-sm shadow-md hover:bg-accent transition-all duration-300 z-40 ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
+        }`}
+        aria-label="Scroll to top"
+      >
+        <i className="fa-solid fa-arrow-up" />
+      </button>
     </>
   );
 }

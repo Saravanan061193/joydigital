@@ -3,8 +3,11 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Professional Logo Design & Corporate Branding | Joy Digital",
-  description: "Establish a memorable business identity with custom logo designs, brand color boards, typography rules, and matching corporate print templates.",
+  title: "Logo Design in Madurai | Corporate Branding Agency - Joy Digital",
+  description: "Joy Digital is a professional logo design company in Madurai, India. We design creative, custom vector logos, brand color boards, and corporate identity sets.",
+  alternates: {
+    canonical: "https://joydigital.in/logo-design-services",
+  },
 };
 
 const pageSchema = {
@@ -14,10 +17,10 @@ const pageSchema = {
   "serviceType": "Graphic Design & Branding Services",
   "provider": {
     "@type": "LocalBusiness",
-    "name": "Joy Digital Growth Agency",
+    "name": "Joy Digital",
     "image": "https://joydigital.in/assets/images/logo.webp",
     "telephone": "+919080026133",
-    "priceRange": "$$",
+    "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Madurai Main Road",
@@ -27,7 +30,7 @@ const pageSchema = {
       "addressCountry": "IN"
     }
   },
-  "description": "Joy Digital is a creative branding agency delivering high-concept corporate logos, typography systems, and print assets.",
+  "description": "Joy Digital is a creative branding agency in Madurai, India, delivering high-concept corporate logos, typography systems, and print assets.",
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
@@ -41,24 +44,28 @@ export default function LogoPage() {
   return (
     <ServicePageTemplate
       serviceName="Logo & Brand Design"
-      heroTitle="Professional Logo Design & Memorable Brand Identity Services"
-      heroSubtitle="Create a memorable first impression with creative, high-concept visual assets. We design custom brand marks, typography guidelines, color palettes, and matching print layouts that represent your business values."
+      heroTitle="Professional Logo Design & Memorable Brand Identity in Madurai"
+      heroSubtitle="Create a memorable first impression with creative, high-concept visual assets. As a leading agency for logo design in Madurai, we design custom brand marks, typography guidelines, color palettes, and matching print layouts that represent your business values."
       leadSource="Logo Design Landing Page"
       overviewTitle="Building Visual Identity Systems that Commend Professional Trust"
       overviewContent={
         <div className="space-y-6">
           <p>
-            Your logo is the visual face of your company. It is often the first brand asset a prospect notices when searching for your services online or offline. A poorly designed or low-resolution logo can make an otherwise professional business appear unestablished, which can hurt conversion rates.
+            Your logo is the visual face of your entire company. It is often the first brand asset a prospective client notices when searching for your services online or browsing social media. A poorly designed, low-resolution, or generic logo can make an otherwise professional business appear unestablished, which can hurt conversions. Investing in a professional visual identity is essential for long-term growth.
           </p>
           <p>
-            At Joy Digital Growth Agency, our design process goes beyond standard clip art. We research your industry, review competitor branding, and sketch custom logo concepts that represent your company values. This structured approach helps ensure your visual assets are clean, memorable, and scalable.
+            At Joy Digital, a premier <strong>branding agency in madurai</strong>, our design process goes far beyond standard templates and automated clip art. We research your specific industry, review competitor branding layouts in Madurai and across India, and sketch custom logo concepts that represent your core corporate values. This structured design approach ensures that your visual assets are clean, memorable, scalable, and visually appealing.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Complete Brand Systems for Online & Offline Growth</h3>
           <p>
-            A consistent brand identity uses matching elements across all platforms. We provide complete branding packages that include custom typography guides, secondary submarks, and print layouts. This ensures your branding looks consistent on your website, social media, business cards, and brochures.
+            A consistent brand identity uses matching design elements across all marketing platforms. We provide complete branding packages that include custom typography guides, secondary submarks, and print layouts. This ensures your branding looks unified whether it is displayed on your website, social profiles, business cards, letterheads, or marketing brochures.
           </p>
           <p>
-            We deliver all designs in vector formats (SVG, PDF, EPS), allowing you to scale them for any print or digital need without losing resolution. This provides you with the creative files needed to represent your business professionally.
+            We deliver all designs in vector formats (SVG, PDF, EPS, AI), allowing you to scale them for any print or digital need—from small website icons to massive outdoor billboards—without losing resolution. This provides you with the creative files needed to represent your business professionally in any commercial setting.
+          </p>
+          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Color Psychology and Typography Pairings</h3>
+          <p>
+            Colors and fonts carry emotional weight. Choosing the right color board (using HSL/Hex values) and pairing typography systems helps convey the right message to your target audience. For example, dark blues communicate trust and security, while vibrant oranges communicate creativity and energy. We help select a palette and font pairings that align with your industry standards and target customer expectations.
           </p>
         </div>
       }
@@ -68,27 +75,27 @@ export default function LogoPage() {
         {
           icon: "fa-solid fa-pen-nib",
           title: "Custom Logo Concepts",
-          description: "We design custom brand marks based on sketches and vector layouts, avoiding generic online templates.",
+          description: "We design custom brand marks based on unique sketches and vector layouts, avoiding generic templates and stock graphics completely.",
         },
         {
           icon: "fa-solid fa-palette",
           title: "Cohesive Color Boards",
-          description: "We select color palettes that align with your industry standards and target audience preferences, defining clear HSL/Hex codes.",
+          description: "We select color palettes that align with your industry standards and target audience preferences, defining clear HSL and Hex codes.",
         },
         {
           icon: "fa-solid fa-vector-square",
           title: "Vector Source Formats",
-          description: "We share all designs in source vector formats (EPS, SVG, PDF), allowing you to scale them from business cards to billboards.",
+          description: "We share all designs in source vector formats (EPS, SVG, PDF, AI), allowing you to scale them from business cards to billboards without pixelation.",
         },
         {
           icon: "fa-solid fa-font",
           title: "Typography Guidelines",
-          description: "We pair matching font combinations for headings and body copy, helping ensure your brand presentation is clean and readable.",
+          description: "We pair matching font combinations for headings and body copy, helping ensure your brand presentation is clean, readable, and professional.",
         },
         {
           icon: "fa-solid fa-address-card",
           title: "Print Assets Design",
-          description: "We design matching business cards, letterheads, and envelopes to present a professional look during offline meetings.",
+          description: "We design matching business cards, letterheads, and envelopes to present a professional look during offline corporate meetings in Madurai.",
         },
         {
           icon: "fa-solid fa-book",
@@ -103,13 +110,13 @@ export default function LogoPage() {
           step: "1",
           icon: "fa-solid fa-clipboard-question",
           title: "Briefing & Competitor Study",
-          description: "We discuss your brand values, target audience, color preferences, and review competitor logos.",
+          description: "We discuss your brand values, target audience, color preferences, and review competitor logos in Madurai and across India.",
         },
         {
           step: "2",
           icon: "fa-solid fa-pencil",
           title: "Concept Sketching",
-          description: "Our design team sketches initial design concepts, testing different shapes and structures.",
+          description: "Our design team sketches initial design concepts, testing different shapes, icons, and structures before digital rendering.",
         },
         {
           step: "3",
@@ -139,7 +146,7 @@ export default function LogoPage() {
             "3 Rounds of Revision Iterations",
             "Business Card Layout Layout",
           ],
-          ctaText: "Select Startup Plan",
+          ctaText: "Select Plan",
         },
         {
           name: "Corporate Brand Identity",
@@ -154,7 +161,7 @@ export default function LogoPage() {
             "Matching Business Card & Letterhead",
             "5 Rounds of Revision Iterations",
           ],
-          ctaText: "Select Corporate Plan",
+          ctaText: "Select Plan",
         },
         {
           name: "Enterprise Design System",
@@ -173,24 +180,24 @@ export default function LogoPage() {
       ]}
       faqs={[
         {
-          question: "Who owns the copyrights to the logo designs?",
-          answer: "Once the design project is finalized and payment is completed, you own the full copyrights to the final approved logo designs. We can showcase the work in our agency portfolio with your permission.",
+          question: "Who owns the copyrights to the logo designs in Madurai?",
+          answer: "Once the design project is finalized and payment is completed, you own the full copyrights to the final approved logo designs. We deliver a signed handoff document and share source assets. We can showcase the work in our agency portfolio only with your permission.",
         },
         {
           question: "What files will I receive at the end of the project?",
-          answer: "You will receive high-resolution digital files (PNG, JPEG) alongside vector source formats (SVG, PDF, EPS). Vector files allow you to resize the logo for any print size without losing image quality.",
+          answer: "You will receive high-resolution digital files (PNG with transparent backgrounds, JPEG) alongside vector source formats (SVG, PDF, EPS, AI). Vector files allow you to resize the logo for any print size without losing image quality.",
         },
         {
           question: "Can you redesign my existing company logo?",
-          answer: "Yes, we can refresh your current logo. We can update elements to make it cleaner and more modern while keeping the core colors and shapes that represent your established brand recognition.",
+          answer: "Yes, we can refresh your current logo. We can update elements to make it cleaner, more modern, and mobile-friendly while keeping the core colors and shapes that represent your established brand recognition.",
         },
         {
-          question: "How long does a branding project take?",
-          answer: "A standard Startup Logo package takes 4 to 8 working days. Complete Corporate Brand Identity packages, which include stationery layouts and brand guideline books, take 8 to 15 working days.",
+          question: "How long does a branding project take in India?",
+          answer: "A standard Startup Logo package takes 4 to 8 working days. Complete Corporate Brand Identity packages, which include stationery layouts and brand guideline books, take 8 to 15 working days depending on revision speeds.",
         },
         {
-          question: "What stationery layout designs do you include?",
-          answer: "Our standard stationery packages include layouts for business cards, letterheads, and envelopes. If you need custom layouts like brochure designs, menu cards, or email signatures, we can add them to your package.",
+          question: "What stationery layouts do you include?",
+          answer: "Our standard stationery packages include layouts for business cards, letterheads, and envelopes. If you need custom layouts like brochure designs, menu cards, or email signatures, we can add them to your package customly.",
         },
       ]}
       schemaMarkup={pageSchema}

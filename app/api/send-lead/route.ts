@@ -45,10 +45,11 @@ export async function POST(request: Request) {
 
     const result = await response.json();
     return NextResponse.json({ success: true, result });
-  } catch (error: any) {
-    console.error("API Lead Handler Error:", error);
+  } catch (error) {
+    const err = error as Error;
+    console.error("API Lead Handler Error:", err);
     return NextResponse.json(
-      { success: false, error: error.message || "Failed to process lead." },
+      { success: false, error: err.message || "Failed to process lead." },
       { status: 500 }
     );
   }

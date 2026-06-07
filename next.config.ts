@@ -5,6 +5,35 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
+  async redirects() {
+    return [
+      {
+        source: "/seo-services-usa",
+        destination: "/seo-services",
+        permanent: true,
+      },
+      {
+        source: "/seo-services-uk",
+        destination: "/seo-services",
+        permanent: true,
+      },
+      {
+        source: "/seo-services-uae",
+        destination: "/seo-services",
+        permanent: true,
+      },
+      {
+        source: "/website-development-usa",
+        destination: "/website-development",
+        permanent: true,
+      },
+      {
+        source: "/website-development-uk",
+        destination: "/website-development",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

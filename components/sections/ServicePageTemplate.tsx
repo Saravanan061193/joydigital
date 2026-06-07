@@ -52,7 +52,7 @@ interface ServicePageTemplateProps {
   pricingSubtitle: string;
   pricingTiers: PricingTier[];
   faqs: FAQItem[];
-  schemaMarkup: Record<string, any>;
+  schemaMarkup: Record<string, unknown>;
   crossLinks: { href: string; label: string }[];
 }
 

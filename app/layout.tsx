@@ -58,6 +58,7 @@ export default function RootLayout({
     <html lang="en" className={`${poppins.variable} h-full antialiased`}>
       <head>
         {/* Google tag (gtag.js) */}
+        {/* eslint-disable-next-line @next/next/next-script-for-ga */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZB05M3K3Z"></script>
         <script
           dangerouslySetInnerHTML={{

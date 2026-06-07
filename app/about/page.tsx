@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
-import Image from "next/image";
+
 
 export const metadata: Metadata = {
   title: "About Our Digital Marketing Agency | Joy Digital",

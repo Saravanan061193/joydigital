@@ -3,8 +3,11 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Social Media Marketing Services | SMM & Ad Campaigns | Joy Digital",
-  description: "Grow brand awareness, engage your audience, and generate quality sales leads with paid Facebook and Instagram ad campaigns. Economical SMM packages.",
+  title: "Digital Marketing Agency in Madurai | SMM & Paid Ads - Joy Digital",
+  description: "Joy Digital is a leading digital marketing agency in Madurai, India. We manage high-converting Facebook, Instagram, and LinkedIn ad campaigns to scale leads.",
+  alternates: {
+    canonical: "https://joydigital.in/social-media-marketing",
+  },
 };
 
 const pageSchema = {
@@ -14,10 +17,10 @@ const pageSchema = {
   "serviceType": "Social Media Marketing Services",
   "provider": {
     "@type": "LocalBusiness",
-    "name": "Joy Digital Growth Agency",
+    "name": "Joy Digital",
     "image": "https://joydigital.in/assets/images/logo.webp",
     "telephone": "+919080026133",
-    "priceRange": "$$",
+    "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Madurai Main Road",
@@ -27,7 +30,7 @@ const pageSchema = {
       "addressCountry": "IN"
     }
   },
-  "description": "Joy Digital is a SMM agency offering Facebook ad setups, Instagram content planning, audience targeting, and lead-gen campaigns.",
+  "description": "Joy Digital is a SMM agency offering Facebook ad setups, Instagram content planning, audience targeting, and lead-gen campaigns in India.",
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
@@ -41,24 +44,28 @@ export default function SMMPage() {
   return (
     <ServicePageTemplate
       serviceName="Social Media Marketing"
-      heroTitle="Grow Brand Engagement & Sales Leads with SMM Campaigns"
-      heroSubtitle="Engage your target audience, build online communities, and generate sales leads with paid ads and organic content on Facebook, Instagram, and LinkedIn. Convert online interest into business inquiries."
+      heroTitle="High-Converting Digital Marketing Agency in Madurai"
+      heroSubtitle="Engage your target audience, build online communities, and generate sales leads with paid ads and organic content on Facebook, Instagram, and LinkedIn. As a trusted digital marketing agency in Madurai, we convert online interest into business inquiries."
       leadSource="SMM Landing Page"
       overviewTitle="Paid Social Ads & Organic Content Strategies Designed to Convert"
       overviewContent={
         <div className="space-y-6">
           <p>
-            Social media platforms are valuable channels for connecting with prospects. Simply posting generic updates, however, is rarely enough to drive commercial results. Algorithm updates mean organic reach is limited, making structured paid campaigns and engaging content strategies essential for business growth.
+            Social media platforms are valuable channels for connecting with prospective customers. Simply posting generic updates or stock images, however, is rarely enough to drive commercial results. Algorithm updates mean organic reach is severely limited, making structured paid advertising campaigns and engaging content strategies essential for real business growth.
           </p>
           <p>
-            At Joy Digital Growth Agency, we focus on helping regional businesses grow their social media presence. We design visual assets, plan content calendars, and build targeted ad campaigns on Facebook and Instagram. Our goal is to ensure your social media spending drives actual leads and conversions.
+            At Joy Digital, a leading <strong>social media marketing company madurai</strong>, we focus on helping regional businesses grow their online brand. We design custom visual assets, plan content calendars, and build targeted ad campaigns on Facebook and Instagram. Our goal is to ensure your social media spending drives actual customer leads, phone calls, and sales conversions.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Paid Ads, Retargeting & Audience Matching</h3>
           <p>
-            Organic posts help build community trust, while paid ads are key for reaching new customers. We build Meta ad campaigns that target specific demographics, interests, and locations. We also set up lead-capture ads that make it easy for users to send inquiries directly within the app.
+            While organic posts build community trust over time, paid ads are key for reaching new customers immediately. We build Meta ad campaigns that target specific demographics, interests, and location radiuses. We also set up lead-capture ads that make it easy for users to send inquiries directly within the app, reducing checkout friction.
           </p>
           <p>
-            Additionally, we build retargeting campaigns to re-engage website visitors, showing relevant ads that help move them toward booking a service or making a purchase. We track performance metrics like click-through rates, reach, and cost-per-lead to optimize your campaign ROI.
+            Additionally, we configure retargeting campaigns (using Meta pixel and conversion APIs) to re-engage website visitors, showing relevant ads that help move them toward booking a service or making a purchase. We track performance metrics like click-through rates, reach, and cost-per-lead to optimize your campaign ROI in India.
+          </p>
+          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Creative Copywriting & Content Scheduling</h3>
+          <p>
+            Social media is a fast-paced environment. To grab attention, your posts must pair striking graphics with engaging captions. Our copywriters craft hooks and call-to-actions tailored to your local market. We coordinate and schedule posts in advance, ensuring your brand maintains an active online presence that builds credibility.
           </p>
         </div>
       }
@@ -68,12 +75,12 @@ export default function SMMPage() {
         {
           icon: "fa-solid fa-users-viewfinder",
           title: "Targeted Audience Matching",
-          description: "We optimize ad settings to reach prospects based on their age, location, hobbies, and search habits, reducing wasted ad spend.",
+          description: "We optimize ad settings to reach prospects based on their age, location, hobbies, and search habits, reducing wasted ad budget.",
         },
         {
           icon: "fa-solid fa-bullhorn",
           title: "Grow Brand Awareness",
-          description: "Consistent, professional content on Facebook and Instagram helps build your brand presence in your target region.",
+          description: "Consistent, professional content on Facebook and Instagram helps build your brand presence in Madurai and across India.",
         },
         {
           icon: "fa-solid fa-address-card",
@@ -103,7 +110,7 @@ export default function SMMPage() {
           step: "1",
           icon: "fa-solid fa-compass",
           title: "Strategy & Audit",
-          description: "We analyze competitor profiles, identify target customer interests, and audit your past social media performance.",
+          description: "We analyze competitor profiles, identify target customer interests, and audit your past social media performance in Madurai.",
         },
         {
           step: "2",
@@ -120,7 +127,7 @@ export default function SMMPage() {
         {
           step: "4",
           icon: "fa-solid fa-chart-line",
-          title: "Ad Management & Optimization",
+          title: "Ad Management",
           description: "We launch targeted ad campaigns, monitor budget performance, test different ad creatives, and adjust settings to optimize ROI.",
         },
       ]}
@@ -177,23 +184,23 @@ export default function SMMPage() {
       faqs={[
         {
           question: "Does the SMM package price include the Google/Meta ad spend?",
-          answer: "No, the package price covers our management, creative design, copywriting, and optimization work. Your ad budget is paid directly to Meta or Google, and we help you set up and optimize that budget.",
+          answer: "No, the package price covers our management, creative design, copywriting, and optimization work. Your ad budget is paid directly to Meta or Google, and we help you set up, verify, and optimize that budget for maximum leads.",
         },
         {
-          question: "Which social media platforms should my business target?",
-          answer: "This depends on your target audience. For consumer services, retail, and local clinics, Facebook and Instagram are usually best. For professional services and B2B products, LinkedIn is generally more effective.",
+          question: "Which social media platforms should my business target in Madurai?",
+          answer: "This depends on your target audience. For consumer services, retail, and local clinics, Facebook and Instagram are usually best. For professional services, corporate B2B products, and training academies, LinkedIn and YouTube are generally more effective.",
         },
         {
           question: "How do you track leads from Facebook Ads?",
-          answer: "We set up Meta Lead Generation forms that let users send inquiries directly inside the app, and we integrate these forms with email notifications so you can follow up with prospects quickly.",
+          answer: "We set up Meta Lead Generation forms that let users send inquiries directly inside the app, and we integrate these forms with CRM systems or email notifications so you can follow up with prospects quickly before they cold down.",
         },
         {
           question: "How long does it take for paid social ads to generate leads?",
-          answer: "Paid social ads can begin generating impressions and lead inquiries within 24 to 48 hours of your campaigns going live after Google/Meta review.",
+          answer: "Paid social ads can begin generating impressions and lead inquiries within 24 to 48 hours of your campaigns going live after Google/Meta review. We monitor initial performance to adjust targets.",
         },
         {
           question: "Do you create video content and Reels?",
-          answer: "Yes, we write scripts and design visual templates for video reels. We can also edit raw video clips your team records into short, social-ready formats.",
+          answer: "Yes, we write scripts and design visual templates for video reels. We can also edit raw video clips your team records into short, social-ready formats with typography overlays and audio transitions.",
         },
       ]}
       schemaMarkup={pageSchema}
