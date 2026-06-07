@@ -95,6 +95,13 @@ export default function ServicePageTemplate({
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Hero Text */}
             <div className="lg:col-span-7 flex flex-col items-start text-left">
+              {/* Breadcrumbs */}
+              <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[10px] font-bold text-text-muted mb-4 uppercase tracking-widest">
+                <Link href="/" className="hover:text-accent transition-colors">Home</Link>
+                <span className="text-gray-300">/</span>
+                <span className="text-primary-dark">{serviceName}</span>
+              </nav>
+
               <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 px-4 py-1.5 rounded-full mb-6">
                 <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
                 <span className="text-xs font-bold text-accent-dark uppercase tracking-wider">
