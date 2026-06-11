@@ -90,7 +90,7 @@ export default function WebDesignPage() {
         {
           icon: "fa-solid fa-paragraph",
           title: "Optimized Typography Systems",
-          description: "We pair clean, readable font hierarchies (like Poppins) with open spacing configurations to improve reading flow on mobile displays and enhance visual appeal.",
+          description: "We pair clean, readable font hierarchies (like Inter) with open spacing configurations to improve reading flow on mobile displays and enhance visual appeal.",
         },
         {
           icon: "fa-solid fa-image",

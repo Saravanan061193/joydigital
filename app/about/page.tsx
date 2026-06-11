@@ -37,24 +37,24 @@ export default function AboutPage() {
         <section className="py-16 bg-light-bg">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Visual Stats */}
-            <div className="bg-gradient-to-br from-primary-dark to-primary border-2 border-accent p-8 sm:p-12 rounded-3xl shadow-xl relative overflow-hidden text-white min-h-[300px] flex items-center justify-center">
-              <div className="absolute inset-0 bg-radial-gradient opacity-10" />
+            <div className="bg-white border border-[#E5E7EB] p-8 sm:p-12 rounded-3xl shadow-md relative overflow-hidden min-h-[300px] flex items-center justify-center">
+              <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
               <div className="grid grid-cols-2 gap-8 relative z-10 w-full">
                 <div className="flex flex-col">
-                  <span className="text-3xl sm:text-4xl font-extrabold text-accent">100%</span>
-                  <span className="text-[10px] font-semibold text-text-muted uppercase tracking-wider mt-1">Client Focus</span>
+                  <span className="text-3xl sm:text-4xl font-extrabold text-primary">100%</span>
+                  <span className="text-[10px] font-bold text-text-secondary uppercase tracking-wider mt-1">Client Focus</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-3xl sm:text-4xl font-extrabold text-accent">₹0</span>
-                  <span className="text-[10px] font-semibold text-text-muted uppercase tracking-wider mt-1">Hidden Costs</span>
+                  <span className="text-3xl sm:text-4xl font-extrabold text-primary">₹0</span>
+                  <span className="text-[10px] font-bold text-text-secondary uppercase tracking-wider mt-1">Hidden Costs</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-3xl sm:text-4xl font-extrabold text-accent">Under 1.5s</span>
-                  <span className="text-[10px] font-semibold text-text-muted uppercase tracking-wider mt-1">Page Load Target</span>
+                  <span className="text-3xl sm:text-4xl font-extrabold text-primary">Under 1.5s</span>
+                  <span className="text-[10px] font-bold text-text-secondary uppercase tracking-wider mt-1">Page Load Target</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-3xl sm:text-4xl font-extrabold text-accent">24/7</span>
-                  <span className="text-[10px] font-semibold text-text-muted uppercase tracking-wider mt-1">Direct Support</span>
+                  <span className="text-3xl sm:text-4xl font-extrabold text-primary">24/7</span>
+                  <span className="text-[10px] font-bold text-text-secondary uppercase tracking-wider mt-1">Direct Support</span>
                 </div>
               </div>
             </div>
@@ -89,8 +89,8 @@ export default function AboutPage() {
             <h2 className="text-2xl md:text-3xl font-extrabold text-primary-dark mb-12">
               Founder Profile & Vision
             </h2>
-            <div className="bg-white border border-gray-100 rounded-3xl p-8 sm:p-12 shadow-sm flex flex-col items-center">
-              <div className="w-24 h-24 rounded-full bg-accent/10 border-2 border-accent flex items-center justify-center text-accent text-3xl mb-6 shadow-sm">
+            <div className="bg-white border border-[#E5E7EB] rounded-3xl p-8 sm:p-12 shadow-sm flex flex-col items-center">
+              <div className="w-24 h-24 rounded-full bg-accent/10 border-2 border-accent/20 flex items-center justify-center text-accent text-3xl mb-6 shadow-sm">
                 <i className="fa-solid fa-circle-user" />
               </div>
               <h3 className="text-xl font-extrabold text-primary-dark mb-1">Saravanan</h3>

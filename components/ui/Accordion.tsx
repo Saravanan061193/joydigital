@@ -26,7 +26,7 @@ export default function Accordion({ items }: AccordionProps) {
           <div
             key={index}
             className={`bg-white border ${
-              isOpen ? "border-accent bg-accent/5" : "border-gray-100 hover:border-gray-200"
+              isOpen ? "border-[#E5E7EB] bg-white shadow-sm" : "border-[#E5E7EB] hover:border-gray-300"
             } rounded-xl shadow-sm transition-all duration-300 overflow-hidden`}
           >
             <button
@@ -53,7 +53,7 @@ export default function Accordion({ items }: AccordionProps) {
                 opacity: isOpen ? 1 : 0,
               }}
             >
-              <div className="px-6 sm:px-8 pb-5 text-xs sm:text-sm text-text-secondary leading-relaxed border-t border-gray-100/50 pt-4">
+              <div className="px-6 sm:px-8 pb-5 text-xs sm:text-sm text-text-secondary leading-relaxed border-t border-[#E5E7EB] pt-4">
                 {item.answer}
               </div>
             </div>

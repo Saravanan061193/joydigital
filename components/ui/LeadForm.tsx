@@ -234,11 +234,11 @@ export default function LeadForm({
 
   return (
     <>
-      <div className={`bg-white border border-gray-100 p-8 rounded-2xl shadow-xl w-full ${layout === "horizontal" ? "max-w-4xl" : "max-w-md"} relative overflow-hidden`}>
+      <div className={`bg-white border border-[#E5E7EB] p-8 rounded-2xl shadow-xl w-full ${layout === "horizontal" ? "max-w-4xl" : "max-w-md"} relative overflow-hidden`}>
         {/* Progress Bar */}
         <div className="absolute top-0 left-0 w-full h-1.5 bg-gray-100">
           <div 
-            className="h-full bg-gradient-to-r from-accent to-accent-light transition-all duration-300"
+            className="h-full bg-primary transition-all duration-300"
             style={{ width: `${(step / 4) * 100}%` }}
           />
         </div>
@@ -270,11 +270,11 @@ export default function LeadForm({
                   onClick={() => handleSelectOption("bottleneck", item.id)}
                   className={`flex items-center gap-4 p-4 rounded-xl border text-left transition-all duration-200 ${
                     formData.bottleneck === item.id
-                      ? "border-accent bg-accent/5 ring-1 ring-accent"
-                      : "border-gray-200 hover:border-accent/50 hover:bg-light-bg"
+                      ? "border-primary bg-primary-glow ring-1 ring-primary"
+                      : "border-[#E5E7EB] hover:border-primary/50 hover:bg-light-bg"
                   }`}
                 >
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm ${formData.bottleneck === item.id ? "bg-accent text-white" : "bg-light-bg text-text-secondary"}`}>
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm ${formData.bottleneck === item.id ? "bg-primary text-white" : "bg-light-bg text-text-secondary"}`}>
                     <i className={item.icon} />
                   </div>
                   <span className="text-xs font-semibold text-text-primary">{item.label}</span>
@@ -307,7 +307,7 @@ export default function LeadForm({
                   value={formData.service}
                   onChange={handleChange}
                   className={`w-full text-xs py-3 pl-10 pr-10 bg-light-bg rounded-lg border appearance-none ${
-                    errors.service ? "border-error-red bg-red-50/20" : "border-gray-200 focus:border-accent"
+                    errors.service ? "border-error-red bg-red-50/20" : "border-[#E5E7EB] focus:border-accent"
                   } outline-none cursor-pointer transition-all`}
                 >
                   <option value="" disabled>Select a Service</option>
@@ -341,7 +341,7 @@ export default function LeadForm({
                   onChange={handleChange}
                   placeholder="e.g. mybusiness.com"
                   className={`w-full text-xs py-3 pl-10 pr-4 bg-light-bg rounded-lg border ${
-                    errors.website ? "border-error-red bg-red-50/20" : "border-gray-200 focus:border-accent"
+                    errors.website ? "border-error-red bg-red-50/20" : "border-[#E5E7EB] focus:border-accent"
                   } outline-none transition-all`}
                 />
               </div>
@@ -385,7 +385,7 @@ export default function LeadForm({
                     handleChange(e);
                     setFormData((prev) => ({ ...prev, budget: "" })); // Reset budget when region changes
                   }}
-                  className="w-full text-xs py-3 pl-10 pr-10 bg-light-bg rounded-lg border appearance-none border-gray-200 focus:border-accent outline-none cursor-pointer transition-all"
+                  className="w-full text-xs py-3 pl-10 pr-10 bg-light-bg rounded-lg border appearance-none border-[#E5E7EB] focus:border-accent outline-none cursor-pointer transition-all"
                 >
                   <option value="us">🇺🇸 United States (USD)</option>
                   <option value="uk">🇬🇧 United Kingdom (GBP)</option>
@@ -408,8 +408,8 @@ export default function LeadForm({
                     onClick={() => handleSelectOption("budget", b.value)}
                     className={`p-3 rounded-lg border text-left text-xs font-semibold transition-all ${
                       formData.budget === b.value
-                        ? "border-accent bg-accent/5 ring-1 ring-accent"
-                        : "border-gray-200 hover:border-accent/40 hover:bg-light-bg"
+                        ? "border-primary bg-primary-glow ring-1 ring-primary"
+                        : "border-[#E5E7EB] hover:border-primary/45 hover:bg-light-bg"
                     }`}
                   >
                     {b.label}
@@ -455,7 +455,7 @@ export default function LeadForm({
                   onChange={handleChange}
                   placeholder="Your Name"
                   className={`w-full text-xs py-3 pl-10 pr-4 bg-light-bg rounded-lg border ${
-                    errors.name ? "border-error-red bg-red-50/20" : "border-gray-200 focus:border-accent"
+                    errors.name ? "border-error-red bg-red-50/20" : "border-[#E5E7EB] focus:border-accent"
                   } outline-none transition-all`}
                 />
               </div>
@@ -474,7 +474,7 @@ export default function LeadForm({
                   onChange={handleChange}
                   placeholder="you@example.com"
                   className={`w-full text-xs py-3 pl-10 pr-4 bg-light-bg rounded-lg border ${
-                    errors.email ? "border-error-red bg-red-50/20" : "border-gray-200 focus:border-accent"
+                    errors.email ? "border-error-red bg-red-50/20" : "border-[#E5E7EB] focus:border-accent"
                   } outline-none transition-all`}
                 />
               </div>
@@ -493,7 +493,7 @@ export default function LeadForm({
                   onChange={handleChange}
                   placeholder="e.g. +1 555-0199 or WhatsApp"
                   className={`w-full text-xs py-3 pl-10 pr-4 bg-light-bg rounded-lg border ${
-                    errors.mobile ? "border-error-red bg-red-50/20" : "border-gray-200 focus:border-accent"
+                    errors.mobile ? "border-error-red bg-red-50/20" : "border-[#E5E7EB] focus:border-accent"
                   } outline-none transition-all`}
                 />
               </div>
@@ -510,7 +510,7 @@ export default function LeadForm({
                   onChange={handleChange}
                   rows={2}
                   placeholder="Briefly describe your requirements..."
-                  className="w-full text-xs py-2 px-4 bg-light-bg rounded-lg border border-gray-200 focus:border-accent outline-none resize-none transition-all"
+                  className="w-full text-xs py-2 px-4 bg-light-bg rounded-lg border border-[#E5E7EB] focus:border-accent outline-none resize-none transition-all"
                 />
               </div>
             )}
@@ -520,14 +520,14 @@ export default function LeadForm({
                 type="button"
                 onClick={handleBack}
                 disabled={isLoading}
-                className="w-1/3 border border-gray-200 hover:border-gray-300 text-text-primary font-bold text-xs py-3.5 rounded-lg transition-all disabled:opacity-50"
+                className="w-1/3 border border-[#E5E7EB] hover:border-gray-300 text-text-primary font-bold text-xs py-3.5 rounded-lg transition-all disabled:opacity-50"
               >
                 Back
               </button>
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-2/3 bg-gradient-to-r from-accent to-accent-light text-white font-bold text-xs py-3.5 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-2/3 bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold text-xs py-3.5 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isLoading ? (
                   <>
@@ -545,7 +545,7 @@ export default function LeadForm({
       {/* Success Modal Overlay */}
       {isSuccess && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-6 animate-fade-in">
-          <div className="bg-white p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center border border-gray-100 flex flex-col items-center">
+          <div className="bg-white p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center border border-[#E5E7EB] flex flex-col items-center">
             <div className="text-success-green text-6xl mb-4 leading-none animate-bounce">
               <i className="fa-solid fa-circle-check" />
             </div>
@@ -553,7 +553,7 @@ export default function LeadForm({
             <p className="text-sm text-text-secondary mb-6 leading-relaxed">Thank you. Your request is queued. Our digital strategist will run a pre-qualification review and contact you within 24 hours.</p>
             <button
               onClick={() => setIsSuccess(false)}
-              className="bg-accent text-white font-bold px-8 py-3 rounded-lg shadow-md hover:bg-accent-dark transition-all duration-200"
+              className="bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold px-8 py-3 rounded-lg shadow-md transition-all duration-200"
             >
               Done
             </button>

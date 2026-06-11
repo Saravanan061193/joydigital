@@ -27,18 +27,18 @@ export default function CTABanner({
   const ctaLink = source ? `${primaryCtaHref}?source=${encodeURIComponent(source)}` : primaryCtaHref;
 
   return (
-    <section className="relative py-20 bg-[#0F172A] border border-[#1E293B] overflow-hidden rounded-[24px] mx-6 lg:mx-12 my-16 shadow-xl">
+    <section className="relative py-20 bg-white border border-[#E5E7EB] overflow-hidden rounded-[24px] mx-6 lg:mx-12 my-16 shadow-md">
       {/* Subtle light background grid decoration */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-[0.04] pointer-events-none" />
 
       <div className="relative max-w-4xl mx-auto px-6 text-center z-10">
         <span className="inline-block bg-[#F97316]/10 text-[#F97316] font-bold text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full border border-[#F97316]/20 mb-6">
           Ready to Grow?
         </span>
-        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-5 leading-tight text-white">
+        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-5 leading-tight text-text-primary">
           {title}
         </h2>
-        <p className="text-sm md:text-base text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+        <p className="text-sm md:text-base text-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed">
           {description}
         </p>
         <div className="flex flex-wrap items-center justify-center gap-4">

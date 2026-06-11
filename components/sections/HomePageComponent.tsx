@@ -298,13 +298,11 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <Header />
-      <main className="bg-light-bg text-primary">
+      <main className="bg-light-bg text-text-primary">
         
         {/* Hero Section */}
         <section className="relative pt-32 lg:pt-40 pb-20 overflow-hidden bg-light-bg">
           <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Hero Text */}
@@ -315,7 +313,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   {hero.badge}
                 </span>
               </div>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-primary tracking-tight mb-6 leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-text-primary tracking-tight mb-6 leading-tight">
                 {hero.h1}
               </h1>
               <p className="text-sm md:text-base text-text-secondary mb-8 max-w-xl leading-relaxed">
@@ -340,7 +338,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 </a>
                 <a
                   href="#portfolio-section"
-                  className="bg-white hover:bg-slate-50 text-primary font-bold text-xs px-8 py-4 rounded-full transition-all border border-[#E2E8F0] shadow-sm hover:-translate-y-0.5 duration-300"
+                  className="bg-white hover:bg-slate-50 text-text-primary font-bold text-xs px-8 py-4 rounded-full transition-all border border-[#E5E7EB] shadow-sm hover:-translate-y-0.5 duration-300"
                 >
                   View Portfolio
                 </a>
@@ -364,23 +362,23 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         <StrongCTA location="hero" />
 
         {/* Client Logos Section */}
-        <section className="py-10 bg-light-bg border-y border-[#E2E8F0]">
+        <section className="py-10 bg-light-bg border-y border-[#E5E7EB]">
           <div className="max-w-7xl mx-auto px-6">
             <p className="text-[10px] font-bold text-text-muted uppercase tracking-widest text-center mb-6">
               {clientLogosText}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
-              <div className="font-bold text-sm text-primary select-none tracking-wider">🏢 APEX SaaS</div>
-              <div className="font-bold text-sm text-primary select-none tracking-wider">🏥 V-CARE CLINICS</div>
-              <div className="font-bold text-sm text-primary select-none tracking-wider">🎓 GLOBAL EDU</div>
-              <div className="font-bold text-sm text-primary select-none tracking-wider">🏗️ VELOCITY DEV</div>
-              <div className="font-bold text-sm text-primary select-none tracking-wider">🛒 SELECT CART</div>
+              <div className="font-bold text-sm text-text-secondary select-none tracking-wider">🏢 APEX SaaS</div>
+              <div className="font-bold text-sm text-text-secondary select-none tracking-wider">🏥 V-CARE CLINICS</div>
+              <div className="font-bold text-sm text-text-secondary select-none tracking-wider">🎓 GLOBAL EDU</div>
+              <div className="font-bold text-sm text-text-secondary select-none tracking-wider">🏗️ VELOCITY DEV</div>
+              <div className="font-bold text-sm text-text-secondary select-none tracking-wider">🛒 SELECT CART</div>
             </div>
           </div>
         </section>
 
         {/* Trust Guarantees Grid (Trust Building) - Light Premium Cards */}
-        <section className="py-16 bg-light-bg border-b border-[#E2E8F0]">
+        <section className="py-16 bg-white border-b border-[#E5E7EB]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-6 text-center">
               {[
@@ -392,11 +390,11 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 { label: "Fast Delivery", icon: "fa-solid fa-bolt" },
                 { label: "Ongoing Support", icon: "fa-solid fa-shield-halved" },
               ].map((g, i) => (
-                <div key={i} className="flex flex-col items-center p-5 bg-light-card rounded-[20px] border border-[#E2E8F0] hover:border-primary/40 transition-all shadow-sm duration-300">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold text-base mb-3">
+                <div key={i} className="flex flex-col items-center p-5 bg-white rounded-[20px] border border-[#E5E7EB] hover:border-accent/40 hover:shadow-md transition-all shadow-sm duration-300">
+                  <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent font-bold text-base mb-3">
                     <i className={g.icon} />
                   </div>
-                  <span className="text-[11px] font-bold text-primary leading-tight">{g.label}</span>
+                  <span className="text-[11px] font-bold text-text-primary leading-tight">{g.label}</span>
                 </div>
               ))}
             </div>
@@ -410,7 +408,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
                 Core Capabilities
               </span>
-              <h2 className="text-2xl md:text-4xl font-extrabold text-primary mb-4">
+              <h2 className="text-2xl md:text-4xl font-extrabold text-text-primary mb-4">
                 Conversion-Focused <span className="text-gradient">Digital Solutions</span>
               </h2>
               <p className="text-sm text-text-secondary">
@@ -422,13 +420,13 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               {HOME_SERVICES.map((service, index) => (
                 <article
                   key={index}
-                  className="bg-light-card border border-[#E2E8F0] rounded-[20px] p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+                  className="bg-light-card border border-[#E5E7EB] rounded-[20px] p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
                 >
                   <div>
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary text-xl mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent text-xl mb-6">
                       <i className={service.icon} />
                     </div>
-                    <h3 className="text-lg font-bold text-primary mb-3">
+                    <h3 className="text-lg font-bold text-text-primary mb-3">
                       {service.title}
                     </h3>
                     <p className="text-xs text-text-secondary leading-relaxed mb-6">
@@ -449,24 +447,24 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* Founder Section - Light Premium Card Layout */}
-        <section id="founder-section" className="py-20 bg-light-bg border-t border-[#E2E8F0]">
+        <section id="founder-section" className="py-20 bg-white border-t border-[#E5E7EB]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               {/* Left Column Profile Card */}
               <div className="lg:col-span-5 flex justify-center">
-                <div className="relative bg-light-card border border-[#E2E8F0] p-8 rounded-[24px] shadow-sm w-full max-w-sm overflow-hidden text-center flex flex-col items-center">
-                  <div className="w-24 h-24 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-primary text-4xl mb-6 shadow-sm">
+                <div className="relative bg-white border border-[#E5E7EB] p-8 rounded-[24px] shadow-md w-full max-w-sm overflow-hidden text-center flex flex-col items-center">
+                  <div className="w-24 h-24 rounded-full bg-accent/10 border-2 border-accent/20 flex items-center justify-center text-accent text-4xl mb-6 shadow-sm">
                     <i className="fa-solid fa-user-tie" />
                   </div>
-                  <h3 className="text-xl font-extrabold text-primary mb-1">Saravanan</h3>
+                  <h3 className="text-xl font-extrabold text-text-primary mb-1">Saravanan</h3>
                   <span className="text-xs text-accent font-bold uppercase tracking-wider mb-6">Founder & Lead Architect</span>
                   
-                  <div className="grid grid-cols-2 gap-4 w-full border-t border-[#E2E8F0]/80 pt-6 mt-2">
+                  <div className="grid grid-cols-2 gap-4 w-full border-t border-[#E5E7EB] pt-6 mt-2">
                     <div className="flex flex-col items-center">
                       <span className="text-2xl font-extrabold text-accent">9+ Years</span>
                       <span className="text-[10px] text-text-secondary uppercase font-bold tracking-wider mt-1">Experience</span>
                     </div>
-                    <div className="flex flex-col items-center border-l border-[#E2E8F0]/80">
+                    <div className="flex flex-col items-center border-l border-[#E5E7EB]">
                       <span className="text-2xl font-extrabold text-accent">100+</span>
                       <span className="text-[10px] text-text-secondary uppercase font-bold tracking-wider mt-1">Sites Built</span>
                     </div>
@@ -479,7 +477,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
                   Behind the Code
                 </span>
-                <h2 className="text-2xl md:text-4xl font-extrabold text-primary mb-6">
+                <h2 className="text-2xl md:text-4xl font-extrabold text-text-primary mb-6">
                   Meet Your Website <span className="text-gradient">Development Partner</span>
                 </h2>
                 <div className="text-sm text-text-secondary space-y-4 mb-6 leading-relaxed">
@@ -489,21 +487,21 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   <p>
                     Throughout my journey as a project development specialist and website portfolio builder, I&apos;ve worked with insurance agents, hotels, clinics, schools, and startups. I&apos;ve seen how businesses get stuck with slow, generic platforms that fail to rank on Google or capture customer trust.
                   </p>
-                  <p className="font-semibold text-primary">
+                  <p className="font-semibold text-text-primary">
                     Our Mission at Joy Digital:
                   </p>
-                  <p className="italic bg-light-card p-4 rounded-lg border-l-4 border-accent">
+                  <p className="italic bg-light-bg p-4 rounded-lg border-l-4 border-accent shadow-sm">
                     &ldquo;To empower small businesses, startups, and local service providers to establish a dominant online presence with premium, SEO-optimized websites at affordable pricing.&rdquo;
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-3 w-full">
-                  <span className="bg-light-card border border-[#E2E8F0] text-primary text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5 shadow-sm">
+                  <span className="bg-white border border-[#E5E7EB] text-text-secondary text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5 shadow-sm">
                     <i className="fa-solid fa-code text-accent" /> Website Portfolio Builder
                   </span>
-                  <span className="bg-light-card border border-[#E2E8F0] text-primary text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5 shadow-sm">
+                  <span className="bg-white border border-[#E5E7EB] text-text-secondary text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5 shadow-sm">
                     <i className="fa-solid fa-screwdriver-wrench text-accent" /> Project Development Specialist
                   </span>
-                  <span className="bg-light-card border border-[#E2E8F0] text-primary text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5 shadow-sm">
+                  <span className="bg-white border border-[#E5E7EB] text-text-secondary text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5 shadow-sm">
                     <i className="fa-solid fa-handshake text-accent" /> Affordable Lead Funnels
                   </span>
                 </div>
@@ -513,13 +511,13 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* Industries We Serve Section */}
-        <section id="industries-section" className="py-20 bg-light-bg border-t border-[#E2E8F0]">
+        <section id="industries-section" className="py-20 bg-light-bg border-t border-[#E5E7EB]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
                 Industry Expertise
               </span>
-              <h2 className="text-2xl md:text-4xl font-extrabold text-primary mb-4">
+              <h2 className="text-2xl md:text-4xl font-extrabold text-text-primary mb-4">
                 Tailored Websites For <span className="text-gradient">High-Demand Sectors</span>
               </h2>
               <p className="text-sm text-text-secondary max-w-2xl mx-auto">
@@ -532,20 +530,20 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               {INDUSTRIES_DATA.map((item, index) => (
                 <div 
                   key={index} 
-                  className="bg-light-card border border-[#E2E8F0] rounded-[24px] p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+                  className="bg-light-card border border-[#E5E7EB] rounded-[24px] p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
                 >
                   <div>
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center text-xl mb-6 flex-shrink-0">
+                    <div className="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-6 flex-shrink-0">
                       <i className={item.icon} />
                     </div>
                     <span className="inline-block bg-accent/10 text-accent font-bold text-[9px] uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">
                       {item.focus}
                     </span>
-                    <h3 className="text-lg font-extrabold text-primary mb-3">{item.name}</h3>
+                    <h3 className="text-lg font-extrabold text-text-primary mb-3">{item.name}</h3>
                     <p className="text-xs text-text-secondary leading-relaxed mb-6">{item.description}</p>
                   </div>
-                  <div className="border-t border-[#E2E8F0] pt-4 flex items-center justify-between mt-2">
-                    <span className="text-[10px] font-bold text-primary uppercase tracking-wider">Conversion Ready</span>
+                  <div className="border-t border-[#E5E7EB] pt-4 flex items-center justify-between mt-2">
+                    <span className="text-[10px] font-bold text-text-secondary uppercase tracking-wider">Conversion Ready</span>
                     <a
                       href="#consultation-section"
                       className="text-xs font-bold text-primary hover:text-primary-light flex items-center gap-1 transition-colors"
@@ -560,13 +558,13 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* Portfolio Section */}
-        <section id="portfolio-section" className="py-20 bg-light-bg">
+        <section id="portfolio-section" className="py-20 bg-white border-y border-[#E5E7EB]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
                 Featured Showcase
               </span>
-              <h2 className="text-2xl md:text-4xl font-extrabold text-primary mb-4">
+              <h2 className="text-2xl md:text-4xl font-extrabold text-text-primary mb-4">
                 Proven Lead-Generating <span className="text-gradient">Websites</span>
               </h2>
               <p className="text-sm text-text-secondary">
@@ -591,14 +589,14 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   avatar: "👩‍💼"
                 }
               ].map((proj, idx) => (
-                <div key={idx} className="bg-light-card border border-[#E2E8F0] rounded-[24px] p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                <div key={idx} className="bg-white border border-[#E5E7EB] rounded-[24px] p-8 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-xl shadow-sm">
+                      <div className="w-12 h-12 rounded-2xl bg-accent/10 text-accent flex items-center justify-center text-xl shadow-sm">
                         {proj.avatar}
                       </div>
                       <div>
-                        <h3 className="text-lg font-extrabold text-primary leading-tight">{proj.title}</h3>
+                        <h3 className="text-lg font-extrabold text-text-primary leading-tight">{proj.title}</h3>
                         <a
                           href={proj.url}
                           target="_blank"
@@ -612,26 +610,26 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                     <p className="text-xs text-text-secondary leading-relaxed mb-6">{proj.desc}</p>
                     <div className="flex flex-wrap gap-2 mb-6">
                       {proj.features.map((f, i) => (
-                        <span key={i} className="bg-slate-100 border border-slate-200/60 text-text-secondary text-[10px] font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
+                        <span key={i} className="bg-[#FAFAFA] border border-[#E5E7EB] text-text-secondary text-[10px] font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
                           <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" /> {f}
                         </span>
                       ))}
                     </div>
                   </div>
-                  <div className="border-t border-[#E2E8F0] pt-4 flex flex-wrap gap-4 items-center">
+                  <div className="border-t border-[#E5E7EB] pt-4 flex flex-wrap gap-4 items-center">
                     <a
                       href={proj.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full sm:w-auto bg-[#2563EB] hover:bg-[#3B82F6] text-white text-xs font-bold px-6 py-3.5 rounded-full shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center gap-2 text-center"
+                      className="w-full sm:w-auto bg-[#2563EB] hover:bg-[#3B82F6] text-white text-xs font-bold px-6 py-3.5 rounded-full shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 text-center"
                     >
                       Visit Live Website <i className="fa-solid fa-arrow-right text-[10px]" />
                     </a>
                     <a
-                      href={`https://wa.me/919080026133?text=Hello%20Saravanan,%20I%20saw%20your%20portfolio%20${encodeURIComponent(proj.title)}%20and%20want%20something%20similar.`}
+                      href={`https://wa.me/919080026133?text=Hello%20Saravanan,%20I%2520saw%2520your%2520portfolio%2520${encodeURIComponent(proj.title)}%2520and%2520want%2520something%2520similar.`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full sm:w-auto border border-[#E2E8F0] bg-white hover:bg-slate-50 text-primary text-xs font-bold px-5 py-3.5 rounded-full transition-all flex items-center justify-center gap-2"
+                      className="w-full sm:w-auto border border-[#E5E7EB] bg-white hover:bg-slate-50 text-text-primary text-xs font-bold px-5 py-3.5 rounded-full transition-all flex items-center justify-center gap-2"
                       data-wa-location="portfolio-section"
                     >
                       <i className="fa-brands fa-whatsapp text-emerald-500 text-sm" /> Same for My Business
@@ -644,13 +642,13 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* Pricing Section */}
-        <section id="pricing-section" className="py-20 bg-light-bg border-t border-[#E2E8F0]">
+        <section id="pricing-section" className="py-20 bg-light-bg border-t border-[#E5E7EB]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
                 Pricing Plans
               </span>
-              <h2 className="text-2xl md:text-4xl font-extrabold text-primary mb-4">
+              <h2 className="text-2xl md:text-4xl font-extrabold text-text-primary mb-4">
                 Transparent Pricing for <span className="text-gradient">Every Business Stage</span>
               </h2>
               <p className="text-sm text-text-secondary">
@@ -661,13 +659,13 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
               
               {/* Plan 1 */}
-              <div className="bg-light-card border border-[#E2E8F0] rounded-[24px] p-8 shadow-sm flex flex-col justify-between relative hover:shadow-md transition-shadow">
+              <div className="bg-light-card border border-[#E5E7EB] rounded-[24px] p-8 shadow-sm flex flex-col justify-between relative hover:shadow-md transition-shadow">
                 <div>
-                  <h3 className="text-lg font-extrabold text-primary mb-2">Starter Website</h3>
+                  <h3 className="text-lg font-extrabold text-text-primary mb-2">Starter Website</h3>
                   <p className="text-xs text-text-secondary mb-6 leading-relaxed">Perfect for local service providers, agents, and small business portfolios.</p>
                   
                   <div className="flex items-baseline gap-1 mb-8">
-                    <span className="text-3xl font-extrabold text-primary">₹15,000</span>
+                    <span className="text-3xl font-extrabold text-text-primary">₹15,000</span>
                     <span className="text-xs text-text-secondary font-semibold">one-time</span>
                   </div>
 
@@ -703,7 +701,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   href={`https://wa.me/919080026133?text=Hello%20Saravanan,%20I'd%20like%20to%20get%20started%20with%20the%20Starter%20Website%20package.`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full text-center bg-white hover:bg-slate-50 border border-[#E2E8F0] text-primary font-bold text-xs py-3.5 rounded-full transition-all shadow-sm"
+                  className="w-full text-center bg-white hover:bg-slate-50 border border-[#E5E7EB] text-text-primary font-bold text-xs py-3.5 rounded-full transition-all shadow-sm"
                   data-wa-location="pricing-starter"
                 >
                   Get Started on WhatsApp
@@ -717,11 +715,11 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 </div>
                 
                 <div>
-                  <h3 className="text-lg font-extrabold text-primary mb-2">Professional Website</h3>
+                  <h3 className="text-lg font-extrabold text-text-primary mb-2">Professional Website</h3>
                   <p className="text-xs text-text-secondary mb-6 leading-relaxed">Ideal for growing companies, specialized clinics, and professional firms.</p>
                   
                   <div className="flex items-baseline gap-1 mb-8">
-                    <span className="text-3xl font-extrabold text-primary">₹25,000</span>
+                    <span className="text-3xl font-extrabold text-text-primary">₹25,000</span>
                     <span className="text-xs text-text-secondary font-semibold">one-time</span>
                   </div>
 
@@ -769,13 +767,13 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               </div>
 
               {/* Plan 3 */}
-              <div className="bg-light-card border border-[#E2E8F0] rounded-[24px] p-8 shadow-sm flex flex-col justify-between relative hover:shadow-md transition-shadow">
+              <div className="bg-light-card border border-[#E5E7EB] rounded-[24px] p-8 shadow-sm flex flex-col justify-between relative hover:shadow-md transition-shadow">
                 <div>
-                  <h3 className="text-lg font-extrabold text-primary mb-2">Custom Business Solution</h3>
+                  <h3 className="text-lg font-extrabold text-text-primary mb-2">Custom Business Solution</h3>
                   <p className="text-xs text-text-secondary mb-6 leading-relaxed">For businesses requiring complex databases, web applications, or custom e-commerce portal functions.</p>
                   
                   <div className="flex items-baseline gap-1 mb-8">
-                    <span className="text-3xl font-extrabold text-primary">Custom</span>
+                    <span className="text-3xl font-extrabold text-text-primary">Custom</span>
                     <span className="text-xs text-text-secondary font-semibold">quote</span>
                   </div>
 
@@ -809,7 +807,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
                 <a
                   href="#consultation-section"
-                  className="w-full text-center bg-white hover:bg-slate-50 border border-[#E2E8F0] text-primary font-bold text-xs py-3.5 rounded-full transition-all shadow-sm"
+                  className="w-full text-center bg-white hover:bg-slate-50 border border-[#E5E7EB] text-text-primary font-bold text-xs py-3.5 rounded-full transition-all shadow-sm"
                 >
                   Contact For Quote
                 </a>
@@ -820,13 +818,13 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* Why Choose Us */}
-        <section className="py-20 bg-light-bg">
+        <section className="py-20 bg-white border-y border-[#E5E7EB]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
                 Why Us
               </span>
-              <h2 className="text-2xl md:text-4xl font-extrabold text-primary mb-4">
+              <h2 className="text-2xl md:text-4xl font-extrabold text-text-primary mb-4">
                 Built to Scale <span className="text-gradient">Your Digital Pipeline</span>
               </h2>
               <p className="text-sm text-text-secondary">
@@ -836,12 +834,12 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {WHY_CHOOSE_ITEMS.map((item, index) => (
-                <div key={index} className="flex gap-4 items-start bg-light-card p-6 rounded-[20px] border border-[#E2E8F0]">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-base flex-shrink-0">
+                <div key={index} className="flex gap-4 items-start bg-white p-6 rounded-[20px] border border-[#E5E7EB] shadow-sm hover:shadow-md transition-all duration-300">
+                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent text-base flex-shrink-0">
                     <i className={item.icon} />
                   </div>
                   <div className="flex flex-col">
-                    <h3 className="text-base font-bold text-primary mb-2">{item.title}</h3>
+                    <h3 className="text-base font-bold text-text-primary mb-2">{item.title}</h3>
                     <p className="text-xs text-text-secondary leading-relaxed">{item.description}</p>
                   </div>
                 </div>
@@ -851,13 +849,13 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* Case Studies Section */}
-        <section className="py-20 bg-light-bg border-t border-[#E2E8F0]">
+        <section className="py-20 bg-light-bg border-t border-[#E5E7EB]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
                 Success Stories
               </span>
-              <h2 className="text-2xl md:text-4xl font-extrabold text-primary mb-4">
+              <h2 className="text-2xl md:text-4xl font-extrabold text-text-primary mb-4">
                 Real Results for <span className="text-gradient">Real Brands</span>
               </h2>
               <p className="text-sm text-text-secondary">
@@ -867,14 +865,14 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {CASE_STUDIES.map((study, index) => (
-                <article key={index} className="bg-light-card border border-[#E2E8F0] rounded-[20px] p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                <article key={index} className="bg-light-card border border-[#E5E7EB] rounded-[20px] p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
                   <div>
-                    <div className="bg-white border border-[#E2E8F0] p-6 rounded-[16px] text-center mb-6 shadow-sm">
+                    <div className="bg-white border border-[#E5E7EB] p-6 rounded-[16px] text-center mb-6 shadow-sm">
                       <span className="text-3xl font-extrabold text-[#2563EB] block">{study.metrics}</span>
                       <span className="text-[9px] font-bold text-text-secondary uppercase tracking-wider">{study.tag}</span>
                     </div>
-                    <span className="text-[10px] font-bold text-primary uppercase tracking-wider">{study.tag}</span>
-                    <h3 className="text-base font-bold text-primary mt-2 mb-3 leading-tight">
+                    <span className="text-[10px] font-bold text-text-secondary uppercase tracking-wider">{study.tag}</span>
+                    <h3 className="text-base font-bold text-text-primary mt-2 mb-3 leading-tight">
                       {study.title}
                     </h3>
                     <p className="text-xs text-text-secondary leading-relaxed mb-6">
@@ -896,13 +894,13 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         <StrongCTA location="case studies section" />
 
         {/* Testimonials Section */}
-        <section className="py-20 bg-light-bg">
+        <section className="py-20 bg-white border-b border-[#E5E7EB]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
                 Reviews
               </span>
-              <h2 className="text-2xl md:text-4xl font-extrabold text-primary mb-4">
+              <h2 className="text-2xl md:text-4xl font-extrabold text-text-primary mb-4">
                 What Our Clients Say
               </h2>
               <p className="text-sm text-text-secondary">
@@ -912,7 +910,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {TESTIMONIALS.map((t, idx) => (
-                <div key={idx} className="bg-light-card border border-[#E2E8F0] p-8 rounded-[20px] shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow duration-300">
+                <div key={idx} className="bg-white border border-[#E5E7EB] p-8 rounded-[20px] shadow-md flex flex-col justify-between hover:shadow-lg transition-shadow duration-300">
                   <div>
                     <div className="flex gap-1 text-yellow-500 mb-4 text-xs">
                       {Array.from({ length: t.stars }).map((_, i) => (
@@ -923,8 +921,8 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                       &ldquo;{t.quote}&rdquo;
                     </p>
                   </div>
-                  <div className="flex flex-col border-t border-[#E2E8F0] pt-4">
-                    <span className="text-xs font-bold text-primary">{t.name}</span>
+                  <div className="flex flex-col border-t border-[#E5E7EB] pt-4">
+                    <span className="text-xs font-bold text-text-primary">{t.name}</span>
                     <span className="text-[10px] text-text-muted">{t.role}</span>
                   </div>
                 </div>
@@ -934,14 +932,14 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* Dynamic Focus Section based on Country */}
-        <section className="py-20 bg-light-bg border-t border-[#E2E8F0]">
+        <section className="py-20 bg-light-bg border-t border-[#E5E7EB]">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             
             {/* Left Content */}
             {country === "in" || country === "" ? (
               <div className="flex flex-col items-start justify-center text-left">
                 <span className="text-xs font-bold text-accent uppercase tracking-widest mb-3">Maps & Local Traffic</span>
-                <h2 className="text-2xl md:text-3xl font-extrabold text-primary mb-6">
+                <h2 className="text-2xl md:text-3xl font-extrabold text-text-primary mb-6">
                   Google Business Profile Optimization
                 </h2>
                 <p className="text-sm text-text-secondary leading-relaxed mb-6">
@@ -957,7 +955,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
             ) : (
               <div className="flex flex-col items-start justify-center text-left">
                 <span className="text-xs font-bold text-accent uppercase tracking-widest mb-3">Global CRO & Funnel Strategy</span>
-                <h2 className="text-2xl md:text-3xl font-extrabold text-primary mb-6">
+                <h2 className="text-2xl md:text-3xl font-extrabold text-text-primary mb-6">
                   Conversion Rate Optimization (CRO)
                 </h2>
                 <p className="text-sm text-text-secondary leading-relaxed mb-6">
@@ -974,17 +972,17 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
             {/* Right graphic mockup */}
             <div className="flex justify-center relative min-h-[300px] w-full items-center">
-              <div className="bg-light-card border border-[#E2E8F0] p-8 rounded-[20px] shadow-sm relative z-10 w-full max-w-sm text-center">
+              <div className="bg-light-card border border-[#E5E7EB] p-8 rounded-[20px] shadow-sm relative z-10 w-full max-w-sm text-center">
                 {country === "in" || country === "" ? (
                   <>
                     <div className="text-[#2563EB] text-5xl mb-4 leading-none"><i className="fa-solid fa-map-location-dot" /></div>
-                    <h4 className="text-base font-bold text-primary mb-2">Google Map Pack Strategy</h4>
+                    <h4 className="text-base font-bold text-text-primary mb-2">Google Map Pack Strategy</h4>
                     <p className="text-xs text-text-secondary mb-4 leading-relaxed">Geotagging, citation sync, primary categories, review capture, and proximity targeting.</p>
                   </>
                 ) : (
                   <>
                     <div className="text-[#2563EB] text-5xl mb-4 leading-none"><i className="fa-solid fa-filter" /></div>
-                    <h4 className="text-base font-bold text-primary mb-2">Conversion Funnel Blueprint</h4>
+                    <h4 className="text-base font-bold text-text-primary mb-2">Conversion Funnel Blueprint</h4>
                     <p className="text-xs text-text-secondary mb-4 leading-relaxed">Interactive inputs, conditional lead scoring, speed hooks, and exit-intent capture.</p>
                   </>
                 )}
@@ -1002,7 +1000,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* Free Website Consultation Form / Bottom Lead Gen Section */}
-        <section id="consultation-section" className="py-20 bg-light-bg border-t border-[#E2E8F0]">
+        <section id="consultation-section" className="py-20 bg-white border-y border-[#E5E7EB]">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             {/* Left Column Information */}
@@ -1013,7 +1011,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   No Cost • Limited Slots Available
                 </span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-primary mb-6 tracking-tight leading-tight">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-text-primary mb-6 tracking-tight leading-tight">
                 Claim Your Free <span className="text-gradient">Website & SEO Consultation</span>
               </h2>
               <p className="text-sm md:text-base text-text-secondary mb-8 leading-relaxed">
@@ -1066,13 +1064,13 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         />
 
         {/* FAQ Section */}
-        <section className="py-20 bg-light-bg border-t border-[#E2E8F0]">
+        <section className="py-20 bg-light-bg border-t border-[#E5E7EB]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
                 Support
               </span>
-              <h2 className="text-2xl md:text-4xl font-extrabold text-primary mb-4">
+              <h2 className="text-2xl md:text-4xl font-extrabold text-text-primary mb-4">
                 Frequently Asked Questions
               </h2>
               <p className="text-sm text-text-secondary">

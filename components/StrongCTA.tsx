@@ -9,7 +9,7 @@ interface StrongCTAProps {
 
 export default function StrongCTA({ location }: StrongCTAProps) {
   return (
-    <section className="relative py-16 bg-light-card border border-gray-200/80 overflow-hidden rounded-3xl mx-6 lg:mx-12 my-12 shadow-sm">
+    <section className="relative py-16 bg-light-card border border-[#E5E7EB] overflow-hidden rounded-3xl mx-6 lg:mx-12 my-12 shadow-sm">
       {/* Subtle light background grid decoration */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
       

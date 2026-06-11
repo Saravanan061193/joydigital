@@ -116,7 +116,7 @@ export default function Header() {
       <header
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 py-3"
+            ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-[#E5E7EB] py-3"
             : "bg-transparent py-5"
         }`}
       >
@@ -168,7 +168,7 @@ export default function Header() {
 
               {/* Dropdown Menu */}
               <div
-                className={`absolute left-0 mt-2 w-64 bg-white border border-gray-100 rounded-lg shadow-lg py-2 transition-all duration-200 ${
+                className={`absolute left-0 mt-2 w-64 bg-white border border-[#E5E7EB] rounded-lg shadow-lg py-2 transition-all duration-200 ${
                   isServicesDropdownOpen
                     ? "opacity-100 visible translate-y-0"
                     : "opacity-0 invisible -translate-y-2 pointer-events-none"
@@ -249,7 +249,7 @@ export default function Header() {
             <div className="relative" ref={regionRef}>
               <button
                 onClick={() => setIsRegionDropdownOpen(!isRegionDropdownOpen)}
-                className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-lg text-sm font-medium hover:border-accent hover:text-accent transition-colors bg-white shadow-sm"
+                className="flex items-center gap-2 px-3 py-1.5 border border-[#E5E7EB] rounded-lg text-sm font-medium hover:border-accent hover:text-accent transition-colors bg-white shadow-sm"
               >
                 <span>{activeRegionObj.flag}</span>
                 <span className="uppercase text-xs">{activeRegionObj.code || "Global"}</span>
@@ -257,7 +257,7 @@ export default function Header() {
               </button>
 
               <div
-                className={`absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded-lg shadow-lg py-1.5 transition-all duration-200 ${
+                className={`absolute right-0 mt-2 w-48 bg-white border border-[#E5E7EB] rounded-lg shadow-lg py-1.5 transition-all duration-200 ${
                   isRegionDropdownOpen
                     ? "opacity-100 visible translate-y-0"
                     : "opacity-0 invisible -translate-y-2 pointer-events-none"
@@ -293,14 +293,14 @@ export default function Header() {
             <div className="relative">
               <button
                 onClick={() => setIsRegionDropdownOpen(!isRegionDropdownOpen)}
-                className="flex items-center justify-center w-8 h-8 border border-gray-200 rounded-lg text-sm bg-white shadow-sm"
+                className="flex items-center justify-center w-8 h-8 border border-[#E5E7EB] rounded-lg text-sm bg-white shadow-sm"
                 aria-label="Select Country"
               >
                 <span>{activeRegionObj.flag}</span>
               </button>
 
               {isRegionDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-44 bg-white border border-gray-100 rounded-lg shadow-lg py-1 z-[60]">
+                <div className="absolute right-0 mt-2 w-44 bg-white border border-[#E5E7EB] rounded-lg shadow-lg py-1 z-[60]">
                   {REGIONS.map((region) => (
                     <button
                       key={region.code}
@@ -361,7 +361,7 @@ export default function Header() {
           <Link
             href={getRegionalHref("/")}
             title="Home"
-            className={`font-semibold text-lg border-b border-gray-100 pb-2 ${
+            className={`font-semibold text-lg border-b border-[#E5E7EB] pb-2 ${
               isActive("/") ? "text-accent" : "text-primary-dark"
             }`}
           >
@@ -370,7 +370,7 @@ export default function Header() {
 
           {/* Mobile Services Sub-list */}
           <div className="flex flex-col gap-2">
-            <span className="font-semibold text-lg text-primary-dark border-b border-gray-100 pb-2 flex justify-between items-center">
+            <span className="font-semibold text-lg text-primary-dark border-b border-[#E5E7EB] pb-2 flex justify-between items-center">
               Our Services
             </span>
             <div className="pl-4 flex flex-col gap-3 mt-2">
@@ -395,7 +395,7 @@ export default function Header() {
           <Link
             href="/about"
             title="About Us"
-            className={`font-semibold text-lg border-b border-gray-100 pb-2 ${
+            className={`font-semibold text-lg border-b border-[#E5E7EB] pb-2 ${
               isActive("/about") ? "text-accent" : "text-primary-dark"
             }`}
           >
@@ -405,7 +405,7 @@ export default function Header() {
           <Link
             href="/portfolio"
             title="Portfolio"
-            className={`font-semibold text-lg border-b border-gray-100 pb-2 ${
+            className={`font-semibold text-lg border-b border-[#E5E7EB] pb-2 ${
               isActive("/portfolio") ? "text-accent" : "text-primary-dark"
             }`}
           >
@@ -415,7 +415,7 @@ export default function Header() {
           <Link
             href="/case-studies"
             title="Case Studies"
-            className={`font-semibold text-lg border-b border-gray-100 pb-2 ${
+            className={`font-semibold text-lg border-b border-[#E5E7EB] pb-2 ${
               isActive("/case-studies") ? "text-accent" : "text-primary-dark"
             }`}
           >
@@ -425,7 +425,7 @@ export default function Header() {
           <Link
             href="/blog"
             title="Blog"
-            className={`font-semibold text-lg border-b border-gray-100 pb-2 ${
+            className={`font-semibold text-lg border-b border-[#E5E7EB] pb-2 ${
               isActive("/blog") ? "text-accent" : "text-primary-dark"
             }`}
           >
@@ -435,7 +435,7 @@ export default function Header() {
           <Link
             href={getRegionalHref("/contact")}
             title="Contact Us"
-            className={`font-semibold text-lg border-b border-gray-100 pb-2 ${
+            className={`font-semibold text-lg border-b border-[#E5E7EB] pb-2 ${
               isActive("/contact") ? "text-accent" : "text-primary-dark"
             }`}
           >

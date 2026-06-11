@@ -200,7 +200,7 @@ export default function ServicePageTemplate({
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="text-xs font-medium text-text-secondary hover:text-accent border border-gray-200 px-3 py-1 rounded-full transition-all duration-200 bg-white shadow-sm"
+                      className="text-xs font-medium text-text-secondary hover:text-accent border border-[#E5E7EB] px-3 py-1 rounded-full transition-all duration-200 bg-white shadow-sm"
                     >
                       {link.label}
                     </Link>
@@ -253,7 +253,7 @@ export default function ServicePageTemplate({
               {benefits.map((benefit, index) => (
                 <div
                   key={index}
-                  className="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col"
+                  className="bg-white border border-[#E5E7EB] rounded-2xl p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col"
                 >
                   <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent-dark text-xl mb-6">
                     <i className={benefit.icon} />
@@ -326,7 +326,7 @@ export default function ServicePageTemplate({
                   className={`bg-white border rounded-[20px] p-8 shadow-sm flex flex-col relative transition-all duration-300 ${
                     tier.isPopular
                       ? "border-primary ring-2 ring-primary/10 -translate-y-2 lg:-translate-y-3"
-                      : "border-gray-100 hover:-translate-y-1"
+                      : "border-[#E5E7EB] hover:-translate-y-1"
                   }`}
                 >
                   {tier.isPopular && (
@@ -342,7 +342,7 @@ export default function ServicePageTemplate({
                   </div>
                   
                   {/* Features List */}
-                  <ul className="flex flex-col gap-3.5 mb-8 text-xs text-text-primary flex-grow border-t border-gray-100 pt-6">
+                  <ul className="flex flex-col gap-3.5 mb-8 text-xs text-text-primary flex-grow border-t border-[#E5E7EB] pt-6">
                     {tier.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start gap-2.5">
                         <span className="text-emerald-500 text-sm mt-0.5"><i className="fa-solid fa-circle-check" /></span>
@@ -356,7 +356,7 @@ export default function ServicePageTemplate({
                     className={`w-full text-center font-bold text-xs py-3.5 rounded-full transition-all duration-300 ${
                       tier.isPopular
                         ? "bg-primary hover:bg-primary-light text-white shadow-md hover:shadow-lg"
-                        : "bg-light-bg hover:bg-gray-200 text-primary border border-gray-200/50"
+                        : "bg-light-bg hover:bg-gray-200 text-primary border border-[#E5E7EB]"
                     }`}
                   >
                     {tier.ctaText || "Get Quote"}
