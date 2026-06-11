@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -15,6 +15,8 @@ interface HomePageComponentProps {
 }
 
 export default function HomePageComponent({ country }: HomePageComponentProps) {
+  const [activeTab, setActiveTab] = useState("finance");
+
   const getRegionalHref = (path: string) => {
     const localizedPaths = ["/", "/seo-services", "/website-development", "/contact"];
     if (localizedPaths.includes(path)) {
@@ -30,45 +32,45 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
       case "us":
         return {
           badge: "Enterprise Growth Partner",
-          h1: <>Scale Your Organic Sales with High-Performance <span className="text-gradient">SEO & Web Development</span></>,
-          subtitle: "We help US businesses capture high-intent customers using ultra-fast Next.js websites, global search marketing campaigns, and conversion-optimized lead funnels.",
+          h1: <>Professional Business Websites <span className="text-gradient">That Generate Leads</span></>,
+          subtitle: "We help US businesses capture high-intent customers using ultra-fast Next.js websites, global search marketing campaigns, and conversion-optimized lead funnels backed by 9+ years of experience.",
         };
       case "uk":
         return {
           badge: "Premium Digital Growth Agency",
-          h1: <>Custom Web Development & Professional <span className="text-gradient">SEO Services for UK Brands</span></>,
-          subtitle: "Convert search traffic into active buyers. Joy Digital builds high-performance corporate sites and runs compliant organic search campaigns across the United Kingdom.",
+          h1: <>Professional Business Websites <span className="text-gradient">That Generate Leads</span></>,
+          subtitle: "Convert search traffic into active buyers. Joy Digital builds high-performance corporate sites and runs organic search campaigns across the UK with 9+ years of experience.",
         };
       case "ae":
         return {
           badge: "Result-Driven Agency Dubai",
-          h1: <>High-Performance SEO & Web Design <span className="text-gradient">Agency in Dubai & UAE</span></>,
-          subtitle: "Dominate Google search rankings, optimize regional map packs, and build ultra-speed corporate and e-commerce web assets for the competitive UAE market.",
+          h1: <>Professional Business Websites <span className="text-gradient">That Generate Leads</span></>,
+          subtitle: "Dominate Google search rankings, optimize regional map packs, and build ultra-speed corporate and e-commerce web assets for the UAE market backed by 9+ years of experience.",
         };
       case "in":
         return {
-          badge: "India's Leading SEO & Web Agency",
-          h1: <>Rank #1 on Google with Custom Web Dev & <span className="text-gradient">SEO Agency India</span></>,
-          subtitle: "Joy Digital delivers growth-focused website development, Google Maps local optimization, and corporate branding packages for ambitious businesses in India.",
+          badge: "9+ Years of Industry Experience",
+          h1: <>Professional Business Websites <span className="text-gradient">That Generate Leads</span></>,
+          subtitle: "Helping businesses grow online with professional websites, SEO-ready development, and digital solutions backed by 9+ years of experience.",
         };
       default:
         return {
-          badge: "Result-Driven Digital Agency",
-          h1: <>High-Performance Website Design & <span className="text-gradient">Global SEO Growth Agency</span></>,
-          subtitle: "We engineer fast-loading Next.js corporate websites and execute result-driven SEO campaigns to scale your digital leads and revenue globally.",
+          badge: "9+ Years of Industry Experience",
+          h1: <>Professional Business Websites <span className="text-gradient">That Generate Leads</span></>,
+          subtitle: "Helping businesses grow online with professional websites, SEO-ready development, and digital solutions backed by 9+ years of experience.",
         };
     }
   };
 
   const getCurrencySymbol = () => {
-    if (country === "in") return "₹";
+    if (country === "in" || country === "") return "₹";
     if (country === "uk") return "£";
     if (country === "ae") return "AED ";
     return "$";
   };
 
   const getStartingPrice = () => {
-    if (country === "in") return "15,000";
+    if (country === "in" || country === "") return "15,000";
     if (country === "uk") return "750";
     if (country === "ae") return "3,500";
     return "1,000";
@@ -118,12 +120,12 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
     },
   ];
 
-  // 3. Why Choose Us
+  // 3. Why Choose Us (Backup or referenced points)
   const WHY_CHOOSE_ITEMS = [
     {
       icon: "fa-solid fa-tags",
       title: "Affordable Pricing",
-      description: `Flexible package pricing structures for startups and growing enterprises. Premium engineering deliverables without high global agency pricing.`,
+      description: `Flexible package pricing structures for startups and growing enterprises. Premium engineering deliverables starting from ${currency}${startingPrice} without high global agency pricing.`,
     },
     {
       icon: "fa-solid fa-bolt",
@@ -199,27 +201,31 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
     },
   ];
 
-  // 6. FAQs
+  // 6. FAQs (6 Target FAQ Questions)
   const HOME_FAQS = [
     {
-      question: `What is the cost of website development and SEO?`,
-      answer: `Project scopes are customized based on page structures and integrations. Joy Digital offers starting service packages from ${currency}${startingPrice}/month, tailoring features to match your exact business growth budget.`,
+      question: `How much does a website cost?`,
+      answer: `Our website solutions start from ₹15,000 for standard business sites. Custom business portals, e-commerce applications, and bespoke web platforms are priced based on page count, custom features, and third-party integrations.`,
     },
     {
-      question: "How long does custom Next.js development take?",
-      answer: "A standard corporate site typically launches within 7 to 14 business days. Custom database web applications, API integrations, and e-commerce platforms average 3 to 6 weeks depending on the complexity.",
+      question: "How long does website development take?",
+      answer: "A standard corporate website typically launches within 7 to 14 business days. Custom database web applications, API integrations, and complex e-commerce platforms average 3 to 6 weeks depending on requirements.",
     },
     {
-      question: "Why do you use Next.js instead of WordPress?",
-      answer: "WordPress sites suffer from speed bottlenecks due to plugins, hosting database calls, and vulnerable source code. Next.js produces static HTML files, rendering immediately, securing data, and maximizing Google rankings.",
+      question: "Is hosting included in the package?",
+      answer: "Yes. We assist you in setting up secure, fast cloud hosting. We configure your custom domain, SSL security certificates, and global CDN distribution so your website loads in under 1.5 seconds.",
     },
     {
-      question: "What is the timeline to see SEO results?",
-      answer: "Technical onsite code fixes and metadata edits can improve indexation speed and impressions within 30 days. Targeting highly competitive industrial queries and growing backlinks typically takes 3 to 6 months.",
+      question: "Will my website work correctly on mobile devices?",
+      answer: "Absolutely. Every website we build is 100% mobile responsive and thoroughly tested across iOS, Android, and tablets to ensure fluid layouts, responsive touch targets, and fast mobile loading times.",
     },
     {
-      question: "Do you provide direct post-launch maintenance?",
-      answer: "Yes. Joy Digital offers direct technical support packages covering regular backups, domain configurations, security patches, schema updates, and performance optimization checks.",
+      question: "Do you provide search engine optimization (SEO) services?",
+      answer: "Yes, organic search engine optimization is built into our core process. Every website features clean code architecture, absolute link canonicals, meta tags, and structured JSON-LD schemas. We also provide dedicated local and global SEO plans.",
+    },
+    {
+      question: "Can you redesign my existing website?",
+      answer: "Yes. We can migrate your outdated or slow website into a modern, fast Next.js or React framework. We ensure your existing search engine rankings are preserved while drastically boosting loading speeds and conversion rates.",
     },
   ];
 
@@ -227,8 +233,144 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
     ? "Trusted by Growing Brands and Startups Globally"
     : `Trusted by Growing Companies in the ${country.toUpperCase()} & Globally`;
 
+  const INDUSTRY_CATEGORIES = [
+    { id: "finance", label: "Finance & Corporate", icon: "fa-solid fa-building-columns" },
+    { id: "hospitality", label: "Hospitality & Retail", icon: "fa-solid fa-utensils" },
+    { id: "services", label: "Professional Services", icon: "fa-solid fa-screwdriver-wrench" },
+    { id: "health", label: "Health & Education", icon: "fa-solid fa-user-doctor" },
+  ];
+
+  const INDUSTRIES_DATA: Record<string, { name: string; icon: string; description: string }[]> = {
+    finance: [
+      {
+        name: "Insurance Agents & LIC Advisors",
+        icon: "fa-solid fa-shield-halved",
+        description: "Capture direct insurance policy enquiries, showcase client testimonials, and integrate direct WhatsApp consultation lines for instant lead response."
+      },
+      {
+        name: "Real Estate Companies",
+        icon: "fa-solid fa-house-chimney",
+        description: "Display listing catalogs with premium galleries, capture property viewing schedule requests, and establish trust with local neighborhood reviews."
+      },
+      {
+        name: "Finance & Loan Consultants",
+        icon: "fa-solid fa-coins",
+        description: "Build regulatory credibility, provide secure eligibility calculator forms, and capture structured business and personal loan leads."
+      },
+      {
+        name: "Startups & Small Businesses",
+        icon: "fa-solid fa-rocket",
+        description: "Rapidly validate products with distraction-free MVPs, present pitch statistics to investors, and secure initial local traffic footprint."
+      },
+      {
+        name: "Manufacturing Companies",
+        icon: "fa-solid fa-industry",
+        description: "Publish detailed industrial catalogs, attract global distributors, and capture custom bulk order RFQs (Requests for Quotation)."
+      }
+    ],
+    hospitality: [
+      {
+        name: "Hotels & Resorts",
+        icon: "fa-solid fa-hotel",
+        description: "Drives direct room bookings, displays property amenities, visualizes Google maps routes, and bypasses heavy third-party OTA commission fees."
+      },
+      {
+        name: "Tours & Travels",
+        icon: "fa-solid fa-plane-departure",
+        description: "Showcases packaged tour itineraries, structures clear pricing charts, integrates review feeds, and captures customer trip planner queries."
+      },
+      {
+        name: "Restaurants",
+        icon: "fa-solid fa-pizza-slice",
+        description: "Publishes interactive mobile menus, manages table booking schedules, and guides customers straight to your physical Google map location."
+      },
+      {
+        name: "Automobile Showrooms",
+        icon: "fa-solid fa-car",
+        description: "Presents latest vehicle collections, triggers custom EMI calculation guides, and captures test-drive or trade-in value requests."
+      },
+      {
+        name: "E-commerce Businesses",
+        icon: "fa-solid fa-cart-shopping",
+        description: "Engages visitors with visual catalogs, enables secure online checkout, recovers carts automatically, and grows retail revenue 24/7."
+      }
+    ],
+    services: [
+      {
+        name: "Pest Control Services",
+        icon: "fa-solid fa-bug",
+        description: "Captures urgent local emergency inquiries, highlights hygiene/safety approvals, and lists treatment pricing maps to build trust."
+      },
+      {
+        name: "Interior Designers",
+        icon: "fa-solid fa-couch",
+        description: "Showcases beautiful project portfolio sliders, describes specific style specialties, and guides prospects to book a design consultation."
+      },
+      {
+        name: "Construction Companies",
+        icon: "fa-solid fa-helmet-safety",
+        description: "Displays complete civil portfolios, highlights heavy machinery certifications, and captures corporate estimation tenders."
+      },
+      {
+        name: "Architects",
+        icon: "fa-solid fa-compass-drafting",
+        description: "Builds a luxury digital blueprint portfolio, publishes layout studies, and establishes creative authority to secure premium design commissions."
+      },
+      {
+        name: "Event Management Companies",
+        icon: "fa-solid fa-masks-theater",
+        description: "Highlights theme decoration photo lists, details corporate packages, and captures wedding or corporate event reservation queries."
+      },
+      {
+        name: "Car Rental Services",
+        icon: "fa-solid fa-key",
+        description: "Showcases fleet selections, highlights hourly/daily tariff policies, and captures instant car rental booking info."
+      },
+      {
+        name: "Service Businesses",
+        icon: "fa-solid fa-toolbox",
+        description: "Enables simplified booking workflows, provides customer review evidence, and displays service radius details for local organic rankings."
+      }
+    ],
+    health: [
+      {
+        name: "Hospitals & Clinics",
+        icon: "fa-solid fa-hospital-user",
+        description: "Simplifies online patient scheduling, presents specialist schedules, and displays clinic certifications to build medical credibility."
+      },
+      {
+        name: "Schools & Educational Institutions",
+        icon: "fa-solid fa-school",
+        description: "Facilitates online registration portals, shares circular files and schedules, and displays academic accolades to local parents."
+      },
+      {
+        name: "Coaching Centres",
+        icon: "fa-solid fa-graduation-cap",
+        description: "Publishes test rank outcomes, provides course registration modules, and captures student inquiries with free class trial passes."
+      }
+    ]
+  };
+
+  // FAQ Schema JSON-LD structure
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": HOME_FAQS.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <Header />
       <main>
         
@@ -241,8 +383,8 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Hero Text */}
             <div className="lg:col-span-7 flex flex-col items-start text-left animate-fade-in">
-              <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 px-4 py-1.5 rounded-full mb-6 animate-pulse">
-                <span className="w-2 h-2 bg-accent rounded-full" />
+              <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 px-4 py-1.5 rounded-full mb-6">
+                <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
                 <span className="text-xs font-bold text-accent-dark uppercase tracking-wider">
                   {hero.badge}
                 </span>
@@ -254,21 +396,27 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 {hero.subtitle}
               </p>
               <div className="flex flex-wrap items-center gap-4 w-full">
-                <Link
-                  href={getRegionalHref("/contact")}
+                <a
+                  href="#consultation-section"
                   className="bg-gradient-to-r from-accent to-accent-light text-white font-bold text-sm px-8 py-3.5 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
                 >
-                  Configure My Project
-                </Link>
+                  Get Free Consultation
+                </a>
                 <a
-                  href="https://wa.me/919080026133"
+                  href="https://wa.me/919080026133?text=Hello%20Saravanan,%20I'd%20like%20to%20get%20a%20free%20consultation%20for%20my%20business."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-light-bg hover:bg-gray-200 text-primary-dark font-bold text-sm px-8 py-3.5 rounded-lg transition-all flex items-center gap-2 border border-gray-200"
                   data-wa-location="hero"
                 >
                   <span className="text-whatsapp-green"><i className="fa-brands fa-whatsapp text-lg" /></span>
-                  WhatsApp Strategy Line
+                  WhatsApp Now
+                </a>
+                <a
+                  href="#portfolio-section"
+                  className="bg-white hover:bg-gray-50 text-primary font-bold text-sm px-8 py-3.5 rounded-lg transition-all border border-primary/20 hover:border-primary/40 shadow-sm"
+                >
+                  View Portfolio
                 </a>
               </div>
             </div>
@@ -301,6 +449,30 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               <div className="font-bold text-sm text-primary-dark select-none tracking-wider">🎓 GLOBAL EDU</div>
               <div className="font-bold text-sm text-primary-dark select-none tracking-wider">🏗️ VELOCITY DEV</div>
               <div className="font-bold text-sm text-primary-dark select-none tracking-wider">🛒 SELECT CART</div>
+            </div>
+          </div>
+        </section>
+
+        {/* Trust Guarantees Grid (Trust Building) */}
+        <section className="py-16 bg-light-bg/30 border-b border-gray-100">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-6 text-center">
+              {[
+                { label: "9+ Years Experience", icon: "fa-solid fa-award" },
+                { label: "Affordable Pricing", icon: "fa-solid fa-tags" },
+                { label: "Personalized Support", icon: "fa-solid fa-headset" },
+                { label: "Mobile Responsive", icon: "fa-solid fa-mobile-screen" },
+                { label: "SEO Friendly", icon: "fa-solid fa-magnifying-glass-chart" },
+                { label: "Fast Delivery", icon: "fa-solid fa-bolt" },
+                { label: "Ongoing Support", icon: "fa-solid fa-shield-halved" },
+              ].map((g, i) => (
+                <div key={i} className="flex flex-col items-center p-5 bg-white rounded-2xl border border-gray-100 hover:border-accent/30 transition-all shadow-sm">
+                  <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent-dark text-base mb-3">
+                    <i className={g.icon} />
+                  </div>
+                  <span className="text-[11px] font-bold text-primary-dark leading-tight">{g.label}</span>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -350,7 +522,391 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           </div>
         </section>
 
-        <StrongCTA location="services section" />
+        {/* Founder Section */}
+        <section id="founder-section" className="py-20 bg-white border-t border-gray-100">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              {/* Left Column Profile Card */}
+              <div className="lg:col-span-5 flex justify-center">
+                <div className="relative bg-gradient-to-br from-primary-dark to-dark text-white p-8 rounded-2xl shadow-xl w-full max-w-sm overflow-hidden border border-white/5">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-2xl" />
+                  <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/20 rounded-full blur-2xl" />
+                  
+                  <div className="relative z-10 flex flex-col items-center text-center">
+                    <div className="w-24 h-24 rounded-full bg-accent/20 border-2 border-accent flex items-center justify-center text-accent text-4xl mb-6 shadow-inner">
+                      <i className="fa-solid fa-user-tie" />
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-1">Saravanan</h3>
+                    <span className="text-xs text-accent-light font-semibold uppercase tracking-wider mb-6">Founder & Lead Architect</span>
+                    
+                    <div className="grid grid-cols-2 gap-4 w-full border-t border-white/10 pt-6 mt-2">
+                      <div className="flex flex-col items-center">
+                        <span className="text-2xl font-extrabold text-accent">9+ Years</span>
+                        <span className="text-[10px] text-text-muted uppercase font-bold tracking-wider mt-1">Experience</span>
+                      </div>
+                      <div className="flex flex-col items-center border-l border-white/10">
+                        <span className="text-2xl font-extrabold text-accent">100+</span>
+                        <span className="text-[10px] text-text-muted uppercase font-bold tracking-wider mt-1">Sites Built</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column Text Content */}
+              <div className="lg:col-span-7 flex flex-col items-start text-left">
+                <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
+                  Behind the Code
+                </span>
+                <h2 className="text-2xl md:text-4xl font-extrabold text-primary-dark mb-6">
+                  Meet Your Website <span className="text-gradient">Development Partner</span>
+                </h2>
+                <div className="text-sm text-text-secondary space-y-4 mb-6 leading-relaxed">
+                  <p>
+                    I&apos;m Saravanan, and for over 9 years, I have been designing, developing, and optimizing high-performance websites for businesses across diverse industries. My focus is simple: <strong>websites that don&apos;t just look pretty, but actually bring in leads and customers.</strong>
+                  </p>
+                  <p>
+                    Throughout my journey as a project development specialist and website portfolio builder, I&apos;ve worked with insurance agents, hotels, clinics, schools, and startups. I&apos;ve seen how businesses get stuck with slow, generic platforms that fail to rank on Google or capture customer trust.
+                  </p>
+                  <p className="font-semibold text-primary-dark">
+                    Our Mission at Joy Digital:
+                  </p>
+                  <p className="italic bg-light-bg p-4 rounded-lg border-l-4 border-accent">
+                    &ldquo;To empower small businesses, startups, and local service providers to establish a dominant online presence with premium, SEO-optimized websites at affordable pricing.&rdquo;
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-3 w-full">
+                  <span className="bg-primary/5 border border-primary/10 text-primary-dark text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5">
+                    <i className="fa-solid fa-code text-accent" /> Website Portfolio Builder
+                  </span>
+                  <span className="bg-primary/5 border border-primary/10 text-primary-dark text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5">
+                    <i className="fa-solid fa-screwdriver-wrench text-accent" /> Project Development Specialist
+                  </span>
+                  <span className="bg-primary/5 border border-primary/10 text-primary-dark text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5">
+                    <i className="fa-solid fa-handshake text-accent" /> Affordable Lead Funnels
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Industries We Serve Section */}
+        <section id="industries-section" className="py-20 bg-light-bg">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
+                Industries We Serve
+              </span>
+              <h2 className="text-2xl md:text-4xl font-extrabold text-primary-dark mb-4">
+                Tailored Websites For <span className="text-gradient">High-Demand Sectors</span>
+              </h2>
+              <p className="text-sm text-text-secondary">
+                For each industry, a professional website helps generate high-intent leads, build local trust, and drive business growth. Select a sector below to see how.
+              </p>
+            </div>
+
+            {/* Tab Buttons */}
+            <div className="flex justify-center gap-2 md:gap-4 mb-10 flex-wrap">
+              {INDUSTRY_CATEGORIES.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-2 font-bold text-xs px-5 py-3 rounded-xl border transition-all duration-200 cursor-pointer ${
+                    activeTab === tab.id
+                      ? "bg-primary text-white border-primary shadow-md"
+                      : "bg-white text-text-secondary border-gray-200 hover:border-accent/40"
+                  }`}
+                >
+                  <i className={tab.icon} />
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Tab Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
+              {INDUSTRIES_DATA[activeTab].map((item, index) => (
+                <div key={index} className="bg-white border border-gray-150 rounded-2xl p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                  <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent-dark text-base mb-4 flex-shrink-0">
+                    <i className={item.icon} />
+                  </div>
+                  <h3 className="text-base font-extrabold text-primary-dark mb-2">{item.name}</h3>
+                  <p className="text-xs text-text-secondary leading-relaxed mb-4 flex-grow">{item.description}</p>
+                  <div className="border-t border-gray-100 pt-3 flex items-center justify-between mt-2">
+                    <span className="text-[10px] font-bold text-accent uppercase tracking-wider">Lead Gen & Growth</span>
+                    <a
+                      href="#consultation-section"
+                      className="text-[11px] font-bold text-primary hover:text-accent flex items-center gap-1"
+                    >
+                      Inquire Now <i className="fa-solid fa-chevron-right text-[8px]" />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Portfolio Section */}
+        <section id="portfolio-section" className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
+                Featured Showcase
+              </span>
+              <h2 className="text-2xl md:text-4xl font-extrabold text-primary-dark mb-4">
+                Proven Lead-Generating <span className="text-gradient">Websites</span>
+              </h2>
+              <p className="text-sm text-text-secondary">
+                Take a look at our live client portals. Engineered for lightning-fast speeds, absolute search engine visibility, and seamless WhatsApp integrations.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-5xl mx-auto">
+              {[
+                {
+                  title: "Ganesh Murugan LIC Portal",
+                  url: "https://ganeshmuruganlic.vercel.app",
+                  desc: "A premium, high-converting digital portal built for a top LIC & financial advisor. Integrated with direct policy inquiry forms, WhatsApp chat support, and local SEO configuration.",
+                  features: ["Mobile Friendly", "Lead Generation Focused", "WhatsApp Integration", "SEO Ready", "Fast Loading"],
+                  avatar: "🏢"
+                },
+                {
+                  title: "Chithra Insurance Agent Portal",
+                  url: "https://chithrainsurance.vercel.app",
+                  desc: "A clean, modern lead-generation web application designed for a professional Insurance advisor. Built to load in under 1.2 seconds, securing client enquiries in real-time.",
+                  features: ["Mobile Friendly", "Lead Generation Focused", "WhatsApp Integration", "SEO Ready", "Fast Loading"],
+                  avatar: "👩‍💼"
+                }
+              ].map((proj, idx) => (
+                <div key={idx} className="bg-light-bg/50 border border-gray-150 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center text-xl shadow-md">
+                        {proj.avatar}
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-extrabold text-primary-dark leading-tight">{proj.title}</h3>
+                        <a
+                          href={proj.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs font-semibold text-accent hover:underline flex items-center gap-1 mt-0.5"
+                        >
+                          {proj.url.replace("https://", "")} <i className="fa-solid fa-arrow-up-right-from-square text-[9px]" />
+                        </a>
+                      </div>
+                    </div>
+                    <p className="text-xs text-text-secondary leading-relaxed mb-6">{proj.desc}</p>
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {proj.features.map((f, i) => (
+                        <span key={i} className="bg-white border border-gray-100 text-primary-dark text-[10px] font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 bg-success-green rounded-full" /> {f}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="border-t border-gray-200/50 pt-4 flex gap-4 items-center">
+                    <a
+                      href={proj.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-primary hover:bg-primary-light text-white text-xs font-bold px-6 py-3 rounded-lg shadow-sm hover:shadow-md transition-all flex items-center gap-2"
+                    >
+                      Visit Live Website <i className="fa-solid fa-arrow-right text-[10px]" />
+                    </a>
+                    <a
+                      href={`https://wa.me/919080026133?text=Hello%20Saravanan,%20I%20saw%20your%20portfolio%20${encodeURIComponent(proj.title)}%20and%20want%20something%20similar.`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="border border-gray-200 hover:border-gray-300 hover:bg-gray-100/50 text-primary-dark text-xs font-bold px-5 py-3 rounded-lg transition-all flex items-center gap-2"
+                      data-wa-location="portfolio-section"
+                    >
+                      <i className="fa-brands fa-whatsapp text-whatsapp-green text-sm" /> Same for My Business
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Pricing Section */}
+        <section id="pricing-section" className="py-20 bg-light-bg border-t border-gray-150">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
+                Pricing Plans
+              </span>
+              <h2 className="text-2xl md:text-4xl font-extrabold text-primary-dark mb-4">
+                Transparent Pricing for <span className="text-gradient">Every Business Stage</span>
+              </h2>
+              <p className="text-sm text-text-secondary">
+                Choose the package that fits your objectives. High-converting deliverables with zero hidden agency costs.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
+              
+              {/* Plan 1 */}
+              <div className="bg-white border border-gray-150 rounded-3xl p-8 shadow-sm flex flex-col justify-between relative hover:shadow-md transition-shadow">
+                <div>
+                  <h3 className="text-lg font-extrabold text-primary-dark mb-2">Starter Website</h3>
+                  <p className="text-xs text-text-secondary mb-6 leading-relaxed">Perfect for local service providers, agents, and small business portfolios.</p>
+                  
+                  <div className="flex items-baseline gap-1 mb-8">
+                    <span className="text-3xl font-extrabold text-primary-dark">₹15,000</span>
+                    <span className="text-xs text-text-secondary font-semibold">one-time</span>
+                  </div>
+
+                  <ul className="flex flex-col gap-4 text-xs text-text-secondary mb-8">
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      1-5 Custom Responsive Pages
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      100% Mobile Responsive Design
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      Direct WhatsApp Chat Integration
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      Lead Capture & Contact Form
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      Standard Local SEO Setup
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      Ultra-Fast Speed Optimization
+                    </li>
+                  </ul>
+                </div>
+
+                <a
+                  href={`https://wa.me/919080026133?text=Hello%20Saravanan,%20I'd%20like%20to%20get%20started%20with%20the%20Starter%20Website%20package.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full text-center bg-primary hover:bg-primary-light text-white font-bold text-xs py-3.5 rounded-xl transition-all shadow-sm hover:shadow-md"
+                  data-wa-location="pricing-starter"
+                >
+                  Get Started on WhatsApp
+                </a>
+              </div>
+
+              {/* Plan 2 */}
+              <div className="bg-white border-2 border-accent rounded-3xl p-8 shadow-md flex flex-col justify-between relative hover:shadow-lg transition-all scale-100 lg:scale-[1.03] z-10">
+                <div className="absolute top-0 right-8 -translate-y-1/2 bg-accent text-white font-bold text-[9px] uppercase tracking-wider px-3.5 py-1 rounded-full shadow-sm">
+                  Most Popular
+                </div>
+                
+                <div>
+                  <h3 className="text-lg font-extrabold text-primary-dark mb-2">Professional Website</h3>
+                  <p className="text-xs text-text-secondary mb-6 leading-relaxed">Ideal for growing companies, specialized clinics, and professional firms.</p>
+                  
+                  <div className="flex items-baseline gap-1 mb-8">
+                    <span className="text-3xl font-extrabold text-primary-dark">₹25,000</span>
+                    <span className="text-xs text-text-secondary font-semibold">one-time</span>
+                  </div>
+
+                  <ul className="flex flex-col gap-4 text-xs text-text-secondary mb-8">
+                    <li className="flex items-center gap-2.5 font-semibold text-primary-dark">
+                      <span className="text-success-green"><i className="fa-solid fa-circle-check" /></span>
+                      Everything in Starter Plan
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      Up to 10 Premium Custom Pages
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      Full SEO Architecture & Schema Setup
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      Advanced Lead Generation Funnel
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      Google Analytics & Clicks Setup
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      1 Year Domain & Hosting Configuration
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      Priority WhatsApp developer Support
+                    </li>
+                  </ul>
+                </div>
+
+                <a
+                  href={`https://wa.me/919080026133?text=Hello%20Saravanan,%20I'd%20like%20to%20get%20started%20with%20the%20Professional%20Website%20package.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full text-center bg-gradient-to-r from-accent to-accent-light hover:shadow-glow text-white font-bold text-xs py-3.5 rounded-xl transition-all shadow-md"
+                  data-wa-location="pricing-professional"
+                >
+                  Configure Project on WhatsApp
+                </a>
+              </div>
+
+              {/* Plan 3 */}
+              <div className="bg-white border border-gray-150 rounded-3xl p-8 shadow-sm flex flex-col justify-between relative hover:shadow-md transition-shadow">
+                <div>
+                  <h3 className="text-lg font-extrabold text-primary-dark mb-2">Custom Business Solution</h3>
+                  <p className="text-xs text-text-secondary mb-6 leading-relaxed">For businesses requiring complex databases, web applications, or custom e-commerce portal functions.</p>
+                  
+                  <div className="flex items-baseline gap-1 mb-8">
+                    <span className="text-3xl font-extrabold text-primary-dark">Custom</span>
+                    <span className="text-xs text-text-secondary font-semibold">quote</span>
+                  </div>
+
+                  <ul className="flex flex-col gap-4 text-xs text-text-secondary mb-8">
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      Bespoke E-commerce Portal Systems
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      Advanced APIs & Database Integrations
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      Multi-channel Lead Routing & CRMs
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      Serverless Next.js Hosting Optimization
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      Unlimited Pages & Dynamic Layouts
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      Monthly Maintenance & Audit Support
+                    </li>
+                  </ul>
+                </div>
+
+                <a
+                  href="#consultation-section"
+                  className="w-full text-center border border-primary text-primary hover:bg-primary/5 font-bold text-xs py-3.5 rounded-xl transition-all shadow-sm"
+                >
+                  Contact For Quote
+                </a>
+              </div>
+
+            </div>
+          </div>
+        </section>
 
         {/* Why Choose Us */}
         <section className="py-20 bg-white">
@@ -467,7 +1023,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* Dynamic Focus Section based on Country */}
-        <section className="py-20 bg-light-bg">
+        <section className="py-20 bg-light-bg/40">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             
             {/* Left Content */}
@@ -530,6 +1086,62 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   <i className="fa-solid fa-star" />
                 </div>
               </div>
+            </div>
+
+          </div>
+        </section>
+
+        {/* Free Website Consultation Form / Bottom Lead Gen Section */}
+        <section id="consultation-section" className="py-20 bg-white border-t border-gray-100">
+          <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Left Column Information */}
+            <div className="lg:col-span-7 flex flex-col items-start text-left">
+              <span className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 px-4 py-1.5 rounded-full mb-6">
+                <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
+                <span className="text-xs font-bold text-accent-dark uppercase tracking-wider">
+                  No Cost • Limited Slots Available
+                </span>
+              </span>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-primary-dark mb-6 tracking-tight leading-tight">
+                Claim Your Free <span className="text-gradient">Website & SEO Consultation</span>
+              </h2>
+              <p className="text-sm md:text-base text-text-secondary mb-8 leading-relaxed">
+                Let&apos;s map out a customized digital solution to grow your business online. During this free 15-minute consultation, founder Saravanan will personally analyze:
+              </p>
+              
+              <ul className="flex flex-col gap-4 text-xs md:text-sm text-text-secondary mb-4 w-full">
+                <li className="flex items-start gap-3">
+                  <span className="text-success-green mt-0.5"><i className="fa-solid fa-circle-check text-sm" /></span>
+                  <div>
+                    <strong>Conversion Funnel Gaps:</strong> Discover why visitors exit without filling out forms or calling.
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-success-green mt-0.5"><i className="fa-solid fa-circle-check text-sm" /></span>
+                  <div>
+                    <strong>SEO Structure Check:</strong> Review target keywords, schemas, and indexing barriers.
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-success-green mt-0.5"><i className="fa-solid fa-circle-check text-sm" /></span>
+                  <div>
+                    <strong>Speed & Mobile Audits:</strong> Scan layouts on mobile networks to identify rendering bottlenecks.
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            {/* Right Column Consultation Form */}
+            <div className="lg:col-span-5 flex justify-center lg:justify-end">
+              <LeadForm
+                layout="vertical"
+                title="Book My consultation"
+                subtitle="Fill in the fields below, and we will schedule your free 15-minute digital consultation."
+                ctaText="Book Free Consultation Now"
+                source={`Homepage Bottom Consultation Form - Region: ${country || "global"}`}
+                showWebsiteField={true}
+              />
             </div>
 
           </div>

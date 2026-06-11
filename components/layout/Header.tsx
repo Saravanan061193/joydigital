@@ -122,7 +122,7 @@ export default function Header() {
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
-          <Link href={getRegionalHref("/")} title="Joy Digital Home" className="flex items-center gap-3">
+          <Link href={getRegionalHref("/")} title="Joy Digital Home" className="flex items-center gap-3 flex-shrink-0">
             <Image
               src="/assets/images/logo.webp"
               alt="Joy Digital Logo"
@@ -138,7 +138,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-8 flex-shrink-0">
             <Link
               href={getRegionalHref("/")}
               title="Home"
@@ -244,7 +244,7 @@ export default function Header() {
           </nav>
 
           {/* Desktop Right Panel (Region Selector + CTA) */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-4 flex-shrink-0">
             {/* Region Dropdown */}
             <div className="relative" ref={regionRef}>
               <button

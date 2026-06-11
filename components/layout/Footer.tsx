@@ -96,7 +96,7 @@ export default function Footer() {
         {/* Global Regions / SEO Sitemap Backlinks */}
         <div className="flex flex-col gap-6">
           <h4 className="text-sm font-bold uppercase tracking-wider text-accent-light relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
-            Global Offices
+            SEO Locations
           </h4>
           <ul className="flex flex-col gap-3 text-xs text-text-muted">
             {REGIONAL_SITES.map((site) => (
@@ -110,6 +110,21 @@ export default function Footer() {
                 </Link>
               </li>
             ))}
+            <li className="border-t border-white/5 pt-2 mt-1">
+              <Link href="/website-development-madurai" className="hover:text-accent-light hover:pl-1 transition-all block">
+                Website Development Madurai
+              </Link>
+            </li>
+            <li>
+              <Link href="/website-development-chennai" className="hover:text-accent-light hover:pl-1 transition-all block">
+                Website Development Chennai
+              </Link>
+            </li>
+            <li>
+              <Link href="/website-development-coimbatore" className="hover:text-accent-light hover:pl-1 transition-all block">
+                Website Development Coimbatore
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -118,7 +133,7 @@ export default function Footer() {
           <h4 className="text-sm font-bold uppercase tracking-wider text-accent-light relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
             Featured Services
           </h4>
-          <ul className="flex flex-col gap-3.5 text-xs text-text-muted">
+          <ul className="flex flex-col gap-3 text-xs text-text-muted">
             <li>
               <Link href={getRegionalHref("/seo-services")} className="hover:text-accent-light hover:pl-1 transition-all">
                 Search Engine Optimization
@@ -139,9 +154,29 @@ export default function Footer() {
                 Local SEO & Maps
               </Link>
             </li>
+            <li className="border-t border-white/5 pt-2 mt-1">
+              <Link href="/website-for-insurance-agents" className="hover:text-accent-light hover:pl-1 transition-all">
+                Website for Insurance Agents
+              </Link>
+            </li>
             <li>
-              <Link href="/social-media-marketing" className="hover:text-accent-light hover:pl-1 transition-all">
-                Social Media Marketing
+              <Link href="/website-for-hotels" className="hover:text-accent-light hover:pl-1 transition-all">
+                Website for Hotels
+              </Link>
+            </li>
+            <li>
+              <Link href="/website-for-hospitals" className="hover:text-accent-light hover:pl-1 transition-all">
+                Website for Hospitals
+              </Link>
+            </li>
+            <li>
+              <Link href="/website-for-real-estate" className="hover:text-accent-light hover:pl-1 transition-all">
+                Website for Real Estate
+              </Link>
+            </li>
+            <li>
+              <Link href="/website-for-tours-and-travels" className="hover:text-accent-light hover:pl-1 transition-all">
+                Website for Tours & Travels
               </Link>
             </li>
           </ul>
