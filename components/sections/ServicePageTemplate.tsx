@@ -76,12 +76,73 @@ export default function ServicePageTemplate({
   schemaMarkup,
   crossLinks,
 }: ServicePageTemplateProps) {
+  const STANDARD_FAQS = [
+    {
+      question: "How much does a professional website cost?",
+      answer: "Professional website cost varies based on page count and custom integrations. Joy Digital offers packages starting from $1,000 (₹15,000 in India) depending on your design specifications."
+    },
+    {
+      question: "How long does website development take?",
+      answer: "A standard custom Next.js business website typically takes 7 to 14 business days. Larger platforms or complex database systems average 3 to 6 weeks."
+    },
+    {
+      question: "Is hosting included?",
+      answer: "We assist in setting up fast, secure server configurations (like Vercel or Netlify) and configure SSL. Hosting fees are paid directly to the providers, but setup is included in our package."
+    },
+    {
+      question: "Do you provide support after launch?",
+      answer: "Yes, we provide dedicated support plans covering backups, security updates, domain configuration, and continuous speed optimization."
+    },
+    {
+      question: "How long does SEO take to show results?",
+      answer: "While onsite technical optimization starts indexing immediately, noticeable traffic increases and organic keyword ranking improvements usually take 3 to 6 months."
+    },
+    {
+      question: "Do you offer Local SEO services?",
+      answer: "Yes! We offer comprehensive Local SEO and Google Business Profile setup and management to rank your business in the Google Maps Local 3-Pack."
+    },
+    {
+      question: "Can you redesign my existing website?",
+      answer: "Absolutely. We can migrate and redesign outdated sites (such as WordPress) into custom Next.js builds to improve speed and convert more leads."
+    },
+    {
+      question: "Will my website be mobile-friendly?",
+      answer: "Yes, every single layout we design is fully responsive and mobile-friendly, targeting speed scores and mobile conversions on all screen sizes."
+    }
+  ];
+
+  // Combine custom page FAQs and standard FAQs without duplicates
+  const uniqueStandardFaqs = STANDARD_FAQS.filter(
+    std => !faqs.some(f => f.question.toLowerCase().trim() === std.question.toLowerCase().trim())
+  );
+  const combinedFaqs = [...faqs, ...uniqueStandardFaqs];
+
+  // FAQ Schema JSON-LD
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": combinedFaqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
+
   return (
     <>
       {/* Schema Injection */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
+      />
+      
+      {/* FAQ Schema Injection */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
       <Header />
@@ -329,7 +390,7 @@ export default function ServicePageTemplate({
               </p>
             </div>
 
-            <Accordion items={faqs} />
+            <Accordion items={combinedFaqs} />
           </div>
         </section>
       </main>

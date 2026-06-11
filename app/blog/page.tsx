@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
 import { getAllPosts } from "@/lib/blog";
 import Link from "next/link";
+import StrongCTA from "@/components/StrongCTA";
 
 export const metadata: Metadata = {
   title: "Agency Growth Blog | Marketing & SEO Tips | Joy Digital",
@@ -94,6 +95,8 @@ export default async function BlogIndexPage() {
 
           </div>
         </section>
+
+        <StrongCTA location="blog page" />
 
       </main>
       <Footer />

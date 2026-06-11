@@ -5,6 +5,7 @@ import Link from "next/link";
 
 export default function StickyWidgets() {
   const [isVisible, setIsVisible] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -17,6 +18,13 @@ export default function StickyWidgets() {
     window.addEventListener("scroll", toggleVisibility);
     toggleVisibility();
     return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowTooltip(true);
+    }, 5000);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -34,6 +42,23 @@ export default function StickyWidgets() {
           Claim Audit
         </Link>
       </div>
+
+      {/* Floating WhatsApp Tooltip Message */}
+      {showTooltip && (
+        <div className="fixed bottom-[88px] lg:bottom-[40px] right-24 bg-white border border-gray-100 p-3.5 rounded-2xl shadow-xl text-left w-44 z-40 animate-fade-in flex flex-col gap-0.5 pointer-events-auto">
+          <button 
+            onClick={() => setShowTooltip(false)} 
+            className="absolute top-2.5 right-2.5 text-text-muted hover:text-primary-dark text-[10px] cursor-pointer"
+            aria-label="Close message"
+          >
+            <i className="fa-solid fa-xmark" />
+          </button>
+          <span className="text-[9px] font-bold text-accent uppercase tracking-wider">Need help?</span>
+          <span className="text-[11px] font-bold text-primary-dark leading-tight">Chat with an SEO Expert</span>
+          {/* Arrow pointing to WhatsApp button */}
+          <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white border-r border-t border-gray-100/80 rotate-45" />
+        </div>
+      )}
 
       {/* Floating WhatsApp Pulse Button */}
       <a

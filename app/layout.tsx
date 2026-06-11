@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import FontAwesomeLoader from "@/components/layout/FontAwesomeLoader";
-import WhatsAppTracker from "@/components/WhatsAppTracker";
+import AnalyticsTracker from "@/components/AnalyticsTracker";
+import ExitIntentPopup from "@/components/ExitIntentPopup";
 import "./globals.css";
 
 
@@ -77,7 +78,8 @@ export default function RootLayout({
         <FontAwesomeLoader />
       </head>
       <body className="min-h-full flex flex-col bg-white text-text-primary">
-        <WhatsAppTracker />
+        <AnalyticsTracker />
+        <ExitIntentPopup />
         {children}
       </body>
     </html>

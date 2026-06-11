@@ -8,6 +8,7 @@ import StickyWidgets from "@/components/ui/StickyWidgets";
 import LeadForm from "@/components/ui/LeadForm";
 import Accordion from "@/components/ui/Accordion";
 import CTABanner from "@/components/CTABanner";
+import StrongCTA from "@/components/StrongCTA";
 
 interface HomePageComponentProps {
   country: string; // "us", "uk", "ae", "in", or "" (Global)
@@ -285,6 +286,8 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
             </div>
           </div>
         </section>
+        
+        <StrongCTA location="hero" />
 
         {/* Client Logos Section */}
         <section className="py-10 bg-white border-y border-gray-100">
@@ -346,6 +349,8 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
             </div>
           </div>
         </section>
+
+        <StrongCTA location="services section" />
 
         {/* Why Choose Us */}
         <section className="py-20 bg-white">
@@ -420,6 +425,8 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
             </div>
           </div>
         </section>
+
+        <StrongCTA location="case studies section" />
 
         {/* Testimonials Section */}
         <section className="py-20 bg-white">

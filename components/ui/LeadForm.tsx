@@ -164,6 +164,17 @@ export default function LeadForm({
       }
 
       setIsSuccess(true);
+      
+      // GA4 Conversion Tracking
+      if (typeof window !== "undefined") {
+        const gtag = (window as any).gtag;
+        if (typeof gtag === "function") {
+          gtag("event", "contact_form_submission", {
+            form_source: source,
+            page_url: window.location.href,
+          });
+        }
+      }
       setFormData({
         bottleneck: "",
         service: "",

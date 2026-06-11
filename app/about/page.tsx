@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
+import StrongCTA from "@/components/StrongCTA";
 
 
 export const metadata: Metadata = {
@@ -119,6 +120,8 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
+
+        <StrongCTA location="about page" />
 
       </main>
       <Footer />

@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
 import Image from "next/image";
 import Link from "next/link";
+import StrongCTA from "@/components/StrongCTA";
 
 const PORTFOLIO_ITEMS = [
   {
@@ -152,6 +153,8 @@ export default function PortfolioPage() {
             </div>
           </div>
         </section>
+
+        <StrongCTA location="portfolio page" />
 
       </main>
       <Footer />
