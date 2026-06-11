@@ -281,7 +281,7 @@ export default function Header() {
             <Link
               href={getRegionalHref("/contact")}
               title="Book Free Consultation"
-              className="bg-gradient-to-r from-accent to-accent-light text-white font-bold text-sm px-5 py-2.5 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+              className="bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold text-xs px-6 py-3 rounded-full shadow-md hover:-translate-y-0.5 transition-all duration-300 flex-shrink-0"
             >
               Book Free Consultation
             </Link>
@@ -445,7 +445,7 @@ export default function Header() {
           <Link
             href={getRegionalHref("/contact")}
             title="Free Website Audit"
-            className="bg-gradient-to-r from-accent to-accent-light text-white text-center font-bold px-6 py-3 rounded-lg shadow-md mt-4"
+            className="bg-[#2563EB] hover:bg-[#3B82F6] text-white text-center font-bold px-6 py-3.5 rounded-full shadow-md mt-4"
           >
             Free Website Audit
           </Link>

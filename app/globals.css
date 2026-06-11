@@ -1,23 +1,23 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: rgb(255, 255, 255);
-  --color-primary-light: rgb(241, 245, 249);
-  --color-primary-dark: rgb(255, 255, 255);
-  --color-primary-glow: rgba(255, 255, 255, 0.05);
+  --color-primary: rgb(37, 99, 235);
+  --color-primary-light: rgb(59, 130, 246);
+  --color-primary-dark: rgb(29, 78, 216);
+  --color-primary-glow: rgba(37, 99, 235, 0.05);
   --color-accent: rgb(249, 115, 22);
   --color-accent-light: rgb(251, 146, 60);
   --color-accent-dark: rgb(234, 88, 12);
-  --color-accent-glow: rgba(249, 115, 22, 0.15);
+  --color-accent-glow: rgba(249, 115, 22, 0.1);
   --color-secondary: rgb(2, 132, 199);
   --color-secondary-light: rgb(14, 165, 233);
   --color-dark: rgb(15, 23, 42);
   --color-dark-slate: rgb(30, 41, 59);
-  --color-light-bg: rgb(15, 23, 42);
-  --color-light-card: rgb(30, 41, 59);
-  --color-white: rgb(15, 23, 42);
-  --color-text-primary: rgb(255, 255, 255);
-  --color-text-secondary: rgb(148, 163, 184);
+  --color-light-bg: rgb(255, 255, 255);
+  --color-light-card: rgb(248, 250, 252);
+  --color-white: rgb(255, 255, 255);
+  --color-text-primary: rgb(15, 23, 42);
+  --color-text-secondary: rgb(71, 85, 105);
   --color-text-muted: rgb(100, 116, 139);
   --color-whatsapp-green: #10b981;
   --color-whatsapp-glow: rgba(16, 185, 129, 0.2);
@@ -29,9 +29,9 @@
   --radius-md: 16px;
   --radius-lg: 24px;
   --radius-full: 9999px;
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.03), 0 4px 6px -4px rgba(15, 23, 42, 0.03);
   --shadow-glow: 0 10px 30px -5px rgba(249, 115, 22, 0.15);
   --animate-pulse-dot: pulse-dot 2s infinite;
   --animate-pulse-ring: pulse-ring 2.5s infinite;

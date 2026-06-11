@@ -323,14 +323,14 @@ export default function ServicePageTemplate({
               {pricingTiers.map((tier, index) => (
                 <div
                   key={index}
-                  className={`bg-white border rounded-2xl p-8 shadow-sm flex flex-col relative transition-all duration-300 ${
+                  className={`bg-white border rounded-[20px] p-8 shadow-sm flex flex-col relative transition-all duration-300 ${
                     tier.isPopular
-                      ? "border-accent ring-2 ring-accent/10 -translate-y-2 lg:-translate-y-3"
+                      ? "border-primary ring-2 ring-primary/10 -translate-y-2 lg:-translate-y-3"
                       : "border-gray-100 hover:-translate-y-1"
                   }`}
                 >
                   {tier.isPopular && (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-white font-bold text-[10px] uppercase tracking-widest px-3 py-1 rounded-full">
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-white font-bold text-[10px] uppercase tracking-widest px-3.5 py-1 rounded-full">
                       Most Popular
                     </span>
                   )}
@@ -345,7 +345,7 @@ export default function ServicePageTemplate({
                   <ul className="flex flex-col gap-3.5 mb-8 text-xs text-text-primary flex-grow border-t border-gray-100 pt-6">
                     {tier.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start gap-2.5">
-                        <span className="text-success-green text-sm mt-0.5"><i className="fa-solid fa-circle-check" /></span>
+                        <span className="text-emerald-500 text-sm mt-0.5"><i className="fa-solid fa-circle-check" /></span>
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -353,10 +353,10 @@ export default function ServicePageTemplate({
 
                   <Link
                     href={`/contact?service=${encodeURIComponent(serviceName)}&tier=${encodeURIComponent(tier.name)}`}
-                    className={`w-full text-center font-bold text-xs py-3 rounded-lg transition-all duration-300 ${
+                    className={`w-full text-center font-bold text-xs py-3.5 rounded-full transition-all duration-300 ${
                       tier.isPopular
-                        ? "bg-accent hover:bg-accent-dark text-white shadow-md hover:shadow-lg"
-                        : "bg-light-bg hover:bg-gray-200 text-primary"
+                        ? "bg-primary hover:bg-primary-light text-white shadow-md hover:shadow-lg"
+                        : "bg-light-bg hover:bg-gray-200 text-primary border border-gray-200/50"
                     }`}
                   >
                     {tier.ctaText || "Get Quote"}

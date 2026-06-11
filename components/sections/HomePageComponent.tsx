@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -15,7 +15,6 @@ interface HomePageComponentProps {
 }
 
 export default function HomePageComponent({ country }: HomePageComponentProps) {
-  const [activeTab, setActiveTab] = useState("finance");
 
   const getRegionalHref = (path: string) => {
     const localizedPaths = ["/", "/seo-services", "/website-development", "/contact"];
@@ -233,123 +232,50 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
     ? "Trusted by Growing Brands and Startups Globally"
     : `Trusted by Growing Companies in the ${country.toUpperCase()} & Globally`;
 
-  const INDUSTRY_CATEGORIES = [
-    { id: "finance", label: "Finance & Corporate", icon: "fa-solid fa-building-columns" },
-    { id: "hospitality", label: "Hospitality & Retail", icon: "fa-solid fa-utensils" },
-    { id: "services", label: "Professional Services", icon: "fa-solid fa-screwdriver-wrench" },
-    { id: "health", label: "Health & Education", icon: "fa-solid fa-user-doctor" },
+  const INDUSTRIES_DATA = [
+    {
+      name: "Hotels & Resorts",
+      icon: "fa-solid fa-hotel",
+      description: "Drives direct room bookings, displays property amenities, visualizes Google maps routes, and bypasses heavy third-party OTA commission fees.",
+      focus: "Direct Bookings & Room Gallery"
+    },
+    {
+      name: "Hospitals & Clinics",
+      icon: "fa-solid fa-hospital-user",
+      description: "Simplifies patient appointment bookings, coordinates doctor schedules, and displays clinic accreditations to build instant medical credibility.",
+      focus: "Appointment Booking & Calendars"
+    },
+    {
+      name: "Real Estate Agencies",
+      icon: "fa-solid fa-house-chimney",
+      description: "Display listing catalogs with premium galleries, capture property viewing schedule requests, and establish trust with local neighborhood reviews.",
+      focus: "Listings Showcases & Lead Capture"
+    },
+    {
+      name: "Insurance Agents & LIC Advisors",
+      icon: "fa-solid fa-shield-halved",
+      description: "Capture direct insurance policy enquiries, showcase client testimonials, and integrate direct WhatsApp consultation lines for instant lead response.",
+      focus: "Policy Calculators & WhatsApp Leads"
+    },
+    {
+      name: "Tours & Travels",
+      icon: "fa-solid fa-plane-departure",
+      description: "Showcases packaged tour itineraries, structures clear pricing charts, integrates review feeds, and captures customer trip planner queries.",
+      focus: "Package Booking & Trip Planners"
+    },
+    {
+      name: "Educational Institutions",
+      icon: "fa-solid fa-school",
+      description: "Facilitates online registration portals, shares academic circular files, and displays academic accolades to local parents and students.",
+      focus: "Online Admissions & Portals"
+    },
+    {
+      name: "Pest Control Businesses",
+      icon: "fa-solid fa-bug",
+      description: "Captures urgent local emergency service requests, highlights hygiene and safety certifications, and lists local treatment pricing structures.",
+      focus: "Urgent Call Capture & Service Maps"
+    }
   ];
-
-  const INDUSTRIES_DATA: Record<string, { name: string; icon: string; description: string }[]> = {
-    finance: [
-      {
-        name: "Insurance Agents & LIC Advisors",
-        icon: "fa-solid fa-shield-halved",
-        description: "Capture direct insurance policy enquiries, showcase client testimonials, and integrate direct WhatsApp consultation lines for instant lead response."
-      },
-      {
-        name: "Real Estate Companies",
-        icon: "fa-solid fa-house-chimney",
-        description: "Display listing catalogs with premium galleries, capture property viewing schedule requests, and establish trust with local neighborhood reviews."
-      },
-      {
-        name: "Finance & Loan Consultants",
-        icon: "fa-solid fa-coins",
-        description: "Build regulatory credibility, provide secure eligibility calculator forms, and capture structured business and personal loan leads."
-      },
-      {
-        name: "Startups & Small Businesses",
-        icon: "fa-solid fa-rocket",
-        description: "Rapidly validate products with distraction-free MVPs, present pitch statistics to investors, and secure initial local traffic footprint."
-      },
-      {
-        name: "Manufacturing Companies",
-        icon: "fa-solid fa-industry",
-        description: "Publish detailed industrial catalogs, attract global distributors, and capture custom bulk order RFQs (Requests for Quotation)."
-      }
-    ],
-    hospitality: [
-      {
-        name: "Hotels & Resorts",
-        icon: "fa-solid fa-hotel",
-        description: "Drives direct room bookings, displays property amenities, visualizes Google maps routes, and bypasses heavy third-party OTA commission fees."
-      },
-      {
-        name: "Tours & Travels",
-        icon: "fa-solid fa-plane-departure",
-        description: "Showcases packaged tour itineraries, structures clear pricing charts, integrates review feeds, and captures customer trip planner queries."
-      },
-      {
-        name: "Restaurants",
-        icon: "fa-solid fa-pizza-slice",
-        description: "Publishes interactive mobile menus, manages table booking schedules, and guides customers straight to your physical Google map location."
-      },
-      {
-        name: "Automobile Showrooms",
-        icon: "fa-solid fa-car",
-        description: "Presents latest vehicle collections, triggers custom EMI calculation guides, and captures test-drive or trade-in value requests."
-      },
-      {
-        name: "E-commerce Businesses",
-        icon: "fa-solid fa-cart-shopping",
-        description: "Engages visitors with visual catalogs, enables secure online checkout, recovers carts automatically, and grows retail revenue 24/7."
-      }
-    ],
-    services: [
-      {
-        name: "Pest Control Services",
-        icon: "fa-solid fa-bug",
-        description: "Captures urgent local emergency inquiries, highlights hygiene/safety approvals, and lists treatment pricing maps to build trust."
-      },
-      {
-        name: "Interior Designers",
-        icon: "fa-solid fa-couch",
-        description: "Showcases beautiful project portfolio sliders, describes specific style specialties, and guides prospects to book a design consultation."
-      },
-      {
-        name: "Construction Companies",
-        icon: "fa-solid fa-helmet-safety",
-        description: "Displays complete civil portfolios, highlights heavy machinery certifications, and captures corporate estimation tenders."
-      },
-      {
-        name: "Architects",
-        icon: "fa-solid fa-compass-drafting",
-        description: "Builds a luxury digital blueprint portfolio, publishes layout studies, and establishes creative authority to secure premium design commissions."
-      },
-      {
-        name: "Event Management Companies",
-        icon: "fa-solid fa-masks-theater",
-        description: "Highlights theme decoration photo lists, details corporate packages, and captures wedding or corporate event reservation queries."
-      },
-      {
-        name: "Car Rental Services",
-        icon: "fa-solid fa-key",
-        description: "Showcases fleet selections, highlights hourly/daily tariff policies, and captures instant car rental booking info."
-      },
-      {
-        name: "Service Businesses",
-        icon: "fa-solid fa-toolbox",
-        description: "Enables simplified booking workflows, provides customer review evidence, and displays service radius details for local organic rankings."
-      }
-    ],
-    health: [
-      {
-        name: "Hospitals & Clinics",
-        icon: "fa-solid fa-hospital-user",
-        description: "Simplifies online patient scheduling, presents specialist schedules, and displays clinic certifications to build medical credibility."
-      },
-      {
-        name: "Schools & Educational Institutions",
-        icon: "fa-solid fa-school",
-        description: "Facilitates online registration portals, shares circular files and schedules, and displays academic accolades to local parents."
-      },
-      {
-        name: "Coaching Centres",
-        icon: "fa-solid fa-graduation-cap",
-        description: "Publishes test rank outcomes, provides course registration modules, and captures student inquiries with free class trial passes."
-      }
-    ]
-  };
 
   // FAQ Schema JSON-LD structure
   const faqSchema = {
@@ -383,9 +309,9 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Hero Text */}
             <div className="lg:col-span-7 flex flex-col items-start text-left animate-fade-in">
-              <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 px-4 py-1.5 rounded-full mb-6">
-                <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-                <span className="text-xs font-bold text-accent-light uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 bg-[#F97316]/10 border border-[#F97316]/20 px-4 py-1.5 rounded-full mb-6">
+                <span className="w-2 h-2 bg-[#F97316] rounded-full animate-pulse" />
+                <span className="text-xs font-bold text-[#F97316] uppercase tracking-wider">
                   {hero.badge}
                 </span>
               </div>
@@ -398,7 +324,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               <div className="flex flex-wrap items-center gap-4 w-full">
                 <a
                   href="#consultation-section"
-                  className="bg-accent hover:bg-accent-dark text-white font-bold text-sm px-8 py-4 rounded-full shadow-md hover:-translate-y-0.5 transition-all duration-300"
+                  className="bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold text-xs px-8 py-4 rounded-full shadow-md hover:-translate-y-0.5 transition-all duration-300"
                 >
                   Get Free Consultation
                 </a>
@@ -406,15 +332,15 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   href="https://wa.me/919080026133?text=Hello%20Saravanan,%20I'd%20like%20to%20get%20a%20free%20consultation%20for%20my%20business."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm px-8 py-4 rounded-full transition-all flex items-center gap-2 shadow-md hover:-translate-y-0.5 duration-300"
+                  className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs px-8 py-4 rounded-full transition-all flex items-center gap-2 shadow-md hover:-translate-y-0.5 duration-300"
                   data-wa-location="hero"
                 >
-                  <span className="text-white"><i className="fa-brands fa-whatsapp text-lg" /></span>
+                  <i className="fa-brands fa-whatsapp text-lg" />
                   WhatsApp Now
                 </a>
                 <a
                   href="#portfolio-section"
-                  className="bg-white/5 hover:bg-white/10 text-primary font-bold text-sm px-8 py-4 rounded-full transition-all border border-slate-700/80 shadow-sm hover:-translate-y-0.5 duration-300"
+                  className="bg-white hover:bg-slate-50 text-primary font-bold text-xs px-8 py-4 rounded-full transition-all border border-[#E2E8F0] shadow-sm hover:-translate-y-0.5 duration-300"
                 >
                   View Portfolio
                 </a>
@@ -438,7 +364,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         <StrongCTA location="hero" />
 
         {/* Client Logos Section */}
-        <section className="py-10 bg-light-bg border-y border-slate-800/80">
+        <section className="py-10 bg-light-bg border-y border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-6">
             <p className="text-[10px] font-bold text-text-muted uppercase tracking-widest text-center mb-6">
               {clientLogosText}
@@ -453,8 +379,8 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           </div>
         </section>
 
-        {/* Trust Guarantees Grid (Trust Building) - Dark Tech Cards */}
-        <section className="py-16 bg-light-bg border-b border-slate-800/80">
+        {/* Trust Guarantees Grid (Trust Building) - Light Premium Cards */}
+        <section className="py-16 bg-light-bg border-b border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-6 text-center">
               {[
@@ -466,8 +392,8 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 { label: "Fast Delivery", icon: "fa-solid fa-bolt" },
                 { label: "Ongoing Support", icon: "fa-solid fa-shield-halved" },
               ].map((g, i) => (
-                <div key={i} className="flex flex-col items-center p-5 bg-light-card rounded-[20px] border border-slate-800/80 hover:border-accent/40 transition-all shadow-sm">
-                  <div className="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center text-accent-light font-bold text-base mb-3">
+                <div key={i} className="flex flex-col items-center p-5 bg-light-card rounded-[20px] border border-[#E2E8F0] hover:border-primary/40 transition-all shadow-sm duration-300">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold text-base mb-3">
                     <i className={g.icon} />
                   </div>
                   <span className="text-[11px] font-bold text-primary leading-tight">{g.label}</span>
@@ -496,10 +422,10 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               {HOME_SERVICES.map((service, index) => (
                 <article
                   key={index}
-                  className="bg-light-card border border-slate-800 rounded-[20px] p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+                  className="bg-light-card border border-[#E2E8F0] rounded-[20px] p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
                 >
                   <div>
-                    <div className="w-12 h-12 rounded-xl bg-accent/15 flex items-center justify-center text-accent-light text-xl mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary text-xl mb-6">
                       <i className={service.icon} />
                     </div>
                     <h3 className="text-lg font-bold text-primary mb-3">
@@ -511,7 +437,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   </div>
                   <Link
                     href={getRegionalHref(service.href)}
-                    className="text-xs font-bold text-accent-light hover:text-accent flex items-center gap-1.5 mt-2"
+                    className="text-xs font-bold text-primary hover:text-primary-light flex items-center gap-1.5 mt-2 transition-colors"
                     aria-label={`Learn more about ${service.title}`}
                   >
                     Learn More <i className="fa-solid fa-chevron-right text-[9px]" />
@@ -522,25 +448,25 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           </div>
         </section>
 
-        {/* Founder Section - Dark Tech Card Layout */}
-        <section id="founder-section" className="py-20 bg-light-bg border-t border-slate-800/80">
+        {/* Founder Section - Light Premium Card Layout */}
+        <section id="founder-section" className="py-20 bg-light-bg border-t border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               {/* Left Column Profile Card */}
               <div className="lg:col-span-5 flex justify-center">
-                <div className="relative bg-light-card border border-slate-800/80 p-8 rounded-[24px] shadow-sm w-full max-w-sm overflow-hidden text-center flex flex-col items-center">
-                  <div className="w-24 h-24 rounded-full bg-accent/10 border-2 border-accent/20 flex items-center justify-center text-accent-light text-4xl mb-6 shadow-sm">
+                <div className="relative bg-light-card border border-[#E2E8F0] p-8 rounded-[24px] shadow-sm w-full max-w-sm overflow-hidden text-center flex flex-col items-center">
+                  <div className="w-24 h-24 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-primary text-4xl mb-6 shadow-sm">
                     <i className="fa-solid fa-user-tie" />
                   </div>
                   <h3 className="text-xl font-extrabold text-primary mb-1">Saravanan</h3>
-                  <span className="text-xs text-accent-light font-bold uppercase tracking-wider mb-6">Founder & Lead Architect</span>
+                  <span className="text-xs text-accent font-bold uppercase tracking-wider mb-6">Founder & Lead Architect</span>
                   
-                  <div className="grid grid-cols-2 gap-4 w-full border-t border-slate-800/50 pt-6 mt-2">
+                  <div className="grid grid-cols-2 gap-4 w-full border-t border-[#E2E8F0]/80 pt-6 mt-2">
                     <div className="flex flex-col items-center">
                       <span className="text-2xl font-extrabold text-accent">9+ Years</span>
                       <span className="text-[10px] text-text-secondary uppercase font-bold tracking-wider mt-1">Experience</span>
                     </div>
-                    <div className="flex flex-col items-center border-l border-slate-800/50">
+                    <div className="flex flex-col items-center border-l border-[#E2E8F0]/80">
                       <span className="text-2xl font-extrabold text-accent">100+</span>
                       <span className="text-[10px] text-text-secondary uppercase font-bold tracking-wider mt-1">Sites Built</span>
                     </div>
@@ -571,14 +497,14 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-3 w-full">
-                  <span className="bg-light-card border border-slate-800 text-primary text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5">
-                    <i className="fa-solid fa-code text-accent-light" /> Website Portfolio Builder
+                  <span className="bg-light-card border border-[#E2E8F0] text-primary text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5 shadow-sm">
+                    <i className="fa-solid fa-code text-accent" /> Website Portfolio Builder
                   </span>
-                  <span className="bg-light-card border border-slate-800 text-primary text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5">
-                    <i className="fa-solid fa-screwdriver-wrench text-accent-light" /> Project Development Specialist
+                  <span className="bg-light-card border border-[#E2E8F0] text-primary text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5 shadow-sm">
+                    <i className="fa-solid fa-screwdriver-wrench text-accent" /> Project Development Specialist
                   </span>
-                  <span className="bg-light-card border border-slate-800 text-primary text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5">
-                    <i className="fa-solid fa-handshake text-accent-light" /> Affordable Lead Funnels
+                  <span className="bg-light-card border border-[#E2E8F0] text-primary text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5 shadow-sm">
+                    <i className="fa-solid fa-handshake text-accent" /> Affordable Lead Funnels
                   </span>
                 </div>
               </div>
@@ -587,52 +513,42 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* Industries We Serve Section */}
-        <section id="industries-section" className="py-20 bg-light-bg border-t border-slate-800/80">
+        <section id="industries-section" className="py-20 bg-light-bg border-t border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
-                Industries We Serve
+                Industry Expertise
               </span>
               <h2 className="text-2xl md:text-4xl font-extrabold text-primary mb-4">
                 Tailored Websites For <span className="text-gradient">High-Demand Sectors</span>
               </h2>
-              <p className="text-sm text-text-secondary">
-                For each industry, a professional website helps generate high-intent leads, build local trust, and drive business growth. Select a sector below to see how.
+              <p className="text-sm text-text-secondary max-w-2xl mx-auto">
+                We engineer customized, conversion-focused websites for key service sectors. Each build is optimized to attract local search traffic and capture high-intent leads.
               </p>
             </div>
 
-            {/* Tab Buttons */}
-            <div className="flex justify-center gap-2 md:gap-4 mb-10 flex-wrap">
-              {INDUSTRY_CATEGORIES.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 font-bold text-xs px-5 py-3 rounded-xl border transition-all duration-200 cursor-pointer ${
-                    activeTab === tab.id
-                      ? "bg-accent text-white border-accent shadow-sm"
-                      : "bg-light-card text-text-secondary border-slate-800 hover:border-accent/40"
-                  }`}
+            {/* Grid Layout of 7 Core Niches */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in">
+              {INDUSTRIES_DATA.map((item, index) => (
+                <div 
+                  key={index} 
+                  className="bg-light-card border border-[#E2E8F0] rounded-[24px] p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
                 >
-                  <i className={tab.icon} />
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Tab Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
-              {INDUSTRIES_DATA[activeTab].map((item, index) => (
-                <div key={index} className="bg-light-card border border-slate-800/80 rounded-[20px] p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col">
-                  <div className="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center text-accent-light text-base mb-4 flex-shrink-0">
-                    <i className={item.icon} />
+                  <div>
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center text-xl mb-6 flex-shrink-0">
+                      <i className={item.icon} />
+                    </div>
+                    <span className="inline-block bg-accent/10 text-accent font-bold text-[9px] uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">
+                      {item.focus}
+                    </span>
+                    <h3 className="text-lg font-extrabold text-primary mb-3">{item.name}</h3>
+                    <p className="text-xs text-text-secondary leading-relaxed mb-6">{item.description}</p>
                   </div>
-                  <h3 className="text-base font-extrabold text-primary mb-2">{item.name}</h3>
-                  <p className="text-xs text-text-secondary leading-relaxed mb-4 flex-grow">{item.description}</p>
-                  <div className="border-t border-slate-800/60 pt-3 flex items-center justify-between mt-2">
-                    <span className="text-[10px] font-bold text-accent-light uppercase tracking-wider">Lead Gen & Growth</span>
+                  <div className="border-t border-[#E2E8F0] pt-4 flex items-center justify-between mt-2">
+                    <span className="text-[10px] font-bold text-primary uppercase tracking-wider">Conversion Ready</span>
                     <a
                       href="#consultation-section"
-                      className="text-[11px] font-bold text-accent-light hover:text-accent flex items-center gap-1"
+                      className="text-xs font-bold text-primary hover:text-primary-light flex items-center gap-1 transition-colors"
                     >
                       Inquire Now <i className="fa-solid fa-chevron-right text-[8px]" />
                     </a>
@@ -675,10 +591,10 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   avatar: "👩‍💼"
                 }
               ].map((proj, idx) => (
-                <div key={idx} className="bg-light-card border border-slate-800 rounded-[24px] p-8 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                <div key={idx} className="bg-light-card border border-[#E2E8F0] rounded-[24px] p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="w-12 h-12 rounded-2xl bg-slate-800 text-white flex items-center justify-center text-xl shadow-md">
+                      <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-xl shadow-sm">
                         {proj.avatar}
                       </div>
                       <div>
@@ -687,7 +603,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                           href={proj.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-xs font-semibold text-accent-light hover:underline flex items-center gap-1 mt-0.5"
+                          className="text-xs font-semibold text-primary hover:underline flex items-center gap-1 mt-0.5"
                         >
                           {proj.url.replace("https://", "")} <i className="fa-solid fa-arrow-up-right-from-square text-[9px]" />
                         </a>
@@ -696,18 +612,18 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                     <p className="text-xs text-text-secondary leading-relaxed mb-6">{proj.desc}</p>
                     <div className="flex flex-wrap gap-2 mb-6">
                       {proj.features.map((f, i) => (
-                        <span key={i} className="bg-slate-850 border border-slate-850 text-text-secondary text-[10px] font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
-                          <span className="w-1.5 h-1.5 bg-success-green rounded-full" /> {f}
+                        <span key={i} className="bg-slate-100 border border-slate-200/60 text-text-secondary text-[10px] font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" /> {f}
                         </span>
                       ))}
                     </div>
                   </div>
-                  <div className="border-t border-slate-800 pt-4 flex gap-4 items-center">
+                  <div className="border-t border-[#E2E8F0] pt-4 flex flex-wrap gap-4 items-center">
                     <a
                       href={proj.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-accent hover:bg-accent-dark text-white text-xs font-bold px-6 py-3.5 rounded-full shadow-sm hover:shadow-md transition-all flex items-center gap-2"
+                      className="w-full sm:w-auto bg-[#2563EB] hover:bg-[#3B82F6] text-white text-xs font-bold px-6 py-3.5 rounded-full shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center gap-2 text-center"
                     >
                       Visit Live Website <i className="fa-solid fa-arrow-right text-[10px]" />
                     </a>
@@ -715,10 +631,10 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                       href={`https://wa.me/919080026133?text=Hello%20Saravanan,%20I%20saw%20your%20portfolio%20${encodeURIComponent(proj.title)}%20and%20want%20something%20similar.`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="border border-slate-700 hover:border-slate-600 hover:bg-white/5 text-primary text-xs font-bold px-5 py-3.5 rounded-full transition-all flex items-center gap-2"
+                      className="w-full sm:w-auto border border-[#E2E8F0] bg-white hover:bg-slate-50 text-primary text-xs font-bold px-5 py-3.5 rounded-full transition-all flex items-center justify-center gap-2"
                       data-wa-location="portfolio-section"
                     >
-                      <i className="fa-brands fa-whatsapp text-success-green text-sm" /> Same for My Business
+                      <i className="fa-brands fa-whatsapp text-emerald-500 text-sm" /> Same for My Business
                     </a>
                   </div>
                 </div>
@@ -728,7 +644,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* Pricing Section */}
-        <section id="pricing-section" className="py-20 bg-light-bg border-t border-slate-800/80">
+        <section id="pricing-section" className="py-20 bg-light-bg border-t border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
@@ -745,7 +661,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
               
               {/* Plan 1 */}
-              <div className="bg-light-card border border-slate-800 rounded-[24px] p-8 shadow-sm flex flex-col justify-between relative hover:shadow-md transition-shadow">
+              <div className="bg-light-card border border-[#E2E8F0] rounded-[24px] p-8 shadow-sm flex flex-col justify-between relative hover:shadow-md transition-shadow">
                 <div>
                   <h3 className="text-lg font-extrabold text-primary mb-2">Starter Website</h3>
                   <p className="text-xs text-text-secondary mb-6 leading-relaxed">Perfect for local service providers, agents, and small business portfolios.</p>
@@ -757,27 +673,27 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
                   <ul className="flex flex-col gap-4 text-xs text-text-secondary mb-8">
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       1-5 Custom Responsive Pages
                     </li>
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       100% Mobile Responsive Design
                     </li>
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       Direct WhatsApp Chat Integration
                     </li>
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       Lead Capture & Contact Form
                     </li>
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       Standard Local SEO Setup
                     </li>
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       Ultra-Fast Speed Optimization
                     </li>
                   </ul>
@@ -787,7 +703,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   href={`https://wa.me/919080026133?text=Hello%20Saravanan,%20I'd%20like%20to%20get%20started%20with%20the%20Starter%20Website%20package.`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full text-center bg-white/5 hover:bg-white/10 border border-slate-700 text-white font-bold text-xs py-3.5 rounded-full transition-all shadow-sm"
+                  className="w-full text-center bg-white hover:bg-slate-50 border border-[#E2E8F0] text-primary font-bold text-xs py-3.5 rounded-full transition-all shadow-sm"
                   data-wa-location="pricing-starter"
                 >
                   Get Started on WhatsApp
@@ -795,7 +711,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               </div>
 
               {/* Plan 2 */}
-              <div className="bg-light-card border-2 border-accent rounded-[24px] p-8 shadow-md flex flex-col justify-between relative hover:shadow-lg transition-all scale-100 lg:scale-[1.03] z-10">
+              <div className="bg-light-card border-2 border-primary rounded-[24px] p-8 shadow-md flex flex-col justify-between relative hover:shadow-lg transition-all scale-100 lg:scale-[1.03] z-10">
                 <div className="absolute top-0 right-8 -translate-y-1/2 bg-accent text-white font-bold text-[9px] uppercase tracking-wider px-3.5 py-1 rounded-full shadow-sm">
                   Most Popular
                 </div>
@@ -811,31 +727,31 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
                   <ul className="flex flex-col gap-4 text-xs text-text-secondary mb-8">
                     <li className="flex items-center gap-2.5 font-semibold text-primary">
-                      <span className="text-success-green"><i className="fa-solid fa-circle-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-circle-check" /></span>
                       Everything in Starter Plan
                     </li>
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       Up to 10 Premium Custom Pages
                     </li>
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       Full SEO Architecture & Schema Setup
                     </li>
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       Advanced Lead Generation Funnel
                     </li>
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       Google Analytics & Clicks Setup
                     </li>
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       1 Year Domain & Hosting Configuration
                     </li>
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       Priority WhatsApp developer Support
                     </li>
                   </ul>
@@ -845,7 +761,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   href={`https://wa.me/919080026133?text=Hello%20Saravanan,%20I'd%20like%20to%20get%20started%20with%20the%20Professional%20Website%20package.`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full text-center bg-accent hover:bg-accent-dark text-white font-bold text-xs py-3.5 rounded-full transition-all shadow-md"
+                  className="w-full text-center bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold text-xs py-3.5 rounded-full transition-all shadow-md"
                   data-wa-location="pricing-professional"
                 >
                   Configure Project on WhatsApp
@@ -853,7 +769,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               </div>
 
               {/* Plan 3 */}
-              <div className="bg-light-card border border-slate-800 rounded-[24px] p-8 shadow-sm flex flex-col justify-between relative hover:shadow-md transition-shadow">
+              <div className="bg-light-card border border-[#E2E8F0] rounded-[24px] p-8 shadow-sm flex flex-col justify-between relative hover:shadow-md transition-shadow">
                 <div>
                   <h3 className="text-lg font-extrabold text-primary mb-2">Custom Business Solution</h3>
                   <p className="text-xs text-text-secondary mb-6 leading-relaxed">For businesses requiring complex databases, web applications, or custom e-commerce portal functions.</p>
@@ -865,27 +781,27 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
                   <ul className="flex flex-col gap-4 text-xs text-text-secondary mb-8">
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       Bespoke E-commerce Portal Systems
                     </li>
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       Advanced APIs & Database Integrations
                     </li>
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       Multi-channel Lead Routing & CRMs
                     </li>
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       Serverless Next.js Hosting Optimization
                     </li>
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       Unlimited Pages & Dynamic Layouts
                     </li>
                     <li className="flex items-center gap-2.5">
-                      <span className="text-success-green"><i className="fa-solid fa-check" /></span>
+                      <span className="text-emerald-500"><i className="fa-solid fa-check" /></span>
                       Monthly Maintenance & Audit Support
                     </li>
                   </ul>
@@ -893,7 +809,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
                 <a
                   href="#consultation-section"
-                  className="w-full text-center border border-slate-700 text-primary hover:bg-white/5 font-bold text-xs py-3.5 rounded-full transition-all shadow-sm"
+                  className="w-full text-center bg-white hover:bg-slate-50 border border-[#E2E8F0] text-primary font-bold text-xs py-3.5 rounded-full transition-all shadow-sm"
                 >
                   Contact For Quote
                 </a>
@@ -920,8 +836,8 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {WHY_CHOOSE_ITEMS.map((item, index) => (
-                <div key={index} className="flex gap-4 items-start bg-light-card p-6 rounded-[20px] border border-slate-800/85">
-                  <div className="w-10 h-10 rounded-lg bg-accent/15 flex items-center justify-center text-accent-light text-base flex-shrink-0">
+                <div key={index} className="flex gap-4 items-start bg-light-card p-6 rounded-[20px] border border-[#E2E8F0]">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-base flex-shrink-0">
                     <i className={item.icon} />
                   </div>
                   <div className="flex flex-col">
@@ -935,7 +851,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* Case Studies Section */}
-        <section className="py-20 bg-light-bg border-t border-slate-800/80">
+        <section className="py-20 bg-light-bg border-t border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
@@ -951,13 +867,13 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {CASE_STUDIES.map((study, index) => (
-                <article key={index} className="bg-light-card border border-slate-800 rounded-[20px] p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                <article key={index} className="bg-light-card border border-[#E2E8F0] rounded-[20px] p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
                   <div>
-                    <div className="bg-slate-800 text-white p-6 rounded-[16px] text-center mb-6">
-                      <span className="text-3xl font-extrabold text-accent block">{study.metrics}</span>
-                      <span className="text-[9px] font-bold text-text-muted uppercase tracking-wider">{study.tag}</span>
+                    <div className="bg-white border border-[#E2E8F0] p-6 rounded-[16px] text-center mb-6 shadow-sm">
+                      <span className="text-3xl font-extrabold text-[#2563EB] block">{study.metrics}</span>
+                      <span className="text-[9px] font-bold text-text-secondary uppercase tracking-wider">{study.tag}</span>
                     </div>
-                    <span className="text-[10px] font-bold text-accent uppercase tracking-wider">{study.tag}</span>
+                    <span className="text-[10px] font-bold text-primary uppercase tracking-wider">{study.tag}</span>
                     <h3 className="text-base font-bold text-primary mt-2 mb-3 leading-tight">
                       {study.title}
                     </h3>
@@ -967,7 +883,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   </div>
                   <Link
                     href={study.href}
-                    className="text-xs font-bold text-accent-light hover:text-accent flex items-center gap-1 mt-2"
+                    className="text-xs font-bold text-primary hover:text-primary-light flex items-center gap-1 mt-2 transition-colors"
                   >
                     Read Case Study <i className="fa-solid fa-chevron-right text-[8px]" />
                   </Link>
@@ -996,7 +912,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {TESTIMONIALS.map((t, idx) => (
-                <div key={idx} className="bg-light-card border border-slate-800 p-8 rounded-[20px] shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div key={idx} className="bg-light-card border border-[#E2E8F0] p-8 rounded-[20px] shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow duration-300">
                   <div>
                     <div className="flex gap-1 text-yellow-500 mb-4 text-xs">
                       {Array.from({ length: t.stars }).map((_, i) => (
@@ -1007,7 +923,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                       &ldquo;{t.quote}&rdquo;
                     </p>
                   </div>
-                  <div className="flex flex-col border-t border-slate-800 pt-4">
+                  <div className="flex flex-col border-t border-[#E2E8F0] pt-4">
                     <span className="text-xs font-bold text-primary">{t.name}</span>
                     <span className="text-[10px] text-text-muted">{t.role}</span>
                   </div>
@@ -1018,7 +934,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* Dynamic Focus Section based on Country */}
-        <section className="py-20 bg-light-bg border-t border-slate-800/80">
+        <section className="py-20 bg-light-bg border-t border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             
             {/* Left Content */}
@@ -1033,7 +949,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 </p>
                 <Link
                   href="/google-business-profile-setup"
-                  className="bg-accent hover:bg-accent-dark text-white font-bold text-xs px-6 py-3 rounded-full transition-all"
+                  className="bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold text-xs px-6 py-3.5 rounded-full transition-all shadow-md hover:-translate-y-0.5 duration-300"
                 >
                   Explore Maps Optimization
                 </Link>
@@ -1049,7 +965,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 </p>
                 <Link
                   href={getRegionalHref("/contact")}
-                  className="bg-accent hover:bg-accent-dark text-white font-bold text-xs px-6 py-3 rounded-full transition-all"
+                  className="bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold text-xs px-6 py-3.5 rounded-full transition-all shadow-md hover:-translate-y-0.5 duration-300"
                 >
                   Optimize My Funnel
                 </Link>
@@ -1058,16 +974,16 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
             {/* Right graphic mockup */}
             <div className="flex justify-center relative min-h-[300px] w-full items-center">
-              <div className="bg-light-card border border-slate-800 p-8 rounded-[20px] shadow-sm relative z-10 w-full max-w-sm text-center">
+              <div className="bg-light-card border border-[#E2E8F0] p-8 rounded-[20px] shadow-sm relative z-10 w-full max-w-sm text-center">
                 {country === "in" || country === "" ? (
                   <>
-                    <div className="text-accent text-5xl mb-4 leading-none"><i className="fa-solid fa-map-location-dot" /></div>
+                    <div className="text-[#2563EB] text-5xl mb-4 leading-none"><i className="fa-solid fa-map-location-dot" /></div>
                     <h4 className="text-base font-bold text-primary mb-2">Google Map Pack Strategy</h4>
                     <p className="text-xs text-text-secondary mb-4 leading-relaxed">Geotagging, citation sync, primary categories, review capture, and proximity targeting.</p>
                   </>
                 ) : (
                   <>
-                    <div className="text-accent text-5xl mb-4 leading-none"><i className="fa-solid fa-filter" /></div>
+                    <div className="text-[#2563EB] text-5xl mb-4 leading-none"><i className="fa-solid fa-filter" /></div>
                     <h4 className="text-base font-bold text-primary mb-2">Conversion Funnel Blueprint</h4>
                     <p className="text-xs text-text-secondary mb-4 leading-relaxed">Interactive inputs, conditional lead scoring, speed hooks, and exit-intent capture.</p>
                   </>
@@ -1086,17 +1002,17 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* Free Website Consultation Form / Bottom Lead Gen Section */}
-        <section id="consultation-section" className="py-20 bg-light-bg border-t border-slate-800/80">
+        <section id="consultation-section" className="py-20 bg-light-bg border-t border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             {/* Left Column Information */}
             <div className="lg:col-span-7 flex flex-col items-start text-left">
-              <span className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 px-4 py-1.5 rounded-full mb-6">
-                <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-                <span className="text-xs font-bold text-accent-dark uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 bg-[#F97316]/10 border border-[#F97316]/20 px-4 py-1.5 rounded-full mb-6">
+                <span className="w-2 h-2 bg-[#F97316] rounded-full animate-pulse" />
+                <span className="text-xs font-bold text-[#F97316] uppercase tracking-wider">
                   No Cost • Limited Slots Available
                 </span>
-              </span>
+              </div>
               <h2 className="text-3xl md:text-4xl font-extrabold text-primary mb-6 tracking-tight leading-tight">
                 Claim Your Free <span className="text-gradient">Website & SEO Consultation</span>
               </h2>
@@ -1106,19 +1022,19 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               
               <ul className="flex flex-col gap-4 text-xs md:text-sm text-text-secondary mb-4 w-full">
                 <li className="flex items-start gap-3">
-                  <span className="text-success-green mt-0.5"><i className="fa-solid fa-circle-check text-sm" /></span>
+                  <span className="text-emerald-500 mt-0.5"><i className="fa-solid fa-circle-check text-sm" /></span>
                   <div>
                     <strong>Conversion Funnel Gaps:</strong> Discover why visitors exit without filling out forms or calling.
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-success-green mt-0.5"><i className="fa-solid fa-circle-check text-sm" /></span>
+                  <span className="text-emerald-500 mt-0.5"><i className="fa-solid fa-circle-check text-sm" /></span>
                   <div>
                     <strong>SEO Structure Check:</strong> Review target keywords, schemas, and indexing barriers.
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-success-green mt-0.5"><i className="fa-solid fa-circle-check text-sm" /></span>
+                  <span className="text-emerald-500 mt-0.5"><i className="fa-solid fa-circle-check text-sm" /></span>
                   <div>
                     <strong>Speed & Mobile Audits:</strong> Scan layouts on mobile networks to identify rendering bottlenecks.
                   </div>
@@ -1150,7 +1066,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         />
 
         {/* FAQ Section */}
-        <section className="py-20 bg-light-bg border-t border-slate-800/80">
+        <section className="py-20 bg-light-bg border-t border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
