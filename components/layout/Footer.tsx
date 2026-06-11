@@ -61,6 +61,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="w-10 h-10 rounded bg-white/5 flex items-center justify-center text-text-muted hover:bg-accent hover:text-white transition-all duration-300"
               aria-label="WhatsApp"
+              data-wa-location="footer"
             >
               <i className="fa-brands fa-whatsapp"></i>
             </a>

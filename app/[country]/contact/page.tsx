@@ -155,6 +155,7 @@ export default async function CountryContactPage({ params }: PageProps) {
                   rel="noopener noreferrer"
                   className="bg-white border border-gray-100 rounded-xl p-6 shadow-sm flex items-center justify-between group hover:border-whatsapp-green/30 transition-all duration-300"
                   title="WhatsApp Us"
+                  data-wa-location="contact page"
                 >
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-lg bg-whatsapp-glow flex items-center justify-center text-whatsapp-green text-xl flex-shrink-0">

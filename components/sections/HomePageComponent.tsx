@@ -264,6 +264,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-light-bg hover:bg-gray-200 text-primary-dark font-bold text-sm px-8 py-3.5 rounded-lg transition-all flex items-center gap-2 border border-gray-200"
+                  data-wa-location="hero"
                 >
                   <span className="text-whatsapp-green"><i className="fa-brands fa-whatsapp text-lg" /></span>
                   WhatsApp Strategy Line

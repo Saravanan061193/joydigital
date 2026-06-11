@@ -43,6 +43,7 @@ export default function StickyWidgets() {
         className={`fixed bottom-20 lg:bottom-8 right-6 w-14 h-14 bg-whatsapp-green text-white rounded-full flex items-center justify-center text-3xl shadow-lg hover:scale-110 hover:rotate-[5deg] transition-all duration-300 z-40 group`}
         aria-label="Chat on WhatsApp"
         title="Chat on WhatsApp"
+        data-wa-location="floating button"
       >
         <span className="absolute top-0 left-0 w-full h-full bg-whatsapp-green rounded-full -z-1 opacity-70 animate-pulse-ring"></span>
         <i className="fa-brands fa-whatsapp relative z-10" />

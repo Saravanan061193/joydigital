@@ -10,6 +10,7 @@ interface CTABannerProps {
   secondaryCtaHref?: string;
   showWhatsApp?: boolean;
   source?: string;
+  waLocation?: string;
 }
 
 export default function CTABanner({
@@ -21,6 +22,7 @@ export default function CTABanner({
   secondaryCtaHref = "https://wa.me/919080026133",
   showWhatsApp = true,
   source = "",
+  waLocation = "hero",
 }: CTABannerProps) {
   const ctaLink = source ? `${primaryCtaHref}?source=${encodeURIComponent(source)}` : primaryCtaHref;
 
@@ -52,6 +54,7 @@ export default function CTABanner({
               target="_blank"
               rel="noopener noreferrer"
               className="bg-white/5 hover:bg-white/10 text-white font-bold text-sm px-8 py-3.5 rounded-lg border border-white/15 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2"
+              data-wa-location={waLocation}
             >
               <span className="text-whatsapp-green"><i className="fa-brands fa-whatsapp text-lg" /></span>
               {secondaryCtaText}

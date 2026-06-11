@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import FontAwesomeLoader from "@/components/layout/FontAwesomeLoader";
+import WhatsAppTracker from "@/components/WhatsAppTracker";
 import "./globals.css";
+
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -75,6 +77,7 @@ export default function RootLayout({
         <FontAwesomeLoader />
       </head>
       <body className="min-h-full flex flex-col bg-white text-text-primary">
+        <WhatsAppTracker />
         {children}
       </body>
     </html>

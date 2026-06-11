@@ -111,6 +111,7 @@ export default function AboutPage() {
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-light-bg flex items-center justify-center text-whatsapp-green hover:bg-accent hover:text-white transition-all duration-300"
                   aria-label="WhatsApp"
+                  data-wa-location="contact page"
                 >
                   <i className="fa-brands fa-whatsapp animate-pulse-dot" />
                 </a>
