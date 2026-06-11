@@ -2,13 +2,16 @@
 
 import React from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import StickyWidgets from "@/components/ui/StickyWidgets";
-import LeadForm from "@/components/ui/LeadForm";
-import Accordion from "@/components/ui/Accordion";
-import CTABanner from "@/components/CTABanner";
 import StrongCTA from "@/components/StrongCTA";
+
+// Dynamically imported below-the-fold components
+const Footer = dynamic(() => import("@/components/layout/Footer"));
+const StickyWidgets = dynamic(() => import("@/components/ui/StickyWidgets"), { ssr: false });
+const LeadForm = dynamic(() => import("@/components/ui/LeadForm"));
+const Accordion = dynamic(() => import("@/components/ui/Accordion"));
+const CTABanner = dynamic(() => import("@/components/CTABanner"));
 
 interface HomePageComponentProps {
   country: string; // "us", "uk", "ae", "in", or "" (Global)

@@ -1,9 +1,58 @@
 "use client";
 
 import { useEffect } from "react";
+import dynamic from "next/dynamic";
+
+const GA_ID = "G-LZB05M3K3Z";
+
+const ExitIntentPopup = dynamic(() => import("@/components/ExitIntentPopup"), {
+  ssr: false,
+});
 
 export default function AnalyticsTracker() {
   useEffect(() => {
+    let scriptLoaded = false;
+
+    const loadGA = () => {
+      if (scriptLoaded) return;
+      scriptLoaded = true;
+
+      // Initialize dataLayer
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      const gtag = function (..._args: any[]) {
+        (window as any).dataLayer.push(arguments);
+      };
+      (window as any).gtag = gtag;
+      gtag("js", new Date());
+      gtag("config", GA_ID);
+
+      // Inject the script
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+      document.head.appendChild(script);
+
+      // Remove event listeners
+      cleanupListeners();
+    };
+
+    const interactionEvents = ["click", "mousedown", "mousemove", "scroll", "touchstart", "keydown"];
+
+    const cleanupListeners = () => {
+      interactionEvents.forEach((event) => {
+        window.removeEventListener(event, loadGA);
+      });
+    };
+
+    const setupListeners = () => {
+      interactionEvents.forEach((event) => {
+        window.addEventListener(event, loadGA, { passive: true });
+      });
+    };
+
+    setupListeners();
+
+    // Global Click Handler for Event Tracking
     const handleGlobalClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       
@@ -16,6 +65,26 @@ export default function AnalyticsTracker() {
 
       const href = anchor ? anchor.getAttribute("href") || "" : "";
       
+      // Ensure GA is loaded when user clicks any CTA button
+      loadGA();
+
+      const trackEvent = (eventName: string, params: Record<string, any>) => {
+        if (typeof window !== "undefined") {
+          const gtagFn = (window as any).gtag;
+          if (typeof gtagFn === "function") {
+            gtagFn("event", eventName, params);
+            console.log(`Tracked event [${eventName}]:`, params);
+          } else {
+            const dataLayer = (window as any).dataLayer || [];
+            dataLayer.push({
+              event: eventName,
+              ...params,
+            });
+            console.log(`Queued event [${eventName}] to dataLayer:`, params);
+          }
+        }
+      };
+
       // 1. WhatsApp Click Tracking
       if (
         href.startsWith("https://wa.me/") || 
@@ -84,28 +153,12 @@ export default function AnalyticsTracker() {
       }
     };
 
-    const trackEvent = (eventName: string, params: Record<string, any>) => {
-      if (typeof window !== "undefined") {
-        const gtag = (window as any).gtag;
-        if (typeof gtag === "function") {
-          gtag("event", eventName, params);
-          console.log(`Tracked event [${eventName}]:`, params);
-        } else {
-          const dataLayer = (window as any).dataLayer || [];
-          dataLayer.push({
-            event: eventName,
-            ...params,
-          });
-          console.log(`Queued event [${eventName}] to dataLayer:`, params);
-        }
-      }
-    };
-
     document.addEventListener("click", handleGlobalClick);
     return () => {
+      cleanupListeners();
       document.removeEventListener("click", handleGlobalClick);
     };
   }, []);
 
-  return null;
+  return <ExitIntentPopup />;
 }

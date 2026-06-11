@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import FontAwesomeLoader from "@/components/layout/FontAwesomeLoader";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
-import ExitIntentPopup from "@/components/ExitIntentPopup";
 import "./globals.css";
 
 
@@ -60,26 +59,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <head>
-        {/* Google tag (gtag.js) */}
-        {/* eslint-disable-next-line @next/next/next-script-for-ga */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZB05M3K3Z"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-LZB05M3K3Z');
-            `,
-          }}
-        />
         <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
         <FontAwesomeLoader />
       </head>
       <body className="min-h-full flex flex-col bg-light-bg text-text-primary">
         <AnalyticsTracker />
-        <ExitIntentPopup />
         {children}
       </body>
     </html>

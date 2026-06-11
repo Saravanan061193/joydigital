@@ -13,7 +13,7 @@ const PORTFOLIO_ITEMS = [
     category: "websites",
     categoryLabel: "Website Design & Development",
     title: "Ganesan Associates - LIC & Star Health Portal",
-    image: "/assets/images/ganesan-associates.png",
+    image: "/assets/images/ganesan-associates.webp",
     description: "A professional insurance and financial services advisory website, built with custom lead capture structures and fully responsive layouts.",
   },
   {
@@ -27,7 +27,7 @@ const PORTFOLIO_ITEMS = [
     category: "marketing",
     categoryLabel: "Advertising & Poster Design",
     title: "Joy Digital Marketing Campaign Poster",
-    image: "/assets/images/marketing-poster-mockup.png",
+    image: "/assets/images/marketing-poster-mockup.webp",
     description: "High-impact advertising poster layout featuring website development pricing packages, client conversion statistics, and direct WhatsApp triggers.",
   },
   {
@@ -48,7 +48,7 @@ const PORTFOLIO_ITEMS = [
     category: "branding",
     categoryLabel: "Corporate Identity & Business Cards",
     title: "Wardiere Creative Designer Business Card",
-    image: "/assets/images/business-card-mockup.png",
+    image: "/assets/images/business-card-mockup.webp",
     description: "Modern, premium corporate visiting card design layout utilizing clean color blocks, contact detail columns, and abstract brand marks.",
   },
   {
