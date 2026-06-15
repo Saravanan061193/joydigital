@@ -18,13 +18,16 @@ export default function AnalyticsTracker() {
       scriptLoaded = true;
 
       // Initialize dataLayer
-      (window as any).dataLayer = (window as any).dataLayer || [];
-      const gtag = function (..._args: any[]) {
-        (window as any).dataLayer.push(arguments);
+      const win = window as unknown as { dataLayer: unknown[]; gtag?: (...args: unknown[]) => void };
+      win.dataLayer = win.dataLayer || [];
+      const gtag = function () {
+        const winInner = window as unknown as { dataLayer: unknown[] };
+        // eslint-disable-next-line prefer-rest-params
+        winInner.dataLayer.push(arguments);
       };
-      (window as any).gtag = gtag;
-      gtag("js", new Date());
-      gtag("config", GA_ID);
+      win.gtag = gtag as unknown as (...args: unknown[]) => void;
+      win.gtag("js", new Date());
+      win.gtag("config", GA_ID);
 
       // Inject the script
       const script = document.createElement("script");
@@ -68,14 +71,14 @@ export default function AnalyticsTracker() {
       // Ensure GA is loaded when user clicks any CTA button
       loadGA();
 
-      const trackEvent = (eventName: string, params: Record<string, any>) => {
+      const trackEvent = (eventName: string, params: Record<string, unknown>) => {
         if (typeof window !== "undefined") {
-          const gtagFn = (window as any).gtag;
+          const gtagFn = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
           if (typeof gtagFn === "function") {
             gtagFn("event", eventName, params);
             console.log(`Tracked event [${eventName}]:`, params);
           } else {
-            const dataLayer = (window as any).dataLayer || [];
+            const dataLayer = (window as unknown as { dataLayer?: unknown[] }).dataLayer || [];
             dataLayer.push({
               event: eventName,
               ...params,

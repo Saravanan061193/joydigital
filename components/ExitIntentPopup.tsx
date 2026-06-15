@@ -44,7 +44,6 @@ export default function ExitIntentPopup() {
 
     // 2. Mobile Exit Intent (Fast scroll up)
     let lastScrollTop = 0;
-    let scrollSpeedTimer: NodeJS.Timeout;
     
     const handleScroll = () => {
       const st = window.pageYOffset || document.documentElement.scrollTop;
@@ -131,9 +130,8 @@ export default function ExitIntentPopup() {
 
       setIsSuccess(true);
 
-      // GA4 Conversion Tracking
       if (typeof window !== "undefined") {
-        const gtag = (window as any).gtag;
+        const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
         if (typeof gtag === "function") {
           gtag("event", "exit_popup_submission", {
             page_url: window.location.href,

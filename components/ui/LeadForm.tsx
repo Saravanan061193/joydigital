@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 
 interface LeadFormProps {
@@ -21,36 +21,39 @@ export default function LeadForm({
   showWebsiteField = false,
 }: LeadFormProps) {
   const pathname = usePathname();
-  const [currentRegion, setCurrentRegion] = useState("");
+
+  // Detect current region from pathname
+  const parts = pathname.split("/").filter(Boolean);
+  const detectedRegion = (parts.length > 0 && ["us", "uk", "ae", "in"].includes(parts[0])) ? parts[0] : "";
+
   const [step, setStep] = useState(1);
 
   // Form State
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState(() => ({
     bottleneck: "",
     service: "",
     website: "",
-    region: "",
+    region: detectedRegion || "us",
     budget: "",
     name: "",
     email: "",
     mobile: "",
     message: "",
-  });
+  }));
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // Auto-detect region on mount
-  useEffect(() => {
-    const parts = pathname.split("/").filter(Boolean);
-    const detected = (parts.length > 0 && ["us", "uk", "ae", "in"].includes(parts[0])) ? parts[0] : "";
-    setCurrentRegion(detected);
-    setFormData((prev) => ({ 
-      ...prev, 
-      region: detected || "us" // default to us if global
+  // Update region form data if pathname changes during render
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setFormData((prev) => ({
+      ...prev,
+      region: detectedRegion || "us"
     }));
-  }, [pathname]);
+  }
 
   const validateStep = (currentStep: number) => {
     const tempErrors: Record<string, string> = {};
@@ -167,7 +170,7 @@ export default function LeadForm({
       
       // GA4 Conversion Tracking
       if (typeof window !== "undefined") {
-        const gtag = (window as any).gtag;
+        const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
         if (typeof gtag === "function") {
           gtag("event", "contact_form_submission", {
             form_source: source,
@@ -179,7 +182,7 @@ export default function LeadForm({
         bottleneck: "",
         service: "",
         website: "",
-        region: currentRegion || "us",
+        region: detectedRegion || "us",
         budget: "",
         name: "",
         email: "",
@@ -197,7 +200,7 @@ export default function LeadForm({
 
   // Get budgets based on region
   const getBudgets = () => {
-    const reg = formData.region || currentRegion || "us";
+    const reg = formData.region || detectedRegion || "us";
     if (reg === "in") {
       return [
         { label: "Starter (Under ₹25,000/mo)", value: "Under ₹25k" },

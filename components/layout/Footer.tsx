@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -11,17 +11,10 @@ const REGIONAL_SITES = [
 
 export default function Footer() {
   const pathname = usePathname();
-  const [currentRegion, setCurrentRegion] = useState("");
 
   // Detect current region from pathname
-  useEffect(() => {
-    const parts = pathname.split("/").filter(Boolean);
-    if (parts.length > 0 && ["us", "uk", "ae", "in"].includes(parts[0])) {
-      setCurrentRegion(parts[0]);
-    } else {
-      setCurrentRegion("");
-    }
-  }, [pathname]);
+  const parts = pathname.split("/").filter(Boolean);
+  const currentRegion = (parts.length > 0 && ["us", "uk", "ae", "in"].includes(parts[0])) ? parts[0] : "";
 
   const getRegionalHref = (path: string) => {
     const localizedPaths = ["/", "/seo-services", "/website-development", "/contact"];

@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   verification: {
     google: "yYfFlGYZPthQmXcw3V9yq2U2OlPPPxWBCtG7URIXDwQ",
   },
-  title: "Website Design & Digital Marketing in Madurai | Joy Digital",
-  description: "Joy Digital is the best website design company & digital marketing agency in Madurai. We offer local SEO, Google Business Profile setup, & branding.",
+  title: "Website Design Company & Global SEO Growth Agency | Joy Digital",
+  description: "Joy Digital is a premium web development company and global SEO agency. We engineer high-performance Next.js websites and scale organic search traffic globally.",
   alternates: {
     canonical: "./",
   },

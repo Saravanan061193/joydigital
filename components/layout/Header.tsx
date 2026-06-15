@@ -28,11 +28,21 @@ export default function Header() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const [isRegionDropdownOpen, setIsRegionDropdownOpen] = useState(false);
-  const [currentRegion, setCurrentRegion] = useState("");
   
   const pathname = usePathname();
   const router = useRouter();
   const regionRef = useRef<HTMLDivElement>(null);
+
+  // Close mobile drawer on route change during render
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setIsMobileOpen(false);
+  }
+
+  // Detect current region from pathname
+  const parts = pathname.split("/").filter(Boolean);
+  const currentRegion = (parts.length > 0 && ["us", "uk", "ae", "in"].includes(parts[0])) ? parts[0] : "";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,11 +52,6 @@ export default function Header() {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Close mobile drawer on route change
-  useEffect(() => {
-    setIsMobileOpen(false);
-  }, [pathname]);
 
   // Click outside region selector handler
   useEffect(() => {
@@ -58,16 +63,6 @@ export default function Header() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  // Detect current region from pathname
-  useEffect(() => {
-    const parts = pathname.split("/").filter(Boolean);
-    if (parts.length > 0 && ["us", "uk", "ae", "in"].includes(parts[0])) {
-      setCurrentRegion(parts[0]);
-    } else {
-      setCurrentRegion("");
-    }
-  }, [pathname]);
 
   const isActive = (path: string) => {
     const regionalPath = getRegionalHref(path);
@@ -87,11 +82,11 @@ export default function Header() {
   const handleRegionChange = (regionCode: string) => {
     setIsRegionDropdownOpen(false);
     
-    const parts = pathname.split("/").filter(Boolean);
-    let rootPath = parts[0];
+    const partsLoc = pathname.split("/").filter(Boolean);
+    const rootPath = partsLoc[0];
     
     const hasRegion = ["us", "uk", "ae", "in"].includes(rootPath);
-    const cleanSegments = hasRegion ? parts.slice(1) : parts;
+    const cleanSegments = hasRegion ? partsLoc.slice(1) : partsLoc;
     const cleanPath = "/" + cleanSegments.join("/");
     
     const localizedPaths = ["/", "/seo-services", "/website-development", "/contact"];

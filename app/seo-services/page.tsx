@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "SEO Services Madurai | Organic SEO Agency - Joy Digital",
-  description: "Joy Digital is a professional SEO agency in Madurai, India. We rank your website on Google's first page using on-page, off-page, and technical SEO campaigns.",
+  title: "Professional SEO Services & Organic Search Agency | Joy Digital",
+  description: "Joy Digital is a professional SEO agency. We rank your website on Google's first page using on-page, off-page, and technical SEO campaigns.",
   alternates: {
     canonical: "https://joydigital.in/seo-services",
   },
@@ -16,21 +16,12 @@ const pageSchema = {
   "name": "Professional SEO Services",
   "serviceType": "Search Engine Optimization Services",
   "provider": {
-    "@type": "LocalBusiness",
+    "@type": "Organization",
     "name": "Joy Digital",
     "image": "https://joydigital.in/assets/images/logo.webp",
-    "telephone": "+919080026133",
-    "priceRange": "₹₹",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Madurai Main Road",
-      "addressLocality": "Madurai",
-      "addressRegion": "Tamil Nadu",
-      "postalCode": "625001",
-      "addressCountry": "IN"
-    }
+    "telephone": "+919080026133"
   },
-  "description": "Joy Digital is an organic SEO agency in Madurai, India, that helps businesses rank on top search results, build quality backlinks, and optimize technical page structures.",
+  "description": "Joy Digital is an organic SEO agency that helps businesses rank on top search results, build quality backlinks, and optimize technical page structures.",
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
@@ -44,8 +35,8 @@ export default function SEOPage() {
   return (
     <ServicePageTemplate
       serviceName="SEO Services"
-      heroTitle="Grow Organic Sales Leads with Professional SEO Services in Madurai"
-      heroSubtitle="Improve search engine rankings, attract high-intent visitors to your offer, and outperform competitors. As an experienced SEO company in Madurai, we implement research-backed optimization campaigns that generate consistent search queries and customer inquiries."
+      heroTitle="Grow Organic Revenue with Expert SEO Services"
+      heroSubtitle="Improve search engine rankings, attract high-intent visitors, and outperform competitors. We deploy research-backed optimization campaigns that generate consistent search visibility and customer inquiries globally."
       leadSource="SEO Services Landing Page"
       overviewTitle="Organic Rankings Built on Analytics, Code Optimization & Quality Copy"
       overviewContent={
@@ -54,7 +45,7 @@ export default function SEOPage() {
             Paid ads are effective for short-term campaigns, but once you stop your ad budget, your lead generation stops. Search Engine Optimization (SEO) builds a long-term search presence that brings in high-intent visitors and customer queries without recurring ad click fees. Investing in organic ranking strategies helps secure sustainable market share.
           </p>
           <p>
-            At Joy Digital, our expert <strong>seo agency in india</strong> avoids shortcuts and outdated link-building schemes that can trigger search engine penalties. We structure our campaigns around technical SEO updates, detailed keyword intent research, readable copywriting, and building trusted local backlinks. This comprehensive approach ensures your search presence grows steadily in Madurai and across India.
+            At Joy Digital, our expert strategist team avoids shortcuts and outdated link-building schemes that can trigger search engine penalties. We structure our campaigns around technical SEO updates, detailed keyword intent research, readable copywriting, and building trusted authority backlinks. This comprehensive approach ensures your search presence grows steadily across target markets globally.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">A Holistic Approach to SEO Performance</h3>
           <p>

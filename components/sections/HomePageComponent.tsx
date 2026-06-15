@@ -78,9 +78,36 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
     return "1,000";
   };
 
+  const getPricingPlans = () => {
+    switch (country) {
+      case "us":
+        return {
+          starter: { price: "1,000", currency: "$" },
+          professional: { price: "1,800", currency: "$" },
+        };
+      case "uk":
+        return {
+          starter: { price: "750", currency: "£" },
+          professional: { price: "1,400", currency: "£" },
+        };
+      case "ae":
+        return {
+          starter: { price: "3,500", currency: "AED " },
+          professional: { price: "6,000", currency: "AED " },
+        };
+      case "in":
+      default:
+        return {
+          starter: { price: "15,000", currency: "₹" },
+          professional: { price: "25,000", currency: "₹" },
+        };
+    }
+  };
+
   const hero = getHeroContent();
   const currency = getCurrencySymbol();
   const startingPrice = getStartingPrice();
+  const pricingPlans = getPricingPlans();
 
   // 2. Localized Services List
   const HOME_SERVICES = [
@@ -668,7 +695,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   <p className="text-xs text-text-secondary mb-6 leading-relaxed">Perfect for local service providers, agents, and small business portfolios.</p>
                   
                   <div className="flex items-baseline gap-1 mb-8">
-                    <span className="text-3xl font-extrabold text-text-primary">₹15,000</span>
+                    <span className="text-3xl font-extrabold text-text-primary">{pricingPlans.starter.currency}{pricingPlans.starter.price}</span>
                     <span className="text-xs text-text-secondary font-semibold">one-time</span>
                   </div>
 
@@ -722,7 +749,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   <p className="text-xs text-text-secondary mb-6 leading-relaxed">Ideal for growing companies, specialized clinics, and professional firms.</p>
                   
                   <div className="flex items-baseline gap-1 mb-8">
-                    <span className="text-3xl font-extrabold text-text-primary">₹25,000</span>
+                    <span className="text-3xl font-extrabold text-text-primary">{pricingPlans.professional.currency}{pricingPlans.professional.price}</span>
                     <span className="text-xs text-text-secondary font-semibold">one-time</span>
                   </div>
 
