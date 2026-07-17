@@ -90,11 +90,21 @@ export default function AboutPage() {
               Founder Profile & Vision
             </h2>
             <div className="bg-white border border-[#E5E7EB] rounded-3xl p-8 sm:p-12 shadow-sm flex flex-col items-center">
-              <div className="w-24 h-24 rounded-full bg-accent/10 border-2 border-accent/20 flex items-center justify-center text-accent text-3xl mb-6 shadow-sm">
+              <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-[#2563EB]/10 to-accent/20 border-2 border-accent/30 flex items-center justify-center text-accent text-3xl mb-4 shadow-sm">
                 <i className="fa-solid fa-circle-user" />
               </div>
-              <h3 className="text-xl font-extrabold text-primary-dark mb-1">Saravanan</h3>
-              <span className="text-xs font-semibold text-accent uppercase tracking-widest mb-6">Founder & Director</span>
+              <h3 className="text-xl font-extrabold text-primary-dark mb-1">Saravanan M.</h3>
+              <span className="text-xs font-semibold text-accent uppercase tracking-widest mb-3">Founder & Director</span>
+              
+              <a
+                href="https://www.linkedin.com/in/saravanan-joydigital/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs text-text-muted hover:text-accent transition-colors font-medium mb-6"
+              >
+                <i className="fa-brands fa-linkedin text-sm" /> View LinkedIn Profile
+              </a>
+              
               <p className="text-sm text-text-secondary leading-relaxed max-w-xl mx-auto mb-6">
                 &ldquo;We launched Joy Digital with a clear goal: to make professional web development and search engine optimization accessible to regional startups and small businesses. We focus on providing clean, fast-loading code and clear SEO strategies that deliver measurable results and support long-term growth.&rdquo;
               </p>
@@ -114,7 +124,7 @@ export default function AboutPage() {
                   aria-label="WhatsApp"
                   data-wa-location="contact page"
                 >
-                  <i className="fa-brands fa-whatsapp animate-pulse-dot" />
+                  <i className="fa-brands fa-whatsapp" />
                 </a>
               </div>
             </div>

@@ -17,27 +17,95 @@ export default function AnalyticsTracker() {
       if (scriptLoaded) return;
       scriptLoaded = true;
 
-      // Initialize dataLayer
-      const win = window as unknown as { dataLayer: unknown[]; gtag?: (...args: unknown[]) => void };
+      const win = window as any;
+
+      // 1. Google Analytics
       win.dataLayer = win.dataLayer || [];
       const gtag = function () {
-        const winInner = window as unknown as { dataLayer: unknown[] };
+        const winInner = window as any;
         // eslint-disable-next-line prefer-rest-params
         winInner.dataLayer.push(arguments);
       };
-      win.gtag = gtag as unknown as (...args: unknown[]) => void;
+      win.gtag = gtag;
       win.gtag("js", new Date());
       win.gtag("config", GA_ID);
 
-      // Inject the script
       const script = document.createElement("script");
       script.async = true;
       script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
       document.head.appendChild(script);
 
+      // 2. Meta Pixel
+      const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+      if (pixelId) {
+        win.fbq = win.fbq || function () {
+          (win.fbq.q = win.fbq.q || []).push(arguments);
+        };
+        win._fbq = win._fbq || win.fbq;
+        win.fbq.push = win.fbq;
+        win.fbq.loaded = true;
+        win.fbq.version = "2.0";
+        win.fbq.queue = [];
+        
+        const fbScript = document.createElement("script");
+        fbScript.async = true;
+        fbScript.src = "https://connect.facebook.net/en_US/fbevents.js";
+        document.head.appendChild(fbScript);
+        
+        win.fbq("init", pixelId);
+        win.fbq("track", "PageView");
+      }
+
+      // 3. Microsoft Clarity
+      const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
+      if (clarityId) {
+        win.clarity = win.clarity || function () {
+          (win.clarity.q = win.clarity.q || []).push(arguments);
+        };
+        const clarityScript = document.createElement("script");
+        clarityScript.async = true;
+        clarityScript.src = `https://www.clarity.ms/tag/${clarityId}`;
+        document.head.appendChild(clarityScript);
+      }
+
       // Remove event listeners
       cleanupListeners();
     };
+
+    const trackEvent = (eventName: string, params: Record<string, unknown>) => {
+      if (typeof window !== "undefined") {
+        loadGA();
+        const win = window as any;
+
+        // GA4 tracking
+        if (typeof win.gtag === "function") {
+          win.gtag("event", eventName, params);
+        } else {
+          win.dataLayer = win.dataLayer || [];
+          win.dataLayer.push({ event: eventName, ...params });
+        }
+
+        // Meta Pixel tracking
+        if (typeof win.fbq === "function") {
+          win.fbq("trackCustom", eventName, params);
+          if (eventName.includes("submission") || eventName.includes("lead")) {
+            win.fbq("track", "Lead", { content_name: eventName, ...params });
+          }
+        }
+
+        // Microsoft Clarity tracking
+        if (typeof win.clarity === "function") {
+          win.clarity("event", eventName, params);
+        }
+
+        console.log(`Tracked event [${eventName}]:`, params);
+      }
+    };
+
+    // Expose helper globally
+    if (typeof window !== "undefined") {
+      (window as any).trackJoyDigitalEvent = trackEvent;
+    }
 
     const interactionEvents = ["click", "mousedown", "mousemove", "scroll", "touchstart", "keydown"];
 
@@ -70,23 +138,6 @@ export default function AnalyticsTracker() {
       
       // Ensure GA is loaded when user clicks any CTA button
       loadGA();
-
-      const trackEvent = (eventName: string, params: Record<string, unknown>) => {
-        if (typeof window !== "undefined") {
-          const gtagFn = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
-          if (typeof gtagFn === "function") {
-            gtagFn("event", eventName, params);
-            console.log(`Tracked event [${eventName}]:`, params);
-          } else {
-            const dataLayer = (window as unknown as { dataLayer?: unknown[] }).dataLayer || [];
-            dataLayer.push({
-              event: eventName,
-              ...params,
-            });
-            console.log(`Queued event [${eventName}] to dataLayer:`, params);
-          }
-        }
-      };
 
       // 1. WhatsApp Click Tracking
       if (

@@ -32,6 +32,11 @@ const nextConfig: NextConfig = {
         destination: "/website-development",
         permanent: true,
       },
+      {
+        source: "/website-development-madurai",
+        destination: "/web-development-company-in-madurai",
+        permanent: true,
+      },
     ];
   },
 };

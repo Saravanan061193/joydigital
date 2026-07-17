@@ -120,7 +120,7 @@ export default function Header() {
           <Link href={getRegionalHref("/")} title="Joy Digital Home" className="flex items-center gap-3 flex-shrink-0">
             <Image
               src="/assets/images/logo.webp"
-              alt="Joy Digital Logo"
+              alt="Joy Digital - Website Design & SEO Agency in Madurai"
               title="Joy Digital Logo"
               width={isScrolled ? 50 : 60}
               height={isScrolled ? 50 : 60}

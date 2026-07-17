@@ -175,7 +175,7 @@ export default async function CountryContactPage({ params }: PageProps) {
 
                 {/* Email Card */}
                 <a
-                  href="mailto:joydiigtals@gmail.com"
+                  href="mailto:saravanan061193@gmail.com"
                   className="bg-white border border-gray-100 rounded-xl p-6 shadow-sm flex items-center justify-between group hover:border-accent/30 transition-all duration-300"
                   title="Email Us"
                 >
@@ -186,7 +186,7 @@ export default async function CountryContactPage({ params }: PageProps) {
                     <div className="flex flex-col">
                       <span className="text-[10px] font-bold text-text-muted uppercase">Send Email</span>
                       <span className="text-sm font-bold text-primary-dark mt-0.5 group-hover:text-accent transition-colors">
-                        joydiigtals@gmail.com
+                        saravanan061193@gmail.com
                       </span>
                     </div>
                   </div>

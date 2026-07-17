@@ -153,7 +153,7 @@ export default function LeadForm({
         _template: "table",
       };
 
-      const response = await fetch("https://formsubmit.co/ajax/joydiigtals@gmail.com", {
+      const response = await fetch("https://formsubmit.co/ajax/saravanan061193@gmail.com", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -168,14 +168,22 @@ export default function LeadForm({
 
       setIsSuccess(true);
       
-      // GA4 Conversion Tracking
+      // Unified Conversion Tracking
       if (typeof window !== "undefined") {
-        const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
-        if (typeof gtag === "function") {
-          gtag("event", "contact_form_submission", {
+        const tracker = (window as any).trackJoyDigitalEvent;
+        if (typeof tracker === "function") {
+          tracker("contact_form_submission", {
             form_source: source,
             page_url: window.location.href,
           });
+        } else {
+          const gtag = (window as any).gtag;
+          if (typeof gtag === "function") {
+            gtag("event", "contact_form_submission", {
+              form_source: source,
+              page_url: window.location.href,
+            });
+          }
         }
       }
       setFormData({
@@ -192,7 +200,7 @@ export default function LeadForm({
       setStep(1);
     } catch (err) {
       console.error(err);
-      alert("Lead delivery failed. Please email us at joydiigtals@gmail.com directly.");
+      alert("Lead delivery failed. Please email us at saravanan061193@gmail.com directly.");
     } finally {
       setIsLoading(false);
     }

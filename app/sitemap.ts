@@ -21,6 +21,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/privacy-policy',
     '/terms-and-conditions',
     '/cookie-policy',
+    '/website-design-company-in-madurai',
+    '/web-development-company-in-madurai',
+    '/seo-services-in-madurai',
+    '/digital-marketing-agency-in-madurai',
+    '/google-business-profile-optimization',
+    '/ecommerce-website-development',
+    '/custom-software-development',
   ];
 
   // 1. Generate sitemap records for unified static routes

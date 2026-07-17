@@ -57,6 +57,7 @@ interface ServicePageTemplateProps {
   faqs: FAQItem[];
   schemaMarkup: Record<string, unknown>;
   crossLinks: { href: string; label: string }[];
+  canonicalUrl?: string;
 }
 
 export default function ServicePageTemplate({
@@ -78,6 +79,7 @@ export default function ServicePageTemplate({
   faqs,
   schemaMarkup,
   crossLinks,
+  canonicalUrl = "https://joydigital.in",
 }: ServicePageTemplateProps) {
   const STANDARD_FAQS = [
     {
@@ -134,6 +136,26 @@ export default function ServicePageTemplate({
     }))
   };
 
+  // Breadcrumb Schema JSON-LD
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://joydigital.in"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": serviceName,
+        "item": canonicalUrl
+      }
+    ]
+  };
+
   return (
     <>
       {/* Schema Injection */}
@@ -146,6 +168,12 @@ export default function ServicePageTemplate({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
+      {/* Breadcrumb Schema Injection */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       <Header />

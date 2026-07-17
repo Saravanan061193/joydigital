@@ -34,31 +34,31 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
       case "us":
         return {
           badge: "Enterprise Growth Partner",
-          h1: <>Professional Business Websites <span className="text-gradient">That Generate Leads</span></>,
+          h1: <>Web Design & Global SEO Agency <span className="text-gradient">USA</span></>,
           subtitle: "We help US businesses capture high-intent customers using ultra-fast Next.js websites, global search marketing campaigns, and conversion-optimized lead funnels backed by 9+ years of experience.",
         };
       case "uk":
         return {
           badge: "Premium Digital Growth Agency",
-          h1: <>Professional Business Websites <span className="text-gradient">That Generate Leads</span></>,
+          h1: <>Web Design & SEO Services <span className="text-gradient">UK</span></>,
           subtitle: "Convert search traffic into active buyers. Joy Digital builds high-performance corporate sites and runs organic search campaigns across the UK with 9+ years of experience.",
         };
       case "ae":
         return {
           badge: "Result-Driven Agency Dubai",
-          h1: <>Professional Business Websites <span className="text-gradient">That Generate Leads</span></>,
+          h1: <>Web Development & Performance SEO <span className="text-gradient">UAE</span></>,
           subtitle: "Dominate Google search rankings, optimize regional map packs, and build ultra-speed corporate and e-commerce web assets for the UAE market backed by 9+ years of experience.",
         };
       case "in":
         return {
           badge: "9+ Years of Industry Experience",
-          h1: <>Professional Business Websites <span className="text-gradient">That Generate Leads</span></>,
+          h1: <>Website Design & SEO Company <span className="text-gradient">India</span></>,
           subtitle: "Helping businesses grow online with professional websites, SEO-ready development, and digital solutions backed by 9+ years of experience.",
         };
       default:
         return {
           badge: "9+ Years of Industry Experience",
-          h1: <>Professional Business Websites <span className="text-gradient">That Generate Leads</span></>,
+          h1: <>Web Design & Digital Marketing Agency <span className="text-gradient">in Madurai</span></>,
           subtitle: "Helping businesses grow online with professional websites, SEO-ready development, and digital solutions backed by 9+ years of experience.",
         };
     }
@@ -212,21 +212,21 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
   const TESTIMONIALS = [
     {
       stars: 5,
-      quote: "Joy Digital optimized our regional map listings. Within weeks, we achieved page 1 rankings, and our monthly incoming business inquiries doubled! Their strategy is highly practical.",
-      name: "Marcus Sterling",
-      role: "SaaS Founder, USA",
+      quote: "Joy Digital optimized our local map search. We now rank at the top of Google Maps in Madurai, and our monthly incoming calls and insurance inquiries have doubled! Their strategy is highly practical.",
+      name: "Ganesh Murugan",
+      role: "LIC Financial Advisor, Madurai",
     },
     {
       stars: 5,
-      quote: "We rebuilt our corporate platform using their headless Next.js framework. The site speeds are blazing fast, and our customer signups increased by 40% with zero ad spend adjustments.",
-      name: "Elizabeth Thorne",
-      role: "Marketing Lead, UK",
+      quote: "We rebuilt our insurance portfolio using their headless Next.js framework. The site loads instantly, and we have captured over 50+ qualified policy leads via WhatsApp in the first month.",
+      name: "Chithra",
+      role: "Star Health Advisor, Tamil Nadu",
     },
     {
       stars: 5,
-      quote: "Their team combined custom interface layouts with rigorous technical SEO. We now rank for competitive terms across the UAE, bringing in continuous qualified sales leads.",
-      name: "Faisal Bin Al-Maktoum",
-      role: "Operations Director, Dubai",
+      quote: "Their team combined custom interface layouts with rigorous technical SEO. We now rank for competitive terms in our sector, bringing in continuous qualified sales leads.",
+      name: "R. Rajesh Kumar",
+      role: "Retail Director, Madurai",
     },
   ];
 
@@ -392,17 +392,24 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         <StrongCTA location="hero" />
 
         {/* Client Logos Section */}
-        <section className="py-10 bg-light-bg border-y border-[#E5E7EB]">
+        <section className="py-12 bg-white border-y border-[#E5E7EB]">
           <div className="max-w-7xl mx-auto px-6">
             <p className="text-[10px] font-bold text-text-muted uppercase tracking-widest text-center mb-6">
               {clientLogosText}
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
-              <div className="font-bold text-sm text-text-secondary select-none tracking-wider">🏢 APEX SaaS</div>
-              <div className="font-bold text-sm text-text-secondary select-none tracking-wider">🏥 V-CARE CLINICS</div>
-              <div className="font-bold text-sm text-text-secondary select-none tracking-wider">🎓 GLOBAL EDU</div>
-              <div className="font-bold text-sm text-text-secondary select-none tracking-wider">🏗️ VELOCITY DEV</div>
-              <div className="font-bold text-sm text-text-secondary select-none tracking-wider">🛒 SELECT CART</div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 items-center justify-center opacity-75 grayscale hover:grayscale-0 transition-all duration-300">
+              {[
+                { name: "APEX SaaS", icon: "fa-solid fa-cube text-[#2563EB]" },
+                { name: "V-CARE CLINICS", icon: "fa-solid fa-heart-pulse text-[#EF4444]" },
+                { name: "GLOBAL EDU", icon: "fa-solid fa-graduation-cap text-[#10B981]" },
+                { name: "VELOCITY DEV", icon: "fa-solid fa-building text-[#F97316]" },
+                { name: "SELECT CART", icon: "fa-solid fa-cart-shopping text-[#8B5CF6]" },
+              ].map((logo, index) => (
+                <div key={index} className="flex items-center justify-center gap-2 py-3 px-5 bg-[#FAFAFA] rounded-xl border border-gray-100 hover:border-gray-200 transition-colors shadow-sm select-none">
+                  <i className={logo.icon} />
+                  <span className="font-extrabold text-[11px] text-text-primary tracking-wider uppercase">{logo.name}</span>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -450,13 +457,14 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               {HOME_SERVICES.map((service, index) => (
                 <article
                   key={index}
-                  className="bg-light-card border border-[#E5E7EB] rounded-[20px] p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+                  className="bg-light-card border border-[#E5E7EB] hover:border-primary/20 rounded-[24px] p-8 shadow-sm hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between relative group overflow-hidden"
                 >
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div>
-                    <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent text-xl mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent text-xl mb-6 group-hover:scale-110 transition-transform duration-300">
                       <i className={service.icon} />
                     </div>
-                    <h3 className="text-lg font-bold text-text-primary mb-3">
+                    <h3 className="text-lg font-bold text-text-primary mb-3 group-hover:text-primary transition-colors">
                       {service.title}
                     </h3>
                     <p className="text-xs text-text-secondary leading-relaxed mb-6">
@@ -465,10 +473,10 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   </div>
                   <Link
                     href={getRegionalHref(service.href)}
-                    className="text-xs font-bold text-primary hover:text-primary-light flex items-center gap-1.5 mt-2 transition-colors"
+                    className="text-xs font-bold text-primary group-hover:text-accent flex items-center gap-1.5 mt-2 transition-colors"
                     aria-label={`Learn more about ${service.title}`}
                   >
-                    Learn More <i className="fa-solid fa-chevron-right text-[9px]" />
+                    Learn More <i className="fa-solid fa-chevron-right text-[9px] group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </article>
               ))}
@@ -483,11 +491,20 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               {/* Left Column Profile Card */}
               <div className="lg:col-span-5 flex justify-center">
                 <div className="relative bg-white border border-[#E5E7EB] p-8 rounded-[24px] shadow-md w-full max-w-sm overflow-hidden text-center flex flex-col items-center">
-                  <div className="w-24 h-24 rounded-full bg-accent/10 border-2 border-accent/20 flex items-center justify-center text-accent text-4xl mb-6 shadow-sm">
+                  <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-[#2563EB]/10 to-accent/20 border-2 border-accent/30 flex items-center justify-center text-accent text-4xl mb-4 shadow-sm relative group">
                     <i className="fa-solid fa-user-tie" />
                   </div>
-                  <h3 className="text-xl font-extrabold text-text-primary mb-1">Saravanan</h3>
-                  <span className="text-xs text-accent font-bold uppercase tracking-wider mb-6">Founder & Lead Architect</span>
+                  <h3 className="text-xl font-extrabold text-text-primary mb-1">Saravanan M.</h3>
+                  <span className="text-xs text-accent font-bold uppercase tracking-wider mb-3">Founder & Lead Architect</span>
+                  
+                  <a
+                    href="https://www.linkedin.com/in/saravanan-joydigital/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs text-text-muted hover:text-accent transition-colors font-medium mb-6"
+                  >
+                    <i className="fa-brands fa-linkedin text-sm" /> View LinkedIn Profile
+                  </a>
                   
                   <div className="grid grid-cols-2 gap-4 w-full border-t border-[#E5E7EB] pt-6 mt-2">
                     <div className="flex flex-col items-center">
@@ -534,6 +551,111 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   <span className="bg-white border border-[#E5E7EB] text-text-secondary text-xs px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5 shadow-sm">
                     <i className="fa-solid fa-handshake text-accent" /> Affordable Lead Funnels
                   </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Lead Magnet / Company Profile Download Section */}
+        <section className="py-20 bg-white border-y border-[#E5E7EB]">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center max-w-5xl mx-auto">
+              <div className="lg:col-span-7 text-left">
+                <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
+                  Free Resource
+                </span>
+                <h2 className="text-2xl md:text-4xl font-extrabold text-text-primary mb-6">
+                  Download Our <span className="text-gradient">Company Profile & Tech Guide</span>
+                </h2>
+                <p className="text-xs md:text-sm text-text-secondary leading-relaxed mb-6">
+                  Learn how we build high-speed Next.js websites, optimize local SEO profiles, and configure lead tracking. Our company brochure includes detailed case studies, client reviews, tech integrations list, and transparent pricing packages.
+                </p>
+                <div className="flex flex-col gap-3 mb-6 text-xs text-[#4B5563]">
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-emerald-500 text-sm"><i className="fa-solid fa-circle-check" /></span>
+                    <span>Complete Agency Pricing and Packages Breakdown</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-emerald-500 text-sm"><i className="fa-solid fa-circle-check" /></span>
+                    <span>Our High-Performance Tech Stack Specification Sheet</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-emerald-500 text-sm"><i className="fa-solid fa-circle-check" /></span>
+                    <span>Step-by-Step 90-Day local SEO Action Plan</span>
+                  </div>
+                </div>
+              </div>
+              <div className="lg:col-span-5 flex justify-center lg:justify-end">
+                <div className="bg-slate-50 border border-gray-100 p-8 rounded-2xl shadow-md w-full max-w-md">
+                  <h3 className="text-sm font-bold text-primary-dark mb-4 text-center">Request Download Link</h3>
+                  <form
+                    onSubmit={async (e) => {
+                      e.preventDefault();
+                      const form = e.target as HTMLFormElement;
+                      const name = (form.querySelector('input[name="name"]') as HTMLInputElement).value;
+                      const mobile = (form.querySelector('input[name="mobile"]') as HTMLInputElement).value;
+                      const email = (form.querySelector('input[name="email"]') as HTMLInputElement).value;
+                      
+                      try {
+                        const response = await fetch("https://formsubmit.co/ajax/saravanan061193@gmail.com", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                          body: JSON.stringify({
+                            Name: name,
+                            Mobile: mobile,
+                            Email: email,
+                            Source: "Company Profile Lead Magnet",
+                            Message: "Requested Company Profile PDF download link.",
+                            _subject: "🔥 Profile PDF Request - Joy Digital",
+                            _captcha: "false",
+                          }),
+                        });
+                        if (response.ok) {
+                          // Track event
+                          const tracker = (window as any).trackJoyDigitalEvent;
+                          if (typeof tracker === "function") {
+                            tracker("pdf_download_request", { name, email, mobile });
+                          }
+                          // Trigger file download
+                          window.open("/assets/docs/joy-digital-profile.pdf", "_blank");
+                          alert("Brochure requested! Your download will start now.");
+                          form.reset();
+                        }
+                      } catch (err) {
+                        console.error("PDF download request failed:", err);
+                      }
+                    }}
+                    className="flex flex-col gap-3 text-left"
+                  >
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Your Full Name"
+                      required
+                      className="bg-white border border-[#E5E7EB] text-xs px-3.5 py-3 rounded-lg outline-none focus:border-accent w-full"
+                    />
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Your Email Address"
+                      required
+                      className="bg-white border border-[#E5E7EB] text-xs px-3.5 py-3 rounded-lg outline-none focus:border-accent w-full"
+                    />
+                    <input
+                      type="tel"
+                      name="mobile"
+                      placeholder="WhatsApp Number (to receive PDF)"
+                      required
+                      className="bg-white border border-[#E5E7EB] text-xs px-3.5 py-3 rounded-lg outline-none focus:border-accent w-full"
+                    />
+                    <button
+                      type="submit"
+                      className="bg-[#2563EB] hover:bg-[#3B82F6] text-white text-xs font-bold py-3.5 rounded-lg shadow-md transition-all mt-2 cursor-pointer w-full"
+                    >
+                      Download Company Profile PDF
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -606,14 +728,14 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               {[
                 {
                   title: "Ganesh Murugan LIC Portal",
-                  url: "https://ganeshmuruganlic.vercel.app",
+                  url: "https://ganeshmuruganlic.com",
                   desc: "A premium, high-converting digital portal built for a top LIC & financial advisor. Integrated with direct policy inquiry forms, WhatsApp chat support, and local SEO configuration.",
                   features: ["Mobile Friendly", "Lead Generation Focused", "WhatsApp Integration", "SEO Ready", "Fast Loading"],
                   avatar: "🏢"
                 },
                 {
                   title: "Chithra Insurance Agent Portal",
-                  url: "https://chithrainsurance.vercel.app",
+                  url: "https://chithrainsurance.com",
                   desc: "A clean, modern lead-generation web application designed for a professional Insurance advisor. Built to load in under 1.2 seconds, securing client enquiries in real-time.",
                   features: ["Mobile Friendly", "Lead Generation Focused", "WhatsApp Integration", "SEO Ready", "Fast Loading"],
                   avatar: "👩‍💼"
@@ -922,6 +1044,54 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         <StrongCTA location="case studies section" />
+
+        {/* Google Reviews Trust Widget */}
+        <section className="py-12 bg-light-bg border-b border-[#E5E7EB]">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="bg-white border border-[#E5E7EB] rounded-3xl p-8 md:p-10 shadow-lg flex flex-col md:flex-row items-center justify-between gap-8 max-w-4xl mx-auto">
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-red-500 text-3xl shadow-sm font-extrabold select-none">
+                  G
+                </div>
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xl font-black text-text-primary">Google Reviews</span>
+                    <span className="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full">100% Verified</span>
+                  </div>
+                  <div className="flex items-center gap-1 text-yellow-500 mt-1">
+                    <i className="fa-solid fa-star" />
+                    <i className="fa-solid fa-star" />
+                    <i className="fa-solid fa-star" />
+                    <i className="fa-solid fa-star" />
+                    <i className="fa-solid fa-star" />
+                    <span className="text-xs text-text-secondary font-bold ml-1.5">5.0 / 5.0 Rating</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex gap-8 text-center border-y md:border-y-0 md:border-x border-gray-200 py-4 md:py-0 md:px-8 w-full md:w-auto justify-center">
+                <div className="flex flex-col">
+                  <span className="text-2xl font-black text-primary">50+</span>
+                  <span className="text-[10px] text-text-secondary uppercase font-bold tracking-wider mt-0.5">Reviews</span>
+                </div>
+                <div className="flex flex-col border-l border-gray-200 pl-8">
+                  <span className="text-2xl font-black text-primary">100%</span>
+                  <span className="text-[10px] text-text-secondary uppercase font-bold tracking-wider mt-0.5">Satisfaction</span>
+                </div>
+              </div>
+
+              <a
+                href="https://g.page/r/YOUR_REVIEW_LINK/review"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white hover:bg-slate-50 border border-gray-200 text-text-primary text-xs font-bold px-6 py-3.5 rounded-full transition-all flex items-center gap-2 shadow-sm shrink-0"
+              >
+                <i className="fa-brands fa-google text-red-500" />
+                Write a Google Review
+              </a>
+            </div>
+          </div>
+        </section>
 
         {/* Testimonials Section */}
         <section className="py-20 bg-white border-b border-[#E5E7EB]">

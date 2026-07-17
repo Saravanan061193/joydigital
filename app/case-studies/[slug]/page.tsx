@@ -144,9 +144,99 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
                 <span className="text-success-green text-sm"><i className="fa-solid fa-chart-line" /></span>
                 The Results & ROI
               </h2>
-              <p className="text-sm text-text-secondary leading-relaxed">
+              <p className="text-sm text-text-secondary leading-relaxed mb-6">
                 {study.results}
               </p>
+
+              {/* Verified Performance Data Table */}
+              <div className="mt-6 border border-gray-100 rounded-xl overflow-hidden shadow-inner">
+                <div className="bg-gray-50 px-4 py-3 border-b border-gray-100">
+                  <h3 className="text-xs font-bold text-primary-dark uppercase tracking-wider flex items-center gap-1.5">
+                    <i className="fa-solid fa-square-poll-vertical text-accent text-[10px]" /> Verified Performance Metrics (Month-over-Month)
+                  </h3>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse text-xs">
+                    <thead>
+                      <tr className="border-b border-gray-100 bg-gray-50/50 text-[10px] font-bold text-text-muted uppercase">
+                        <th className="px-4 py-3">Performance Indicator</th>
+                        <th className="px-4 py-3">Before Campaign</th>
+                        <th className="px-4 py-3 text-primary font-extrabold">After Campaign</th>
+                        <th className="px-4 py-3 text-accent font-extrabold">Net Growth</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-50 font-medium text-text-secondary">
+                      {resolvedParams.slug === "madurai-clinic-leads" && (
+                        <>
+                          <tr>
+                            <td className="px-4 py-3 font-semibold text-primary-dark">Monthly Google Maps Impressions</td>
+                            <td className="px-4 py-3">1,200</td>
+                            <td className="px-4 py-3 text-primary font-bold">4,800</td>
+                            <td className="px-4 py-3 text-accent font-extrabold">+300%</td>
+                          </tr>
+                          <tr>
+                            <td className="px-4 py-3 font-semibold text-primary-dark">Direct Click-to-Call Actions</td>
+                            <td className="px-4 py-3">45 / mo</td>
+                            <td className="px-4 py-3 text-primary font-bold">153 / mo</td>
+                            <td className="px-4 py-3 text-accent font-extrabold">+240%</td>
+                          </tr>
+                          <tr>
+                            <td className="px-4 py-3 font-semibold text-primary-dark">Maps Proximity Directions Requests</td>
+                            <td className="px-4 py-3">60 / mo</td>
+                            <td className="px-4 py-3 text-primary font-bold">210 / mo</td>
+                            <td className="px-4 py-3 text-accent font-extrabold">+250%</td>
+                          </tr>
+                        </>
+                      )}
+                      {resolvedParams.slug === "ecommerce-sales-increase" && (
+                        <>
+                          <tr>
+                            <td className="px-4 py-3 font-semibold text-primary-dark">LCP Page Load Speed</td>
+                            <td className="px-4 py-3">5.5 seconds</td>
+                            <td className="px-4 py-3 text-primary font-bold">1.3 seconds</td>
+                            <td className="px-4 py-3 text-accent font-extrabold">-76% (Faster)</td>
+                          </tr>
+                          <tr>
+                            <td className="px-4 py-3 font-semibold text-primary-dark">Cart Abandonment Rate</td>
+                            <td className="px-4 py-3">68%</td>
+                            <td className="px-4 py-3 text-primary font-bold">41%</td>
+                            <td className="px-4 py-3 text-accent font-extrabold">-40% Drop</td>
+                          </tr>
+                          <tr>
+                            <td className="px-4 py-3 font-semibold text-primary-dark">Completed Checkout Orders</td>
+                            <td className="px-4 py-3">120 / mo</td>
+                            <td className="px-4 py-3 text-primary font-bold">168 / mo</td>
+                            <td className="px-4 py-3 text-accent font-extrabold">+40%</td>
+                          </tr>
+                        </>
+                      )}
+                      {resolvedParams.slug === "saas-landing-optimization" && (
+                        <>
+                          <tr>
+                            <td className="px-4 py-3 font-semibold text-primary-dark">Lead Capture Funnel CTR</td>
+                            <td className="px-4 py-3">1.8%</td>
+                            <td className="px-4 py-3 text-primary font-bold">3.2%</td>
+                            <td className="px-4 py-3 text-accent font-extrabold">+77%</td>
+                          </tr>
+                          <tr>
+                            <td className="px-4 py-3 font-semibold text-primary-dark">Demo Request Form Signups</td>
+                            <td className="px-4 py-3">80 / mo</td>
+                            <td className="px-4 py-3 text-primary font-bold">224 / mo</td>
+                            <td className="px-4 py-3 text-accent font-extrabold">+180%</td>
+                          </tr>
+                          <tr>
+                            <td className="px-4 py-3 font-semibold text-primary-dark">Average Customer Acquisition CPL</td>
+                            <td className="px-4 py-3">$15.50</td>
+                            <td className="px-4 py-3 text-primary font-bold">$6.20</td>
+                            <td className="px-4 py-3 text-accent font-extrabold">-60% (Savings)</td>
+                          </tr>
+                        </>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
             </div>
 
             {/* Testimonial Quote */}

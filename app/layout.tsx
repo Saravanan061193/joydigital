@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   verification: {
     google: "yYfFlGYZPthQmXcw3V9yq2U2OlPPPxWBCtG7URIXDwQ",
   },
-  title: "Website Design Company & Global SEO Growth Agency | Joy Digital",
-  description: "Joy Digital is a premium web development company and global SEO agency. We engineer high-performance Next.js websites and scale organic search traffic globally.",
+  title: "Joy Digital | Web Design & Digital Marketing Agency",
+  description: "Joy Digital is a premium web development and search marketing agency. We build fast, high-converting Next.js websites and optimize them for search visibility.",
   alternates: {
     canonical: "./",
   },
@@ -31,22 +31,22 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://joydigital.in",
-    siteName: "Joy Digital Growth Agency",
-    title: "Website Design & Digital Marketing in Madurai | Joy Digital",
-    description: "Joy Digital is the best website design company & digital marketing agency in Madurai. We offer local SEO, Google Business Profile setup, & branding.",
+    siteName: "Joy Digital Agency",
+    title: "Joy Digital | Web Design & Digital Marketing Agency",
+    description: "Joy Digital is a premium web development and search marketing agency. We build fast, high-converting Next.js websites and optimize them for search visibility.",
     images: [
       {
         url: "/assets/images/hero-banner.webp",
         width: 1024,
         height: 1024,
-        alt: "Joy Digital Growth Agency Logo",
+        alt: "Joy Digital - Web Design & Digital Marketing Agency",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Website Design & Digital Marketing in Madurai | Joy Digital",
-    description: "Joy Digital is the best website design company & digital marketing agency in Madurai. We offer local SEO, Google Business Profile setup, & branding.",
+    title: "Joy Digital | Web Design & Digital Marketing Agency",
+    description: "Joy Digital is a premium web development and search marketing agency. We build fast, high-converting Next.js websites and optimize them for search visibility.",
     images: ["/assets/images/hero-banner.webp"],
   },
 };

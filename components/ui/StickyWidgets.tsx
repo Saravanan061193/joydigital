@@ -60,6 +60,18 @@ export default function StickyWidgets() {
         </div>
       )}
 
+      {/* Floating Call Button */}
+      <a
+        href="tel:+919080026133"
+        className="fixed bottom-36 lg:bottom-24 right-6 w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center text-2xl shadow-lg hover:scale-110 transition-all duration-300 z-40"
+        aria-label="Call Us Now"
+        title="Call Us Now"
+        data-call-location="floating button"
+      >
+        <span className="absolute top-0 left-0 w-full h-full bg-primary rounded-full -z-1 opacity-70 animate-pulse-ring"></span>
+        <i className="fa-solid fa-phone relative z-10" />
+      </a>
+
       {/* Floating WhatsApp Pulse Button */}
       <a
         href="https://wa.me/919080026133?text=Hello%20Joy%20Digital,%20I'd%20like%20to%20get%20a%20free%20consultation%20for%20my%20business."
@@ -77,7 +89,7 @@ export default function StickyWidgets() {
       {/* Scroll to Top Button */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className={`fixed bottom-36 lg:bottom-24 right-8 w-10 h-10 bg-primary-dark text-white rounded-full flex items-center justify-center text-sm shadow-md hover:bg-accent transition-all duration-300 z-40 ${
+        className={`fixed bottom-52 lg:bottom-40 right-8 w-10 h-10 bg-primary-dark text-white rounded-full flex items-center justify-center text-sm shadow-md hover:bg-accent transition-all duration-300 z-40 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
         }`}
         aria-label="Scroll to top"

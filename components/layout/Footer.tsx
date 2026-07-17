@@ -11,6 +11,43 @@ const REGIONAL_SITES = [
 
 export default function Footer() {
   const pathname = usePathname();
+  const [subscribed, setSubscribed] = React.useState(false);
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement;
+    const email = emailInput?.value || "";
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/saravanan061193@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: JSON.stringify({
+          Email: email,
+          Source: "Newsletter Footer Form",
+          Message: "Newsletter subscription request.",
+          _subject: "📬 Newsletter Subscription - Joy Digital",
+          _captcha: "false",
+        }),
+      });
+      if (response.ok) {
+        setSubscribed(true);
+        emailInput.value = "";
+        
+        // Track event
+        const tracker = (window as any).trackJoyDigitalEvent;
+        if (typeof tracker === "function") {
+          tracker("newsletter_signup", { email });
+        }
+      }
+    } catch (err) {
+      console.error("Newsletter submission failed:", err);
+    }
+  };
 
   // Detect current region from pathname
   const parts = pathname.split("/").filter(Boolean);
@@ -30,11 +67,11 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 border-b border-[#E5E7EB] pb-16">
         
         {/* Brand Info */}
-        <div className="flex flex-col gap-6 col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-1">
+        <div className="flex flex-col gap-5 col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-1">
           <Link href={getRegionalHref("/")} title="Joy Digital Home" className="flex items-center gap-3">
             <Image
               src="/assets/images/logo.webp"
-              alt="Joy Digital Logo"
+              alt="Joy Digital - Web Design & Digital Marketing Agency Logo"
               title="Joy Digital Logo"
               width={70}
               height={70}
@@ -77,12 +114,47 @@ export default function Footer() {
               <i className="fa-brands fa-youtube"></i>
             </a>
             <a
-              href="mailto:joydiigtals@gmail.com"
+              href="https://www.linkedin.com/in/saravanan-joydigital/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded bg-[#E5E7EB]/50 border border-[#E5E7EB] flex items-center justify-center text-text-secondary hover:bg-accent hover:text-white transition-all duration-300"
+              aria-label="LinkedIn"
+            >
+              <i className="fa-brands fa-linkedin-in"></i>
+            </a>
+            <a
+              href="mailto:saravanan061193@gmail.com"
               className="w-10 h-10 rounded bg-[#E5E7EB]/50 border border-[#E5E7EB] flex items-center justify-center text-text-secondary hover:bg-accent hover:text-white transition-all duration-300"
               aria-label="Email"
             >
               <i className="fa-solid fa-envelope"></i>
             </a>
+          </div>
+
+          {/* Newsletter Box */}
+          <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-gray-200">
+            <span className="text-[10px] font-bold text-[#111827] uppercase tracking-wider">Subscribe to Newsletter</span>
+            <p className="text-[10px] text-text-secondary leading-tight">Get weekly SEO tips & conversion hacks to grow your business.</p>
+            {subscribed ? (
+              <span className="text-emerald-600 text-xs font-semibold flex items-center gap-1 mt-1">
+                <i className="fa-solid fa-circle-check" /> You're subscribed!
+              </span>
+            ) : (
+              <form onSubmit={handleNewsletterSubmit} className="flex gap-1.5 w-full mt-1">
+                <input
+                  type="email"
+                  placeholder="Enter email..."
+                  required
+                  className="bg-white border border-[#E5E7EB] text-xs px-3.5 py-2.5 rounded-lg outline-none focus:border-accent w-full"
+                />
+                <button
+                  type="submit"
+                  className="bg-[#2563EB] hover:bg-[#3B82F6] text-white text-xs px-4 py-2.5 rounded-lg font-bold shadow-sm transition-all cursor-pointer"
+                >
+                  Join
+                </button>
+              </form>
+            )}
           </div>
         </div>
 
@@ -104,18 +176,28 @@ export default function Footer() {
               </li>
             ))}
             <li className="border-t border-[#E5E7EB] pt-2 mt-1">
-              <Link href="/website-development-madurai" className="hover:text-accent hover:pl-1 transition-all block">
-                Website Development Madurai
+              <Link href="/web-development-company-in-madurai" className="hover:text-accent hover:pl-1 transition-all block">
+                Web Development Madurai
               </Link>
             </li>
             <li>
-              <Link href="/website-development-chennai" className="hover:text-accent hover:pl-1 transition-all block">
-                Website Development Chennai
+              <Link href="/website-design-company-in-madurai" className="hover:text-accent hover:pl-1 transition-all block">
+                Website Design Madurai
               </Link>
             </li>
             <li>
-              <Link href="/website-development-coimbatore" className="hover:text-accent hover:pl-1 transition-all block">
-                Website Development Coimbatore
+              <Link href="/seo-services-in-madurai" className="hover:text-accent hover:pl-1 transition-all block">
+                SEO Services Madurai
+              </Link>
+            </li>
+            <li>
+              <Link href="/digital-marketing-agency-in-madurai" className="hover:text-accent hover:pl-1 transition-all block">
+                Digital Marketing Madurai
+              </Link>
+            </li>
+            <li>
+              <Link href="/google-business-profile-optimization" className="hover:text-accent hover:pl-1 transition-all block">
+                GBP Maps Optimization
               </Link>
             </li>
           </ul>
@@ -145,6 +227,16 @@ export default function Footer() {
             <li>
               <Link href="/local-seo-services" className="hover:text-accent hover:pl-1 transition-all">
                 Local SEO & Maps
+              </Link>
+            </li>
+            <li>
+              <Link href="/ecommerce-website-development" className="hover:text-accent hover:pl-1 transition-all">
+                Ecommerce Web Dev
+              </Link>
+            </li>
+            <li>
+              <Link href="/custom-software-development" className="hover:text-accent hover:pl-1 transition-all">
+                Custom Software Dev
               </Link>
             </li>
             <li className="border-t border-[#E5E7EB] pt-2 mt-1">
@@ -221,7 +313,7 @@ export default function Footer() {
             </li>
             <li className="flex items-center gap-2 border-t border-[#E5E7EB] pt-3 mt-1">
               <span className="text-accent"><i className="fa-solid fa-envelope" /></span>
-              <a href="mailto:joydiigtals@gmail.com" className="hover:text-accent text-[#111827] font-medium transition-colors">joydiigtals@gmail.com</a>
+              <a href="mailto:saravanan061193@gmail.com" className="hover:text-accent text-[#111827] font-medium transition-colors">saravanan061193@gmail.com</a>
             </li>
           </ul>
         </div>
