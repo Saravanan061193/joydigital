@@ -3,28 +3,28 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "SEO Services in Madurai | Google Maps Ranking & Search Marketing",
-  description: "Joy Digital is the premier Local SEO company in Madurai, India. We rank your business in the Google Maps 3-Pack and optimize local citation directories.",
+  title: "SEO Services in Chennai | Google Maps Ranking & Search Marketing",
+  description: "Joy Digital is the premier Local SEO company in Chennai, India. We rank your business in the Google Maps 3-Pack and optimize local citation directories.",
   alternates: {
-    canonical: "https://joydigital.in/seo-services-in-madurai",
+    canonical: "https://joydigital.in/seo-services-in-chennai",
   },
   openGraph: {
-    title: "SEO Services in Madurai | Google Maps Ranking & Search Marketing",
-    description: "Joy Digital is the premier Local SEO company in Madurai, India. We rank your business in the Google Maps 3-Pack and optimize local citation directories.",
-    url: "https://joydigital.in/seo-services-in-madurai",
+    title: "SEO Services in Chennai | Google Maps Ranking & Search Marketing",
+    description: "Joy Digital is the premier Local SEO company in Chennai, India. We rank your business in the Google Maps 3-Pack and optimize local citation directories.",
+    url: "https://joydigital.in/seo-services-in-chennai",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SEO Services in Madurai | Google Maps Ranking & Search Marketing",
-    description: "Joy Digital is the premier Local SEO company in Madurai, India. We rank your business in the Google Maps 3-Pack and optimize local citation directories.",
+    title: "SEO Services in Chennai | Google Maps Ranking & Search Marketing",
+    description: "Joy Digital is the premier Local SEO company in Chennai, India. We rank your business in the Google Maps 3-Pack and optimize local citation directories.",
   }
 };
 
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Local SEO Services in Madurai",
+  "name": "Local SEO Services in Chennai",
   "serviceType": "Search Engine Optimization Services",
   "provider": {
     "@type": "LocalBusiness",
@@ -34,14 +34,14 @@ const pageSchema = {
     "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Madurai Main Road",
-      "addressLocality": "Madurai",
+      "streetAddress": "Chennai Main Road",
+      "addressLocality": "Chennai",
       "addressRegion": "Tamil Nadu",
       "postalCode": "625001",
       "addressCountry": "IN"
     }
   },
-  "description": "Joy Digital helps local companies improve their map placements, optimize directory listings, and rank for nearby search queries in Madurai and across India.",
+  "description": "Joy Digital helps local companies improve their map placements, optimize directory listings, and rank for nearby search queries in Chennai and across India.",
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
@@ -51,29 +51,29 @@ const pageSchema = {
   }
 };
 
-export default function SEOServicesMadurai() {
+export default function SEOServicesChennai() {
   return (
     <ServicePageTemplate
-      serviceName="SEO Services Madurai"
-      heroTitle="Best SEO Services in Madurai"
-      heroSubtitle="Dominate local Google search rankings and get ranked in the Google Maps Local 3-Pack. As the leading local SEO agency in Madurai, we build high-authority citations and optimize search metadata to drive continuous customer inquiries."
-      leadSource="SEO Services Madurai Landing Page"
-      canonicalUrl="https://joydigital.in/seo-services-in-madurai"
-      overviewTitle="Scale Organic Traffic and Leads for Your Madurai Business"
+      serviceName="SEO Services Chennai"
+      heroTitle="Best SEO Services in Chennai"
+      heroSubtitle="Dominate local Google search rankings and get ranked in the Google Maps Local 3-Pack. As the leading local SEO agency in Chennai, we build high-authority citations and optimize search metadata to drive continuous customer inquiries."
+      leadSource="SEO Services Chennai Landing Page"
+      canonicalUrl="https://joydigital.in/seo-services-in-chennai"
+      overviewTitle="Scale Organic Traffic and Leads for Your Chennai Business"
       overviewContent={
         <div className="space-y-6">
           <p>
-            When customers need local services&mdash;whether searching for a clinic, Travels, real estate agent, or retail showroom in Madurai&mdash;they open Google Maps or search queries like &ldquo;best Travels in Madurai&rdquo; or &ldquo;insurance agent near me&rdquo;. If your business is not showing up in the top three map results (the Google Maps 3-Pack), you are losing high-intent leads to competitors.
+            When customers need local services&mdash;whether searching for a clinic, Travels, real estate agent, or retail showroom in Chennai&mdash;they open Google Maps or search queries like &ldquo;best Travels in Chennai&rdquo; or &ldquo;insurance agent near me&rdquo;. If your business is not showing up in the top three map results (the Google Maps 3-Pack), you are losing high-intent leads to competitors.
           </p>
           <p>
-            At Joy Digital, our specialized <strong>local SEO services in Madurai</strong> focus on ranking your business where buying intent is highest. We set up Google Business Profiles, correct Name, Address, and Phone (NAP) details, and structure localized landing pages to capture search engine traffic.
+            At Joy Digital, our specialized <strong>local SEO services in Chennai</strong> focus on ranking your business where buying intent is highest. We set up Google Business Profiles, correct Name, Address, and Phone (NAP) details, and structure localized landing pages to capture search engine traffic.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Relevance, Distance, and Prominence: The Local SEO Pillars</h3>
           <p>
             Google ranks map results using three core parameters: relevance (matching search queries), distance (proximity to searcher), and prominence (brand authority). We optimize these signals by injecting local business schemas on your website, listing your details in trusted directories, and setting up review acquisition links.
           </p>
           <p>
-            We also design location landing pages targeting Madurai neighborhoods and Tamil Nadu cities. This structure allows your site to capture search queries from surrounding areas, sending a steady stream of call clicks and contact form submissions to your team.
+            We also design location landing pages targeting Chennai neighborhoods and Tamil Nadu cities. This structure allows your site to capture search queries from surrounding areas, sending a steady stream of call clicks and contact form submissions to your team.
           </p>
         </div>
       }
@@ -191,7 +191,7 @@ export default function SEOServicesMadurai() {
       ]}
       faqs={[
         {
-          question: "How long does it take to see results from Local SEO in Madurai?",
+          question: "How long does it take to see results from Local SEO in Chennai?",
           answer: "Local SEO optimizations can show improvements in 30 to 60 days. Standard profile category tweaks and building consistent directory listings help map positions rise steadily over 3 to 6 months.",
         },
         {
@@ -201,8 +201,8 @@ export default function SEOServicesMadurai() {
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
-        { href: "/website-design-company-in-madurai", label: "Web Design Madurai" },
-        { href: "/web-development-company-in-madurai", label: "Web Development" },
+        { href: "/website-design-company-in-chennai", label: "Web Design Chennai" },
+        { href: "/web-development-company-in-chennai", label: "Web Development" },
         { href: "/google-business-profile-optimization", label: "GBP Optimization" },
       ]}
     />

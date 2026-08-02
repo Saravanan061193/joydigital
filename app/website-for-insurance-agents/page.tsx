@@ -23,8 +23,8 @@ const pageSchema = {
     "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Madurai Main Road",
-      "addressLocality": "Madurai",
+      "streetAddress": "Chennai Main Road",
+      "addressLocality": "Chennai",
       "addressRegion": "Tamil Nadu",
       "postalCode": "625001",
       "addressCountry": "IN"
@@ -171,7 +171,7 @@ export default function InsuranceAgentWebPage() {
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
-        { href: "/website-development-madurai", label: "Madurai Web Dev" },
+        { href: "/website-development-chennai", label: "Chennai Web Dev" },
         { href: "/portfolio", label: "View Portfolio" },
         { href: "/contact", label: "Contact Us" },
       ]}

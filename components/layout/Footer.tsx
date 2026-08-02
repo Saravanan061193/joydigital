@@ -176,23 +176,23 @@ export default function Footer() {
               </li>
             ))}
             <li className="border-t border-[#E5E7EB] pt-2 mt-1">
-              <Link href="/web-development-company-in-madurai" className="hover:text-accent hover:pl-1 transition-all block">
-                Web Development Madurai
+              <Link href="/web-development-company-in-chennai" className="hover:text-accent hover:pl-1 transition-all block">
+                Web Development Chennai
               </Link>
             </li>
             <li>
-              <Link href="/website-design-company-in-madurai" className="hover:text-accent hover:pl-1 transition-all block">
-                Website Design Madurai
+              <Link href="/website-design-company-in-chennai" className="hover:text-accent hover:pl-1 transition-all block">
+                Website Design Chennai
               </Link>
             </li>
             <li>
-              <Link href="/seo-services-in-madurai" className="hover:text-accent hover:pl-1 transition-all block">
-                SEO Services Madurai
+              <Link href="/seo-services-in-chennai" className="hover:text-accent hover:pl-1 transition-all block">
+                SEO Services Chennai
               </Link>
             </li>
             <li>
-              <Link href="/digital-marketing-agency-in-madurai" className="hover:text-accent hover:pl-1 transition-all block">
-                Digital Marketing Madurai
+              <Link href="/digital-marketing-agency-in-chennai" className="hover:text-accent hover:pl-1 transition-all block">
+                Digital Marketing Chennai
               </Link>
             </li>
             <li>

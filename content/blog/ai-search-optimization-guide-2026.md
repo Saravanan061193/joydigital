@@ -10,9 +10,9 @@ Google Search is changing rapidly. Is your business ready?
 
 For years, businesses focused only on ranking on Google. If your website appeared on the first page, you had a good chance of getting visitors and enquiries. Today, the way people search has changed.
 
-Instead of typing short keywords like **"website design company in Madurai"**, people are asking AI assistants questions such as:
+Instead of typing short keywords like **"website design company in Chennai"**, people are asking AI assistants questions such as:
 
-* "Which company can build an affordable business website in Madurai?"
+* "Which company can build an affordable business website in Chennai?"
 * "Who provides SEO services for local businesses?"
 * "Recommend a digital marketing agency for a startup."
 

@@ -26,7 +26,7 @@ export default function ContactPage() {
               Let&apos;s Grow Your <span className="text-gradient">Digital Presence</span>
             </h1>
             <p className="text-sm text-text-secondary max-w-xl mx-auto leading-relaxed">
-              Ready to grow your search visibility and customer leads? Contact us today. Our consulting team is based in Madurai, Tamil Nadu, India.
+              Ready to grow your search visibility and customer leads? Contact us today. Our consulting team is based in Chennai, Tamil Nadu, India.
             </p>
           </div>
         </section>
@@ -50,7 +50,7 @@ export default function ContactPage() {
                   <div className="flex flex-col">
                     <span className="text-[10px] font-bold text-text-muted uppercase">Office Address</span>
                     <span className="text-sm font-bold text-primary-dark mt-0.5">
-                      Joy Digital Growth Agency, Madurai, Tamil Nadu, India
+                      Joy Digital Growth Agency, Chennai, Tamil Nadu, India
                     </span>
                   </div>
                 </div>

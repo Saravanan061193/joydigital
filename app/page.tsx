@@ -3,14 +3,14 @@ import HomePageComponent from "@/components/sections/HomePageComponent";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Web Design & Digital Marketing Agency in Madurai | Joy Digital",
-  description: "Joy Digital is the premier website design company & digital marketing agency in Madurai. We offer custom web design, local SEO, Google Business Profile setup, and lead generation.",
+  title: "Web Design & Digital Marketing Agency in Chennai | Joy Digital",
+  description: "Joy Digital is the premier website design company & digital marketing agency in Chennai. We offer custom web design, local SEO, Google Business Profile setup, and lead generation.",
   alternates: {
     canonical: "https://joydigital.in",
   },
   openGraph: {
-    title: "Web Design & Digital Marketing Agency in Madurai | Joy Digital",
-    description: "Joy Digital is the premier website design company & digital marketing agency in Madurai. We offer custom web design, local SEO, Google Business Profile setup, and lead generation.",
+    title: "Web Design & Digital Marketing Agency in Chennai | Joy Digital",
+    description: "Joy Digital is the premier website design company & digital marketing agency in Chennai. We offer custom web design, local SEO, Google Business Profile setup, and lead generation.",
     url: "https://joydigital.in",
     siteName: "Joy Digital",
     type: "website",
@@ -19,14 +19,14 @@ export const metadata: Metadata = {
         url: "/assets/images/hero-banner.webp",
         width: 1024,
         height: 1024,
-        alt: "Joy Digital - Web Design & Digital Marketing Agency in Madurai",
+        alt: "Joy Digital - Web Design & Digital Marketing Agency in Chennai",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Web Design & Digital Marketing Agency in Madurai | Joy Digital",
-    description: "Joy Digital is the premier website design company & digital marketing agency in Madurai. We offer custom web design, local SEO, Google Business Profile setup, and lead generation.",
+    title: "Web Design & Digital Marketing Agency in Chennai | Joy Digital",
+    description: "Joy Digital is the premier website design company & digital marketing agency in Chennai. We offer custom web design, local SEO, Google Business Profile setup, and lead generation.",
     images: ["/assets/images/hero-banner.webp"],
   },
 };

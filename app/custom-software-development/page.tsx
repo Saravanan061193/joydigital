@@ -34,8 +34,8 @@ const pageSchema = {
     "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Madurai Main Road",
-      "addressLocality": "Madurai",
+      "streetAddress": "Chennai Main Road",
+      "addressLocality": "Chennai",
       "addressRegion": "Tamil Nadu",
       "postalCode": "625001",
       "addressCountry": "IN"
@@ -200,7 +200,7 @@ export default function CustomSoftwarePage() {
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
-        { href: "/web-development-company-in-madurai", label: "Web Development" },
+        { href: "/web-development-company-in-chennai", label: "Web Development" },
         { href: "/ecommerce-website-development", label: "eCommerce Web Dev" },
         { href: "/portfolio", label: "Our Portfolio" },
       ]}

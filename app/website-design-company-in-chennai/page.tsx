@@ -3,28 +3,28 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Website Design Company in Madurai | Premium UI/UX & Web Design",
-  description: "Joy Digital is the leading website design company in Madurai. We design modern, high-converting websites and UI/UX layouts for businesses in Madurai.",
+  title: "Website Design Company in Chennai | Premium UI/UX & Web Design",
+  description: "Joy Digital is the leading website design company in Chennai. We design modern, high-converting websites and UI/UX layouts for businesses in Chennai.",
   alternates: {
-    canonical: "https://joydigital.in/website-design-company-in-madurai",
+    canonical: "https://joydigital.in/website-design-company-in-chennai",
   },
   openGraph: {
-    title: "Website Design Company in Madurai | Premium UI/UX & Web Design",
-    description: "Joy Digital is the leading website design company in Madurai. We design modern, high-converting websites and UI/UX layouts for businesses in Madurai.",
-    url: "https://joydigital.in/website-design-company-in-madurai",
+    title: "Website Design Company in Chennai | Premium UI/UX & Web Design",
+    description: "Joy Digital is the leading website design company in Chennai. We design modern, high-converting websites and UI/UX layouts for businesses in Chennai.",
+    url: "https://joydigital.in/website-design-company-in-chennai",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Website Design Company in Madurai | Premium UI/UX & Web Design",
-    description: "Joy Digital is the leading website design company in Madurai. We design modern, high-converting websites and UI/UX layouts for businesses in Madurai.",
+    title: "Website Design Company in Chennai | Premium UI/UX & Web Design",
+    description: "Joy Digital is the leading website design company in Chennai. We design modern, high-converting websites and UI/UX layouts for businesses in Chennai.",
   }
 };
 
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Website Design in Madurai",
+  "name": "Website Design in Chennai",
   "serviceType": "Web Design Services",
   "provider": {
     "@type": "LocalBusiness",
@@ -34,14 +34,14 @@ const pageSchema = {
     "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Madurai Main Road",
-      "addressLocality": "Madurai",
+      "streetAddress": "Chennai Main Road",
+      "addressLocality": "Chennai",
       "addressRegion": "Tamil Nadu",
       "postalCode": "625001",
       "addressCountry": "IN"
     }
   },
-  "description": "Custom UI/UX website design company in Madurai. We create responsive templates, landing pages, and interactive designs that convert traffic into leads.",
+  "description": "Custom UI/UX website design company in Chennai. We create responsive templates, landing pages, and interactive designs that convert traffic into leads.",
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
@@ -51,14 +51,14 @@ const pageSchema = {
   }
 };
 
-export default function WebsiteDesignMadurai() {
+export default function WebsiteDesignChennai() {
   return (
     <ServicePageTemplate
-      serviceName="Website Design Madurai"
-      heroTitle="Creative Website Design Company in Madurai"
+      serviceName="Website Design Chennai"
+      heroTitle="Creative Website Design Company in Chennai"
       heroSubtitle="Stand out from competitors in Tamil Nadu with custom, conversion-optimized, and premium UI/UX layouts. We design gorgeous web platforms that rank on Google Maps and drive direct customer inquiries."
-      leadSource="Website Design Madurai Landing Page"
-      canonicalUrl="https://joydigital.in/website-design-company-in-madurai"
+      leadSource="Website Design Chennai Landing Page"
+      canonicalUrl="https://joydigital.in/website-design-company-in-chennai"
       overviewTitle="Custom Responsive Web Designs Engineered for Conversions"
       overviewContent={
         <div className="space-y-6">
@@ -66,9 +66,9 @@ export default function WebsiteDesignMadurai() {
             Your website is often the first impression a customer has of your business. A slow, generic template with confusing navigation can turn prospects away and send them directly to competitors. To grow your business online, you need a website that is visually stunning, easy to navigate, and optimized for search and leads.
           </p>
           <p>
-            At Joy Digital, a premium <strong>website design company in Madurai</strong>, we focus on custom, responsive UI/UX. We design custom layouts tailored to your exact brand aesthetics using advanced typography, harmonized color schemes, and fast-loading web elements.
+            At Joy Digital, a premium <strong>website design company in Chennai</strong>, we focus on custom, responsive UI/UX. We design custom layouts tailored to your exact brand aesthetics using advanced typography, harmonized color schemes, and fast-loading web elements.
           </p>
-          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Mobile-Responsive Designs Custom Built for Madurai Brands</h3>
+          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Mobile-Responsive Designs Custom Built for Chennai Brands</h3>
           <p>
             More than 80% of local web traffic comes from mobile devices. We design all layouts using a mobile-first framework. Your website will render beautifully on smartphones, tablets, laptops, and wide screens. We ensure buttons are easy to tap, forms are easy to fill, and text is readable on all displays.
           </p>
@@ -77,7 +77,7 @@ export default function WebsiteDesignMadurai() {
           </p>
         </div>
       }
-      benefitsTitle="Why Choose Our Madurai Web Design Agency?"
+      benefitsTitle="Why Choose Our Chennai Web Design Agency?"
       benefitsSubtitle="We blend premium creative UI/UX designs with technical SEO to maximize your website's ROI."
       benefits={[
         {
@@ -200,8 +200,8 @@ export default function WebsiteDesignMadurai() {
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
-        { href: "/web-development-company-in-madurai", label: "Web Development" },
-        { href: "/seo-services-in-madurai", label: "SEO Services Madurai" },
+        { href: "/web-development-company-in-chennai", label: "Web Development" },
+        { href: "/seo-services-in-chennai", label: "SEO Services Chennai" },
         { href: "/portfolio", label: "Portfolio" },
       ]}
     />

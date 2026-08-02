@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Logo Design in Madurai | Corporate Branding Agency - Joy Digital",
-  description: "Joy Digital is a professional logo design company in Madurai, India. We design creative, custom vector logos, brand color boards, and corporate identity sets.",
+  title: "Logo Design in Chennai | Corporate Branding Agency - Joy Digital",
+  description: "Joy Digital is a professional logo design company in Chennai, India. We design creative, custom vector logos, brand color boards, and corporate identity sets.",
   alternates: {
     canonical: "https://joydigital.in/logo-design-services",
   },
@@ -23,14 +23,14 @@ const pageSchema = {
     "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Madurai Main Road",
-      "addressLocality": "Madurai",
+      "streetAddress": "Chennai Main Road",
+      "addressLocality": "Chennai",
       "addressRegion": "Tamil Nadu",
       "postalCode": "625001",
       "addressCountry": "IN"
     }
   },
-  "description": "Joy Digital is a creative branding agency in Madurai, India, delivering high-concept corporate logos, typography systems, and print assets.",
+  "description": "Joy Digital is a creative branding agency in Chennai, India, delivering high-concept corporate logos, typography systems, and print assets.",
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
@@ -44,8 +44,8 @@ export default function LogoPage() {
   return (
     <ServicePageTemplate
       serviceName="Logo & Brand Design"
-      heroTitle="Professional Logo Design & Memorable Brand Identity in Madurai"
-      heroSubtitle="Create a memorable first impression with creative, high-concept visual assets. As a leading agency for logo design in Madurai, we design custom brand marks, typography guidelines, color palettes, and matching print layouts that represent your business values."
+      heroTitle="Professional Logo Design & Memorable Brand Identity in Chennai"
+      heroSubtitle="Create a memorable first impression with creative, high-concept visual assets. As a leading agency for logo design in Chennai, we design custom brand marks, typography guidelines, color palettes, and matching print layouts that represent your business values."
       leadSource="Logo Design Landing Page"
       overviewTitle="Building Visual Identity Systems that Commend Professional Trust"
       overviewContent={
@@ -54,7 +54,7 @@ export default function LogoPage() {
             Your logo is the visual face of your entire company. It is often the first brand asset a prospective client notices when searching for your services online or browsing social media. A poorly designed, low-resolution, or generic logo can make an otherwise professional business appear unestablished, which can hurt conversions. Investing in a professional visual identity is essential for long-term growth.
           </p>
           <p>
-            At Joy Digital, a premier <strong>branding agency in madurai</strong>, our design process goes far beyond standard templates and automated clip art. We research your specific industry, review competitor branding layouts in Madurai and across India, and sketch custom logo concepts that represent your core corporate values. This structured design approach ensures that your visual assets are clean, memorable, scalable, and visually appealing.
+            At Joy Digital, a premier <strong>branding agency in chennai</strong>, our design process goes far beyond standard templates and automated clip art. We research your specific industry, review competitor branding layouts in Chennai and across India, and sketch custom logo concepts that represent your core corporate values. This structured design approach ensures that your visual assets are clean, memorable, scalable, and visually appealing.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Complete Brand Systems for Online & Offline Growth</h3>
           <p>
@@ -95,7 +95,7 @@ export default function LogoPage() {
         {
           icon: "fa-solid fa-address-card",
           title: "Print Assets Design",
-          description: "We design matching business cards, letterheads, and envelopes to present a professional look during offline corporate meetings in Madurai.",
+          description: "We design matching business cards, letterheads, and envelopes to present a professional look during offline corporate meetings in Chennai.",
         },
         {
           icon: "fa-solid fa-book",
@@ -110,7 +110,7 @@ export default function LogoPage() {
           step: "1",
           icon: "fa-solid fa-clipboard-question",
           title: "Briefing & Competitor Study",
-          description: "We discuss your brand values, target audience, color preferences, and review competitor logos in Madurai and across India.",
+          description: "We discuss your brand values, target audience, color preferences, and review competitor logos in Chennai and across India.",
         },
         {
           step: "2",
@@ -180,7 +180,7 @@ export default function LogoPage() {
       ]}
       faqs={[
         {
-          question: "Who owns the copyrights to the logo designs in Madurai?",
+          question: "Who owns the copyrights to the logo designs in Chennai?",
           answer: "Once the design project is finalized and payment is completed, you own the full copyrights to the final approved logo designs. We deliver a signed handoff document and share source assets. We can showcase the work in our agency portfolio only with your permission.",
         },
         {

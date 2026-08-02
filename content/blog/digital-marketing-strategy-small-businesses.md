@@ -31,7 +31,7 @@ Local search optimization is the most cost-effective way to acquire clients. It 
 Once your foundation is set, use paid social campaigns to reach prospective clients quickly:
 
 * **Meta Lead Ads (Facebook & Instagram):** Run lead forms targeting local demographic areas.
-* **Google Search Ads:** Bid on buying intent search queries (e.g., 'hire interior designer in Madurai') to capture hot leads.
+* **Google Search Ads:** Bid on buying intent search queries (e.g., 'hire interior designer in Chennai') to capture hot leads.
 * **Retargeting Campaigns:** Show follow-up ads to users who have visited your website but did not fill in a contact form.
 
 ## Step 4: Track Metrics & Optimize ROI

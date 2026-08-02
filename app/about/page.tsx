@@ -67,7 +67,7 @@ export default function AboutPage() {
               </h2>
               <div className="text-sm text-text-secondary leading-relaxed space-y-6">
                 <p>
-                  At Joy Digital Growth Agency, our core mission is to deliver professional digital marketing and web engineering solutions designed to fit startup and small-to-medium business budgets. Based in Madurai, Tamil Nadu, we understand how local search habits impact customer acquisition.
+                  At Joy Digital Growth Agency, our core mission is to deliver professional digital marketing and web engineering solutions designed to fit startup and small-to-medium business budgets. Based in Chennai, Tamil Nadu, we understand how local search habits impact customer acquisition.
                 </p>
                 <p>
                   We avoid generic, bloated web designs that slow down page performance. Instead, we write clean, search-ready code and configure profiles to help local businesses rank on Google Maps and search results, building brand authority.
@@ -93,7 +93,7 @@ export default function AboutPage() {
               <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-[#2563EB]/10 to-accent/20 border-2 border-accent/30 flex items-center justify-center text-accent text-3xl mb-4 shadow-sm">
                 <i className="fa-solid fa-circle-user" />
               </div>
-              <h3 className="text-xl font-extrabold text-primary-dark mb-1">Saravanan M.</h3>
+              <h3 className="text-xl font-extrabold text-primary-dark mb-1">Saravanan L</h3>
               <span className="text-xs font-semibold text-accent uppercase tracking-widest mb-3">Founder & Director</span>
               
               <a

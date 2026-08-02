@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Google Business Profile Optimization Madurai | GMB Setup - Joy Digital",
-  description: "Joy Digital is a professional Google Business Profile optimization agency in Madurai, India. We verify and rank your business on Google Maps pack.",
+  title: "Google Business Profile Optimization Chennai | GMB Setup - Joy Digital",
+  description: "Joy Digital is a professional Google Business Profile optimization agency in Chennai, India. We verify and rank your business on Google Maps pack.",
   alternates: {
     canonical: "https://joydigital.in/google-business-profile-setup",
   },
@@ -23,8 +23,8 @@ const pageSchema = {
     "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Madurai Main Road",
-      "addressLocality": "Madurai",
+      "streetAddress": "Chennai Main Road",
+      "addressLocality": "Chennai",
       "addressRegion": "Tamil Nadu",
       "postalCode": "625001",
       "addressCountry": "IN"
@@ -45,7 +45,7 @@ export default function GBPPage() {
     <ServicePageTemplate
       serviceName="Google Business Profile Setup"
       heroTitle="Dominate Google Maps & Grow Customer Inquiries with GBP Optimization"
-      heroSubtitle="Improve search rankings on Google Maps, generate direct phone calls, and connect with local customers. As a leading Google Business Profile setup provider in Madurai, we handle verification, category setup, review management, and citation listings to grow your map presence."
+      heroSubtitle="Improve search rankings on Google Maps, generate direct phone calls, and connect with local customers. As a leading Google Business Profile setup provider in Chennai, we handle verification, category setup, review management, and citation listings to grow your map presence."
       leadSource="GBP Setup Landing Page"
       overviewTitle="Earning Placements in the Google Maps Local Pack"
       overviewContent={
@@ -54,7 +54,7 @@ export default function GBPPage() {
             When nearby customers search for local services, Google displays the &ldquo;Local Pack&rdquo;&mdash;a section at the top of the search results showing three local business map listings. Earning a placement in these top spots can significantly grow your customer inquiries, website visits, and physical store traffic. If you do not optimize your profile, you are leaving free leads for your competitors.
           </p>
           <p>
-            At Joy Digital, our specialized <strong>google business profile optimization madurai</strong> services focus on helping regional businesses optimize their Google Maps presence. We handle Google Business Profile verification, select target primary and secondary business categories, write search-optimized description bios, and list your core services. This structured approach helps your profile stand out to local searchers in Madurai and across India.
+            At Joy Digital, our specialized <strong>google business profile optimization chennai</strong> services focus on helping regional businesses optimize their Google Maps presence. We handle Google Business Profile verification, select target primary and secondary business categories, write search-optimized description bios, and list your core services. This structured approach helps your profile stand out to local searchers in Chennai and across India.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Optimizing Google Maps for Mobile Calls & Directions</h3>
           <p>
@@ -65,7 +65,7 @@ export default function GBPPage() {
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">The Impact of Geotagged Media and Regular Updates</h3>
           <p>
-            Google&apos;s local algorithm monitors profile activity to gauge relevancy. Regularly uploading photos from your physical location with metadata signals (geotagging) alerts the algorithm that your business is active and physically present in Madurai. We schedule weekly updates, geotag your service images, and publish profile posts that highlight special offers and services.
+            Google&apos;s local algorithm monitors profile activity to gauge relevancy. Regularly uploading photos from your physical location with metadata signals (geotagging) alerts the algorithm that your business is active and physically present in Chennai. We schedule weekly updates, geotag your service images, and publish profile posts that highlight special offers and services.
           </p>
         </div>
       }
@@ -95,7 +95,7 @@ export default function GBPPage() {
         {
           icon: "fa-solid fa-triangle-exclamation",
           title: "Spam Profile Cleanups",
-          description: "We audit your search area in Madurai and report keyword-stuffed competitor listings that violate guidelines, clearing search space.",
+          description: "We audit your search area in Chennai and report keyword-stuffed competitor listings that violate guidelines, clearing search space.",
         },
         {
           icon: "fa-solid fa-comment-dots",
@@ -180,7 +180,7 @@ export default function GBPPage() {
       ]}
       faqs={[
         {
-          question: "How long does Google Business Profile verification take in Madurai?",
+          question: "How long does Google Business Profile verification take in Chennai?",
           answer: "Google verification methods vary. Some listings can be verified instantly via phone or email, while others require a video verification or a physical postcard sent by mail to your address, which takes 5 to 14 days. We assist you through each verification path.",
         },
         {
@@ -189,7 +189,7 @@ export default function GBPPage() {
         },
         {
           question: "What is Google Maps spam, and how do you handle it?",
-          answer: "Google Maps spam includes keyword-stuffed business names, fake reviews, or listings at residential addresses. We audit your search area in Madurai and report profiles that violate Google's guidelines to help clean up search space and rank your real listing.",
+          answer: "Google Maps spam includes keyword-stuffed business names, fake reviews, or listings at residential addresses. We audit your search area in Chennai and report profiles that violate Google's guidelines to help clean up search space and rank your real listing.",
         },
         {
           question: "How do customer reviews affect map rankings?",

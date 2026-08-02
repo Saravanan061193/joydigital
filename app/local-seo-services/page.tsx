@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Local SEO Services in Madurai | Google Maps Ranking - Joy Digital",
-  description: "Joy Digital is the premier Local SEO company in Madurai, India. We rank your business in the Google Maps 3-Pack and optimize local citation directories.",
+  title: "Local SEO Services in Chennai | Google Maps Ranking - Joy Digital",
+  description: "Joy Digital is the premier Local SEO company in Chennai, India. We rank your business in the Google Maps 3-Pack and optimize local citation directories.",
   alternates: {
     canonical: "https://joydigital.in/local-seo-services",
   },
@@ -23,14 +23,14 @@ const pageSchema = {
     "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Madurai Main Road",
-      "addressLocality": "Madurai",
+      "streetAddress": "Chennai Main Road",
+      "addressLocality": "Chennai",
       "addressRegion": "Tamil Nadu",
       "postalCode": "625001",
       "addressCountry": "IN"
     }
   },
-  "description": "Joy Digital helps local companies improve their map placements, optimize directory listings, and rank for nearby search queries in Madurai and across India.",
+  "description": "Joy Digital helps local companies improve their map placements, optimize directory listings, and rank for nearby search queries in Chennai and across India.",
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
@@ -45,7 +45,7 @@ export default function LocalSEOPage() {
     <ServicePageTemplate
       serviceName="Local SEO"
       heroTitle="Dominate Local Search & Rank in the Google Maps 3-Pack"
-      heroSubtitle="Help nearby customers find your business when they search for your services. As a leading local seo company in Madurai, we optimize Google Map profiles, build directory citations, and structure local content to grow your search visibility and drive calls."
+      heroSubtitle="Help nearby customers find your business when they search for your services. As a leading local seo company in Chennai, we optimize Google Map profiles, build directory citations, and structure local content to grow your search visibility and drive calls."
       leadSource="Local SEO Landing Page"
       overviewTitle="Connecting Local Businesses with High-Intent Nearby Customers"
       overviewContent={
@@ -54,14 +54,14 @@ export default function LocalSEOPage() {
             When customers need local services&mdash;whether they are looking for a clinic, a retail shop, or a local contractor&mdash;they turn to Google Maps or search queries like &ldquo;best services near me&rdquo;. If your business does not show up in the top three map results (the Google Local Pack), you are missing out on high-intent lead opportunities to local competitors.
           </p>
           <p>
-            At Joy Digital, our specialized <strong>local seo services madurai</strong> focus on helping regional businesses improve their search engine exposure. We handle Google Business Profile setups, correct Name, Address, and Phone (NAP) inconsistencies across web directories, and build localized landing pages. This structured optimization helps your store or clinic appear in map packs and local searches where buying intent is highest.
+            At Joy Digital, our specialized <strong>local seo services chennai</strong> focus on helping regional businesses improve their search engine exposure. We handle Google Business Profile setups, correct Name, Address, and Phone (NAP) inconsistencies across web directories, and build localized landing pages. This structured optimization helps your store or clinic appear in map packs and local searches where buying intent is highest.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Why Local Search Presence and Maps Algorithms Matter</h3>
           <p>
             Local SEO matches search queries with local intent. Google ranks map results based on three main pillars: relevance, distance, and prominence. We help optimize these areas by adding local business schemas to your website, cleaning up directory listings, building local backlinks, and setting up systematic review systems that build credibility.
           </p>
           <p>
-            We also build location landing pages that target specific zip codes, neighborhoods, and suburbs in Madurai and surrounding Tamil Nadu districts. This architecture allows your business to rank across multiple service areas, generating a steady stream of customer phone calls, driving directions requests, and qualified contact form submissions.
+            We also build location landing pages that target specific zip codes, neighborhoods, and suburbs in Chennai and surrounding Tamil Nadu districts. This architecture allows your business to rank across multiple service areas, generating a steady stream of customer phone calls, driving directions requests, and qualified contact form submissions.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">The Role of Citations and Directory Integrity</h3>
           <p>
@@ -183,8 +183,8 @@ export default function LocalSEOPage() {
       ]}
       faqs={[
         {
-          question: "What is the difference between SEO and Local SEO in Madurai?",
-          answer: "General SEO focuses on ranking websites for queries without location constraints (like national or global keywords). Local SEO optimizes your search presence to appear for location-specific queries (e.g., 'dentist in Madurai') on Google Maps and localized search results.",
+          question: "What is the difference between SEO and Local SEO in Chennai?",
+          answer: "General SEO focuses on ranking websites for queries without location constraints (like national or global keywords). Local SEO optimizes your search presence to appear for location-specific queries (e.g., 'dentist in Chennai') on Google Maps and localized search results.",
         },
         {
           question: "How does Google rank local map listings in India?",
@@ -200,7 +200,7 @@ export default function LocalSEOPage() {
         },
         {
           question: "Do I need a physical office for Local SEO?",
-          answer: "Not necessarily. Service area businesses (like plumbers, electricians, or cleaning services) that travel to clients can hide their physical address on Google Maps while still ranking for their target service locations in Madurai.",
+          answer: "Not necessarily. Service area businesses (like plumbers, electricians, or cleaning services) that travel to clients can hide their physical address on Google Maps while still ranking for their target service locations in Chennai.",
         },
       ]}
       schemaMarkup={pageSchema}

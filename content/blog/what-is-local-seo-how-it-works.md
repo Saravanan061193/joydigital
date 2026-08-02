@@ -16,7 +16,7 @@ In this beginner's guide, we explain what Local SEO is and how the local search 
 
 When users search for services on their mobile phones, Google displays the **Local 3-Pack**. This is a highlighted map block showcasing three local businesses that match the query. 
 
-Most mobile searches have local intent (e.g., 'dentist near me' or 'plumbing services in Madurai'). If your business does not appear in these top three maps spots, you are missing out on direct calls, directions requests, and walk-in customers.
+Most mobile searches have local intent (e.g., 'dentist near me' or 'plumbing services in Chennai'). If your business does not appear in these top three maps spots, you are missing out on direct calls, directions requests, and walk-in customers.
 
 ## How Google's Local Search Algorithm Works
 

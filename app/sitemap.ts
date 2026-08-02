@@ -21,10 +21,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/privacy-policy',
     '/terms-and-conditions',
     '/cookie-policy',
-    '/website-design-company-in-madurai',
-    '/web-development-company-in-madurai',
-    '/seo-services-in-madurai',
-    '/digital-marketing-agency-in-madurai',
+    '/website-design-company-in-chennai',
+    '/web-development-company-in-chennai',
+    '/seo-services-in-chennai',
+    '/digital-marketing-agency-in-chennai',
     '/google-business-profile-optimization',
     '/ecommerce-website-development',
     '/custom-software-development',
@@ -86,7 +86,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // 5. Define case studies (unified root level)
   const caseStudySlugs = [
-    'madurai-clinic-leads',
+    'chennai-clinic-leads',
     'ecommerce-sales-increase',
     'saas-landing-optimization',
   ];

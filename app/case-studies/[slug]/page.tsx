@@ -20,17 +20,17 @@ interface CaseStudyData {
 }
 
 const DATA: Record<string, CaseStudyData> = {
-  "madurai-clinic-leads": {
+  "chennai-clinic-leads": {
     category: "Local SEO & GBP Optimization",
-    title: "How a Madurai Dental Clinic Increased Patient Appointments by 240%",
+    title: "How a Chennai Dental Clinic Increased Patient Appointments by 240%",
     metricValue: "240%",
     metricLabel: "Appointment Growth",
-    challenge: "A leading dental clinic in Madurai was struggling to attract patients from Google Search. Despite their established medical expertise, their Google Business Profile was unoptimized, suffered from name and address inconsistencies across local citation directories, and did not appear in local maps listings for high-intent keywords like 'best dentist in Madurai'.",
+    challenge: "A leading dental clinic in Chennai was struggling to attract patients from Google Search. Despite their established medical expertise, their Google Business Profile was unoptimized, suffered from name and address inconsistencies across local citation directories, and did not appear in local maps listings for high-intent keywords like 'best dentist in Chennai'.",
     strategy: "We audited the competitor landscape and restructured the clinic's Google Business Profile. We selected relevant primary and secondary business categories, added descriptive service descriptions, and uploaded geotagged images of their facilities. Next, we corrected NAP inconsistencies across 60+ local directory citations and built location landing pages with schema integrations.",
     results: "Within 30 days of campaign launch, the clinic ranked in the top 3 Google Maps Local Pack spots. Direct mobile click-to-call conversions increased, resulting in a 240% monthly growth in new patient appointment inquiries.",
     clientQuote: "Joy Digital optimized our Google Map and local search presence. Within two weeks, we started getting direct calling leads from local search queries.",
     clientAuthor: "Dr. S. K. Murugan",
-    clientRole: "Clinic Director, Madurai",
+    clientRole: "Clinic Director, Chennai",
   },
   "ecommerce-sales-increase": {
     category: "Web Development & CRO",
@@ -42,7 +42,7 @@ const DATA: Record<string, CaseStudyData> = {
     results: "The rebuilt website achieved page load speeds under 1.5 seconds and improved mobile user experience, resulting in a 40% growth in completed sales conversions and reduced cart abandonment rates.",
     clientQuote: "Excellent pricing structures and professional delivery timelines. Our sales conversion rates have significantly increased since our redesign.",
     clientAuthor: "R. Rajesh Kumar",
-    clientRole: "Retail Store Manager, Madurai",
+    clientRole: "Retail Store Manager, Chennai",
   },
   "saas-landing-optimization": {
     category: "Paid Ads & Landing Design",
@@ -60,7 +60,7 @@ const DATA: Record<string, CaseStudyData> = {
 
 export async function generateStaticParams() {
   return [
-    { slug: "madurai-clinic-leads" },
+    { slug: "chennai-clinic-leads" },
     { slug: "ecommerce-sales-increase" },
     { slug: "saas-landing-optimization" },
   ];
@@ -166,7 +166,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-50 font-medium text-text-secondary">
-                      {resolvedParams.slug === "madurai-clinic-leads" && (
+                      {resolvedParams.slug === "chennai-clinic-leads" && (
                         <>
                           <tr>
                             <td className="px-4 py-3 font-semibold text-primary-dark">Monthly Google Maps Impressions</td>

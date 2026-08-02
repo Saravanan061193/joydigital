@@ -58,7 +58,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
       default:
         return {
           badge: "9+ Years of Industry Experience",
-          h1: <>Web Design & Digital Marketing Agency <span className="text-gradient">in Madurai</span></>,
+          h1: <>Web Design & Digital Marketing Agency <span className="text-gradient">in Chennai</span></>,
           subtitle: "Helping businesses grow online with professional websites, SEO-ready development, and digital solutions backed by 9+ years of experience.",
         };
     }
@@ -190,7 +190,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
       tag: "Local SEO & GBP",
       title: "Dental Clinic Patient Lead Strategy",
       desc: "Optimized regional search presence and local business indicators to rank in Google Maps top spots, driving call clicks and online appointments.",
-      href: "/case-studies/madurai-clinic-leads",
+      href: "/case-studies/chennai-clinic-leads",
     },
     {
       metrics: "40% Conversion Lift",
@@ -212,9 +212,9 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
   const TESTIMONIALS = [
     {
       stars: 5,
-      quote: "Joy Digital optimized our local map search. We now rank at the top of Google Maps in Madurai, and our monthly incoming calls and insurance inquiries have doubled! Their strategy is highly practical.",
+      quote: "Joy Digital optimized our local map search. We now rank at the top of Google Maps in Chennai, and our monthly incoming calls and insurance inquiries have doubled! Their strategy is highly practical.",
       name: "Ganesh Murugan",
-      role: "LIC Financial Advisor, Madurai",
+      role: "LIC Financial Advisor, Chennai",
     },
     {
       stars: 5,
@@ -226,7 +226,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
       stars: 5,
       quote: "Their team combined custom interface layouts with rigorous technical SEO. We now rank for competitive terms in our sector, bringing in continuous qualified sales leads.",
       name: "R. Rajesh Kumar",
-      role: "Retail Director, Madurai",
+      role: "Retail Director, Chennai",
     },
   ];
 
@@ -494,7 +494,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-[#2563EB]/10 to-accent/20 border-2 border-accent/30 flex items-center justify-center text-accent text-4xl mb-4 shadow-sm relative group">
                     <i className="fa-solid fa-user-tie" />
                   </div>
-                  <h3 className="text-xl font-extrabold text-text-primary mb-1">Saravanan M.</h3>
+                  <h3 className="text-xl font-extrabold text-text-primary mb-1">Saravanan L</h3>
                   <span className="text-xs text-accent font-bold uppercase tracking-wider mb-3">Founder & Lead Architect</span>
                   
                   <a

@@ -174,7 +174,7 @@ export default function SEOPage() {
       ]}
       faqs={[
         {
-          question: "How long does it take to see results from SEO in Madurai?",
+          question: "How long does it take to see results from SEO in Chennai?",
           answer: "SEO is a long-term marketing channel. Technical fixes and local keyword updates can improve rankings in 30 to 60 days. Broad industry keywords typically require 4 to 6 months of consistent optimization to rank on the first page. We monitor all updates carefully.",
         },
         {

@@ -33,8 +33,33 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/website-development-chennai",
+        destination: "/web-development-company-in-chennai",
+        permanent: true,
+      },
+      {
         source: "/website-development-madurai",
-        destination: "/web-development-company-in-madurai",
+        destination: "/web-development-company-in-chennai",
+        permanent: true,
+      },
+      {
+        source: "/website-design-company-in-madurai",
+        destination: "/website-design-company-in-chennai",
+        permanent: true,
+      },
+      {
+        source: "/web-development-company-in-madurai",
+        destination: "/web-development-company-in-chennai",
+        permanent: true,
+      },
+      {
+        source: "/seo-services-in-madurai",
+        destination: "/seo-services-in-chennai",
+        permanent: true,
+      },
+      {
+        source: "/digital-marketing-agency-in-madurai",
+        destination: "/digital-marketing-agency-in-chennai",
         permanent: true,
       },
     ];

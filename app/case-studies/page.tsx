@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 
 const CASE_STUDIES = [
   {
-    slug: "madurai-clinic-leads",
+    slug: "chennai-clinic-leads",
     category: "Local SEO & GBP Optimization",
-    title: "How a Madurai Dental Clinic Increased Patient Appointments by 240%",
+    title: "How a Chennai Dental Clinic Increased Patient Appointments by 240%",
     metricValue: "240%",
     metricLabel: "Appointment Growth",
     description: "By optimizing their Google Business Profile, targeting local keywords, and cleaning up duplicate citations, we ranked the clinic in the Maps 3-Pack within 30 days.",

@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Website Design Company in Madurai | Premium UI/UX - Joy Digital",
-  description: "Joy Digital is the leading website design company in Madurai, India. We design stunning, mobile-responsive, conversion-focused UI/UX layouts and Figma prototypes.",
+  title: "Website Design Company in Chennai | Premium UI/UX - Joy Digital",
+  description: "Joy Digital is the leading website design company in Chennai, India. We design stunning, mobile-responsive, conversion-focused UI/UX layouts and Figma prototypes.",
   alternates: {
     canonical: "https://joydigital.in/web-design-services",
   },
@@ -23,8 +23,8 @@ const pageSchema = {
     "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Madurai Main Road",
-      "addressLocality": "Madurai",
+      "streetAddress": "Chennai Main Road",
+      "addressLocality": "Chennai",
       "addressRegion": "Tamil Nadu",
       "postalCode": "625001",
       "addressCountry": "IN"
@@ -44,8 +44,8 @@ export default function WebDesignPage() {
   return (
     <ServicePageTemplate
       serviceName="Web Design"
-      heroTitle="Stunning, Conversion-Focused Website Design Company in Madurai"
-      heroSubtitle="Engage your target audience, communicate your core value proposition clearly, and improve customer trust. As a premium website design company in Madurai, we design custom digital interfaces that merge elegant layout systems with high-converting calls-to-action."
+      heroTitle="Stunning, Conversion-Focused Website Design Company in Chennai"
+      heroSubtitle="Engage your target audience, communicate your core value proposition clearly, and improve customer trust. As a premium website design company in Chennai, we design custom digital interfaces that merge elegant layout systems with high-converting calls-to-action."
       leadSource="Web Design Landing Page"
       overviewTitle="Merging Premium Aesthetics with Intuitive User Experiences"
       overviewContent={
@@ -54,14 +54,14 @@ export default function WebDesignPage() {
             An exceptional website design is more than just a collection of nice graphics. It is a visual communication system that guides your target customer toward taking action&mdash;whether that is booking a consultation call, purchasing a product, or sending an enquiry. Poor navigation layouts, illegible typography, and unbalanced color schemes increase user frustration and lead to high bounce rates, which can hurt your brand&apos;s authority.
           </p>
           <p>
-            At Joy Digital, a top-rated <strong>website design company in madurai</strong>, our design process starts with understanding your customer&apos;s pain points. We conduct visual research, build wireframe navigation structures, map out user flows, and construct interactive mockups in Figma. This comprehensive approach ensures that every pixel, typography setting, and spacing variable is optimized to drive conversions and generate leads in India.
+            At Joy Digital, a top-rated <strong>website design company in chennai</strong>, our design process starts with understanding your customer&apos;s pain points. We conduct visual research, build wireframe navigation structures, map out user flows, and construct interactive mockups in Figma. This comprehensive approach ensures that every pixel, typography setting, and spacing variable is optimized to drive conversions and generate leads in India.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Mobile-First UI/UX & Visual Hierarchy</h3>
           <p>
             With more than half of global web traffic originating from mobile devices, desktop-only layouts are no longer sufficient. We design layouts using a mobile-first philosophy. This ensures that headers remain compact, text is readable without zooming, buttons are easy to tap, and sections stack logically on smaller viewports. Our designs adapt to various device viewports, providing a seamless browsing experience.
           </p>
           <p>
-            Additionally, we build clear visual hierarchies. We draw attention to your primary offers using high-contrast colors, open whitespace, and clear headings. Our designs balance aesthetics with performance, ensuring your brand stands out while maintaining fast load speeds. Whether you are a local shop in Madurai or a large corporate entity in India, we deliver designs that convey professional trust.
+            Additionally, we build clear visual hierarchies. We draw attention to your primary offers using high-contrast colors, open whitespace, and clear headings. Our designs balance aesthetics with performance, ensuring your brand stands out while maintaining fast load speeds. Whether you are a local shop in Chennai or a large corporate entity in India, we deliver designs that convey professional trust.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">The Importance of User-Centric Design in Digital Branding</h3>
           <p>
@@ -110,7 +110,7 @@ export default function WebDesignPage() {
           step: "1",
           icon: "fa-solid fa-magnifying-glass",
           title: "Research & Blueprint",
-          description: "We analyze competitor layouts, build target user flows, and map out the sitemap paths for your website based on local search trends in Madurai.",
+          description: "We analyze competitor layouts, build target user flows, and map out the sitemap paths for your website based on local search trends in Chennai.",
         },
         {
           step: "2",
@@ -180,7 +180,7 @@ export default function WebDesignPage() {
       ]}
       faqs={[
         {
-          question: "Do you design websites in Figma in Madurai?",
+          question: "Do you design websites in Figma in Chennai?",
           answer: "Yes, Figma is our primary UI/UX design tool. It allows us to create interactive, clickable layout mockups that you can test on your phone or desktop before development starts. This ensures alignment on visuals before coding.",
         },
         {

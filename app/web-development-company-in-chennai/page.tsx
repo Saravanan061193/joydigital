@@ -3,28 +3,28 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Web Development Company in Madurai | Next.js Developer - Joy Digital",
-  description: "Joy Digital is the premier web development company in Madurai. We build high-performance, fast-loading, and mobile-friendly Next.js web applications for local businesses.",
+  title: "Web Development Company in Chennai | Next.js Developer - Joy Digital",
+  description: "Joy Digital is the premier web development company in Chennai. We build high-performance, fast-loading, and mobile-friendly Next.js web applications for local businesses.",
   alternates: {
-    canonical: "https://joydigital.in/web-development-company-in-madurai",
+    canonical: "https://joydigital.in/web-development-company-in-chennai",
   },
   openGraph: {
-    title: "Web Development Company in Madurai | Next.js Developer - Joy Digital",
-    description: "Joy Digital is the premier web development company in Madurai. We build high-performance, fast-loading, and mobile-friendly Next.js web applications for local businesses.",
-    url: "https://joydigital.in/web-development-company-in-madurai",
+    title: "Web Development Company in Chennai | Next.js Developer - Joy Digital",
+    description: "Joy Digital is the premier web development company in Chennai. We build high-performance, fast-loading, and mobile-friendly Next.js web applications for local businesses.",
+    url: "https://joydigital.in/web-development-company-in-chennai",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Web Development Company in Madurai | Next.js Developer - Joy Digital",
-    description: "Joy Digital is the premier web development company in Madurai. We build high-performance, fast-loading, and mobile-friendly Next.js web applications for local businesses.",
+    title: "Web Development Company in Chennai | Next.js Developer - Joy Digital",
+    description: "Joy Digital is the premier web development company in Chennai. We build high-performance, fast-loading, and mobile-friendly Next.js web applications for local businesses.",
   }
 };
 
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Web Development in Madurai",
+  "name": "Web Development in Chennai",
   "serviceType": "Web Development Services",
   "provider": {
     "@type": "LocalBusiness",
@@ -34,14 +34,14 @@ const pageSchema = {
     "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Madurai Main Road",
-      "addressLocality": "Madurai",
+      "streetAddress": "Chennai Main Road",
+      "addressLocality": "Chennai",
       "addressRegion": "Tamil Nadu",
       "postalCode": "625001",
       "addressCountry": "IN"
     }
   },
-  "description": "Custom Next.js & React web development services in Madurai. We build fast, mobile-responsive, and secure business web portals and e-commerce platforms.",
+  "description": "Custom Next.js & React web development services in Chennai. We build fast, mobile-responsive, and secure business web portals and e-commerce platforms.",
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
@@ -51,33 +51,33 @@ const pageSchema = {
   }
 };
 
-export default function WebDevelopmentMadurai() {
+export default function WebDevelopmentChennai() {
   return (
     <ServicePageTemplate
-      serviceName="Web Development Madurai"
-      heroTitle="Best Web Development Company in Madurai"
+      serviceName="Web Development Chennai"
+      heroTitle="Best Web Development Company in Chennai"
       heroSubtitle="Accelerate your business growth with high-speed, secure, and mobile-responsive Next.js website development. We build custom React codebases that rank on Google search and capture qualified customer inquiries."
-      leadSource="Web Development Madurai Landing Page"
-      canonicalUrl="https://joydigital.in/web-development-company-in-madurai"
-      overviewTitle="High-Performance Next.js Engineering for Madurai Businesses"
+      leadSource="Web Development Chennai Landing Page"
+      canonicalUrl="https://joydigital.in/web-development-company-in-chennai"
+      overviewTitle="High-Performance Next.js Engineering for Chennai Businesses"
       overviewContent={
         <div className="space-y-6">
           <p>
-            Madurai is rapidly developing as a major commercial center, with industries ranging from health clinics and travels to real estate agencies and educational institutions. A simple, slow template website is no longer enough to win customer trust. You need a fast, secure website that ranks high on Google Maps and converts visitors into active phone calls and contact inquiries.
+            Chennai is rapidly developing as a major commercial center, with industries ranging from health clinics and travels to real estate agencies and educational institutions. A simple, slow template website is no longer enough to win customer trust. You need a fast, secure website that ranks high on Google Maps and converts visitors into active phone calls and contact inquiries.
           </p>
           <p>
-            At Joy Digital, a leading <strong>web development company in Madurai</strong>, we build websites using modern web development frameworks like **Next.js** and **Tailwind CSS**. Bypassing heavy, bloated builders like older WordPress templates, our serverless builds load in under 1.5 seconds, achieve 95+ PageSpeed scores, and are 100% responsive.
+            At Joy Digital, a leading <strong>web development company in Chennai</strong>, we build websites using modern web development frameworks like **Next.js** and **Tailwind CSS**. Bypassing heavy, bloated builders like older WordPress templates, our serverless builds load in under 1.5 seconds, achieve 95+ PageSpeed scores, and are 100% responsive.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Why Local Search Optimization and Clean Code Matter</h3>
           <p>
-            Most local customers search for services on their smartphones using terms like &quot;best clinic in Madurai&quot; or &quot;real estate in Madurai&quot;. We optimize your website code, structure title tags and heading hierarchies, and set up local JSON-LD schema markups. This ensures search engines easily index your location details, helping you rank in local Map Pack results.
+            Most local customers search for services on their smartphones using terms like &quot;best clinic in Chennai&quot; or &quot;real estate in Chennai&quot;. We optimize your website code, structure title tags and heading hierarchies, and set up local JSON-LD schema markups. This ensures search engines easily index your location details, helping you rank in local Map Pack results.
           </p>
           <p>
             We also integrate sticky WhatsApp chat modules and call buttons to make it easy for mobile visitors to contact you. Whether you need a corporate site, an e-commerce catalog, or a custom portal, we provide clean, secure development with direct developer support.
           </p>
         </div>
       }
-      benefitsTitle="Why Choose Our Madurai Web Development Agency?"
+      benefitsTitle="Why Choose Our Chennai Web Development Agency?"
       benefitsSubtitle="We deliver custom serverless layouts with clean code, built to match your local market requirements."
       benefits={[
         {
@@ -190,7 +190,7 @@ export default function WebDevelopmentMadurai() {
       ]}
       faqs={[
         {
-          question: "How long does it take to build a website in Madurai?",
+          question: "How long does it take to build a website in Chennai?",
           answer: "A standard business site takes about 7 to 14 business days. Larger projects or custom e-commerce database setups average 3 to 5 weeks.",
         },
         {
@@ -200,8 +200,8 @@ export default function WebDevelopmentMadurai() {
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
-        { href: "/website-design-company-in-madurai", label: "Web Design Madurai" },
-        { href: "/seo-services-in-madurai", label: "SEO Services Madurai" },
+        { href: "/website-design-company-in-chennai", label: "Web Design Chennai" },
+        { href: "/seo-services-in-chennai", label: "SEO Services Chennai" },
         { href: "/portfolio", label: "Our Portfolio" },
       ]}
     />

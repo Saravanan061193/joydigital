@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Digital Marketing Agency in Madurai | SMM & Paid Ads - Joy Digital",
-  description: "Joy Digital is a leading digital marketing agency in Madurai, India. We manage high-converting Facebook, Instagram, and LinkedIn ad campaigns to scale leads.",
+  title: "Digital Marketing Agency in Chennai | SMM & Paid Ads - Joy Digital",
+  description: "Joy Digital is a leading digital marketing agency in Chennai, India. We manage high-converting Facebook, Instagram, and LinkedIn ad campaigns to scale leads.",
   alternates: {
     canonical: "https://joydigital.in/social-media-marketing",
   },
@@ -23,8 +23,8 @@ const pageSchema = {
     "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Madurai Main Road",
-      "addressLocality": "Madurai",
+      "streetAddress": "Chennai Main Road",
+      "addressLocality": "Chennai",
       "addressRegion": "Tamil Nadu",
       "postalCode": "625001",
       "addressCountry": "IN"
@@ -44,8 +44,8 @@ export default function SMMPage() {
   return (
     <ServicePageTemplate
       serviceName="Social Media Marketing"
-      heroTitle="High-Converting Digital Marketing Agency in Madurai"
-      heroSubtitle="Engage your target audience, build online communities, and generate sales leads with paid ads and organic content on Facebook, Instagram, and LinkedIn. As a trusted digital marketing agency in Madurai, we convert online interest into business inquiries."
+      heroTitle="High-Converting Digital Marketing Agency in Chennai"
+      heroSubtitle="Engage your target audience, build online communities, and generate sales leads with paid ads and organic content on Facebook, Instagram, and LinkedIn. As a trusted digital marketing agency in Chennai, we convert online interest into business inquiries."
       leadSource="SMM Landing Page"
       overviewTitle="Paid Social Ads & Organic Content Strategies Designed to Convert"
       overviewContent={
@@ -54,7 +54,7 @@ export default function SMMPage() {
             Social media platforms are valuable channels for connecting with prospective customers. Simply posting generic updates or stock images, however, is rarely enough to drive commercial results. Algorithm updates mean organic reach is severely limited, making structured paid advertising campaigns and engaging content strategies essential for real business growth.
           </p>
           <p>
-            At Joy Digital, a leading <strong>social media marketing company madurai</strong>, we focus on helping regional businesses grow their online brand. We design custom visual assets, plan content calendars, and build targeted ad campaigns on Facebook and Instagram. Our goal is to ensure your social media spending drives actual customer leads, phone calls, and sales conversions.
+            At Joy Digital, a leading <strong>social media marketing company chennai</strong>, we focus on helping regional businesses grow their online brand. We design custom visual assets, plan content calendars, and build targeted ad campaigns on Facebook and Instagram. Our goal is to ensure your social media spending drives actual customer leads, phone calls, and sales conversions.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Paid Ads, Retargeting & Audience Matching</h3>
           <p>
@@ -80,7 +80,7 @@ export default function SMMPage() {
         {
           icon: "fa-solid fa-bullhorn",
           title: "Grow Brand Awareness",
-          description: "Consistent, professional content on Facebook and Instagram helps build your brand presence in Madurai and across India.",
+          description: "Consistent, professional content on Facebook and Instagram helps build your brand presence in Chennai and across India.",
         },
         {
           icon: "fa-solid fa-address-card",
@@ -110,7 +110,7 @@ export default function SMMPage() {
           step: "1",
           icon: "fa-solid fa-compass",
           title: "Strategy & Audit",
-          description: "We analyze competitor profiles, identify target customer interests, and audit your past social media performance in Madurai.",
+          description: "We analyze competitor profiles, identify target customer interests, and audit your past social media performance in Chennai.",
         },
         {
           step: "2",
@@ -187,7 +187,7 @@ export default function SMMPage() {
           answer: "No, the package price covers our management, creative design, copywriting, and optimization work. Your ad budget is paid directly to Meta or Google, and we help you set up, verify, and optimize that budget for maximum leads.",
         },
         {
-          question: "Which social media platforms should my business target in Madurai?",
+          question: "Which social media platforms should my business target in Chennai?",
           answer: "This depends on your target audience. For consumer services, retail, and local clinics, Facebook and Instagram are usually best. For professional services, corporate B2B products, and training academies, LinkedIn and YouTube are generally more effective.",
         },
         {

@@ -30,6 +30,6 @@ Organic search listings appear below paid ads and local map packs. Ranking here 
 
 If you need leads immediately and cannot wait for organic SEO rankings to grow, Google Search Ads (PPC) are the most effective solution.
 
-* **Target Buyer Intent:** Bid on keywords with strong buying intent (e.g., 'hire web designer in Madurai') rather than broad terms.
+* **Target Buyer Intent:** Bid on keywords with strong buying intent (e.g., 'hire web designer in Chennai') rather than broad terms.
 * **Create Custom Landing Pages:** Link ads to dedicated landing pages with clear lead forms and direct calling buttons.
 * **Monitor Quality Scores:** Keep your ad copy highly relevant to the search query to lower cost-per-click fees.

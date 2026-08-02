@@ -102,7 +102,7 @@ export default function TermsAndConditionsPage() {
                     6. Governing Law
                   </h2>
                   <p className="text-sm sm:text-base text-text-secondary leading-relaxed">
-                    These terms and conditions are governed by and construed in accordance with the laws of India. Any disputes arising out of these terms shall be subject to the exclusive jurisdiction of the courts in Madurai, Tamil Nadu, India.
+                    These terms and conditions are governed by and construed in accordance with the laws of India. Any disputes arising out of these terms shall be subject to the exclusive jurisdiction of the courts in Chennai, Tamil Nadu, India.
                   </p>
                 </div>
 

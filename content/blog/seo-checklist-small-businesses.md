@@ -23,7 +23,7 @@ Before writing content, ensure search crawlers can read your site:
 
 Optimize individual pages for target keywords:
 
-* **Write Unique Title Tags:** Limit titles to 60 characters and place your primary keyword at the beginning (e.g., 'Web Developer in Madurai | Joy Digital').
+* **Write Unique Title Tags:** Limit titles to 60 characters and place your primary keyword at the beginning (e.g., 'Web Developer in Chennai | Joy Digital').
 * **Write Compelling Meta Descriptions:** Limit descriptions to 155 characters and add a clear call-to-action (CTA).
 * **Use H1 and H2 Tags Correctly:** Use only one H1 tag per page and structure sections using subheadings.
 * **Add Image Alt Tags:** Describe what is in your images, incorporating keywords naturally.

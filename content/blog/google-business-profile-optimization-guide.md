@@ -6,7 +6,7 @@ category: "Local SEO"
 author: "Saravanan"
 ---
 
-When a local customer searches for a service nearby—whether it is a "dentist in Madurai," a "boutique near me," or a "plumbing company in London"—they rarely scroll past the first page of search results. In fact, they rarely scroll past the map block at the very top. This prominent map section is known as the Google Local 3-Pack, and it is the single most valuable piece of digital real estate for any physical or service-area business today.
+When a local customer searches for a service nearby—whether it is a "dentist in Chennai," a "boutique near me," or a "plumbing company in London"—they rarely scroll past the first page of search results. In fact, they rarely scroll past the map block at the very top. This prominent map section is known as the Google Local 3-Pack, and it is the single most valuable piece of digital real estate for any physical or service-area business today.
 
 If your business does not appear in those top three map spots, you are practically invisible to local searchers. 
 
@@ -90,7 +90,7 @@ Google allows up to 750 characters for your business description.
 
 ### Step 4: Standardize NAP Details
 Consistency is critical for search engine trust.
-*   Ensure your business name is your real legal name. Do not stuff it with keywords (e.g., writing "Joy Digital - Best SEO Agency in Madurai" is a guideline violation and can lead to profile suspension).
+*   Ensure your business name is your real legal name. Do not stuff it with keywords (e.g., writing "Joy Digital - Best SEO Agency in Chennai" is a guideline violation and can lead to profile suspension).
 *   Your physical address must be identical to the address displayed on your website contact page and other local directories.
 *   Use a local area code phone number if possible, as this reinforces your local presence.
 
@@ -114,7 +114,7 @@ graph TD
 
 To leverage reviews for ranking success:
 1.  **Request Reviews Consistently:** Set up a system to ask customers for feedback immediately after a purchase or service. Use your short review link (found in your GBP dashboard) to make the process easy.
-2.  **Encourage Keyword-Rich Reviews:** When customers write reviews, they naturally describe your service. Reviews containing terms like "best local SEO agency" or "great dental clinic in Madurai" help boost your rankings for those specific keywords.
+2.  **Encourage Keyword-Rich Reviews:** When customers write reviews, they naturally describe your service. Reviews containing terms like "best local SEO agency" or "great dental clinic in Chennai" help boost your rankings for those specific keywords.
 3.  **Reply to Every Review:** Respond to both positive and negative reviews. A professional reply to a negative review shows prospective clients that you care about customer satisfaction and actively manage your business.
 
 ---

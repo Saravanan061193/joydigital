@@ -3,17 +3,17 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Website Development Company in Madurai | Web Design - Joy Digital",
-  description: "Joy Digital is the best website design and development company in Madurai. We build fast, responsive Next.js business sites that generate calls and organic leads.",
+  title: "Website Development Company in Chennai | Web Design - Joy Digital",
+  description: "Joy Digital is the best website design and development company in Chennai. We build fast, responsive Next.js business sites that generate calls and organic leads.",
   alternates: {
-    canonical: "https://joydigital.in/website-development-madurai",
+    canonical: "https://joydigital.in/website-development-chennai",
   },
 };
 
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Website Development in Madurai",
+  "name": "Website Development in Chennai",
   "serviceType": "Web Design and Development Services",
   "provider": {
     "@type": "LocalBusiness",
@@ -23,14 +23,14 @@ const pageSchema = {
     "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Madurai Main Road",
-      "addressLocality": "Madurai",
+      "streetAddress": "Chennai Main Road",
+      "addressLocality": "Chennai",
       "addressRegion": "Tamil Nadu",
       "postalCode": "625001",
       "addressCountry": "IN"
     }
   },
-  "description": "Premium Next.js website design and development services in Madurai. We construct mobile-responsive layouts and lead generation funnels for clinics, hotels, real estate, and schools.",
+  "description": "Premium Next.js website design and development services in Chennai. We construct mobile-responsive layouts and lead generation funnels for clinics, hotels, real estate, and schools.",
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
@@ -40,29 +40,29 @@ const pageSchema = {
   }
 };
 
-export default function MaduraiWebDevPage() {
+export default function ChennaiWebDevPage() {
   return (
     <ServicePageTemplate
-      serviceName="Web Development Madurai"
-      heroTitle="Best Website Development Company in Madurai"
+      serviceName="Web Development Chennai"
+      heroTitle="Best Website Development Company in Chennai"
       heroSubtitle="Scale your local customer pipeline with high-speed, mobile-responsive Next.js websites. We build professional web platforms that rank on Google Maps and convert traffic into leads."
-      leadSource="Website Development Madurai Landing Page"
-      overviewTitle="High-Performance Web Design Built for Businesses in Madurai"
+      leadSource="Website Development Chennai Landing Page"
+      overviewTitle="High-Performance Web Design Built for Businesses in Chennai"
       overviewContent={
         <div className="space-y-6">
           <p>
-            Madurai is a rapidly growing business hub, from clinics and hotels to travels, real estate, and retail showrooms. To stand out from the competition, a basic online brochure is no longer enough. You need a fast, high-performance website that attracts local searches and converts visitors into paying customers.
+            Chennai is a rapidly growing business hub, from clinics and hotels to travels, real estate, and retail showrooms. To stand out from the competition, a basic online brochure is no longer enough. You need a fast, high-performance website that attracts local searches and converts visitors into paying customers.
           </p>
           <p>
             At Joy Digital, we build premium websites using the **Next.js** framework and **Tailwind CSS**. Unlike slow, heavy templates built on legacy builders, our websites load in under 1.5 seconds, are 100% mobile-friendly, and score 95+ on Google PageSpeed Insights.
           </p>
-          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Why Local Optimization Matters for Madurai Businesses</h3>
+          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Why Local Optimization Matters for Chennai Businesses</h3>
           <p>
-            Most customers in Madurai search for services on their smartphones using keywords like &quot;best doctor in Madurai&quot; or &quot;travels in Madurai&quot;. We integrate local SEO keywords, set up JSON-LD schema markups, and configure direct WhatsApp links to make sure your website rank high on local Google Maps listings and captures immediate phone calls.
+            Most customers in Chennai search for services on their smartphones using keywords like &quot;best doctor in Chennai&quot; or &quot;travels in Chennai&quot;. We integrate local SEO keywords, set up JSON-LD schema markups, and configure direct WhatsApp links to make sure your website rank high on local Google Maps listings and captures immediate phone calls.
           </p>
         </div>
       }
-      benefitsTitle="Why Choose Joy Digital in Madurai?"
+      benefitsTitle="Why Choose Joy Digital in Chennai?"
       benefitsSubtitle="We deliver custom web designs with clean code, built to match your local market requirements."
       benefits={[
         {
@@ -73,7 +73,7 @@ export default function MaduraiWebDevPage() {
         {
           icon: "fa-solid fa-mobile-screen-button",
           title: "Mobile-First Design",
-          description: "Over 80% of local searches in Madurai happen on mobile. We build layouts optimized for any smartphone layout.",
+          description: "Over 80% of local searches in Chennai happen on mobile. We build layouts optimized for any smartphone layout.",
         },
         {
           icon: "fa-solid fa-comments",
@@ -175,7 +175,7 @@ export default function MaduraiWebDevPage() {
       ]}
       faqs={[
         {
-          question: "How long does it take to build a website in Madurai?",
+          question: "How long does it take to build a website in Chennai?",
           answer: "A standard business site takes about 7 to 14 business days. Larger projects or custom e-commerce database setups average 3 to 5 weeks.",
         },
         {

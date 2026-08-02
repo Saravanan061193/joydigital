@@ -3,28 +3,28 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Digital Marketing Agency in Madurai | Lead Gen & Ads - Joy Digital",
-  description: "Joy Digital is a result-driven digital marketing agency in Madurai. We offer local SEO, social media marketing, Google Ads, and conversion-optimized websites.",
+  title: "Digital Marketing Agency in Chennai | Lead Gen & Ads - Joy Digital",
+  description: "Joy Digital is a result-driven digital marketing agency in Chennai. We offer local SEO, social media marketing, Google Ads, and conversion-optimized websites.",
   alternates: {
-    canonical: "https://joydigital.in/digital-marketing-agency-in-madurai",
+    canonical: "https://joydigital.in/digital-marketing-agency-in-chennai",
   },
   openGraph: {
-    title: "Digital Marketing Agency in Madurai | Lead Gen & Ads - Joy Digital",
-    description: "Joy Digital is a result-driven digital marketing agency in Madurai. We offer local SEO, social media marketing, Google Ads, and conversion-optimized websites.",
-    url: "https://joydigital.in/digital-marketing-agency-in-madurai",
+    title: "Digital Marketing Agency in Chennai | Lead Gen & Ads - Joy Digital",
+    description: "Joy Digital is a result-driven digital marketing agency in Chennai. We offer local SEO, social media marketing, Google Ads, and conversion-optimized websites.",
+    url: "https://joydigital.in/digital-marketing-agency-in-chennai",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Digital Marketing Agency in Madurai | Lead Gen & Ads - Joy Digital",
-    description: "Joy Digital is a result-driven digital marketing agency in Madurai. We offer local SEO, social media marketing, Google Ads, and conversion-optimized websites.",
+    title: "Digital Marketing Agency in Chennai | Lead Gen & Ads - Joy Digital",
+    description: "Joy Digital is a result-driven digital marketing agency in Chennai. We offer local SEO, social media marketing, Google Ads, and conversion-optimized websites.",
   }
 };
 
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Digital Marketing in Madurai",
+  "name": "Digital Marketing in Chennai",
   "serviceType": "Digital Marketing Services",
   "provider": {
     "@type": "LocalBusiness",
@@ -34,14 +34,14 @@ const pageSchema = {
     "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Madurai Main Road",
-      "addressLocality": "Madurai",
+      "streetAddress": "Chennai Main Road",
+      "addressLocality": "Chennai",
       "addressRegion": "Tamil Nadu",
       "postalCode": "625001",
       "addressCountry": "IN"
     }
   },
-  "description": "Premium digital marketing agency in Madurai. We help local businesses scale via targeted search ads, social media campaigns, SEO, and high-converting web layouts.",
+  "description": "Premium digital marketing agency in Chennai. We help local businesses scale via targeted search ads, social media campaigns, SEO, and high-converting web layouts.",
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
@@ -51,22 +51,22 @@ const pageSchema = {
   }
 };
 
-export default function DigitalMarketingMadurai() {
+export default function DigitalMarketingChennai() {
   return (
     <ServicePageTemplate
-      serviceName="Digital Marketing Madurai"
-      heroTitle="Top Digital Marketing Agency in Madurai"
+      serviceName="Digital Marketing Chennai"
+      heroTitle="Top Digital Marketing Agency in Chennai"
       heroSubtitle="Stop paying for empty web traffic. We build high-converting lead generation funnels, run target-oriented social campaigns, and run map optimization strategies that bring phone calls and insurance inquiries."
-      leadSource="Digital Marketing Madurai Landing Page"
-      canonicalUrl="https://joydigital.in/digital-marketing-agency-in-madurai"
+      leadSource="Digital Marketing Chennai Landing Page"
+      canonicalUrl="https://joydigital.in/digital-marketing-agency-in-chennai"
       overviewTitle="ROI-Focused Search, Social & Web Optimization for Tamil Nadu Brands"
       overviewContent={
         <div className="space-y-6">
           <p>
-            Traditional advertising (newspapers, pamphlets, billboards) is expensive and difficult to track. Today, customers in Madurai look for services online. Whether searching for a clinic, hotel, Travels, or insurance advisor, they turn to Google Maps and social media channels.
+            Traditional advertising (newspapers, pamphlets, billboards) is expensive and difficult to track. Today, customers in Chennai look for services online. Whether searching for a clinic, hotel, Travels, or insurance advisor, they turn to Google Maps and social media channels.
           </p>
           <p>
-            At Joy Digital, our specialized <strong>digital marketing agency in Madurai</strong> bridges the gap between web views and revenue. We build fast, mobile-friendly landing pages, execute local SEO map optimizations, and manage social media campaigns.
+            At Joy Digital, our specialized <strong>digital marketing agency in Chennai</strong> bridges the gap between web views and revenue. We build fast, mobile-friendly landing pages, execute local SEO map optimizations, and manage social media campaigns.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Capturing Leads Across the Search and Social Funnel</h3>
           <p>
@@ -77,7 +77,7 @@ export default function DigitalMarketingMadurai() {
           </p>
         </div>
       }
-      benefitsTitle="Why Choose Our Madurai Marketing Agency?"
+      benefitsTitle="Why Choose Our Chennai Marketing Agency?"
       benefitsSubtitle="We focus on lead volume, local map visibility, and direct WhatsApp integrations."
       benefits={[
         {
@@ -108,7 +108,7 @@ export default function DigitalMarketingMadurai() {
         {
           icon: "fa-solid fa-award",
           title: "9+ Years Team Experience",
-          description: "Led by our founder Saravanan M., we bring practical industry knowledge to scaling local brands.",
+          description: "Led by our founder Saravanan L, we bring practical industry knowledge to scaling local brands.",
         },
       ]}
       processTitle="Our Growth Framework"
@@ -190,8 +190,8 @@ export default function DigitalMarketingMadurai() {
       ]}
       faqs={[
         {
-          question: "What channels do you recommend for local businesses in Madurai?",
-          answer: "We strongly recommend starting with Local SEO and Google Maps optimization. It targets buyers actively searching for your services in Madurai. Rebuilding slow websites with modern Next.js templates increases conversion rates.",
+          question: "What channels do you recommend for local businesses in Chennai?",
+          answer: "We strongly recommend starting with Local SEO and Google Maps optimization. It targets buyers actively searching for your services in Chennai. Rebuilding slow websites with modern Next.js templates increases conversion rates.",
         },
         {
           question: "Do you handle paid ads (Google Ads & Meta Ads)?",
@@ -200,9 +200,9 @@ export default function DigitalMarketingMadurai() {
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
-        { href: "/website-design-company-in-madurai", label: "Web Design Madurai" },
-        { href: "/web-development-company-in-madurai", label: "Web Development" },
-        { href: "/seo-services-in-madurai", label: "SEO Services Madurai" },
+        { href: "/website-design-company-in-chennai", label: "Web Design Chennai" },
+        { href: "/web-development-company-in-chennai", label: "Web Development" },
+        { href: "/seo-services-in-chennai", label: "SEO Services Chennai" },
       ]}
     />
   );
