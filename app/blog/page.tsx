@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
 import { getAllPosts } from "@/lib/blog";
 import Link from "next/link";
+import ViewCounter from "@/components/ui/ViewCounter";
 import StrongCTA from "@/components/StrongCTA";
 
 export const metadata: Metadata = {
@@ -53,7 +54,7 @@ export default async function BlogIndexPage() {
                     className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
                   >
                     <div className="p-6 sm:p-8">
-                      <div className="flex items-center gap-3 mb-4">
+                      <div className="flex items-center flex-wrap gap-2.5 mb-4">
                         <span className="bg-accent-glow text-accent font-bold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full border border-accent/10">
                           {post.category}
                         </span>
@@ -64,6 +65,8 @@ export default async function BlogIndexPage() {
                             year: "numeric",
                           })}
                         </span>
+                        <span className="text-[10px] text-text-muted/40 font-semibold">&bull;</span>
+                        <ViewCounter slug={post.slug} increment={false} />
                       </div>
                       
                       <h3 className="text-base sm:text-lg font-bold text-primary-dark mb-3 leading-tight hover:text-accent transition-colors">

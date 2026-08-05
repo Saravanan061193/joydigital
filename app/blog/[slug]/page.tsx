@@ -7,6 +7,7 @@ import { getPostBySlug, getAllPosts } from "@/lib/blog";
 import { notFound } from "next/navigation";
 import { marked } from "marked";
 import Link from "next/link";
+import ViewCounter from "@/components/ui/ViewCounter";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -48,7 +49,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         <section className="py-16 bg-white relative overflow-hidden border-b border-gray-100">
           <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
           <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-            <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="flex items-center justify-center flex-wrap gap-3 mb-6">
               <span className="bg-accent-glow text-accent font-bold text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-accent/20">
                 {post.category}
               </span>
@@ -59,6 +60,8 @@ export default async function BlogPostPage({ params }: PageProps) {
                   year: "numeric",
                 })}
               </span>
+              <span className="text-xs text-text-muted/40 font-bold">&bull;</span>
+              <ViewCounter slug={resolvedParams.slug} increment={true} />
             </div>
             
             <h1 className="text-2xl sm:text-4xl font-extrabold text-primary-dark tracking-tight mb-6 leading-tight">
