@@ -34,12 +34,17 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/website-development-chennai",
-        destination: "/web-development-company-in-chennai",
+        destination: "/website-development-company-chennai",
         permanent: true,
       },
       {
         source: "/website-development-madurai",
-        destination: "/web-development-company-in-chennai",
+        destination: "/website-development-company-chennai",
+        permanent: true,
+      },
+      {
+        source: "/web-development-company-in-chennai",
+        destination: "/website-development-company-chennai",
         permanent: true,
       },
       {
@@ -49,7 +54,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/web-development-company-in-madurai",
-        destination: "/web-development-company-in-chennai",
+        destination: "/website-development-company-chennai",
         permanent: true,
       },
       {

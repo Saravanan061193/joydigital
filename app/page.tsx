@@ -3,14 +3,14 @@ import HomePageComponent from "@/components/sections/HomePageComponent";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Web Design & Digital Marketing Agency in Chennai | Joy Digital",
-  description: "Joy Digital is the premier website design company & digital marketing agency in Chennai. We offer custom web design, local SEO, Google Business Profile setup, and lead generation.",
+  title: "Website Development Company in Chennai | Fast Next.js Sites",
+  description: "Looking for a leading website development company in Chennai? We build high-speed Next.js websites & offer affordable web design services to boost leads.",
   alternates: {
     canonical: "https://joydigital.in",
   },
   openGraph: {
-    title: "Web Design & Digital Marketing Agency in Chennai | Joy Digital",
-    description: "Joy Digital is the premier website design company & digital marketing agency in Chennai. We offer custom web design, local SEO, Google Business Profile setup, and lead generation.",
+    title: "Website Development Company in Chennai | Fast Next.js Sites",
+    description: "Looking for a leading website development company in Chennai? We build high-speed Next.js websites & offer affordable web design services to boost leads.",
     url: "https://joydigital.in",
     siteName: "Joy Digital",
     type: "website",
@@ -19,14 +19,14 @@ export const metadata: Metadata = {
         url: "/assets/images/hero-banner.webp",
         width: 1024,
         height: 1024,
-        alt: "Joy Digital - Web Design & Digital Marketing Agency in Chennai",
+        alt: "Joy Digital - Website Development Company in Chennai",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Web Design & Digital Marketing Agency in Chennai | Joy Digital",
-    description: "Joy Digital is the premier website design company & digital marketing agency in Chennai. We offer custom web design, local SEO, Google Business Profile setup, and lead generation.",
+    title: "Website Development Company in Chennai | Fast Next.js Sites",
+    description: "Looking for a leading website development company in Chennai? We build high-speed Next.js websites & offer affordable web design services to boost leads.",
     images: ["/assets/images/hero-banner.webp"],
   },
 };

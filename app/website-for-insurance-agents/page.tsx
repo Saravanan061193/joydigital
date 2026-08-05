@@ -171,7 +171,7 @@ export default function InsuranceAgentWebPage() {
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
-        { href: "/website-development-chennai", label: "Chennai Web Dev" },
+        { href: "/website-development-company-chennai", label: "website development in Chennai" },
         { href: "/portfolio", label: "View Portfolio" },
         { href: "/contact", label: "Contact Us" },
       ]}

@@ -12,6 +12,28 @@ interface LeadFormProps {
   showWebsiteField?: boolean;
 }
 
+const COUNTRY_CODES = [
+  { code: "+91", flag: "🇮🇳", name: "India" },
+  { code: "+1", flag: "🇺🇸", name: "USA" },
+  { code: "+44", flag: "🇬🇧", name: "UK" },
+  { code: "+971", flag: "🇦🇪", name: "UAE" },
+  { code: "+61", flag: "🇦🇺", name: "Australia" },
+  { code: "+65", flag: "🇸🇬", name: "Singapore" },
+  { code: "+1", flag: "🇨🇦", name: "Canada" },
+  { code: "+60", flag: "🇲🇾", name: "Malaysia" },
+  { code: "+94", flag: "🇱🇰", name: "Sri Lanka" },
+  { code: "+49", flag: "🇩🇪", name: "Germany" },
+  { code: "+33", flag: "🇫🇷", name: "France" },
+  { code: "+966", flag: "🇸🇦", name: "Saudi Arabia" },
+  { code: "+974", flag: "🇶🇦", name: "Qatar" },
+  { code: "+965", flag: "🇰🇼", name: "Kuwait" },
+  { code: "+968", flag: "🇴🇲", name: "Oman" },
+  { code: "+973", flag: "🇧🇭", name: "Bahrain" },
+  { code: "+64", flag: "🇳🇿", name: "New Zealand" },
+  { code: "+353", flag: "🇮🇪", name: "Ireland" },
+  { code: "+27", flag: "🇿🇦", name: "South Africa" },
+];
+
 export default function LeadForm({
   layout = "vertical",
   title = "Get a Free Growth Consultation",
@@ -26,7 +48,18 @@ export default function LeadForm({
   const parts = pathname.split("/").filter(Boolean);
   const detectedRegion = (parts.length > 0 && ["us", "uk", "ae", "in"].includes(parts[0])) ? parts[0] : "";
 
+  const getDefaultCountryCode = (region: string) => {
+    switch (region) {
+      case "us": return "+1";
+      case "uk": return "+44";
+      case "ae": return "+971";
+      case "in": return "+91";
+      default: return "+91";
+    }
+  };
+
   const [step, setStep] = useState(1);
+  const [selectedCountryCode, setSelectedCountryCode] = useState(() => getDefaultCountryCode(detectedRegion));
 
   // Form State
   const [formData, setFormData] = useState(() => ({
@@ -53,6 +86,7 @@ export default function LeadForm({
       ...prev,
       region: detectedRegion || "us"
     }));
+    setSelectedCountryCode(getDefaultCountryCode(detectedRegion));
   }
 
   const validateStep = (currentStep: number) => {
@@ -87,16 +121,19 @@ export default function LeadForm({
         }
       }
       
-      // Mobile / WhatsApp number is mandatory and must include country code
+      // Mobile / WhatsApp number is mandatory
       const mobileVal = formData.mobile.trim();
+      let fullMobile = mobileVal;
+      if (fullMobile && !fullMobile.startsWith("+")) {
+        fullMobile = selectedCountryCode + fullMobile;
+      }
+
       if (!mobileVal) {
-        tempErrors.mobile = "WhatsApp / Mobile number with country code is required.";
-      } else if (!mobileVal.startsWith("+")) {
-        tempErrors.mobile = "Country code is required (e.g. +91 or +1).";
+        tempErrors.mobile = "WhatsApp / Mobile number is required.";
       } else {
-        const numbersOnly = mobileVal.replace(/\D/g, "");
+        const numbersOnly = fullMobile.replace(/\D/g, "");
         if (numbersOnly.length < 7) {
-          tempErrors.mobile = "Please enter a valid phone number with country code.";
+          tempErrors.mobile = "Please enter a valid phone number.";
         }
       }
     }
@@ -144,7 +181,9 @@ export default function LeadForm({
         MonthlyBudget: formData.budget,
         Name: formData.name,
         Email: formData.email,
-        Mobile: formData.mobile,
+        Mobile: formData.mobile.trim().startsWith("+")
+          ? formData.mobile.trim()
+          : `${selectedCountryCode} ${formData.mobile.trim()}`,
         Message: formData.message || "No extra details provided.",
         Source: source,
         _subject: `🔥 Global Lead [${formData.region.toUpperCase()}] - Joy Digital`,
@@ -489,20 +528,41 @@ export default function LeadForm({
             </div>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="mobile" className="text-[10px] font-bold text-text-primary uppercase tracking-wider">Mobile / WhatsApp Number (with country code, e.g. +91) <span className="text-error-red">*</span></label>
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xs"><i className="fa-solid fa-phone" /></span>
-                <input
-                  type="tel"
-                  id="mobile"
-                  name="mobile"
-                  value={formData.mobile}
-                  onChange={handleChange}
-                  placeholder="e.g. +91 90800 26133"
-                  className={`w-full text-xs py-3 pl-10 pr-4 bg-light-bg rounded-lg border ${
-                    errors.mobile ? "border-error-red bg-red-50/20" : "border-[#E5E7EB] focus:border-accent"
-                  } outline-none transition-all`}
-                />
+              <label htmlFor="mobile" className="text-[10px] font-bold text-text-primary uppercase tracking-wider">Mobile / WhatsApp Number <span className="text-error-red">*</span></label>
+              <div className="flex gap-2">
+                {/* Country Code Select Dropdown */}
+                <div className="relative w-[110px] shrink-0">
+                  <select
+                    value={selectedCountryCode}
+                    onChange={(e) => setSelectedCountryCode(e.target.value)}
+                    className="w-full text-xs py-3 pl-3 pr-7 bg-light-bg rounded-lg border border-[#E5E7EB] focus:border-accent outline-none appearance-none transition-all cursor-pointer font-medium text-text-primary"
+                  >
+                    {COUNTRY_CODES.map((c) => (
+                      <option key={`${c.code}-${c.name}`} value={c.code}>
+                        {c.flag} {c.code}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-text-muted text-[10px] pointer-events-none">
+                    <i className="fa-solid fa-chevron-down" />
+                  </span>
+                </div>
+
+                {/* Number Input Field */}
+                <div className="relative flex-1">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xs"><i className="fa-solid fa-phone" /></span>
+                  <input
+                    type="tel"
+                    id="mobile"
+                    name="mobile"
+                    value={formData.mobile}
+                    onChange={handleChange}
+                    placeholder="e.g. 90800 26133"
+                    className={`w-full text-xs py-3 pl-10 pr-4 bg-light-bg rounded-lg border ${
+                      errors.mobile ? "border-error-red bg-red-50/20" : "border-[#E5E7EB] focus:border-accent"
+                    } outline-none transition-all`}
+                  />
+                </div>
               </div>
               {errors.mobile && <span className="text-[10px] font-semibold text-error-red">{errors.mobile}</span>}
             </div>

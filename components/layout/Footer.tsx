@@ -176,8 +176,8 @@ export default function Footer() {
               </li>
             ))}
             <li className="border-t border-[#E5E7EB] pt-2 mt-1">
-              <Link href="/web-development-company-in-chennai" className="hover:text-accent hover:pl-1 transition-all block">
-                Web Development Chennai
+              <Link href="/website-development-company-chennai" className="hover:text-accent hover:pl-1 transition-all block">
+                website development in Chennai
               </Link>
             </li>
             <li>

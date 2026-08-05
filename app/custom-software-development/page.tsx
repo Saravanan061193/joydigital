@@ -200,7 +200,7 @@ export default function CustomSoftwarePage() {
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
-        { href: "/web-development-company-in-chennai", label: "Web Development" },
+        { href: "/website-development-company-chennai", label: "website development in Chennai" },
         { href: "/ecommerce-website-development", label: "eCommerce Web Dev" },
         { href: "/portfolio", label: "Our Portfolio" },
       ]}

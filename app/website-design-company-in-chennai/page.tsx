@@ -3,29 +3,29 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Website Design Company in Chennai | Premium UI/UX & Web Design",
-  description: "Joy Digital is the leading website design company in Chennai. We design modern, high-converting websites and UI/UX layouts for businesses in Chennai.",
+  title: "Web Design Company in Chennai | Premium Website Design Agency",
+  description: "Joy Digital is a leading web design company in Chennai. We build high-speed, responsive websites & local SEO plans. Find a website developer near me.",
   alternates: {
     canonical: "https://joydigital.in/website-design-company-in-chennai",
   },
   openGraph: {
-    title: "Website Design Company in Chennai | Premium UI/UX & Web Design",
-    description: "Joy Digital is the leading website design company in Chennai. We design modern, high-converting websites and UI/UX layouts for businesses in Chennai.",
+    title: "Web Design Company in Chennai | Premium Website Design Agency",
+    description: "Joy Digital is a leading web design company in Chennai. We build high-speed, responsive websites & local SEO plans. Find a website developer near me.",
     url: "https://joydigital.in/website-design-company-in-chennai",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Website Design Company in Chennai | Premium UI/UX & Web Design",
-    description: "Joy Digital is the leading website design company in Chennai. We design modern, high-converting websites and UI/UX layouts for businesses in Chennai.",
+    title: "Web Design Company in Chennai | Premium Website Design Agency",
+    description: "Joy Digital is a leading web design company in Chennai. We build high-speed, responsive websites & local SEO plans. Find a website developer near me.",
   }
 };
 
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Website Design in Chennai",
-  "serviceType": "Web Design Services",
+  "name": "Web Design Services in Chennai",
+  "serviceType": "Web Design & UI/UX Services",
   "provider": {
     "@type": "LocalBusiness",
     "name": "Joy Digital",
@@ -41,7 +41,7 @@ const pageSchema = {
       "addressCountry": "IN"
     }
   },
-  "description": "Custom UI/UX website design company in Chennai. We create responsive templates, landing pages, and interactive designs that convert traffic into leads.",
+  "description": "Joy Digital is a premium web design company in Chennai offering custom responsive layouts and local SEO optimization for Chennai service brands.",
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
@@ -55,25 +55,22 @@ export default function WebsiteDesignChennai() {
   return (
     <ServicePageTemplate
       serviceName="Website Design Chennai"
-      heroTitle="Creative Website Design Company in Chennai"
-      heroSubtitle="Stand out from competitors in Tamil Nadu with custom, conversion-optimized, and premium UI/UX layouts. We design gorgeous web platforms that rank on Google Maps and drive direct customer inquiries."
+      heroTitle="Web Design Company in Chennai"
+      heroSubtitle="Looking for a website developer near me or a web development agency in T Nagar / Guindy / Velachery? We design high-speed Next.js websites that convert local search traffic into leads."
       leadSource="Website Design Chennai Landing Page"
       canonicalUrl="https://joydigital.in/website-design-company-in-chennai"
-      overviewTitle="Custom Responsive Web Designs Engineered for Conversions"
+      overviewTitle="Local Web Design Company in Chennai Built for Results"
       overviewContent={
         <div className="space-y-6">
           <p>
-            Your website is often the first impression a customer has of your business. A slow, generic template with confusing navigation can turn prospects away and send them directly to competitors. To grow your business online, you need a website that is visually stunning, easy to navigate, and optimized for search and leads.
+            Your website is the first impression a customer has of your brand. Slow load times or outdated layouts will drive prospects straight to competitors. If you need a leading <strong>web design company in Chennai</strong> to build a modern, high-converting digital portal, we are here to help.
           </p>
           <p>
-            At Joy Digital, a premium <strong>website design company in Chennai</strong>, we focus on custom, responsive UI/UX. We design custom layouts tailored to your exact brand aesthetics using advanced typography, harmonized color schemes, and fast-loading web elements.
+            Whether you are looking for a reliable <strong>website developer near me</strong> or a full-service <strong>web development agency in T Nagar / Guindy / Velachery</strong>, our team has 9+ years of experience helping Chennai businesses establish dominant local search authority.
           </p>
-          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Mobile-Responsive Designs Custom Built for Chennai Brands</h3>
+          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Mobile-Responsive Layouts for T Nagar, Guindy & Velachery Businesses</h3>
           <p>
-            More than 80% of local web traffic comes from mobile devices. We design all layouts using a mobile-first framework. Your website will render beautifully on smartphones, tablets, laptops, and wide screens. We ensure buttons are easy to tap, forms are easy to fill, and text is readable on all displays.
-          </p>
-          <p>
-            We don't build generic template clones. We draft custom wireframes and create layouts optimized for speed. Our designs load in under 1.5 seconds, reducing customer bounce rates and ensuring a positive brand experience for your visitors.
+            Over 80% of local service queries in Tamil Nadu occur on smartphones. We design clean wireframes, compressed media, and secure code structures. This ensures your website loads under 1.5 seconds and renders beautifully across all mobile browsers.
           </p>
         </div>
       }
@@ -200,7 +197,7 @@ export default function WebsiteDesignChennai() {
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
-        { href: "/web-development-company-in-chennai", label: "Web Development" },
+        { href: "/website-development-company-chennai", label: "website development in Chennai" },
         { href: "/seo-services-in-chennai", label: "SEO Services Chennai" },
         { href: "/portfolio", label: "Portfolio" },
       ]}

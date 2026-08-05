@@ -202,7 +202,7 @@ export default function SEOServicesChennai() {
       schemaMarkup={pageSchema}
       crossLinks={[
         { href: "/website-design-company-in-chennai", label: "Web Design Chennai" },
-        { href: "/web-development-company-in-chennai", label: "Web Development" },
+        { href: "/website-development-company-chennai", label: "website development in Chennai" },
         { href: "/google-business-profile-optimization", label: "GBP Optimization" },
       ]}
     />

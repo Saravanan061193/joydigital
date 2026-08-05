@@ -200,7 +200,7 @@ export default function EcommerceWebDevPage() {
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
-        { href: "/web-development-company-in-chennai", label: "Web Development" },
+        { href: "/website-development-company-chennai", label: "website development in Chennai" },
         { href: "/website-design-company-in-chennai", label: "Web Design Chennai" },
         { href: "/seo-services-in-chennai", label: "SEO Services Chennai" },
       ]}

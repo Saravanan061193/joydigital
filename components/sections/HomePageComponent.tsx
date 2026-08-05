@@ -13,12 +13,46 @@ const LeadForm = dynamic(() => import("@/components/ui/LeadForm"));
 const Accordion = dynamic(() => import("@/components/ui/Accordion"));
 const CTABanner = dynamic(() => import("@/components/CTABanner"));
 
+const COUNTRY_CODES = [
+  { code: "+91", flag: "🇮🇳", name: "India" },
+  { code: "+1", flag: "🇺🇸", name: "USA" },
+  { code: "+44", flag: "🇬🇧", name: "UK" },
+  { code: "+971", flag: "🇦🇪", name: "UAE" },
+  { code: "+61", flag: "🇦🇺", name: "Australia" },
+  { code: "+65", flag: "🇸🇬", name: "Singapore" },
+  { code: "+1", flag: "🇨🇦", name: "Canada" },
+  { code: "+60", flag: "🇲🇾", name: "Malaysia" },
+  { code: "+94", flag: "🇱🇰", name: "Sri Lanka" },
+  { code: "+49", flag: "🇩🇪", name: "Germany" },
+  { code: "+33", flag: "🇫🇷", name: "France" },
+  { code: "+966", flag: "🇸🇦", name: "Saudi Arabia" },
+  { code: "+974", flag: "🇶🇦", name: "Qatar" },
+  { code: "+965", flag: "🇰🇼", name: "Kuwait" },
+  { code: "+968", flag: "🇴🇲", name: "Oman" },
+  { code: "+973", flag: "🇧🇭", name: "Bahrain" },
+  { code: "+64", flag: "🇳🇿", name: "New Zealand" },
+  { code: "+353", flag: "🇮🇪", name: "Ireland" },
+  { code: "+27", flag: "🇿🇦", name: "South Africa" },
+];
+
 interface HomePageComponentProps {
   country: string; // "us", "uk", "ae", "in", or "" (Global)
 }
 
 export default function HomePageComponent({ country }: HomePageComponentProps) {
   const [selectedCurrency, setSelectedCurrency] = React.useState(country || "in");
+
+  const getDefaultCountryCode = (c: string) => {
+    switch (c) {
+      case "us": return "+1";
+      case "uk": return "+44";
+      case "ae": return "+971";
+      case "in": return "+91";
+      default: return "+91";
+    }
+  };
+
+  const [selectedCountryCode, setSelectedCountryCode] = React.useState(() => getDefaultCountryCode(country));
 
   const getRegionalHref = (path: string) => {
     const localizedPaths = ["/", "/seo-services", "/website-development", "/contact"];
@@ -59,8 +93,8 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
       default:
         return {
           badge: "9+ Years of Industry Experience",
-          h1: <>Web Design & Digital Marketing Agency <span className="text-gradient">in Chennai</span></>,
-          subtitle: "Helping businesses grow online with professional websites, SEO-ready development, and digital solutions backed by 9+ years of experience.",
+          h1: <>#1 Website Development & <span className="text-gradient">Web Design Agency in Chennai</span></>,
+          subtitle: "Looking for a leading website development company in Chennai? We build high-speed Next.js websites & offer affordable web design services to boost leads.",
         };
     }
   };
@@ -243,8 +277,20 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
     },
   ];
 
-  // 6. FAQs (6 Target FAQ Questions)
+  // 6. FAQs (9 FAQ Questions)
   const HOME_FAQS = [
+    {
+      question: "How much does a custom website design cost in Chennai?",
+      answer: "A custom website design in Chennai starts from ₹15,000 for a starter business landing page. Custom website development projects, complex e-commerce portals, and enterprise web solutions are priced based on the page count, custom features, API integrations, and ongoing technical support needs.",
+    },
+    {
+      question: "Why is Next.js better than traditional WordPress for local SEO?",
+      answer: "Next.js websites load under 1.5 seconds and score 95+ on Core Web Vitals, which is a major Google ranking factor. Unlike legacy WordPress, Next.js generates static HTML pre-rendered on global CDNs, has no heavy databases or plugins to hack, and outputs clean, semantic code with optimized meta tags and structured local schemas for local search maps ranking.",
+    },
+    {
+      question: "How fast should a corporate website load to rank on Google?",
+      answer: "A corporate website should ideally load in under 2 seconds. According to Google speed guidelines, any site loading slower than 3 seconds suffers from high mobile bounce rates, directly harming organic search visibility. Building websites with modern frameworks like React and Next.js ensures maximum speed and lower bounce rates.",
+    },
     {
       question: `How much does a website cost?`,
       answer: `Our website solutions start from ₹15,000 for standard business sites. Custom business portals, e-commerce applications, and bespoke web platforms are priced based on page count, custom features, and third-party integrations.`,
@@ -285,19 +331,19 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
     {
       name: "Hospitals & Clinics",
       icon: "fa-solid fa-hospital-user",
-      description: "Simplifies patient appointment bookings, coordinates doctor schedules, and displays clinic accreditations to build instant medical credibility.",
+      description: "We are a premier clinic and hospital website design agency chennai, simplifying patient appointment bookings, coordinating doctor schedules, and displaying clinic accreditations to build instant credibility.",
       focus: "Appointment Booking & Calendars"
     },
     {
       name: "Real Estate Agencies",
       icon: "fa-solid fa-house-chimney",
-      description: "Display listing catalogs with premium galleries, capture property viewing schedule requests, and establish trust with local neighborhood reviews.",
+      description: "As a leading real estate website design company in tamil nadu, we display listings showcases with premium galleries, capture property viewings, and establish local neighborhood trust.",
       focus: "Listings Showcases & Lead Capture"
     },
     {
       name: "Insurance Agents & LIC Advisors",
       icon: "fa-solid fa-shield-halved",
-      description: "Capture direct insurance policy enquiries, showcase client testimonials, and integrate direct WhatsApp consultation lines for instant lead response.",
+      description: "Specializing in insurance agent website development chennai. Capture policy enquiries, showcase advisor achievements, and integrate direct WhatsApp chat lines.",
       focus: "Policy Calculators & WhatsApp Leads"
     },
     {
@@ -459,7 +505,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 Core Capabilities
               </span>
               <h2 className="text-2xl md:text-4xl font-extrabold text-text-primary mb-4">
-                Conversion-Focused <span className="text-gradient">Digital Solutions</span>
+                Custom Web Development Services <span className="text-gradient">in Chennai</span>
               </h2>
               <p className="text-sm text-text-secondary">
                 We engineer speed-optimized layouts, technical sitemaps, and data routing to capture commercial search keywords.
@@ -607,8 +653,13 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                       e.preventDefault();
                       const form = e.target as HTMLFormElement;
                       const name = (form.querySelector('input[name="name"]') as HTMLInputElement).value;
-                      const mobile = (form.querySelector('input[name="mobile"]') as HTMLInputElement).value;
+                      const mobileInput = (form.querySelector('input[name="mobile"]') as HTMLInputElement).value;
                       const email = (form.querySelector('input[name="email"]') as HTMLInputElement).value;
+                      const countrySelect = (form.querySelector('select[name="countryCode"]') as HTMLSelectElement).value;
+                      
+                      const mobile = mobileInput.trim().startsWith("+")
+                        ? mobileInput.trim()
+                        : `${countrySelect} ${mobileInput.trim()}`;
                       
                       try {
                         const response = await fetch("https://formsubmit.co/ajax/saravanan061193@gmail.com", {
@@ -655,13 +706,32 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                       required
                       className="bg-white border border-[#E5E7EB] text-xs px-3.5 py-3 rounded-lg outline-none focus:border-accent w-full"
                     />
-                    <input
-                      type="tel"
-                      name="mobile"
-                      placeholder="WhatsApp Number (to receive PDF)"
-                      required
-                      className="bg-white border border-[#E5E7EB] text-xs px-3.5 py-3 rounded-lg outline-none focus:border-accent w-full"
-                    />
+                    <div className="flex gap-2 w-full">
+                      <div className="relative w-[100px] shrink-0">
+                        <select
+                          name="countryCode"
+                          value={selectedCountryCode}
+                          onChange={(e) => setSelectedCountryCode(e.target.value)}
+                          className="w-full text-xs py-3 pl-3 pr-7 bg-white border border-[#E5E7EB] focus:border-accent rounded-lg outline-none appearance-none transition-all cursor-pointer font-medium text-text-primary"
+                        >
+                          {COUNTRY_CODES.map((c) => (
+                            <option key={`${c.code}-${c.name}`} value={c.code}>
+                              {c.flag} {c.code}
+                            </option>
+                          ))}
+                        </select>
+                        <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-text-muted text-[10px] pointer-events-none">
+                          <i className="fa-solid fa-chevron-down" />
+                        </span>
+                      </div>
+                      <input
+                        type="tel"
+                        name="mobile"
+                        placeholder="WhatsApp Number"
+                        required
+                        className="bg-white border border-[#E5E7EB] text-xs px-3.5 py-3 rounded-lg outline-none focus:border-accent flex-1"
+                      />
+                    </div>
                     <button
                       type="submit"
                       className="bg-[#2563EB] hover:bg-[#3B82F6] text-white text-xs font-bold py-3.5 rounded-lg shadow-md transition-all mt-2 cursor-pointer w-full"
@@ -814,7 +884,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 Pricing Plans
               </span>
               <h2 className="text-2xl md:text-4xl font-extrabold text-text-primary mb-4">
-                Transparent Pricing for <span className="text-gradient">Every Business Stage</span>
+                Affordable Web Design Packages <span className="text-gradient">for Growing Businesses</span>
               </h2>
               <p className="text-sm text-text-secondary mb-6">
                 Choose the package that fits your objectives. High-converting deliverables with zero hidden agency costs.
@@ -1012,7 +1082,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 Why Us
               </span>
               <h2 className="text-2xl md:text-4xl font-extrabold text-text-primary mb-4">
-                Built to Scale <span className="text-gradient">Your Digital Pipeline</span>
+                Why Choose Our Next.js & <span className="text-gradient">SEO-Ready Web Design Solutions?</span>
               </h2>
               <p className="text-sm text-text-secondary">
                 We combine organic optimization with high-performance code frameworks to deliver measurable pipeline results.
