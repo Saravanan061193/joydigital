@@ -59,21 +59,12 @@ export default function LeadForm({
     const tempErrors: Record<string, string> = {};
     
     if (currentStep === 1) {
-      if (!formData.bottleneck) tempErrors.bottleneck = "Please select your primary challenge.";
+      // Challenge bottleneck selection is optional
     }
     
     if (currentStep === 2) {
-      if (!formData.service) tempErrors.service = "Please select a service.";
-      
-      const isAuditOrSEO = 
-        source.toLowerCase().includes("audit") || 
-        showWebsiteField || 
-        formData.bottleneck === "speed" || 
-        formData.bottleneck === "traffic";
-        
-      if (isAuditOrSEO && !formData.website.trim()) {
-        tempErrors.website = "Website URL is required for performance audits.";
-      } else if (formData.website.trim()) {
+      // Service and website are optional. Validate website format only if entered.
+      if (formData.website.trim()) {
         const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/;
         if (!urlPattern.test(formData.website.trim())) {
           tempErrors.website = "Please enter a valid website URL (e.g. example.com).";
@@ -82,23 +73,31 @@ export default function LeadForm({
     }
     
     if (currentStep === 3) {
-      if (!formData.budget) tempErrors.budget = "Please select a budget range.";
+      // Budget is optional
     }
     
     if (currentStep === 4) {
-      if (!formData.name.trim()) tempErrors.name = "Full Name is required.";
+      // Name is optional
       
-      const emailReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!formData.email.trim()) {
-        tempErrors.email = "Email Address is required.";
-      } else if (!emailReg.test(formData.email.trim())) {
-        tempErrors.email = "Please enter a valid email address.";
+      // Email is optional, but if entered, must be valid
+      if (formData.email.trim()) {
+        const emailReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailReg.test(formData.email.trim())) {
+          tempErrors.email = "Please enter a valid email address.";
+        }
       }
       
-      if (!formData.mobile.trim()) {
-        tempErrors.mobile = "Contact number is required.";
-      } else if (formData.mobile.trim().length < 7) {
-        tempErrors.mobile = "Please enter a valid phone number.";
+      // Mobile / WhatsApp number is mandatory and must include country code
+      const mobileVal = formData.mobile.trim();
+      if (!mobileVal) {
+        tempErrors.mobile = "WhatsApp / Mobile number with country code is required.";
+      } else if (!mobileVal.startsWith("+")) {
+        tempErrors.mobile = "Country code is required (e.g. +91 or +1).";
+      } else {
+        const numbersOnly = mobileVal.replace(/\D/g, "");
+        if (numbersOnly.length < 7) {
+          tempErrors.mobile = "Please enter a valid phone number with country code.";
+        }
       }
     }
 
@@ -337,10 +336,7 @@ export default function LeadForm({
 
             <div className="flex flex-col gap-1 mt-2">
               <label htmlFor="website" className="text-[10px] font-bold text-text-primary uppercase tracking-wider">
-                Current Website URL
-                {(source.toLowerCase().includes("audit") || formData.bottleneck === "speed" || formData.bottleneck === "traffic" || showWebsiteField) && (
-                  <span className="text-error-red"> *</span>
-                )}
+                Current Website URL (Optional)
               </label>
               <div className="relative">
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xs"><i className="fa-solid fa-globe" /></span>
@@ -455,7 +451,7 @@ export default function LeadForm({
             <h4 className="text-sm font-bold text-primary-dark">Enter your contact details to finalize</h4>
             
             <div className="flex flex-col gap-1">
-              <label htmlFor="name" className="text-[10px] font-bold text-text-primary uppercase tracking-wider">Full Name <span className="text-error-red">*</span></label>
+              <label htmlFor="name" className="text-[10px] font-bold text-text-primary uppercase tracking-wider">Full Name (Optional)</label>
               <div className="relative">
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xs"><i className="fa-solid fa-user" /></span>
                 <input
@@ -474,7 +470,7 @@ export default function LeadForm({
             </div>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="email" className="text-[10px] font-bold text-text-primary uppercase tracking-wider">Email Address <span className="text-error-red">*</span></label>
+              <label htmlFor="email" className="text-[10px] font-bold text-text-primary uppercase tracking-wider">Email Address (Optional)</label>
               <div className="relative">
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xs"><i className="fa-solid fa-envelope" /></span>
                 <input
@@ -493,7 +489,7 @@ export default function LeadForm({
             </div>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="mobile" className="text-[10px] font-bold text-text-primary uppercase tracking-wider">Mobile / WhatsApp Number <span className="text-error-red">*</span></label>
+              <label htmlFor="mobile" className="text-[10px] font-bold text-text-primary uppercase tracking-wider">Mobile / WhatsApp Number (with country code, e.g. +91) <span className="text-error-red">*</span></label>
               <div className="relative">
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xs"><i className="fa-solid fa-phone" /></span>
                 <input
@@ -502,7 +498,7 @@ export default function LeadForm({
                   name="mobile"
                   value={formData.mobile}
                   onChange={handleChange}
-                  placeholder="e.g. +1 555-0199 or WhatsApp"
+                  placeholder="e.g. +91 90800 26133"
                   className={`w-full text-xs py-3 pl-10 pr-4 bg-light-bg rounded-lg border ${
                     errors.mobile ? "border-error-red bg-red-50/20" : "border-[#E5E7EB] focus:border-accent"
                   } outline-none transition-all`}

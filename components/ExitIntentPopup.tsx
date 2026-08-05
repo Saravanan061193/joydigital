@@ -90,20 +90,32 @@ export default function ExitIntentPopup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !email.trim() || !mobile.trim()) {
-      setError("Please fill in all fields.");
+    
+    // Only mobile / WhatsApp number is mandatory
+    const mobileVal = mobile.trim();
+    if (!mobileVal) {
+      setError("WhatsApp number is required.");
       return;
     }
 
-    const emailReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailReg.test(email.trim())) {
-      setError("Please enter a valid email address.");
+    if (!mobileVal.startsWith("+")) {
+      setError("Country code is required (e.g. +91 or +1).");
       return;
     }
 
-    if (mobile.trim().length < 7) {
-      setError("Please enter a valid contact number.");
+    const numbersOnly = mobileVal.replace(/\D/g, "");
+    if (numbersOnly.length < 7) {
+      setError("Please enter a valid WhatsApp number with country code.");
       return;
+    }
+
+    // Email is optional, but must be valid if provided
+    if (email.trim()) {
+      const emailReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailReg.test(email.trim())) {
+        setError("Please enter a valid email address.");
+        return;
+      }
     }
 
     setError("");
@@ -243,7 +255,7 @@ export default function ExitIntentPopup() {
 
               {/* Mobile / WhatsApp */}
               <div className="flex flex-col gap-1">
-                <label htmlFor="popup-mobile" className="text-[9px] font-bold text-text-primary uppercase tracking-wider">WhatsApp Number</label>
+                <label htmlFor="popup-mobile" className="text-[9px] font-bold text-text-primary uppercase tracking-wider">WhatsApp Number (with country code, e.g. +91) <span className="text-error-red">*</span></label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xs"><i className="fa-solid fa-phone" /></span>
                   <input
