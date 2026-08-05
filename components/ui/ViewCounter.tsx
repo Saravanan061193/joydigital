@@ -21,7 +21,7 @@ export default function ViewCounter({ slug, increment = false, className = "" }:
         const response = await fetch(url);
         if (response.ok) {
           const data = await response.json();
-          setViews(data.value);
+          setViews(data.count);
         }
       } catch (err) {
         console.error("Error fetching view count:", err);

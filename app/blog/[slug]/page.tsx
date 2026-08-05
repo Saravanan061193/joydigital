@@ -67,10 +67,6 @@ export default async function BlogPostPage({ params }: PageProps) {
             <h1 className="text-2xl sm:text-4xl font-extrabold text-primary-dark tracking-tight mb-6 leading-tight">
               {post.title}
             </h1>
-            
-            <span className="text-xs text-text-secondary font-semibold">
-              Written by {post.author} &bull; Joy Digital Marketing
-            </span>
           </div>
         </section>
 
