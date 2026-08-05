@@ -50,7 +50,7 @@ export default function ContactPage() {
                   <div className="flex flex-col">
                     <span className="text-[10px] font-bold text-text-muted uppercase">Office Address</span>
                     <span className="text-sm font-bold text-primary-dark mt-0.5">
-                      Joy Digital Growth Agency, Chennai, Tamil Nadu, India
+                      Joy Digital Growth Agency, Old Perungalathur, Chennai 600063, Tamil Nadu, India
                     </span>
                   </div>
                 </div>

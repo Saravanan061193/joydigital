@@ -66,10 +66,10 @@ Schema markup is structured code injected into your website that helps search en
   "name": "Joy Digital Growth Agency",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Chennai Main Road",
+    "streetAddress": "Old Perungalathur",
     "addressLocality": "Chennai",
     "addressRegion": "Tamil Nadu",
-    "postalCode": "625001",
+    "postalCode": "600063",
     "addressCountry": "IN"
   },
   "telephone": "+919080026133",

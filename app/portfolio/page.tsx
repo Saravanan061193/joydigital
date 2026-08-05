@@ -15,6 +15,15 @@ const PORTFOLIO_ITEMS = [
     title: "Ganesan Associates - LIC & Star Health Portal",
     image: "/assets/images/ganesan-associates.webp",
     description: "A professional insurance and financial services advisory website, built with custom lead capture structures and fully responsive layouts.",
+    liveUrl: "https://ganeshmuruganlic.com",
+  },
+  {
+    category: "websites",
+    categoryLabel: "Website Design & Development",
+    title: "Chithra Insurance Agent Portal",
+    image: "/assets/images/hero-banner.webp",
+    description: "A clean, modern lead-generation web application designed for a professional Insurance advisor. Built to load in under 1.2 seconds, securing client enquiries in real-time.",
+    liveUrl: "https://chithrainsurance.com",
   },
   {
     category: "marketing",
@@ -29,13 +38,6 @@ const PORTFOLIO_ITEMS = [
     title: "Joy Digital Marketing Campaign Poster",
     image: "/assets/images/marketing-poster-mockup.webp",
     description: "High-impact advertising poster layout featuring website development pricing packages, client conversion statistics, and direct WhatsApp triggers.",
-  },
-  {
-    category: "websites",
-    categoryLabel: "Website Design",
-    title: "E-commerce Marketplace Website",
-    image: "/assets/images/hero-banner.webp",
-    description: "Multi-vendor responsive online marketplace designed for high loading performance and sales flow conversions.",
   },
   {
     category: "branding",
@@ -141,12 +143,26 @@ export default function PortfolioPage() {
                       </p>
                     </div>
                     
-                    <Link
-                      href="/contact"
-                      className="text-xs font-bold text-primary hover:text-accent flex items-center gap-1 mt-2"
-                    >
-                      Inquire About Project <i className="fa-solid fa-chevron-right text-[9px]" />
-                    </Link>
+                    <div className="flex justify-between items-center mt-4 border-t border-gray-50 pt-4">
+                      {item.liveUrl ? (
+                        <a
+                          href={item.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs font-bold text-accent hover:text-primary flex items-center gap-1.5"
+                        >
+                          Live Link <i className="fa-solid fa-arrow-up-right-from-square text-[9px]" />
+                        </a>
+                      ) : (
+                        <span className="text-[9px] font-bold text-text-muted uppercase tracking-wider">Static Showcase</span>
+                      )}
+                      <Link
+                        href="/contact"
+                        className="text-xs font-bold text-primary hover:text-accent flex items-center gap-1"
+                      >
+                        Inquire <i className="fa-solid fa-chevron-right text-[8px]" />
+                      </Link>
+                    </div>
                   </div>
                 </article>
               ))}

@@ -18,6 +18,7 @@ interface HomePageComponentProps {
 }
 
 export default function HomePageComponent({ country }: HomePageComponentProps) {
+  const [selectedCurrency, setSelectedCurrency] = React.useState(country || "in");
 
   const getRegionalHref = (path: string) => {
     const localizedPaths = ["/", "/seo-services", "/website-development", "/contact"];
@@ -79,7 +80,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
   };
 
   const getPricingPlans = () => {
-    switch (country) {
+    switch (selectedCurrency) {
       case "us":
         return {
           starter: { price: "1,000", currency: "$" },
@@ -214,19 +215,31 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
       stars: 5,
       quote: "Joy Digital optimized our local map search. We now rank at the top of Google Maps in Chennai, and our monthly incoming calls and insurance inquiries have doubled! Their strategy is highly practical.",
       name: "Ganesh Murugan",
-      role: "LIC Financial Advisor, Chennai",
+      role: "LIC Financial Advisor",
+      company: "Ganesan Associates",
+      avatarBg: "bg-blue-100 text-blue-600",
+      initials: "GM",
+      linkedin: "https://www.linkedin.com/in/saravanan-joydigital/"
     },
     {
       stars: 5,
       quote: "We rebuilt our insurance portfolio using their headless Next.js framework. The site loads instantly, and we have captured over 50+ qualified policy leads via WhatsApp in the first month.",
       name: "Chithra",
-      role: "Star Health Advisor, Tamil Nadu",
+      role: "Star Health Advisor",
+      company: "Independent Consultancy",
+      avatarBg: "bg-emerald-100 text-emerald-600",
+      initials: "C",
+      linkedin: "https://www.linkedin.com/in/saravanan-joydigital/"
     },
     {
       stars: 5,
       quote: "Their team combined custom interface layouts with rigorous technical SEO. We now rank for competitive terms in our sector, bringing in continuous qualified sales leads.",
       name: "R. Rajesh Kumar",
-      role: "Retail Director, Chennai",
+      role: "Retail Director",
+      company: "Rajesh Retail Group",
+      avatarBg: "bg-purple-100 text-purple-600",
+      initials: "RK",
+      linkedin: "https://www.linkedin.com/in/saravanan-joydigital/"
     },
   ];
 
@@ -803,9 +816,31 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               <h2 className="text-2xl md:text-4xl font-extrabold text-text-primary mb-4">
                 Transparent Pricing for <span className="text-gradient">Every Business Stage</span>
               </h2>
-              <p className="text-sm text-text-secondary">
+              <p className="text-sm text-text-secondary mb-6">
                 Choose the package that fits your objectives. High-converting deliverables with zero hidden agency costs.
               </p>
+              
+              {/* Currency Selector Switcher */}
+              <div className="inline-flex bg-white p-1 rounded-full border border-gray-200 shadow-sm mb-4">
+                {[
+                  { code: "in", label: "INR (₹)" },
+                  { code: "us", label: "USD ($)" },
+                  { code: "uk", label: "GBP (£)" },
+                  { code: "ae", label: "AED (AED)" }
+                ].map((c) => (
+                  <button
+                    key={c.code}
+                    onClick={() => setSelectedCurrency(c.code)}
+                    className={`px-4 py-2 rounded-full text-[10px] font-bold transition-all duration-200 cursor-pointer ${
+                      selectedCurrency === c.code
+                        ? "bg-primary text-white shadow-sm"
+                        : "text-text-secondary hover:text-text-primary"
+                    }`}
+                  >
+                    {c.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
@@ -1121,9 +1156,19 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                       &ldquo;{t.quote}&rdquo;
                     </p>
                   </div>
-                  <div className="flex flex-col border-t border-[#E5E7EB] pt-4">
-                    <span className="text-xs font-bold text-text-primary">{t.name}</span>
-                    <span className="text-[10px] text-text-muted">{t.role}</span>
+                  <div className="flex items-center gap-3 border-t border-[#E5E7EB] pt-4">
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs flex-shrink-0 ${t.avatarBg}`}>
+                      {t.initials}
+                    </div>
+                    <div className="flex-grow text-left">
+                      <span className="text-xs font-bold text-text-primary block leading-tight">{t.name}</span>
+                      <span className="text-[10px] text-text-muted block mt-0.5">{t.role} — {t.company}</span>
+                    </div>
+                    {t.linkedin && (
+                      <a href={t.linkedin} target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-[#0A66C2] transition-colors flex-shrink-0" aria-label="LinkedIn profile">
+                        <i className="fa-brands fa-linkedin text-sm" />
+                      </a>
+                    )}
                   </div>
                 </div>
               ))}
@@ -1196,6 +1241,56 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               </div>
             </div>
 
+          </div>
+        </section>
+
+        {/* Remote Client Workflow / Global Partnership Section */}
+        <section className="py-20 bg-white border-t border-[#E5E7EB]">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
+                Global Operations
+              </span>
+              <h2 className="text-2xl md:text-4xl font-extrabold text-text-primary mb-4">
+                Seamless <span className="text-gradient">Remote Collaboration</span>
+              </h2>
+              <p className="text-sm text-text-secondary">
+                We work with international clients across USA, UK, UAE, and Europe using structured async models that fit your timezone.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {[
+                {
+                  icon: "fa-solid fa-clock",
+                  title: "Timezone Alignment",
+                  desc: "We coordinate overlapping work hours for project handoffs, sprint reviews, and direct consultations, ensuring smooth delivery cycles."
+                },
+                {
+                  icon: "fa-solid fa-comments",
+                  title: "Async Channels",
+                  desc: "Clear updates via Slack, WhatsApp, and email. You get a dedicated dashboard to track files, design drafts, and staging links."
+                },
+                {
+                  icon: "fa-solid fa-file-contract",
+                  title: "Legal & IP Protection",
+                  desc: "Secure international contracts (NDAs) and clean IP handoffs. All code and branding assets belong entirely to your company from day one."
+                },
+                {
+                  icon: "fa-solid fa-credit-card",
+                  title: "Global Payments",
+                  desc: "Flexible, transparent invoices in USD, GBP, AED, or INR via Stripe, Wise, or bank wire transfer. No hidden transaction charges."
+                }
+              ].map((step, index) => (
+                <div key={index} className="bg-light-card border border-[#E5E7EB] rounded-[24px] p-8 shadow-sm flex flex-col items-start text-left hover:shadow-md transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-[#2563EB]/10 text-[#2563EB] flex items-center justify-center text-xl mb-6">
+                    <i className={step.icon} />
+                  </div>
+                  <h3 className="text-base font-extrabold text-text-primary mb-3">{step.title}</h3>
+                  <p className="text-xs text-text-secondary leading-relaxed">{step.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 

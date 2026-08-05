@@ -14,6 +14,10 @@ export default function FontAwesomeLoader() {
     link.integrity = "sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==";
     link.crossOrigin = "anonymous";
     link.referrerPolicy = "no-referrer";
+    link.media = "print";
+    link.onload = () => {
+      link.media = "all";
+    };
 
     document.head.appendChild(link);
   }, []);

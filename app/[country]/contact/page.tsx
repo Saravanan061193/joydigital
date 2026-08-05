@@ -59,7 +59,7 @@ const REGIONAL_CONTACTS: Record<string, {
     description: "Ready to scale your search presence and customer leads in India? Contact our core agency engineering team based in Tamil Nadu.",
     phone: "+919080026133",
     phoneFormatted: "+91 90800 26133",
-    address: "Joy Digital Growth Agency, Chennai Main Road, Tamil Nadu, India",
+    address: "Joy Digital Growth Agency, Old Perungalathur, Chennai 600063, Tamil Nadu, India",
     showMap: true,
     marketName: "India",
   },

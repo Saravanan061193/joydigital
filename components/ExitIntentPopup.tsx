@@ -44,17 +44,24 @@ export default function ExitIntentPopup() {
 
     // 2. Mobile Exit Intent (Fast scroll up)
     let lastScrollTop = 0;
+    let ticking = false;
     
     const handleScroll = () => {
-      const st = window.pageYOffset || document.documentElement.scrollTop;
-      const isScrollUp = st < lastScrollTop - 60;
-      
-      if (isScrollUp && st > 150) {
-        triggerPopup();
-        cleanup();
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const st = window.scrollY !== undefined ? window.scrollY : document.documentElement.scrollTop;
+          const isScrollUp = st < lastScrollTop - 60;
+          
+          if (isScrollUp && st > 150) {
+            triggerPopup();
+            cleanup();
+          }
+          
+          lastScrollTop = st <= 0 ? 0 : st;
+          ticking = false;
+        });
+        ticking = true;
       }
-      
-      lastScrollTop = st <= 0 ? 0 : st;
     };
 
     // 3. Inactivity/Time Delay Fallback (25 seconds)
@@ -70,7 +77,7 @@ export default function ExitIntentPopup() {
     };
 
     document.addEventListener("mouseleave", handleMouseLeave);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       cleanup();

@@ -34,10 +34,10 @@ const pageSchema = {
     "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Chennai Main Road",
+      "streetAddress": "Old Perungalathur",
       "addressLocality": "Chennai",
       "addressRegion": "Tamil Nadu",
-      "postalCode": "625001",
+      "postalCode": "600063",
       "addressCountry": "IN"
     }
   },
