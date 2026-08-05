@@ -200,7 +200,7 @@ export default async function CountryContactPage({ params }: PageProps) {
               {config.showMap && (
                 <div className="w-full rounded-xl overflow-hidden shadow-sm border border-gray-100 mt-2">
                   <iframe
-                    src="https://maps.google.com/maps?q=9.927296037472392,78.1265955104797&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                    src="https://maps.google.com/maps?q=Old%20Perungalathur,%20Chennai,%20Tamil%20Nadu,%20India&t=&z=15&ie=UTF8&iwloc=&output=embed"
                     width="100%"
                     height="230"
                     style={{ border: 0, filter: "grayscale(100%) invert(90%) contrast(90%)" }}
