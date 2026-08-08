@@ -93,8 +93,8 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
       default:
         return {
           badge: "9+ Years of Industry Experience",
-          h1: <>#1 Website Development & <span className="text-gradient">Web Design Agency in Chennai</span></>,
-          subtitle: "Looking for a leading website development company in Chennai? We build high-speed Next.js websites & offer affordable web design services to boost leads.",
+          h1: <>Website Development Company in Chennai</>,
+          subtitle: "Joy Digital is a professional website development company in Chennai helping businesses build modern, responsive and SEO-friendly websites. We provide web development services in Chennai, including business websites, ecommerce websites, custom web applications and digital marketing solutions designed to improve online visibility and generate leads.",
         };
     }
   };
@@ -147,27 +147,33 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
   // 2. Localized Services List
   const HOME_SERVICES = [
     {
-      icon: "fa-solid fa-laptop-code",
-      title: "Next.js Web Development",
-      description: `High-performance, secure, fast-loading Next.js websites built with custom React components, static pre-rendering, and global CDN delivery.`,
+      icon: "fa-solid fa-code",
+      title: "Website Development",
+      description: "We are a premier website development company in Chennai building high-performance, fast-loading websites using Next.js and React. Our custom solutions help businesses optimize conversion rates and secure qualified sales leads.",
       href: "/website-development",
     },
     {
-      icon: "fa-solid fa-building",
-      title: "Corporate Web Design",
-      description: `Multipage corporate website designs tailor-made for businesses, clinics, insurance advisors, and service agencies to capture search intent.`,
+      icon: "fa-solid fa-laptop-code",
+      title: "Web Design",
+      description: "Looking for professional website design company in Chennai? We design mobile-responsive, visually stunning, and user-friendly web layouts that establish brand trust and deliver exceptional user experiences on all screens.",
       href: "/web-design-services",
     },
     {
       icon: "fa-solid fa-cart-shopping",
-      title: "Headless E-commerce",
-      description: `Ultra-fast e-commerce storefronts built on headless frameworks. Integrates shop catalogs with lightweight checkouts for lower cart bounce rates.`,
+      title: "Ecommerce Development",
+      description: "Supercharge your online store with ecommerce website development in Chennai. We design secure, SEO-ready shopping platforms and payment checkouts built to increase conversion rates and customer satisfaction.",
       href: "/ecommerce-website-development",
     },
     {
-      icon: "fa-solid fa-funnel-dollar",
-      title: "Landing Pages & Lead Funnels",
-      description: "Convert high-intent digital traffic with custom interactive landing pages, direct contact forms, exit-intent prompts, and CRM integrations.",
+      icon: "fa-solid fa-magnifying-glass-chart",
+      title: "SEO Services",
+      description: "Rank on the first page of search results with professional SEO services in Chennai. We optimize core web speed metrics, structure semantic data schemas, and build authoritative local citations to drive organic traffic.",
+      href: "/seo-services",
+    },
+    {
+      icon: "fa-solid fa-chart-line",
+      title: "Digital Marketing",
+      description: "Expand your local presence with results-driven digital marketing services in Chennai. We manage high-ROI advertising campaigns, capture search intent, and optimize landing pages to maximize corporate growth.",
       href: "/contact",
     },
   ];
@@ -175,34 +181,29 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
   // 3. Why Choose Us (Backup or referenced points)
   const WHY_CHOOSE_ITEMS = [
     {
-      icon: "fa-solid fa-tags",
-      title: "Affordable Pricing",
-      description: `Flexible package pricing structures for startups and growing enterprises. Premium engineering deliverables starting from ${currency}${startingPrice} without high global agency pricing.`,
+      icon: "fa-solid fa-location-dot",
+      title: "Chennai-focused website solutions",
+      description: "Tailor-made web solutions designed to target local search queries, capture local customer intent, and dominate the Chennai business market.",
+    },
+    {
+      icon: "fa-solid fa-mobile-screen-button",
+      title: "Mobile responsive design",
+      description: "Ensure your website looks modern, functions flawlessly, and maintains perfect layout scaling across all smartphone and tablet screen sizes.",
     },
     {
       icon: "fa-solid fa-bolt",
-      title: "Ultra-Fast Delivery",
-      description: "We organize development sprints to deliver custom web drafts and launch layouts ahead of schedule, with zero compromise on codebase health.",
+      title: "Fast loading websites",
+      description: "Built on high-performance static rendering frameworks to achieve load times under 1.5 seconds, reducing bounce rates and maximizing conversions.",
     },
     {
-      icon: "fa-solid fa-shield-halved",
-      title: "Next.js Security & Speed",
-      description: "We bypass slow databases and server vulnerabilities by building headless sites that load under 1.5 seconds and score 95+ on Core Web Vitals.",
+      icon: "fa-solid fa-magnifying-glass-chart",
+      title: "SEO-ready development",
+      description: "Clean code structure, semantic HTML tags, pre-configured JSON-LD structured schemas, and XML sitemaps built-in to rank higher on Google search results.",
     },
     {
-      icon: "fa-solid fa-search",
-      title: "SEO-Ready Architecture",
-      description: "Every page is built with structured JSON-LD schemas, absolute link canonicals, meta fields, and fast HTML markup to boost indexation.",
-    },
-    {
-      icon: "fa-solid fa-headset",
-      title: "Dedicated Support Lines",
-      description: "Direct Slack or WhatsApp developer communications. We monitor hosting, security certificates, and core backups to keep your platform secure.",
-    },
-    {
-      icon: "fa-solid fa-chart-line",
-      title: "Lead-Focused Engineering",
-      description: "We don't build passive online portfolios. Every screen is optimized with interactive forms, distinct calls-to-action, and lead tracking.",
+      icon: "fa-solid fa-tags",
+      title: "Affordable pricing for startups and businesses",
+      description: "Transparent, package-based development pricing structure with no hidden fees, helping local Chennai startups launch professional websites affordably.",
     },
   ];
 
@@ -436,7 +437,11 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           </div>
         </section>
         
-        <StrongCTA location="hero" />
+        <StrongCTA 
+          location="hero" 
+          title="Need a professional website for your business in Chennai?" 
+          description="Contact Joy Digital today for a free consultation and website development quote."
+        />
 
         {/* Client Logos Section */}
         <section className="py-12 bg-white border-y border-[#E5E7EB]">
@@ -1094,7 +1099,11 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
 
-        <StrongCTA location="case studies section" />
+        <StrongCTA 
+          location="case studies section" 
+          title="Need a professional website for your business in Chennai?" 
+          description="Contact Joy Digital today for a free consultation and website development quote."
+        />
 
         {/* Google Reviews Trust Widget */}
         <section className="py-12 bg-light-bg border-b border-[#E5E7EB]">

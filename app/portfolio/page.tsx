@@ -14,6 +14,7 @@ const PORTFOLIO_ITEMS = [
     categoryLabel: "Website Design & Development",
     title: "Ganesan Associates - LIC & Star Health Portal",
     image: "/assets/images/ganesan-associates.webp",
+    alt: "Website Development Company in Chennai",
     description: "A professional insurance and financial services advisory website, built with custom lead capture structures and fully responsive layouts.",
     liveUrl: "https://ganeshmuruganlic.com",
   },
@@ -22,6 +23,7 @@ const PORTFOLIO_ITEMS = [
     categoryLabel: "Website Design & Development",
     title: "Chithra Insurance Agent Portal",
     image: "/assets/images/hero-banner.webp",
+    alt: "Web Development Services Chennai",
     description: "A clean, modern lead-generation web application designed for a professional Insurance advisor. Built to load in under 1.2 seconds, securing client enquiries in real-time.",
     liveUrl: "https://chithrainsurance.com",
   },
@@ -30,6 +32,7 @@ const PORTFOLIO_ITEMS = [
     categoryLabel: "Local SEO & GBP Optimization",
     title: "Joy Digital Local Maps Ranking Campaign",
     image: "/assets/images/gbp-showcase.webp",
+    alt: "Website Design Chennai",
     description: "Comprehensive Google Business Profile setup, local citations, and maps optimization to secure top ranks on local search results.",
   },
   {
@@ -37,6 +40,7 @@ const PORTFOLIO_ITEMS = [
     categoryLabel: "Advertising & Poster Design",
     title: "Joy Digital Marketing Campaign Poster",
     image: "/assets/images/marketing-poster-mockup.webp",
+    alt: "Ecommerce Website Development Chennai",
     description: "High-impact advertising poster layout featuring website development pricing packages, client conversion statistics, and direct WhatsApp triggers.",
   },
   {
@@ -44,6 +48,7 @@ const PORTFOLIO_ITEMS = [
     categoryLabel: "Logo & Branding",
     title: "Joy Growth Corporate Brand Logo",
     image: "/assets/images/logo.webp",
+    alt: "Website Design Company in Chennai",
     description: "Creative vector logo mark design for a modern technology consultancy, including custom color palettes.",
   },
   {
@@ -51,6 +56,7 @@ const PORTFOLIO_ITEMS = [
     categoryLabel: "Corporate Identity & Business Cards",
     title: "Wardiere Creative Designer Business Card",
     image: "/assets/images/business-card-mockup.webp",
+    alt: "Custom Website Development Chennai",
     description: "Modern, premium corporate visiting card design layout utilizing clean color blocks, contact detail columns, and abstract brand marks.",
   },
   {
@@ -58,6 +64,7 @@ const PORTFOLIO_ITEMS = [
     categoryLabel: "Website Development",
     title: "Startup SaaS Landing Page",
     image: "/assets/images/hero-banner.webp",
+    alt: "Responsive Website Development Chennai",
     description: "Single-page responsive marketing landing page built using clean code structures and SEO variables.",
   },
 ];
@@ -121,7 +128,7 @@ export default function PortfolioPage() {
                   <div className="relative aspect-[4/3] bg-light-bg overflow-hidden flex items-center justify-center p-4">
                     <Image
                       src={item.image}
-                      alt={item.title}
+                      alt={item.alt || item.title}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover transition-transform duration-300 hover:scale-105"

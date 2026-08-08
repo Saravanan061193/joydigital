@@ -3,14 +3,14 @@ import HomePageComponent from "@/components/sections/HomePageComponent";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Website Development Company in Chennai | Fast Next.js Sites",
-  description: "Looking for a leading website development company in Chennai? We build high-speed Next.js websites & offer affordable web design services to boost leads.",
+  title: "Website Development Company in Chennai | Web Design & SEO Services | Joy Digital",
+  description: "Joy Digital is a leading website development company in Chennai offering web design, custom website development, ecommerce websites, responsive web development and SEO services for businesses.",
   alternates: {
     canonical: "https://joydigital.in",
   },
   openGraph: {
-    title: "Website Development Company in Chennai | Fast Next.js Sites",
-    description: "Looking for a leading website development company in Chennai? We build high-speed Next.js websites & offer affordable web design services to boost leads.",
+    title: "Website Development Company in Chennai | Web Design & SEO Services | Joy Digital",
+    description: "Joy Digital is a leading website development company in Chennai offering web design, custom website development, ecommerce websites, responsive web development and SEO services for businesses.",
     url: "https://joydigital.in",
     siteName: "Joy Digital",
     type: "website",
@@ -19,14 +19,14 @@ export const metadata: Metadata = {
         url: "/assets/images/hero-banner.webp",
         width: 1024,
         height: 1024,
-        alt: "Joy Digital - Website Development Company in Chennai",
+        alt: "Website Development Company in Chennai",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Website Development Company in Chennai | Fast Next.js Sites",
-    description: "Looking for a leading website development company in Chennai? We build high-speed Next.js websites & offer affordable web design services to boost leads.",
+    title: "Website Development Company in Chennai | Web Design & SEO Services | Joy Digital",
+    description: "Joy Digital is a leading website development company in Chennai offering web design, custom website development, ecommerce websites, responsive web development and SEO services for businesses.",
     images: ["/assets/images/hero-banner.webp"],
   },
 };

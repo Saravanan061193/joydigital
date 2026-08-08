@@ -5,9 +5,14 @@ import Link from "next/link";
 
 interface StrongCTAProps {
   location: string;
+  title?: string;
+  description?: string;
 }
 
-export default function StrongCTA({ location }: StrongCTAProps) {
+export default function StrongCTA({ location, title, description }: StrongCTAProps) {
+  const displayTitle = title || "Ready to Grow Your Business Online?";
+  const displayDesc = description || "Get a professional website and SEO strategy tailored to your business goals. Speak with our team today.";
+
   return (
     <section className="relative py-16 bg-light-card border border-[#E5E7EB] overflow-hidden rounded-3xl mx-6 lg:mx-12 my-12 shadow-sm">
       {/* Subtle light background grid decoration */}
@@ -18,10 +23,10 @@ export default function StrongCTA({ location }: StrongCTAProps) {
           Grow Fast, Scale Smart
         </span>
         <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-5 leading-tight text-text-primary">
-          Ready to Grow Your Business Online?
+          {displayTitle}
         </h2>
         <p className="text-sm md:text-base text-text-secondary max-w-xl mx-auto mb-10 leading-relaxed">
-          Get a professional website and SEO strategy tailored to your business goals. Speak with our team today.
+          {displayDesc}
         </p>
         
         <div className="flex flex-wrap items-center justify-center gap-4 w-full sm:w-auto">

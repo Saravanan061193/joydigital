@@ -285,13 +285,18 @@ export default function Footer() {
 
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-text-secondary">
-        <p>
-          Copyright &copy; {new Date().getFullYear()} Joy Digital Growth Agency. All Rights Reserved.
+      <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-[#E5E7EB] mt-8 flex flex-col gap-6 text-center text-xs text-text-secondary">
+        <p className="font-semibold text-slate-500">
+          Joy Digital – Website Development Company in Chennai | Web Design | Ecommerce Development | SEO Services | Digital Marketing
         </p>
-        <div className="flex gap-6">
-          <Link href="/privacy-policy" className="hover:text-accent transition-colors">Privacy Policy</Link>
-          <Link href="/terms-and-conditions" className="hover:text-accent transition-colors">Terms of Service</Link>
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 w-full">
+          <p>
+            Copyright &copy; {new Date().getFullYear()} Joy Digital Growth Agency. All Rights Reserved.
+          </p>
+          <div className="flex gap-6">
+            <Link href="/privacy-policy" className="hover:text-accent transition-colors">Privacy Policy</Link>
+            <Link href="/terms-and-conditions" className="hover:text-accent transition-colors">Terms of Service</Link>
+          </div>
         </div>
       </div>
     </footer>
