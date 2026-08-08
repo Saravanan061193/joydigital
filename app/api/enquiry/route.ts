@@ -9,23 +9,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     
-    // 1. Create directory if not exists
-    if (!fs.existsSync(DATA_DIR)) {
-      fs.mkdirSync(DATA_DIR, { recursive: true });
-    }
-    
-    // 2. Read existing enquiries
-    let enquiries = [];
-    if (fs.existsSync(DATA_FILE)) {
-      try {
-        const fileContent = fs.readFileSync(DATA_FILE, "utf-8");
-        enquiries = JSON.parse(fileContent);
-      } catch (e) {
-        console.error("Error parsing existing enquiries file:", e);
-      }
-    }
-    
-    // 3. Construct new lead record
+    // Construct new lead record
     const newEnquiry = {
       id: crypto.randomUUID(),
       name: body.Name || body.name || "N/A",
@@ -41,11 +25,30 @@ export async function POST(request: Request) {
       createdAt: new Date().toISOString(),
     };
     
-    // 4. Save to JSON file (newest leads first)
-    enquiries.unshift(newEnquiry);
-    fs.writeFileSync(DATA_FILE, JSON.stringify(enquiries, null, 2), "utf-8");
+    // 1. Attempt to save locally in data/enquiries.json (for local runs)
+    try {
+      if (!fs.existsSync(DATA_DIR)) {
+        fs.mkdirSync(DATA_DIR, { recursive: true });
+      }
+      
+      let enquiries = [];
+      if (fs.existsSync(DATA_FILE)) {
+        try {
+          const fileContent = fs.readFileSync(DATA_FILE, "utf-8");
+          enquiries = JSON.parse(fileContent);
+        } catch (e) {
+          console.error("Error parsing existing enquiries file:", e);
+        }
+      }
+      
+      enquiries.unshift(newEnquiry);
+      fs.writeFileSync(DATA_FILE, JSON.stringify(enquiries, null, 2), "utf-8");
+    } catch (fsError) {
+      console.warn("Local filesystem write failed (running in read-only environment like Vercel):", fsError);
+      // Let the function continue so that the FormSubmit email is forwarded successfully
+    }
     
-    // 5. Forward to FormSubmit.co server-side so owner still receives email
+    // 2. Forward to FormSubmit.co server-side so owner still receives email
     try {
       await fetch("https://formsubmit.co/ajax/saravanan061193@gmail.com", {
         method: "POST",
