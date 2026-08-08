@@ -8,11 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 const SERVICES_LINKS = [
   { href: "/website-development", label: "Web Development", localized: true },
   { href: "/web-design-services", label: "Web Design", localized: false },
-  { href: "/seo-services", label: "Global SEO", localized: true },
-  { href: "/local-seo-services", label: "Local SEO", localized: false },
-  { href: "/social-media-marketing", label: "Social Media Marketing", localized: false },
-  { href: "/logo-design-services", label: "Logo & Brand Design", localized: false },
-  { href: "/google-business-profile-setup", label: "GBP & Google Maps Setup", localized: false },
+  { href: "/ecommerce-website-development", label: "E-commerce Development", localized: false },
 ];
 
 const REGIONS = [
@@ -215,16 +211,6 @@ export default function Header() {
             </Link>
 
             <Link
-              href="/case-studies"
-              title="Case Studies"
-              className={`font-semibold text-sm transition-colors hover:text-accent ${
-                isActive("/case-studies") ? "text-accent" : "text-text-primary"
-              }`}
-            >
-              Case Studies
-            </Link>
-
-            <Link
               href="/blog"
               title="Blog"
               className={`font-semibold text-sm transition-colors hover:text-accent ${
@@ -412,16 +398,6 @@ export default function Header() {
             }`}
           >
             Portfolio
-          </Link>
-
-          <Link
-            href="/case-studies"
-            title="Case Studies"
-            className={`font-semibold text-lg border-b border-[#E5E7EB] pb-2 ${
-              isActive("/case-studies") ? "text-accent" : "text-primary-dark"
-            }`}
-          >
-            Case Studies
           </Link>
 
           <Link

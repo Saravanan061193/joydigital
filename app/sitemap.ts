@@ -15,7 +15,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const unifiedStaticPaths = [
     '/about',
     '/portfolio',
-    '/case-studies',
     '/blog',
     '/free-audit',
     '/privacy-policy',
@@ -85,24 +84,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  // 5. Define case studies (unified root level)
-  const caseStudySlugs = [
-    'chennai-clinic-leads',
-    'ecommerce-sales-increase',
-    'saas-landing-optimization',
-  ];
-  const caseStudiesRoutes = caseStudySlugs.map((slug) => ({
-    url: `${baseUrl}/case-studies/${slug}`,
-    lastModified: todayStr,
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }));
-
   return [
     ...regionalRoutes,
     ...unifiedRoutes,
-    ...blogRoutes,
-    ...caseStudiesRoutes
+    ...blogRoutes
   ];
 }
-

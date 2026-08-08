@@ -68,27 +68,27 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
     switch (country) {
       case "us":
         return {
-          badge: "Enterprise Growth Partner",
-          h1: <>Web Design & Global SEO Agency <span className="text-gradient">USA</span></>,
-          subtitle: "We help US businesses capture high-intent customers using ultra-fast Next.js websites, global search marketing campaigns, and conversion-optimized lead funnels backed by 9+ years of experience.",
+          badge: "Premium Web Engineering Partner",
+          h1: <>Web Design & Custom Web Development <span className="text-gradient">USA</span></>,
+          subtitle: "We design and build ultra-fast, secure Next.js websites and premium corporate platforms for US businesses, backed by 9+ years of experience.",
         };
       case "uk":
         return {
-          badge: "Premium Digital Growth Agency",
-          h1: <>Web Design & SEO Services <span className="text-gradient">UK</span></>,
-          subtitle: "Convert search traffic into active buyers. Joy Digital builds high-performance corporate sites and runs organic search campaigns across the UK with 9+ years of experience.",
+          badge: "High-Performance Web Agency",
+          h1: <>Website Design & Web Development <span className="text-gradient">UK</span></>,
+          subtitle: "Convert visitors into active buyers. Joy Digital builds high-speed corporate sites, custom web interfaces, and conversion-ready landing pages across the UK.",
         };
       case "ae":
         return {
-          badge: "Result-Driven Agency Dubai",
-          h1: <>Web Development & Performance SEO <span className="text-gradient">UAE</span></>,
-          subtitle: "Dominate Google search rankings, optimize regional map packs, and build ultra-speed corporate and e-commerce web assets for the UAE market backed by 9+ years of experience.",
+          badge: "Premium Web Development Dubai",
+          h1: <>Website Design & Headless E-commerce <span className="text-gradient">UAE</span></>,
+          subtitle: "Build ultra-speed, responsive corporate portals and headless WooCommerce storefronts for the UAE market backed by 9+ years of experience.",
         };
       case "in":
         return {
-          badge: "9+ Years of Industry Experience",
-          h1: <>Website Design & SEO Company <span className="text-gradient">India</span></>,
-          subtitle: "Helping businesses grow online with professional websites, SEO-ready development, and digital solutions backed by 9+ years of experience.",
+          badge: "9+ Years of Web Engineering",
+          h1: <>Website Design & Development Company <span className="text-gradient">India</span></>,
+          subtitle: "Helping businesses grow online with custom-coded React & Next.js websites, mobile-friendly designs, and modern web solutions.",
         };
       default:
         return {
@@ -148,39 +148,27 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
   const HOME_SERVICES = [
     {
       icon: "fa-solid fa-laptop-code",
-      title: "Website Design & Dev",
-      description: `High-performance, secure, fast-loading, and mobile-responsive business sites. Target top speed scores and maximum conversion rates in your local market.`,
+      title: "Next.js Web Development",
+      description: `High-performance, secure, fast-loading Next.js websites built with custom React components, static pre-rendering, and global CDN delivery.`,
       href: "/website-development",
     },
     {
-      icon: "fa-solid fa-magnifying-glass",
-      title: "Performance SEO Services",
-      description: `Target high-intent organic search queries nationally or globally. Build authoritative backlink profiles and optimized, crawler-friendly code schemas.`,
-      href: "/seo-services",
+      icon: "fa-solid fa-building",
+      title: "Corporate Web Design",
+      description: `Multipage corporate website designs tailor-made for businesses, clinics, insurance advisors, and service agencies to capture search intent.`,
+      href: "/web-design-services",
+    },
+    {
+      icon: "fa-solid fa-cart-shopping",
+      title: "Headless E-commerce",
+      description: `Ultra-fast e-commerce storefronts built on headless frameworks. Integrates shop catalogs with lightweight checkouts for lower cart bounce rates.`,
+      href: "/ecommerce-website-development",
     },
     {
       icon: "fa-solid fa-funnel-dollar",
-      title: "Lead Generation Funnels",
-      description: "Convert basic web traffic into qualified corporate pipeline leads. Deployed with multi-step interactive scripts, exit intent triggers, and CRM workflows.",
+      title: "Landing Pages & Lead Funnels",
+      description: "Convert high-intent digital traffic with custom interactive landing pages, direct contact forms, exit-intent prompts, and CRM integrations.",
       href: "/contact",
-    },
-    {
-      icon: "fa-solid fa-share-nodes",
-      title: "Social Media Marketing",
-      description: "Engage your audience, build brand visibility, and manage ROI-driven lead acquisition campaigns on Instagram, LinkedIn, and Facebook.",
-      href: "/social-media-marketing",
-    },
-    {
-      icon: "fa-solid fa-pen-nib",
-      title: "Logo & Brand Design",
-      description: "Create memorable corporate logos, premium brand style boards, assets, and typography configurations for growing startups.",
-      href: "/logo-design-services",
-    },
-    {
-      icon: "fa-solid fa-map-location-dot",
-      title: "Local SEO & Map Pack",
-      description: "Appear in Google Maps local search listings. Professional profile setups, Google reviews collection shortcuts, and localized citation building.",
-      href: "/google-business-profile-setup",
     },
   ];
 
@@ -1105,48 +1093,6 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           </div>
         </section>
 
-        {/* Case Studies Section */}
-        <section className="py-20 bg-light-bg border-t border-[#E5E7EB]">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
-                Success Stories
-              </span>
-              <h2 className="text-2xl md:text-4xl font-extrabold text-text-primary mb-4">
-                Real Results for <span className="text-gradient">Real Brands</span>
-              </h2>
-              <p className="text-sm text-text-secondary">
-                See how we help SaaS companies, localized clinics, and e-commerce stores grow their qualified customer pipeline.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {CASE_STUDIES.map((study, index) => (
-                <article key={index} className="bg-light-card border border-[#E5E7EB] rounded-[20px] p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
-                  <div>
-                    <div className="bg-white border border-[#E5E7EB] p-6 rounded-[16px] text-center mb-6 shadow-sm">
-                      <span className="text-3xl font-extrabold text-[#2563EB] block">{study.metrics}</span>
-                      <span className="text-[9px] font-bold text-text-secondary uppercase tracking-wider">{study.tag}</span>
-                    </div>
-                    <span className="text-[10px] font-bold text-text-secondary uppercase tracking-wider">{study.tag}</span>
-                    <h3 className="text-base font-bold text-text-primary mt-2 mb-3 leading-tight">
-                      {study.title}
-                    </h3>
-                    <p className="text-xs text-text-secondary leading-relaxed mb-6">
-                      {study.desc}
-                    </p>
-                  </div>
-                  <Link
-                    href={study.href}
-                    className="text-xs font-bold text-primary hover:text-primary-light flex items-center gap-1 mt-2 transition-colors"
-                  >
-                    Read Case Study <i className="fa-solid fa-chevron-right text-[8px]" />
-                  </Link>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
 
         <StrongCTA location="case studies section" />
 

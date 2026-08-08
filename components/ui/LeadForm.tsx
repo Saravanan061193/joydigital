@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 interface LeadFormProps {
@@ -34,13 +34,22 @@ const COUNTRY_CODES = [
   { code: "+27", flag: "🇿🇦", name: "South Africa" },
 ];
 
+const SERVICE_OPTIONS = [
+  { value: "Website Design & Development", label: "Next.js Web Design & Development", desc: "Speed-optimized custom React business sites", icon: "fa-solid fa-laptop-code" },
+  { value: "Corporate Multipage Site", label: "Corporate Business Website", desc: "Multipage company profiles & lead funnels", icon: "fa-solid fa-building" },
+  { value: "Headless E-commerce Store", label: "Headless E-commerce Store", desc: "Ultra-fast headless WooCommerce/Shopify storefronts", icon: "fa-solid fa-cart-shopping" },
+  { value: "Landing Page Development", label: "Landing Page & Lead Funnel", desc: "High-converting single page funnel setups", icon: "fa-solid fa-funnel-dollar" },
+  { value: "Custom Web Application", label: "Custom React Web Application", desc: "Bespoke dynamic platforms & database portals", icon: "fa-solid fa-code" },
+  { value: "Other Web Services", label: "Maintenance / Custom Web Support", desc: "Migrations, speed tuning, or maintenance contracts", icon: "fa-solid fa-screwdriver-wrench" },
+];
+
 export default function LeadForm({
   layout = "vertical",
   title = "Get a Free Growth Consultation",
   subtitle = "Our digital experts will analyze your needs and reach out within 24 hours.",
   ctaText = "Submit Request",
   source = "General Lead Funnel",
-  showWebsiteField = false,
+  showWebsiteField = true,
 }: LeadFormProps) {
   const pathname = usePathname();
 
@@ -58,98 +67,89 @@ export default function LeadForm({
     }
   };
 
-  const [step, setStep] = useState(1);
   const [selectedCountryCode, setSelectedCountryCode] = useState(() => getDefaultCountryCode(detectedRegion));
 
   // Form State
   const [formData, setFormData] = useState(() => ({
-    bottleneck: "",
-    service: "",
-    website: "",
-    region: detectedRegion || "us",
-    budget: "",
     name: "",
+    companyName: "",
+    website: "",
     email: "",
     mobile: "",
+    service: "",
     message: "",
+    region: detectedRegion || "in",
   }));
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // Update region form data if pathname changes during render
+  // Dropdown States
+  const [isCountryOpen, setIsCountryOpen] = useState(false);
+  const [isServiceOpen, setIsServiceOpen] = useState(false);
+  const [countrySearch, setCountrySearch] = useState("");
+
+  const countryDropdownRef = useRef<HTMLDivElement>(null);
+  const serviceDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdowns on outside click
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (countryDropdownRef.current && !countryDropdownRef.current.contains(event.target as Node)) {
+        setIsCountryOpen(false);
+      }
+      if (serviceDropdownRef.current && !serviceDropdownRef.current.contains(event.target as Node)) {
+        setIsServiceOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Update region form data if pathname changes
   const [prevPathname, setPrevPathname] = useState(pathname);
   if (pathname !== prevPathname) {
     setPrevPathname(pathname);
     setFormData((prev) => ({
       ...prev,
-      region: detectedRegion || "us"
+      region: detectedRegion || "in"
     }));
     setSelectedCountryCode(getDefaultCountryCode(detectedRegion));
   }
 
-  const validateStep = (currentStep: number) => {
+  const validateForm = () => {
     const tempErrors: Record<string, string> = {};
-    
-    if (currentStep === 1) {
-      // Challenge bottleneck selection is optional
-    }
-    
-    if (currentStep === 2) {
-      // Service and website are optional. Validate website format only if entered.
-      if (formData.website.trim()) {
-        const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/;
-        if (!urlPattern.test(formData.website.trim())) {
-          tempErrors.website = "Please enter a valid website URL (e.g. example.com).";
-        }
-      }
-    }
-    
-    if (currentStep === 3) {
-      // Budget is optional
-    }
-    
-    if (currentStep === 4) {
-      // Name is optional
-      
-      // Email is optional, but if entered, must be valid
-      if (formData.email.trim()) {
-        const emailReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailReg.test(formData.email.trim())) {
-          tempErrors.email = "Please enter a valid email address.";
-        }
-      }
-      
-      // Mobile / WhatsApp number is mandatory
-      const mobileVal = formData.mobile.trim();
-      let fullMobile = mobileVal;
-      if (fullMobile && !fullMobile.startsWith("+")) {
-        fullMobile = selectedCountryCode + fullMobile;
-      }
 
-      if (!mobileVal) {
-        tempErrors.mobile = "WhatsApp / Mobile number is required.";
-      } else {
-        const numbersOnly = fullMobile.replace(/\D/g, "");
-        if (numbersOnly.length < 7) {
-          tempErrors.mobile = "Please enter a valid phone number.";
-        }
+    if (!formData.name.trim()) {
+      tempErrors.name = "Full Name is required.";
+    }
+
+    if (!formData.email.trim()) {
+      tempErrors.email = "Email Address is required.";
+    } else {
+      const emailReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailReg.test(formData.email.trim())) {
+        tempErrors.email = "Please enter a valid email address.";
       }
+    }
+
+    const mobileVal = formData.mobile.trim();
+    if (!mobileVal) {
+      tempErrors.mobile = "Contact number is required.";
+    } else {
+      const numbersOnly = mobileVal.replace(/\D/g, "");
+      if (numbersOnly.length < 7) {
+        tempErrors.mobile = "Please enter a valid phone number.";
+      }
+    }
+
+    if (!formData.service) {
+      tempErrors.service = "Please select a required service.";
     }
 
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
-  };
-
-  const handleNext = () => {
-    if (validateStep(step)) {
-      setStep((prev) => prev + 1);
-    }
-  };
-
-  const handleBack = () => {
-    setStep((prev) => prev - 1);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -160,38 +160,30 @@ export default function LeadForm({
     }
   };
 
-  const handleSelectOption = (name: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }));
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateStep(4)) return;
+    if (!validateForm()) return;
 
     setIsLoading(true);
     try {
       const payload = {
-        Bottleneck: formData.bottleneck,
-        Service: formData.service,
-        Website: formData.website || "N/A",
-        TargetRegion: formData.region.toUpperCase(),
-        MonthlyBudget: formData.budget,
-        Name: formData.name,
-        Email: formData.email,
+        Name: formData.name.trim(),
+        CompanyName: formData.companyName.trim() || "N/A",
+        Website: formData.website.trim() || "N/A",
+        Email: formData.email.trim(),
         Mobile: formData.mobile.trim().startsWith("+")
           ? formData.mobile.trim()
           : `${selectedCountryCode} ${formData.mobile.trim()}`,
-        Message: formData.message || "No extra details provided.",
+        Service: formData.service,
+        Message: formData.message.trim() || "No extra details provided.",
         Source: source,
-        _subject: `🔥 Global Lead [${formData.region.toUpperCase()}] - Joy Digital`,
+        TargetRegion: formData.region.toUpperCase(),
+        _subject: `🔥 Simplified Lead [${formData.region.toUpperCase()}] - Joy Digital`,
         _captcha: "false",
         _template: "table",
       };
 
-      const response = await fetch("https://formsubmit.co/ajax/saravanan061193@gmail.com", {
+      const response = await fetch("/api/enquiry", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -224,275 +216,73 @@ export default function LeadForm({
           }
         }
       }
+
+      // Reset Form
       setFormData({
-        bottleneck: "",
-        service: "",
-        website: "",
-        region: detectedRegion || "us",
-        budget: "",
         name: "",
+        companyName: "",
+        website: "",
         email: "",
         mobile: "",
+        service: "",
         message: "",
+        region: detectedRegion || "in",
       });
-      setStep(1);
+      setErrors({});
     } catch (err) {
       console.error(err);
-      alert("Lead delivery failed. Please email us at saravanan061193@gmail.com directly.");
+      alert("Enquiry delivery failed. Please email us at saravanan061193@gmail.com directly.");
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Get budgets based on region
-  const getBudgets = () => {
-    const reg = formData.region || detectedRegion || "us";
-    if (reg === "in") {
-      return [
-        { label: "Starter (Under ₹25,000/mo)", value: "Under ₹25k" },
-        { label: "Growth (₹25,000 - ₹50,000/mo)", value: "₹25k - ₹50k" },
-        { label: "Scale (₹50,000 - ₹1,00,000/mo)", value: "₹50k - ₹100k" },
-        { label: "Enterprise (₹1,00,000+/mo)", value: "₹100k+" },
-      ];
-    } else if (reg === "ae") {
-      return [
-        { label: "Starter (Under 3,500 AED/mo)", value: "Under 3.5k AED" },
-        { label: "Growth (3,500 - 10,000 AED/mo)", value: "3.5k - 10k AED" },
-        { label: "Scale (10,000 - 18,000 AED/mo)", value: "10k - 18k AED" },
-        { label: "Enterprise (18,000+ AED/mo)", value: "18k+ AED" },
-      ];
-    } else if (reg === "uk") {
-      return [
-        { label: "Starter (Under £750/mo)", value: "Under £750" },
-        { label: "Growth (£750 - £2,500/mo)", value: "£750 - £2.5k" },
-        { label: "Scale (£2,500 - £5,000/mo)", value: "£2.5k - £5k" },
-        { label: "Enterprise (£5,000+/mo)", value: "£5k+" },
-      ];
-    } else {
-      // Default to USD
-      return [
-        { label: "Starter (Under $1,000/mo)", value: "Under $1k" },
-        { label: "Growth ($1,000 - $3,000/mo)", value: "$1k - $3k" },
-        { label: "Scale ($3,000 - $5,000/mo)", value: "$3k - $5k" },
-        { label: "Enterprise ($5,000+/mo)", value: "$5k+" },
-      ];
-    }
+  const getSelectedServiceIcon = (value: string) => {
+    const option = SERVICE_OPTIONS.find(o => o.value === value);
+    return option ? <i className={option.icon} /> : <i className="fa-solid fa-screwdriver-wrench" />;
   };
 
-  const budgets = getBudgets();
+  const selectedCountry = COUNTRY_CODES.find(c => c.code === selectedCountryCode);
+  const filteredCountries = COUNTRY_CODES.filter(
+    (c) =>
+      c.name.toLowerCase().includes(countrySearch.toLowerCase()) ||
+      c.code.includes(countrySearch)
+  );
 
   return (
     <>
-      <div className={`bg-white border border-[#E5E7EB] p-8 rounded-2xl shadow-xl w-full ${layout === "horizontal" ? "max-w-4xl" : "max-w-md"} relative overflow-hidden`}>
-        {/* Progress Bar */}
-        <div className="absolute top-0 left-0 w-full h-1.5 bg-gray-100">
-          <div 
-            className="h-full bg-primary transition-all duration-300"
-            style={{ width: `${(step / 4) * 100}%` }}
-          />
-        </div>
+      {/* Locally-Scoped Animation Styles */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes fadeInSlideDown {
+          from { opacity: 0; transform: translateY(-8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      ` }} />
+
+      <div className={`bg-white border border-[#E5E7EB]/80 p-8 rounded-[24px] shadow-2xl w-full ${layout === "horizontal" ? "max-w-4xl" : "max-w-md"} relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-gray-200`}>
+        {/* Top Accent Gradient Border */}
+        <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#2563EB] via-[#3B82F6] to-[#F97316]" />
 
         {/* Title Zone */}
         <div className="mb-6 mt-2">
-          {title && <h3 className="text-xl font-bold text-primary-dark mb-1">{title}</h3>}
+          {title && <h3 className="text-xl font-extrabold text-primary-dark mb-1 leading-snug">{title}</h3>}
           {subtitle && <p className="text-xs text-text-secondary leading-relaxed">{subtitle}</p>}
-          <div className="flex justify-between items-center mt-3 text-[10px] font-extrabold text-accent uppercase tracking-widest">
-            <span>Step {step} of 4</span>
-            <span>{Math.round((step / 4) * 100)}% Complete</span>
-          </div>
         </div>
 
-        {/* Step 1: Bottleneck */}
-        {step === 1 && (
-          <div className="flex flex-col gap-4 animate-fade-in">
-            <h4 className="text-sm font-bold text-primary-dark">What is your primary digital challenge?</h4>
-            <div className="grid grid-cols-1 gap-3">
-              {[
-                { id: "speed", label: "Slow Site / Bloated Platform Code", icon: "fa-solid fa-gauge-high" },
-                { id: "traffic", label: "Low Organic Traffic & Google Rankings", icon: "fa-solid fa-arrow-trend-down" },
-                { id: "leads", label: "Good Traffic, but Zero Phone Leads/Enquiries", icon: "fa-solid fa-user-xmark" },
-                { id: "branding", label: "Outdated Brand Identity & Logo Styling", icon: "fa-solid fa-bezier-curve" },
-              ].map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => handleSelectOption("bottleneck", item.id)}
-                  className={`flex items-center gap-4 p-4 rounded-xl border text-left transition-all duration-200 ${
-                    formData.bottleneck === item.id
-                      ? "border-primary bg-primary-glow ring-1 ring-primary"
-                      : "border-[#E5E7EB] hover:border-primary/50 hover:bg-light-bg"
-                  }`}
-                >
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm ${formData.bottleneck === item.id ? "bg-primary text-white" : "bg-light-bg text-text-secondary"}`}>
-                    <i className={item.icon} />
-                  </div>
-                  <span className="text-xs font-semibold text-text-primary">{item.label}</span>
-                </button>
-              ))}
-            </div>
-            {errors.bottleneck && <span className="text-[10px] font-semibold text-error-red mt-1">{errors.bottleneck}</span>}
-            <button
-              type="button"
-              onClick={handleNext}
-              className="w-full bg-primary hover:bg-primary-light text-white font-bold text-xs py-3.5 rounded-lg shadow-md transition-all mt-4 flex items-center justify-center gap-2"
-            >
-              Continue <i className="fa-solid fa-arrow-right" />
-            </button>
-          </div>
-        )}
-
-        {/* Step 2: Service & Website */}
-        {step === 2 && (
-          <div className="flex flex-col gap-4 animate-fade-in">
-            <h4 className="text-sm font-bold text-primary-dark">Which service are you interested in?</h4>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div className={`grid grid-cols-1 ${layout === "horizontal" ? "md:grid-cols-2" : ""} gap-4`}>
             
+            {/* Full Name */}
             <div className="flex flex-col gap-1">
-              <label htmlFor="service" className="text-[10px] font-bold text-text-primary uppercase tracking-wider">Service Category</label>
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xs"><i className="fa-solid fa-screwdriver-wrench" /></span>
-                <select
-                  id="service"
-                  name="service"
-                  value={formData.service}
-                  onChange={handleChange}
-                  className={`w-full text-xs py-3 pl-10 pr-10 bg-light-bg rounded-lg border appearance-none ${
-                    errors.service ? "border-error-red bg-red-50/20" : "border-[#E5E7EB] focus:border-accent"
-                  } outline-none cursor-pointer transition-all`}
-                >
-                  <option value="" disabled>Select a Service</option>
-                  <option value="Website Design & Development">Next.js Web Design & Development</option>
-                  <option value="Global SEO Services">Performance SEO Services</option>
-                  <option value="Local SEO & GBP Setup">Local SEO & Google Map Pack Setup</option>
-                  <option value="Social Media Marketing">Social Media Marketing & Brand Management</option>
-                  <option value="Logo & Brand Identity">Corporate Logo & Brand Style Guide</option>
-                </select>
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none text-[8px]">
-                  <i className="fa-solid fa-chevron-down" />
-                </span>
-              </div>
-              {errors.service && <span className="text-[10px] font-semibold text-error-red mt-1">{errors.service}</span>}
-            </div>
-
-            <div className="flex flex-col gap-1 mt-2">
-              <label htmlFor="website" className="text-[10px] font-bold text-text-primary uppercase tracking-wider">
-                Current Website URL (Optional)
+              <label htmlFor="name" className="text-[10px] font-extrabold text-text-secondary uppercase tracking-widest mb-1 block">
+                Full Name <span className="text-error-red font-normal">*</span>
               </label>
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xs"><i className="fa-solid fa-globe" /></span>
-                <input
-                  type="text"
-                  id="website"
-                  name="website"
-                  value={formData.website}
-                  onChange={handleChange}
-                  placeholder="e.g. mybusiness.com"
-                  className={`w-full text-xs py-3 pl-10 pr-4 bg-light-bg rounded-lg border ${
-                    errors.website ? "border-error-red bg-red-50/20" : "border-[#E5E7EB] focus:border-accent"
-                  } outline-none transition-all`}
-                />
-              </div>
-              {errors.website && <span className="text-[10px] font-semibold text-error-red mt-1">{errors.website}</span>}
-              <p className="text-[9px] text-text-secondary mt-1">Leave blank if you don&apos;t have a website yet.</p>
-            </div>
-
-            <div className="flex gap-3 mt-4">
-              <button
-                type="button"
-                onClick={handleBack}
-                className="w-1/3 border border-gray-200 hover:border-gray-300 text-text-primary font-bold text-xs py-3.5 rounded-lg transition-all"
-              >
-                Back
-              </button>
-              <button
-                type="button"
-                onClick={handleNext}
-                className="w-2/3 bg-primary hover:bg-primary-light text-white font-bold text-xs py-3.5 rounded-lg shadow-md transition-all flex items-center justify-center gap-2"
-              >
-                Continue <i className="fa-solid fa-arrow-right" />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Step 3: Region & Budget */}
-        {step === 3 && (
-          <div className="flex flex-col gap-4 animate-fade-in">
-            <h4 className="text-sm font-bold text-primary-dark">Select target market & monthly budget</h4>
-            
-            <div className="flex flex-col gap-1">
-              <label htmlFor="region" className="text-[10px] font-bold text-text-primary uppercase tracking-wider">Target Region</label>
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xs"><i className="fa-solid fa-map-pin" /></span>
-                <select
-                  id="region"
-                  name="region"
-                  value={formData.region}
-                  onChange={(e) => {
-                    handleChange(e);
-                    setFormData((prev) => ({ ...prev, budget: "" })); // Reset budget when region changes
-                  }}
-                  className="w-full text-xs py-3 pl-10 pr-10 bg-light-bg rounded-lg border appearance-none border-[#E5E7EB] focus:border-accent outline-none cursor-pointer transition-all"
-                >
-                  <option value="us">🇺🇸 United States (USD)</option>
-                  <option value="uk">🇬🇧 United Kingdom (GBP)</option>
-                  <option value="ae">🇦🇪 United Arab Emirates (AED)</option>
-                  <option value="in">🇮🇳 India (INR)</option>
-                </select>
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none text-[8px]">
-                  <i className="fa-solid fa-chevron-down" />
+              <div className={`flex items-center gap-3 bg-light-bg rounded-xl border px-4 py-3 group transition-all duration-300 focus-within:bg-white focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#2563EB]/10 ${
+                errors.name ? "border-[#ef4444] bg-red-50/10" : "border-[#E5E7EB] hover:border-gray-300"
+              }`}>
+                <span className={`text-xs transition-colors duration-300 shrink-0 ${errors.name ? "text-error-red" : "text-text-muted group-focus-within:text-[#2563EB]"}`}>
+                  <i className="fa-solid fa-user" />
                 </span>
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-2 mt-2">
-              <span className="text-[10px] font-bold text-text-primary uppercase tracking-wider">Select Monthly Budget</span>
-              <div className="grid grid-cols-1 gap-2">
-                {budgets.map((b) => (
-                  <button
-                    key={b.value}
-                    type="button"
-                    onClick={() => handleSelectOption("budget", b.value)}
-                    className={`p-3 rounded-lg border text-left text-xs font-semibold transition-all ${
-                      formData.budget === b.value
-                        ? "border-primary bg-primary-glow ring-1 ring-primary"
-                        : "border-[#E5E7EB] hover:border-primary/45 hover:bg-light-bg"
-                    }`}
-                  >
-                    {b.label}
-                  </button>
-                ))}
-              </div>
-              {errors.budget && <span className="text-[10px] font-semibold text-error-red mt-1">{errors.budget}</span>}
-            </div>
-
-            <div className="flex gap-3 mt-4">
-              <button
-                type="button"
-                onClick={handleBack}
-                className="w-1/3 border border-gray-200 hover:border-gray-300 text-text-primary font-bold text-xs py-3.5 rounded-lg transition-all"
-              >
-                Back
-              </button>
-              <button
-                type="button"
-                onClick={handleNext}
-                className="w-2/3 bg-primary hover:bg-primary-light text-white font-bold text-xs py-3.5 rounded-lg shadow-md transition-all flex items-center justify-center gap-2"
-              >
-                Continue <i className="fa-solid fa-arrow-right" />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Step 4: Contact Details */}
-        {step === 4 && (
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4 animate-fade-in">
-            <h4 className="text-sm font-bold text-primary-dark">Enter your contact details to finalize</h4>
-            
-            <div className="flex flex-col gap-1">
-              <label htmlFor="name" className="text-[10px] font-bold text-text-primary uppercase tracking-wider">Full Name (Optional)</label>
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xs"><i className="fa-solid fa-user" /></span>
                 <input
                   type="text"
                   id="name"
@@ -500,18 +290,157 @@ export default function LeadForm({
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Your Name"
-                  className={`w-full text-xs py-3 pl-10 pr-4 bg-light-bg rounded-lg border ${
-                    errors.name ? "border-error-red bg-red-50/20" : "border-[#E5E7EB] focus:border-accent"
-                  } outline-none transition-all`}
+                  className="w-full text-xs bg-transparent outline-none border-none text-text-primary placeholder:text-text-muted font-medium"
                 />
               </div>
-              {errors.name && <span className="text-[10px] font-semibold text-error-red">{errors.name}</span>}
+              {errors.name && <span className="text-[9px] font-semibold text-[#ef4444] mt-0.5">{errors.name}</span>}
             </div>
 
+            {/* Contact Number */}
             <div className="flex flex-col gap-1">
-              <label htmlFor="email" className="text-[10px] font-bold text-text-primary uppercase tracking-wider">Email Address (Optional)</label>
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xs"><i className="fa-solid fa-envelope" /></span>
+              <label htmlFor="mobile" className="text-[10px] font-extrabold text-text-secondary uppercase tracking-widest mb-1 block">
+                Contact Number <span className="text-error-red">*</span>
+              </label>
+              <div className="flex gap-2 relative">
+                
+                {/* Custom Country Selector Dropdown Container */}
+                <div className="relative" ref={countryDropdownRef}>
+                  <button
+                    type="button"
+                    onClick={() => setIsCountryOpen(!isCountryOpen)}
+                    className="w-[100px] text-xs py-3 px-3.5 bg-light-bg rounded-xl border border-[#E5E7EB] hover:border-gray-300 hover:bg-white text-left flex items-center justify-between outline-none cursor-pointer font-semibold text-text-primary transition-all focus:ring-4 focus:ring-[#2563EB]/10 focus:border-[#2563EB] focus:bg-white h-full"
+                  >
+                    <span className="flex items-center gap-1.5 select-none">
+                      <span>{selectedCountry?.flag}</span>
+                      <span>{selectedCountryCode}</span>
+                    </span>
+                    <span className={`text-[8px] text-text-muted transition-transform duration-300 shrink-0 ${isCountryOpen ? "rotate-180" : ""}`}>
+                      <i className="fa-solid fa-chevron-down" />
+                    </span>
+                  </button>
+
+                  {isCountryOpen && (
+                    <div 
+                      className="absolute z-30 left-0 top-[108%] w-64 max-h-60 overflow-y-auto bg-white border border-[#E5E7EB] rounded-xl shadow-xl py-1"
+                      style={{ animation: "fadeInSlideDown 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards" }}
+                    >
+                      {/* Dropdown Search Box */}
+                      <div className="p-2 border-b border-[#E5E7EB] bg-light-bg sticky top-0 z-10">
+                        <input
+                          type="text"
+                          placeholder="Search country..."
+                          value={countrySearch}
+                          onChange={(e) => setCountrySearch(e.target.value)}
+                          className="w-full text-xs px-2.5 py-1.5 bg-white border border-[#E5E7EB] rounded-md focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/5 outline-none transition-all"
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                      </div>
+                      
+                      {/* Dropdown List Items */}
+                      {filteredCountries.length > 0 ? (
+                        filteredCountries.map((c) => (
+                          <button
+                            key={`${c.code}-${c.name}`}
+                            type="button"
+                            onClick={() => {
+                              setSelectedCountryCode(c.code);
+                              setIsCountryOpen(false);
+                              setCountrySearch("");
+                            }}
+                            className={`w-full flex items-center justify-between px-4 py-2 text-left text-xs transition-colors hover:bg-light-bg ${
+                              selectedCountryCode === c.code ? "bg-[#2563EB]/5 font-bold text-[#2563EB]" : "text-text-primary"
+                            }`}
+                          >
+                            <span className="flex items-center gap-2">
+                              <span className="select-none">{c.flag}</span>
+                              <span className="font-medium truncate max-w-[130px]">{c.name}</span>
+                            </span>
+                            <span className="font-semibold text-text-muted text-[10px]">{c.code}</span>
+                          </button>
+                        ))
+                      ) : (
+                        <div className="px-4 py-3 text-xs text-text-muted text-center font-medium">No results found</div>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Phone input wrapper */}
+                <div className={`flex items-center gap-3 bg-light-bg rounded-xl border px-4 py-3 flex-1 group transition-all duration-300 focus-within:bg-white focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#2563EB]/10 ${
+                  errors.mobile ? "border-[#ef4444] bg-red-50/10" : "border-[#E5E7EB] hover:border-gray-300"
+                }`}>
+                  <span className={`text-xs transition-colors duration-300 shrink-0 ${errors.mobile ? "text-error-red" : "text-text-muted group-focus-within:text-[#2563EB]"}`}>
+                    <i className="fa-solid fa-phone" />
+                  </span>
+                  <input
+                    type="tel"
+                    id="mobile"
+                    name="mobile"
+                    value={formData.mobile}
+                    onChange={handleChange}
+                    placeholder="Mobile / WhatsApp"
+                    className="w-full text-xs bg-transparent outline-none border-none text-text-primary placeholder:text-text-muted font-medium"
+                  />
+                </div>
+              </div>
+              {errors.mobile && <span className="text-[9px] font-semibold text-[#ef4444] mt-0.5">{errors.mobile}</span>}
+            </div>
+
+            {/* Company Name */}
+            <div className="flex flex-col gap-1">
+              <label htmlFor="companyName" className="text-[10px] font-extrabold text-text-secondary uppercase tracking-widest mb-1 block">
+                Company Name
+              </label>
+              <div className="flex items-center gap-3 bg-light-bg rounded-xl border px-4 py-3 group transition-all duration-300 focus-within:bg-white focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#2563EB]/10 border-[#E5E7EB] hover:border-gray-300">
+                <span className="text-xs text-text-muted transition-colors duration-300 group-focus-within:text-[#2563EB] shrink-0">
+                  <i className="fa-solid fa-building" />
+                </span>
+                <input
+                  type="text"
+                  id="companyName"
+                  name="companyName"
+                  value={formData.companyName}
+                  onChange={handleChange}
+                  placeholder="e.g. Acme Corp"
+                  className="w-full text-xs bg-transparent outline-none border-none text-text-primary placeholder:text-text-muted font-medium"
+                />
+              </div>
+            </div>
+
+            {/* Website Link */}
+            {showWebsiteField && (
+              <div className="flex flex-col gap-1">
+                <label htmlFor="website" className="text-[10px] font-extrabold text-text-secondary uppercase tracking-widest mb-1 block">
+                  Website Link
+                </label>
+                <div className="flex items-center gap-3 bg-light-bg rounded-xl border px-4 py-3 group transition-all duration-300 focus-within:bg-white focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#2563EB]/10 border-[#E5E7EB] hover:border-gray-300">
+                  <span className="text-xs text-text-muted transition-colors duration-300 group-focus-within:text-[#2563EB] shrink-0">
+                    <i className="fa-solid fa-globe" />
+                  </span>
+                  <input
+                    type="text"
+                    id="website"
+                    name="website"
+                    value={formData.website}
+                    onChange={handleChange}
+                    placeholder="e.g. acme.com"
+                    className="w-full text-xs bg-transparent outline-none border-none text-text-primary placeholder:text-text-muted font-medium"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Email Address */}
+            <div className="flex flex-col gap-1">
+              <label htmlFor="email" className="text-[10px] font-extrabold text-text-secondary uppercase tracking-widest mb-1 block">
+                Email ID <span className="text-error-red">*</span>
+              </label>
+              <div className={`flex items-center gap-3 bg-light-bg rounded-xl border px-4 py-3 group transition-all duration-300 focus-within:bg-white focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#2563EB]/10 ${
+                errors.email ? "border-[#ef4444] bg-red-50/10" : "border-[#E5E7EB] hover:border-gray-300"
+              }`}>
+                <span className={`text-xs transition-colors duration-300 shrink-0 ${errors.email ? "text-error-red" : "text-text-muted group-focus-within:text-[#2563EB]"}`}>
+                  <i className="fa-solid fa-envelope" />
+                </span>
                 <input
                   type="email"
                   id="email"
@@ -519,108 +448,126 @@ export default function LeadForm({
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="you@example.com"
-                  className={`w-full text-xs py-3 pl-10 pr-4 bg-light-bg rounded-lg border ${
-                    errors.email ? "border-error-red bg-red-50/20" : "border-[#E5E7EB] focus:border-accent"
-                  } outline-none transition-all`}
+                  className="w-full text-xs bg-transparent outline-none border-none text-text-primary placeholder:text-text-muted font-medium"
                 />
               </div>
-              {errors.email && <span className="text-[10px] font-semibold text-error-red">{errors.email}</span>}
+              {errors.email && <span className="text-[9px] font-semibold text-[#ef4444] mt-0.5">{errors.email}</span>}
             </div>
 
+            {/* Required Services Dropdown Container */}
             <div className="flex flex-col gap-1">
-              <label htmlFor="mobile" className="text-[10px] font-bold text-text-primary uppercase tracking-wider">Mobile / WhatsApp Number <span className="text-error-red">*</span></label>
-              <div className="flex gap-2">
-                {/* Country Code Select Dropdown */}
-                <div className="relative w-[110px] shrink-0">
-                  <select
-                    value={selectedCountryCode}
-                    onChange={(e) => setSelectedCountryCode(e.target.value)}
-                    className="w-full text-xs py-3 pl-3 pr-7 bg-light-bg rounded-lg border border-[#E5E7EB] focus:border-accent outline-none appearance-none transition-all cursor-pointer font-medium text-text-primary"
-                  >
-                    {COUNTRY_CODES.map((c) => (
-                      <option key={`${c.code}-${c.name}`} value={c.code}>
-                        {c.flag} {c.code}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-text-muted text-[10px] pointer-events-none">
+              <label htmlFor="service" className="text-[10px] font-extrabold text-text-secondary uppercase tracking-widest mb-1 block">
+                Required Services <span className="text-error-red">*</span>
+              </label>
+              <div className="relative" ref={serviceDropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => setIsServiceOpen(!isServiceOpen)}
+                  className={`w-full flex items-center justify-between bg-light-bg rounded-xl border px-4 py-3 group transition-all duration-300 focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/10 ${
+                    errors.service ? "border-[#ef4444] bg-red-50/10" : "border-[#E5E7EB] hover:border-gray-300"
+                  }`}
+                >
+                  <span className="flex items-center gap-3 text-left w-full overflow-hidden">
+                    <span className={`text-xs transition-colors duration-300 shrink-0 ${errors.service ? "text-error-red" : "text-text-muted group-focus-within:text-[#2563EB]"}`}>
+                      {getSelectedServiceIcon(formData.service)}
+                    </span>
+                    <span className={`text-xs font-semibold truncate ${formData.service ? "text-text-primary" : "text-text-muted"}`}>
+                      {formData.service ? SERVICE_OPTIONS.find(o => o.value === formData.service)?.label : "Select a Service"}
+                    </span>
+                  </span>
+                  <span className={`text-[8px] text-text-muted transition-transform duration-300 shrink-0 ${isServiceOpen ? "rotate-180" : ""}`}>
                     <i className="fa-solid fa-chevron-down" />
                   </span>
-                </div>
+                </button>
 
-                {/* Number Input Field */}
-                <div className="relative flex-1">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xs"><i className="fa-solid fa-phone" /></span>
-                  <input
-                    type="tel"
-                    id="mobile"
-                    name="mobile"
-                    value={formData.mobile}
-                    onChange={handleChange}
-                    placeholder="e.g. 90800 26133"
-                    className={`w-full text-xs py-3 pl-10 pr-4 bg-light-bg rounded-lg border ${
-                      errors.mobile ? "border-error-red bg-red-50/20" : "border-[#E5E7EB] focus:border-accent"
-                    } outline-none transition-all`}
-                  />
-                </div>
-              </div>
-              {errors.mobile && <span className="text-[10px] font-semibold text-error-red">{errors.mobile}</span>}
-            </div>
-
-            {layout === "vertical" && (
-              <div className="flex flex-col gap-1">
-                <label htmlFor="message" className="text-[10px] font-bold text-text-primary uppercase tracking-wider">Message details (Optional)</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={2}
-                  placeholder="Briefly describe your requirements..."
-                  className="w-full text-xs py-2 px-4 bg-light-bg rounded-lg border border-[#E5E7EB] focus:border-accent outline-none resize-none transition-all"
-                />
-              </div>
-            )}
-
-            <div className="flex gap-3 mt-4">
-              <button
-                type="button"
-                onClick={handleBack}
-                disabled={isLoading}
-                className="w-1/3 border border-[#E5E7EB] hover:border-gray-300 text-text-primary font-bold text-xs py-3.5 rounded-lg transition-all disabled:opacity-50"
-              >
-                Back
-              </button>
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-2/3 bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold text-xs py-3.5 rounded-lg shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                {isLoading ? (
-                  <>
-                    <i className="fa-solid fa-spinner animate-spin" /> Submitting...
-                  </>
-                ) : (
-                  ctaText
+                {isServiceOpen && (
+                  <div 
+                    className="absolute z-20 left-0 top-[108%] w-full bg-white border border-[#E5E7EB] rounded-xl shadow-xl py-1 max-h-72 overflow-y-auto"
+                    style={{ animation: "fadeInSlideDown 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards" }}
+                  >
+                    {SERVICE_OPTIONS.map((opt) => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => {
+                          setFormData(prev => ({ ...prev, service: opt.value }));
+                          setIsServiceOpen(false);
+                          if (errors.service) setErrors(prev => ({ ...prev, service: "" }));
+                        }}
+                        className={`w-full flex items-start gap-3 px-4 py-2.5 text-left transition-colors hover:bg-light-bg ${
+                          formData.service === opt.value ? "bg-[#2563EB]/5 text-[#2563EB]" : "text-text-primary"
+                        }`}
+                      >
+                        <span className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm shrink-0 mt-0.5 transition-colors ${
+                          formData.service === opt.value ? "bg-[#2563EB] text-white" : "bg-light-bg text-text-secondary"
+                        }`}>
+                          <i className={opt.icon} />
+                        </span>
+                        <div className="flex flex-col gap-0.5 overflow-hidden">
+                          <span className={`text-xs font-bold ${formData.service === opt.value ? "text-[#2563EB]" : "text-text-primary"}`}>
+                            {opt.label}
+                          </span>
+                          <span className="text-[10px] text-text-muted truncate">{opt.desc}</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
                 )}
-              </button>
+              </div>
+              {errors.service && <span className="text-[9px] font-semibold text-[#ef4444] mt-0.5">{errors.service}</span>}
             </div>
-          </form>
-        )}
+
+          </div>
+
+          {/* Details / Message - Full Width */}
+          <div className="flex flex-col gap-1">
+            <label htmlFor="message" className="text-[10px] font-extrabold text-text-secondary uppercase tracking-widest mb-1 block">
+              Requirement Details
+            </label>
+            <div className="flex bg-light-bg rounded-xl border border-[#E5E7EB] hover:border-gray-300 p-4 group transition-all duration-300 focus-within:bg-white focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#2563EB]/10">
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                rows={3}
+                placeholder="Describe your requirements (pages needed, specific features, timeline, etc.)..."
+                className="w-full text-xs bg-transparent outline-none border-none text-text-primary placeholder:text-text-muted font-medium resize-none"
+              />
+            </div>
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full bg-[#2563EB] hover:bg-[#3B82F6] text-white font-extrabold text-xs py-4 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2 cursor-pointer"
+          >
+            {isLoading ? (
+              <>
+                <i className="fa-solid fa-spinner animate-spin" /> Submitting...
+              </>
+            ) : (
+              ctaText
+            )}
+          </button>
+        </form>
       </div>
 
       {/* Success Modal Overlay */}
       {isSuccess && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-6 animate-fade-in">
           <div className="bg-white p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center border border-[#E5E7EB] flex flex-col items-center">
-            <div className="text-success-green text-6xl mb-4 leading-none animate-bounce">
+            <div className="text-[#10b981] text-6xl mb-4 leading-none animate-bounce">
               <i className="fa-solid fa-circle-check" />
             </div>
-            <h4 className="text-xl font-extrabold text-primary-dark mb-2">Goal Configured!</h4>
-            <p className="text-sm text-text-secondary mb-6 leading-relaxed">Thank you. Your request is queued. Our digital strategist will run a pre-qualification review and contact you within 24 hours.</p>
+            <h4 className="text-xl font-extrabold text-primary-dark mb-2">Enquiry Submitted!</h4>
+            <p className="text-sm text-text-secondary mb-6 leading-relaxed">
+              Thank you for reaching out. We have received your enquiry. Our team will review your requirements and get back to you within 24 hours.
+            </p>
             <button
               onClick={() => setIsSuccess(false)}
-              className="bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold px-8 py-3 rounded-lg shadow-md transition-all duration-200"
+              className="bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold px-8 py-3 rounded-lg shadow-md transition-all duration-200 cursor-pointer"
             >
               Done
             </button>
@@ -630,4 +577,3 @@ export default function LeadForm({
     </>
   );
 }
-

@@ -82,7 +82,7 @@ export default function Footer() {
             </span>
           </Link>
           <p className="text-text-secondary text-xs leading-relaxed">
-            High-performance, global digital agency delivering SEO, custom website development, and conversion-focused systems for brands targeting the USA, UK, UAE, and India.
+            High-performance web agency delivering custom website development, premium React/Next.js design, and conversion-focused digital platforms.
           </p>
           <div className="flex items-center gap-3">
             <a
@@ -134,7 +134,7 @@ export default function Footer() {
           {/* Newsletter Box */}
           <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-gray-200">
             <span className="text-[10px] font-bold text-[#111827] uppercase tracking-wider">Subscribe to Newsletter</span>
-            <p className="text-[10px] text-text-secondary leading-tight">Get weekly SEO tips & conversion hacks to grow your business.</p>
+            <p className="text-[10px] text-text-secondary leading-tight">Get weekly web design & speed optimization tips to grow your business.</p>
             {subscribed ? (
               <span className="text-emerald-600 text-xs font-semibold flex items-center gap-1 mt-1">
                 <i className="fa-solid fa-circle-check" /> You're subscribed!
@@ -158,10 +158,10 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Global Regions / SEO Sitemap Backlinks */}
+        {/* Service Locations Sitemap Links */}
         <div className="flex flex-col gap-6">
           <h4 className="text-sm font-bold uppercase tracking-wider text-[#111827] relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
-            SEO Locations
+            Service Locations
           </h4>
           <ul className="flex flex-col gap-3 text-xs text-text-secondary">
             {REGIONAL_SITES.map((site) => (
@@ -177,7 +177,7 @@ export default function Footer() {
             ))}
             <li className="border-t border-[#E5E7EB] pt-2 mt-1">
               <Link href="/website-development-company-chennai" className="hover:text-accent hover:pl-1 transition-all block">
-                website development in Chennai
+                Website Development Chennai
               </Link>
             </li>
             <li>
@@ -185,58 +185,28 @@ export default function Footer() {
                 Website Design Chennai
               </Link>
             </li>
-            <li>
-              <Link href="/seo-services-in-chennai" className="hover:text-accent hover:pl-1 transition-all block">
-                SEO Services Chennai
-              </Link>
-            </li>
-            <li>
-              <Link href="/digital-marketing-agency-in-chennai" className="hover:text-accent hover:pl-1 transition-all block">
-                Digital Marketing Chennai
-              </Link>
-            </li>
-            <li>
-              <Link href="/google-business-profile-optimization" className="hover:text-accent hover:pl-1 transition-all block">
-                GBP Maps Optimization
-              </Link>
-            </li>
           </ul>
         </div>
 
-        {/* Services / Dynamic Links */}
+        {/* Featured Services column */}
         <div className="flex flex-col gap-6">
           <h4 className="text-sm font-bold uppercase tracking-wider text-[#111827] relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
             Featured Services
           </h4>
           <ul className="flex flex-col gap-3 text-xs text-text-secondary">
             <li>
-              <Link href={getRegionalHref("/seo-services")} className="hover:text-accent hover:pl-1 transition-all">
-                Search Engine Optimization
-              </Link>
-            </li>
-            <li>
               <Link href={getRegionalHref("/website-development")} className="hover:text-accent hover:pl-1 transition-all">
-                Website Development
+                Next.js Web Development
               </Link>
             </li>
             <li>
               <Link href="/web-design-services" className="hover:text-accent hover:pl-1 transition-all">
-                Website Design
-              </Link>
-            </li>
-            <li>
-              <Link href="/local-seo-services" className="hover:text-accent hover:pl-1 transition-all">
-                Local SEO & Maps
+                Website Design Services
               </Link>
             </li>
             <li>
               <Link href="/ecommerce-website-development" className="hover:text-accent hover:pl-1 transition-all">
-                Ecommerce Web Dev
-              </Link>
-            </li>
-            <li>
-              <Link href="/custom-software-development" className="hover:text-accent hover:pl-1 transition-all">
-                Custom Software Dev
+                Headless E-commerce Web Dev
               </Link>
             </li>
             <li className="border-t border-[#E5E7EB] pt-2 mt-1">
@@ -276,11 +246,6 @@ export default function Footer() {
             <li>
               <Link href="/about" className="hover:text-accent hover:pl-1 transition-all">
                 About Our Agency
-              </Link>
-            </li>
-            <li>
-              <Link href="/case-studies" className="hover:text-accent hover:pl-1 transition-all">
-                Client Case Studies
               </Link>
             </li>
             <li>
