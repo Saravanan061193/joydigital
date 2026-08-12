@@ -94,7 +94,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         return {
           badge: "9+ Years of Industry Experience",
           h1: <>Website Development Company in Chennai</>,
-          subtitle: "Joy Digital is a professional website development company in Chennai helping businesses build modern, responsive and SEO-friendly websites. We provide web development services in Chennai, including business websites, ecommerce websites, custom web applications and digital marketing solutions designed to improve online visibility and generate leads.",
+          subtitle: "Joy Digital is the Best Website Development Company in Chennai. We offer premier Web Development Services Chennai to help corporate startups and small businesses build fast, responsive, and SEO-friendly sites that generate leads.",
         };
     }
   };
@@ -149,31 +149,31 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
     {
       icon: "fa-solid fa-code",
       title: "Website Development",
-      description: "We are a premier website development company in Chennai building high-performance, fast-loading websites using Next.js and React. Our custom solutions help businesses optimize conversion rates and secure qualified sales leads.",
+      description: "We specialize in high-performance Business Website Development Chennai and custom-coded solutions. As a trusted partner for Custom Website Development Chennai, we build fast, scalable Next.js and React websites built to convert visitors.",
       href: "/website-development",
     },
     {
       icon: "fa-solid fa-laptop-code",
       title: "Web Design",
-      description: "Looking for professional website design company in Chennai? We design mobile-responsive, visually stunning, and user-friendly web layouts that establish brand trust and deliver exceptional user experiences on all screens.",
+      description: "Looking for a professional Web Design Company in Chennai? Our expert team of Website Designers in Chennai designs mobile-responsive, visually stunning, and user-centric brand assets that build trust and drive conversions.",
       href: "/web-design-services",
     },
     {
       icon: "fa-solid fa-cart-shopping",
       title: "Ecommerce Development",
-      description: "Supercharge your online store with ecommerce website development in Chennai. We design secure, SEO-ready shopping platforms and payment checkouts built to increase conversion rates and customer satisfaction.",
+      description: "Supercharge your online store with customized Ecommerce Website Development Chennai solutions. We engineer secure, fast-loading shopping carts, merchant checkout pathways, and inventory sync systems that maximize sales.",
       href: "/ecommerce-website-development",
     },
     {
       icon: "fa-solid fa-magnifying-glass-chart",
       title: "SEO Services",
-      description: "Rank on the first page of search results with professional SEO services in Chennai. We optimize core web speed metrics, structure semantic data schemas, and build authoritative local citations to drive organic traffic.",
+      description: "Rank at the top of search engine results with our SEO Friendly Website Development Chennai practices. We build semantic HTML structures, optimize page loads under 1.5 seconds, and configure schema layouts to rank you on Google.",
       href: "/seo-services",
     },
     {
       icon: "fa-solid fa-chart-line",
       title: "Digital Marketing",
-      description: "Expand your local presence with results-driven digital marketing services in Chennai. We manage high-ROI advertising campaigns, capture search intent, and optimize landing pages to maximize corporate growth.",
+      description: "Expand your market outreach with our professional Web Development Services Chennai and digital marketing expertise. We optimize custom landing pages and run intent-based search campaigns to convert traffic into pipelines.",
       href: "/contact",
     },
   ];
@@ -183,12 +183,12 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
     {
       icon: "fa-solid fa-location-dot",
       title: "Chennai-focused website solutions",
-      description: "Tailor-made web solutions designed to target local search queries, capture local customer intent, and dominate the Chennai business market.",
+      description: "Custom-made software designs targeted at local search keywords to help your brand outrank regional competitors and win Chennai's local market.",
     },
     {
       icon: "fa-solid fa-mobile-screen-button",
-      title: "Mobile responsive design",
-      description: "Ensure your website looks modern, functions flawlessly, and maintains perfect layout scaling across all smartphone and tablet screen sizes.",
+      title: "Responsive Website Design Chennai",
+      description: "We specialize in delivering fluid Responsive Website Design Chennai systems that scale seamlessly across smartphones, tablets, and wide screens.",
     },
     {
       icon: "fa-solid fa-bolt",
