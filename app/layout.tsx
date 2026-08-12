@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import FontAwesomeLoader from "@/components/layout/FontAwesomeLoader";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
+import ClarityTracker from "@/components/ClarityTracker";
 import "./globals.css";
 
 
@@ -65,6 +66,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-light-bg text-text-primary">
         <AnalyticsTracker />
+        <ClarityTracker />
         {children}
       </body>
     </html>

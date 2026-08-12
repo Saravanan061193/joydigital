@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import VisitorMap from "@/components/VisitorMap";
 
 interface Enquiry {
   id: string;
@@ -19,12 +20,30 @@ interface Enquiry {
   notes?: string;
 }
 
+interface AnalyticsData {
+  totalPageviews: number;
+  uniqueVisitors: number;
+  topCities: Array<{ city: string; country: string; count: number }>;
+  mapMarkers: Array<{ lat: number; lng: number; city: string; count: number }>;
+}
+
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [pin, setPin] = useState("");
   const [loginError, setLoginError] = useState("");
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Tab State: "leads" | "map" | "heatmaps"
+  const [activeTab, setActiveTab] = useState<"leads" | "map" | "heatmaps">("leads");
+
+  // Analytics data state
+  const [analytics, setAnalytics] = useState<AnalyticsData>({
+    totalPageviews: 0,
+    uniqueVisitors: 0,
+    topCities: [],
+    mapMarkers: []
+  });
 
   // Search & filter states
   const [search, setSearch] = useState("");
@@ -65,6 +84,7 @@ export default function AdminPage() {
     if (auth === "true") {
       setIsAuthenticated(true);
       fetchEnquiries();
+      fetchAnalytics();
     } else {
       setLoading(false);
     }
@@ -77,6 +97,7 @@ export default function AdminPage() {
       sessionStorage.setItem("joy_admin_auth", "true");
       setLoginError("");
       fetchEnquiries();
+      fetchAnalytics();
     } else {
       setLoginError("Incorrect access credentials. Please try again.");
     }
@@ -101,6 +122,18 @@ export default function AdminPage() {
       console.error("Error fetching enquiries:", err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchAnalytics = async () => {
+    try {
+      const res = await fetch("/api/admin/analytics");
+      if (res.ok) {
+        const data = await res.json();
+        setAnalytics(data);
+      }
+    } catch (err) {
+      console.error("Error fetching analytics data:", err);
     }
   };
 
@@ -287,7 +320,6 @@ export default function AdminPage() {
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
 
         <div className="w-full max-w-md bg-white border border-slate-200/80 rounded-[32px] p-8 sm:p-10 shadow-[0_15px_50px_rgba(0,0,0,0.05)] relative z-10 transition-all hover:border-slate-350">
-          {/* Top Logo Grid */}
           <div className="text-center mb-8 flex flex-col items-center">
             <div className="w-14 h-14 bg-gradient-to-tr from-blue-600 to-orange-500 rounded-2xl flex items-center justify-center shadow-md shadow-blue-500/10 mb-5">
               <span className="font-black text-2xl text-white tracking-tighter">JD</span>
@@ -339,7 +371,6 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-8 px-4 sm:px-6 lg:px-8 font-sans text-slate-800 relative overflow-hidden">
-      {/* Background patterns */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
 
       {/* Scope Style Overrides */}
@@ -360,7 +391,7 @@ export default function AdminPage() {
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Top Header Panel (Modern White Glassmorphic Console) */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8 bg-white border border-slate-200/80 rounded-3xl p-6 shadow-[0_5px_20px_rgba(0,0,0,0.02)] hover:border-slate-300/80 transition-all">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8 bg-white border border-slate-200/80 rounded-3xl p-6 shadow-[0_5px_20px_rgba(0,0,0,0.02)]">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-center text-blue-600 shadow-sm shrink-0">
               <i className="fa-solid fa-chart-line text-lg" />
@@ -381,7 +412,6 @@ export default function AdminPage() {
           </div>
           
           <div className="flex flex-wrap items-center gap-4 w-full lg:w-auto">
-            {/* Live Clock widget */}
             <div className="hidden sm:flex items-center gap-2.5 bg-slate-50 border border-slate-200/80 px-4 py-2.5 rounded-xl text-slate-500 text-xs font-mono select-none">
               <span className="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping" />
               <span>LIVE: {liveTime || "00:00:00"}</span>
@@ -404,456 +434,484 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* Analytics Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          
-          {/* Card 1: Total */}
-          <div className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.02)] flex items-center justify-between hover:border-slate-300 transition-all duration-300 group">
-            <div className="flex flex-col">
-              <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Total Enquiries</span>
-              <span className="text-3xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">{totalCount}</span>
-              <span className="text-[10px] text-slate-500 mt-2 font-medium">All channels combined</span>
-            </div>
-            <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 text-xl shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
-              <i className="fa-solid fa-database" />
-            </div>
-          </div>
-
-          {/* Card 2: New */}
-          <div className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.02)] flex items-center justify-between hover:border-slate-300 transition-all duration-300 group">
-            <div className="flex flex-col">
-              <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">New Leads</span>
-              <span className="text-3xl font-black text-orange-600">{newCount}</span>
-              <span className="text-[10px] text-orange-600 mt-2 font-semibold flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse" /> Requires attention
-              </span>
-            </div>
-            <div className="w-14 h-14 rounded-2xl bg-orange-50 border border-orange-100 flex items-center justify-center text-orange-600 text-xl shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
-              <i className="fa-solid fa-fire animate-pulse" />
-            </div>
-          </div>
-
-          {/* Card 3: In Progress */}
-          <div className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.02)] flex items-center justify-between hover:border-slate-300 transition-all duration-300 group">
-            <div className="flex flex-col">
-              <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">In Progress</span>
-              <span className="text-3xl font-black text-amber-600">{inProgressCount}</span>
-              <span className="text-[10px] text-slate-500 mt-2 font-medium">Currently consulting</span>
-            </div>
-            <div className="w-14 h-14 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 text-xl shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
-              <i className="fa-solid fa-spinner animate-spin" style={{ animationDuration: "5s" }} />
-            </div>
-          </div>
-
-          {/* Card 4: Contacted */}
-          <div className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.02)] flex items-center justify-between hover:border-slate-300 transition-all duration-300 group">
-            <div className="flex flex-col">
-              <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Completed & Contacted</span>
-              <span className="text-3xl font-black text-emerald-600">{contactedCount}</span>
-              <span className="text-[10px] text-slate-500 mt-2 font-medium">Proposal / Deal closed</span>
-            </div>
-            <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-xl shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
-              <i className="fa-solid fa-circle-check" />
-            </div>
-          </div>
-
+        {/* Feature Tab Selector Switcher (Vibrant Capsule Bar) */}
+        <div className="flex bg-white p-1 rounded-2xl border border-slate-200 shadow-[0_4px_25px_rgba(0,0,0,0.01)] mb-8 max-w-xl">
+          {[
+            { id: "leads", label: "CRM Leads", icon: "fa-solid fa-address-book text-blue-600" },
+            { id: "map", label: "Visitor Geolocation Map", icon: "fa-solid fa-map-location-dot text-emerald-600" },
+            { id: "heatmaps", label: "User Session Heatmaps (Clarity)", icon: "fa-solid fa-eye text-orange-500" }
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => {
+                setActiveTab(tab.id as any);
+                if (tab.id === "map") fetchAnalytics();
+              }}
+              className={`flex-1 flex items-center justify-center gap-2 py-3.5 px-4.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer ${
+                activeTab === tab.id
+                  ? "bg-slate-900 text-white shadow-md"
+                  : "text-slate-500 hover:text-slate-850 hover:bg-slate-50"
+              }`}
+            >
+              <i className={tab.icon} />
+              <span className="hidden sm:inline">{tab.label}</span>
+            </button>
+          ))}
         </div>
 
-        {/* Charts & Analytics Visual Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-          
-          {/* Services Progress Chart */}
-          <div className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.01)] lg:col-span-2">
-            <h3 className="text-xs font-black uppercase tracking-[0.1em] text-slate-450 mb-6 flex items-center gap-2">
-              <i className="fa-solid fa-chart-pie text-blue-600" /> Service Requested Analytics
-            </h3>
-            <div className="flex flex-col gap-4">
-              {[
-                "Next.js Web Design & Development",
-                "Corporate Business Website",
-                "Headless E-commerce Store",
-                "Landing Page & Lead Funnel",
-                "Custom React Web Application",
-                "Maintenance / Custom Web Support"
-              ].map(serviceName => {
-                const count = serviceStats[serviceName] || 0;
-                const percent = totalCount > 0 ? (count / totalCount) * 100 : 0;
-                return (
-                  <div key={serviceName} className="flex flex-col gap-1.5">
-                    <div className="flex justify-between items-center text-xs font-semibold text-slate-600">
-                      <span className="truncate max-w-[80%]">{serviceName}</span>
-                      <span className="text-blue-600 font-bold bg-blue-50 px-2 py-0.5 rounded text-[10px] border border-blue-100">{count} ({Math.round(percent)}%)</span>
-                    </div>
-                    <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-gradient-to-r from-blue-600 to-orange-500 rounded-full transition-all duration-1000 ease-out" 
-                        style={{ width: `${percent}%` }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Leads Conversion Funnel */}
-          <div className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.01)] flex flex-col justify-between">
-            <div>
-              <h3 className="text-xs font-black uppercase tracking-[0.1em] text-slate-450 mb-6 flex items-center gap-2">
-                <i className="fa-solid fa-percent text-orange-500" /> Status Funnel
-              </h3>
-              
-              {/* Radial Donut Visualization */}
-              <div className="flex items-center justify-center gap-6 mb-6">
-                <div className="relative w-24 h-24 shrink-0">
-                  <svg className="w-full h-full -rotate-90" viewBox="0 0 80 80">
-                    <circle cx="40" cy="40" r={radius} fill="transparent" stroke="#f1f5f9" strokeWidth="8" />
-                    
-                    {/* Ring for New Leads (Orange) */}
-                    <circle cx="40" cy="40" r={radius} fill="transparent" stroke="#EA580C" strokeWidth="8"
-                            strokeDasharray={circumference}
-                            strokeDashoffset={calculateStrokeOffset(newCount)}
-                            strokeLinecap="round"
-                            className="transition-all duration-1000 ease-in-out" />
-
-                    {/* Ring for Contacted Leads (Emerald) */}
-                    <circle cx="40" cy="40" r={radius} fill="transparent" stroke="#10B981" strokeWidth="8"
-                            strokeDasharray={circumference}
-                            strokeDashoffset={calculateStrokeOffset(contactedCount)}
-                            strokeLinecap="round"
-                            className="transition-all duration-1000 ease-in-out" />
-                  </svg>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                    <span className="text-xl font-black text-slate-900">{totalCount}</span>
-                    <span className="text-[8px] font-black uppercase tracking-wider text-slate-400">Total</span>
-                  </div>
+        {/* TAB CONTENT: Leads CRM Manager */}
+        {activeTab === "leads" && (
+          <>
+            {/* Analytics Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-fade-in">
+              <div className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.02)] flex items-center justify-between hover:border-slate-350 transition-all duration-300 group">
+                <div className="flex flex-col">
+                  <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Total Enquiries</span>
+                  <span className="text-3xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">{totalCount}</span>
+                  <span className="text-[10px] text-slate-500 mt-2 font-medium">All channels combined</span>
                 </div>
-
-                <div className="flex flex-col gap-2.5 text-[10px] font-bold text-slate-500 w-full">
-                  <div className="flex items-center justify-between">
-                    <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-orange-500" /> New Leads</span>
-                    <span className="text-slate-900 font-extrabold">{newCount} ({totalCount ? Math.round((newCount/totalCount)*100) : 0}%)</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-amber-500" /> In Progress</span>
-                    <span className="text-slate-900 font-extrabold">{inProgressCount} ({totalCount ? Math.round((inProgressCount/totalCount)*100) : 0}%)</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-500" /> Contacted</span>
-                    <span className="text-slate-900 font-extrabold">{contactedCount} ({totalCount ? Math.round((contactedCount/totalCount)*100) : 0}%)</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-rose-500" /> Rejected</span>
-                    <span className="text-slate-900 font-extrabold">{rejectedCount} ({totalCount ? Math.round((rejectedCount/totalCount)*100) : 0}%)</span>
-                  </div>
+                <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 text-xl shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
+                  <i className="fa-solid fa-database" />
                 </div>
               </div>
 
-              {/* Regional progress */}
-              <div className="border-t border-slate-100 pt-5 mt-2 flex flex-col gap-3">
-                <span className="text-[10px] font-black text-slate-450 uppercase tracking-widest block">Geographic Demographics</span>
+              <div className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.02)] flex items-center justify-between hover:border-slate-350 transition-all duration-300 group">
+                <div className="flex flex-col">
+                  <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">New Leads</span>
+                  <span className="text-3xl font-black text-orange-600">{newCount}</span>
+                  <span className="text-[10px] text-orange-600 mt-2 font-semibold flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse" /> Requires attention
+                  </span>
+                </div>
+                <div className="w-14 h-14 rounded-2xl bg-orange-50 border border-orange-100 flex items-center justify-center text-orange-600 text-xl shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
+                  <i className="fa-solid fa-fire animate-pulse" />
+                </div>
+              </div>
+
+              <div className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.02)] flex items-center justify-between hover:border-slate-350 transition-all duration-300 group">
+                <div className="flex flex-col">
+                  <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">In Progress</span>
+                  <span className="text-3xl font-black text-amber-600">{inProgressCount}</span>
+                  <span className="text-[10px] text-slate-500 mt-2 font-medium">Currently consulting</span>
+                </div>
+                <div className="w-14 h-14 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 text-xl shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
+                  <i className="fa-solid fa-spinner animate-spin" style={{ animationDuration: "5s" }} />
+                </div>
+              </div>
+
+              <div className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.02)] flex items-center justify-between hover:border-slate-350 transition-all duration-300 group">
+                <div className="flex flex-col">
+                  <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Completed & Contacted</span>
+                  <span className="text-3xl font-black text-emerald-600">{contactedCount}</span>
+                  <span className="text-[10px] text-slate-500 mt-2 font-medium">Proposal / Deal closed</span>
+                </div>
+                <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-xl shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
+                  <i className="fa-solid fa-circle-check" />
+                </div>
+              </div>
+            </div>
+
+            {/* Filters Toolbar */}
+            <div className="bg-white rounded-2xl border border-slate-200/80 p-5 mb-8 shadow-[0_4px_20px_rgba(0,0,0,0.01)] flex flex-col lg:flex-row gap-4 items-center justify-between animate-fade-in">
+              <div className="relative w-full lg:w-96">
+                <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 pointer-events-none">
+                  <i className="fa-solid fa-magnifying-glass text-[11px]" />
+                </span>
+                <input
+                  type="text"
+                  placeholder="Search by name, email, mobile, notes..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full text-xs pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/5 transition-all duration-200 font-medium"
+                />
+              </div>
+
+              <div className="flex flex-wrap gap-4 w-full lg:w-auto items-center justify-end">
+                <div className="flex flex-col gap-1.5 w-full sm:w-44">
+                  <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest pl-1">Service Type</span>
+                  <select
+                    value={serviceFilter}
+                    onChange={(e) => setServiceFilter(e.target.value)}
+                    className="w-full text-[11px] px-3.5 py-2.5 border border-slate-200 bg-slate-50 text-slate-700 outline-none rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 transition-all font-semibold"
+                  >
+                    <option value="all">All Services</option>
+                    <option value="Next.js Web Design & Development">Next.js Web Design & Dev</option>
+                    <option value="Corporate Business Website">Corporate Business Website</option>
+                    <option value="Headless E-commerce Store">Headless E-commerce</option>
+                    <option value="Landing Page & Lead Funnel">Landing Page & Funnel</option>
+                    <option value="Custom React Web Application">Custom Web App</option>
+                    <option value="Maintenance / Custom Web Support">Support & Maintenance</option>
+                  </select>
+                </div>
+
+                <div className="flex flex-col gap-1.5 w-full sm:w-36">
+                  <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest pl-1">Status</span>
+                  <select
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    className="w-full text-[11px] px-3.5 py-2.5 border border-slate-200 bg-slate-50 text-slate-700 outline-none rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 transition-all font-semibold"
+                  >
+                    <option value="all">All Statuses</option>
+                    <option value="New">New</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Contacted">Contacted</option>
+                    <option value="Rejected">Rejected</option>
+                  </select>
+                </div>
+
+                <div className="flex flex-col gap-1.5 w-full sm:w-32">
+                  <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest pl-1">Region</span>
+                  <select
+                    value={regionFilter}
+                    onChange={(e) => setRegionFilter(e.target.value)}
+                    className="w-full text-[11px] px-3.5 py-2.5 border border-slate-200 bg-slate-50 text-slate-700 outline-none rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 transition-all font-semibold"
+                  >
+                    <option value="all">All Regions</option>
+                    <option value="US">US</option>
+                    <option value="UK">UK</option>
+                    <option value="AE">UAE</option>
+                    <option value="IN">India</option>
+                    <option value="GLOBAL">Global</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* CRM Lead Table */}
+            <div className="bg-white rounded-[32px] border border-slate-250 shadow-[0_15px_50px_rgba(0,0,0,0.02)] overflow-hidden mb-12 animate-fade-in">
+              {filteredEnquiries.length > 0 ? (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="bg-slate-50 border-b border-slate-200 text-[9px] font-black uppercase tracking-wider text-slate-500">
+                        <th className="px-6 py-5">Date</th>
+                        <th className="px-6 py-5">Contact Details</th>
+                        <th className="px-6 py-5">Target Channels</th>
+                        <th className="px-6 py-5">Target Service</th>
+                        <th className="px-6 py-5">Region</th>
+                        <th className="px-6 py-5">Lead Status</th>
+                        <th className="px-6 py-5 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 text-xs">
+                      {filteredEnquiries.map((enq) => {
+                        const isExpanded = expandedId === enq.id;
+                        const dateStr = new Date(enq.createdAt).toLocaleDateString(undefined, {
+                          month: "short",
+                          day: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: false
+                        });
+                        const noteStatus = savedNotesStatus[enq.id] || "idle";
+
+                        return (
+                          <React.Fragment key={enq.id}>
+                            <tr className={`hover:bg-slate-50/70 transition-all duration-200 ${isExpanded ? "bg-slate-50/55" : ""}`}>
+                              <td className="px-6 py-5.5 font-bold text-slate-450 whitespace-nowrap">
+                                {dateStr}
+                              </td>
+                              <td className="px-6 py-5.5">
+                                <div className="font-black text-slate-900 text-sm">{enq.name}</div>
+                                {enq.companyName !== "N/A" ? (
+                                  <div className="text-[10px] text-blue-600 font-bold mt-0.5">{enq.companyName}</div>
+                                ) : (
+                                  <div className="text-[10px] text-slate-400 italic mt-0.5">No company listed</div>
+                                )}
+                              </td>
+                              <td className="px-6 py-5.5">
+                                <div className="flex flex-col gap-1">
+                                  <a href={`tel:${enq.mobile}`} className="font-extrabold text-blue-600 hover:underline transition-colors flex items-center gap-1.5">
+                                    <i className="fa-solid fa-square-phone text-blue-500/80 text-sm" /> {enq.mobile}
+                                  </a>
+                                  <a href={`mailto:${enq.email}`} className="text-[11px] text-slate-500 hover:underline transition-colors flex items-center gap-1.5">
+                                    <i className="fa-solid fa-square-envelope text-slate-400 text-sm" /> {enq.email}
+                                  </a>
+                                  {enq.website !== "N/A" && (
+                                    <a
+                                      href={enq.website.startsWith("http") ? enq.website : `https://${enq.website}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-[10px] text-emerald-600 font-bold hover:text-emerald-700 flex items-center gap-1.5 mt-0.5"
+                                    >
+                                      <i className="fa-solid fa-globe text-emerald-500/70" /> Web Link
+                                    </a>
+                                  )}
+                                </div>
+                              </td>
+                              <td className="px-6 py-5.5 font-bold text-slate-800 max-w-[200px] truncate">
+                                {enq.service}
+                              </td>
+                              <td className="px-6 py-5.5">
+                                <span className="bg-slate-100 border border-slate-200 font-bold uppercase text-[9px] px-2.5 py-1 rounded-lg text-slate-650 inline-block shadow-sm">
+                                  {enq.region}
+                                </span>
+                              </td>
+                              <td className="px-6 py-5.5">
+                                <select
+                                  value={enq.status}
+                                  onChange={(e) => handleStatusChange(enq.id, e.target.value)}
+                                  className={`text-[10px] font-black px-2.5 py-1.5 rounded-xl border outline-none cursor-pointer shadow-sm transition-all focus:ring-4 ${
+                                    enq.status === "New"
+                                      ? "bg-blue-50 border-blue-200 text-blue-600 focus:ring-blue-100"
+                                      : enq.status === "In Progress"
+                                      ? "bg-amber-50 border-amber-200 text-amber-700 focus:ring-amber-100"
+                                      : enq.status === "Contacted"
+                                      ? "bg-emerald-50 border-emerald-200 text-emerald-700 focus:ring-emerald-100"
+                                      : "bg-rose-50 border-rose-200 text-rose-700 focus:ring-rose-100"
+                                  }`}
+                                >
+                                  <option value="New">New</option>
+                                  <option value="In Progress">In Progress</option>
+                                  <option value="Contacted">Contacted</option>
+                                  <option value="Rejected">Rejected</option>
+                                </select>
+                              </td>
+                              <td className="px-6 py-5.5 text-right">
+                                <div className="flex items-center justify-end gap-2.5">
+                                  <button
+                                    onClick={() => setExpandedId(isExpanded ? null : enq.id)}
+                                    className={`w-8.5 h-8.5 rounded-xl text-xs flex items-center justify-center transition-all cursor-pointer ${
+                                      isExpanded 
+                                        ? "bg-slate-900 text-white shadow-md" 
+                                        : "bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-850"
+                                    }`}
+                                    title="Expand Details"
+                                  >
+                                    <i className={`fa-solid ${isExpanded ? "fa-folder-open" : "fa-chevron-down"}`} />
+                                  </button>
+                                  
+                                  <button
+                                    onClick={() => handleDelete(enq.id)}
+                                    className="w-8.5 h-8.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200/50 text-rose-600 flex items-center justify-center transition-all cursor-pointer"
+                                    title="Delete Lead"
+                                  >
+                                    <i className="fa-solid fa-trash-can" />
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                            
+                            {isExpanded && (
+                              <tr className="bg-slate-50/45 border-b border-slate-150 animate-fade-in">
+                                <td colSpan={7} className="px-8 py-6">
+                                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                    <div className="flex flex-col gap-2.5">
+                                      <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-455 flex items-center gap-1.5">
+                                        <i className="fa-solid fa-comment-dots" /> Client Message Query
+                                      </h4>
+                                      <div className="bg-white border border-slate-200 rounded-2xl p-5 text-[12px] leading-relaxed text-slate-700 shadow-inner whitespace-pre-wrap min-h-[140px]">
+                                        {enq.message}
+                                      </div>
+                                      <div className="flex flex-wrap gap-4 text-[9px] text-slate-450 font-bold px-1 mt-1">
+                                        <span>Record UUID: <code className="bg-slate-100 px-1 py-0.5 rounded text-[8.5px] font-mono text-blue-600">{enq.id}</code></span>
+                                        <span>•</span>
+                                        <span>Acquisition Channel: <span className="text-slate-650 font-extrabold">{enq.source}</span></span>
+                                      </div>
+                                    </div>
+
+                                    <div className="flex flex-col gap-2.5">
+                                      <div className="flex justify-between items-center">
+                                        <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-450 flex items-center gap-1.5">
+                                          <i className="fa-solid fa-pen-to-square text-blue-500" /> Internal Follow-up Notes
+                                        </h4>
+                                        {noteStatus === "saved" && (
+                                          <span className="text-[9px] text-emerald-600 font-black bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 flex items-center gap-1">
+                                            <i className="fa-solid fa-circle-check" /> Updated!
+                                          </span>
+                                        )}
+                                      </div>
+                                      
+                                      <textarea
+                                        value={notesState[enq.id] || ""}
+                                        onChange={(e) => setNotesState({ ...notesState, [enq.id]: e.target.value })}
+                                        placeholder="Enter status updates, follow-up history, client response, or call details here..."
+                                        className="bg-white border border-slate-200 rounded-2xl p-4 text-[12px] text-slate-800 placeholder:text-slate-350 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/5 shadow-inner resize-none min-h-[140px] font-medium leading-relaxed"
+                                      />
+                                      
+                                      <button
+                                        onClick={() => handleSaveNotes(enq.id)}
+                                        disabled={noteStatus === "saving"}
+                                        className={`w-full lg:w-auto self-end px-6 py-3.5 rounded-xl font-extrabold text-xs shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                                          noteStatus === "saving"
+                                            ? "bg-slate-100 border border-slate-200 text-slate-455 cursor-not-allowed"
+                                            : "bg-blue-600 hover:bg-blue-500 text-white shadow-sm"
+                                        }`}
+                                      >
+                                        <i className={`fa-solid ${noteStatus === "saving" ? "fa-circle-notch animate-spin" : "fa-floppy-disk"}`} />
+                                        {noteStatus === "saving" ? "Saving updates..." : "Save Follow-up Notes"}
+                                      </button>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                            )}
+                          </React.Fragment>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className="p-16 text-center flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400 mb-4">
+                    <i className="fa-solid fa-folder-open text-xl" />
+                  </div>
+                  <h3 className="font-extrabold text-sm text-slate-800 mb-1">No enquiries found</h3>
+                  <p className="text-xs text-slate-500 max-w-[280px]">Your current database or active search query returned 0 listing records.</p>
+                </div>
+              )}
+            </div>
+          </>
+        )}
+
+        {/* TAB CONTENT: Geolocation Visitor Map */}
+        {activeTab === "map" && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12 animate-fade-in">
+            {/* Visual Leaflet Map */}
+            <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm lg:col-span-2">
+              <h3 className="text-xs font-black uppercase tracking-[0.1em] text-slate-450 mb-4 flex items-center gap-2">
+                <i className="fa-solid fa-map text-emerald-600" /> Interactive Traffic Heatmap
+              </h3>
+              <VisitorMap markers={analytics.mapMarkers} />
+            </div>
+
+            {/* City Listings Panel */}
+            <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+              <div>
+                <h3 className="text-xs font-black uppercase tracking-[0.1em] text-slate-450 mb-5 flex items-center gap-2">
+                  <i className="fa-solid fa-city text-emerald-600" /> Top Visitor Geographics
+                </h3>
                 
-                <div className="flex flex-col gap-2.5">
-                  {["IN", "US", "UK", "AE", "GLOBAL"].map(reg => {
-                    const count = regionStats[reg] || 0;
-                    const percent = totalCount > 0 ? (count / totalCount) * 100 : 0;
-                    const flagMap: Record<string, string> = { IN: "🇮🇳", US: "🇺🇸", UK: "🇬🇧", AE: "🇦🇪", GLOBAL: "🌐" };
-                    const nameMap: Record<string, string> = { IN: "India", US: "United States", UK: "United Kingdom", AE: "UAE", GLOBAL: "Global" };
-                    
-                    return (
-                      <div key={reg} className="flex items-center gap-3">
-                        <span className="text-sm shrink-0 leading-none">{flagMap[reg]}</span>
-                        <div className="flex-1 flex flex-col gap-1">
-                          <div className="flex justify-between items-center text-[10px] font-bold text-slate-600">
-                            <span>{nameMap[reg]}</span>
-                            <span>{count} leads ({Math.round(percent)}%)</span>
+                {analytics.topCities.length > 0 ? (
+                  <div className="flex flex-col gap-4 mt-2">
+                    {analytics.topCities.map((item, index) => {
+                      const percent = analytics.totalPageviews > 0 ? (item.count / analytics.totalPageviews) * 100 : 0;
+                      return (
+                        <div key={`${item.city}-${index}`} className="flex flex-col gap-1">
+                          <div className="flex justify-between items-center text-xs font-bold text-slate-700">
+                            <span>{item.city} <span className="text-slate-400 font-medium">({item.country})</span></span>
+                            <span className="text-emerald-700 font-extrabold">{item.count} hits</span>
                           </div>
-                          <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                          <div className="w-full h-2 bg-slate-50 rounded-full overflow-hidden border border-slate-100">
                             <div 
-                              className="h-full bg-orange-500 rounded-full transition-all duration-1000 ease-out" 
+                              className="h-full bg-emerald-500 rounded-full" 
                               style={{ width: `${percent}%` }}
                             />
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="py-16 text-center flex flex-col items-center">
+                    <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 mb-3">
+                      <i className="fa-solid fa-earth-asia" />
+                    </div>
+                    <span className="text-slate-500 text-xs font-bold">No geography logs yet</span>
+                    <span className="text-[10px] text-slate-400 mt-1 max-w-[200px]">Geotarget logs will record automatically on user page entry.</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="border-t border-slate-100 pt-4 mt-6 text-center">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="flex flex-col">
+                    <span className="text-2xl font-black text-emerald-600">{analytics.totalPageviews}</span>
+                    <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-1">Total Hits</span>
+                  </div>
+                  <div className="flex flex-col border-l border-slate-100">
+                    <span className="text-2xl font-black text-emerald-600">{analytics.uniqueVisitors}</span>
+                    <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-1">Unique Approx</span>
+                  </div>
                 </div>
               </div>
             </div>
-            
-            <div className="text-[9px] text-slate-400 mt-6 border-t border-slate-100 pt-3.5 text-center font-medium">
-              Lead information is synced with MongoDB Atlas real-time database.
-            </div>
           </div>
+        )}
 
-        </div>
-
-        {/* Filters Toolbar (Clean Light Mode Style) */}
-        <div className="bg-white rounded-2xl border border-slate-200/80 p-5 mb-8 shadow-[0_4px_20px_rgba(0,0,0,0.01)] flex flex-col lg:flex-row gap-4 items-center justify-between">
-          
-          {/* Search Box */}
-          <div className="relative w-full lg:w-96">
-            <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 pointer-events-none">
-              <i className="fa-solid fa-magnifying-glass text-[11px]" />
-            </span>
-            <input
-              type="text"
-              placeholder="Search by name, email, mobile, notes..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full text-xs pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/5 transition-all duration-200 font-medium"
-            />
-          </div>
-
-          {/* Filters Select boxes */}
-          <div className="flex flex-wrap gap-4 w-full lg:w-auto items-center justify-end">
-            
-            {/* Service Type Filter */}
-            <div className="flex flex-col gap-1.5 w-full sm:w-44">
-              <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest pl-1">Service Type</span>
-              <select
-                value={serviceFilter}
-                onChange={(e) => setServiceFilter(e.target.value)}
-                className="w-full text-[11px] px-3.5 py-2.5 border border-slate-200 bg-slate-50 text-slate-700 outline-none rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 transition-all font-semibold"
-              >
-                <option value="all">All Services</option>
-                <option value="Next.js Web Design & Development">Next.js Web Design & Dev</option>
-                <option value="Corporate Business Website">Corporate Business Website</option>
-                <option value="Headless E-commerce Store">Headless E-commerce</option>
-                <option value="Landing Page & Lead Funnel">Landing Page & Funnel</option>
-                <option value="Custom React Web Application">Custom Web App</option>
-                <option value="Maintenance / Custom Web Support">Support & Maintenance</option>
-              </select>
-            </div>
-
-            {/* Status Filter */}
-            <div className="flex flex-col gap-1.5 w-full sm:w-36">
-              <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest pl-1">Status</span>
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full text-[11px] px-3.5 py-2.5 border border-slate-200 bg-slate-50 text-slate-700 outline-none rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 transition-all font-semibold"
-              >
-                <option value="all">All Statuses</option>
-                <option value="New">New</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Contacted">Contacted</option>
-                <option value="Rejected">Rejected</option>
-              </select>
-            </div>
-
-            {/* Region Filter */}
-            <div className="flex flex-col gap-1.5 w-full sm:w-32">
-              <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest pl-1">Region</span>
-              <select
-                value={regionFilter}
-                onChange={(e) => setRegionFilter(e.target.value)}
-                className="w-full text-[11px] px-3.5 py-2.5 border border-slate-200 bg-slate-50 text-slate-700 outline-none rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 transition-all font-semibold"
-              >
-                <option value="all">All Regions</option>
-                <option value="US">US</option>
-                <option value="UK">UK</option>
-                <option value="AE">UAE</option>
-                <option value="IN">India</option>
-                <option value="GLOBAL">Global</option>
-              </select>
-            </div>
-
-          </div>
-
-        </div>
-
-        {/* Lead Table / CRM Panel Container */}
-        <div className="bg-white rounded-[32px] border border-slate-250 shadow-[0_15px_50px_rgba(0,0,0,0.02)] overflow-hidden mb-12">
-          {filteredEnquiries.length > 0 ? (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200 text-[9px] font-black uppercase tracking-wider text-slate-500">
-                    <th className="px-6 py-5">Date</th>
-                    <th className="px-6 py-5">Contact Details</th>
-                    <th className="px-6 py-5">Target Channels</th>
-                    <th className="px-6 py-5">Target Service</th>
-                    <th className="px-6 py-5">Region</th>
-                    <th className="px-6 py-5">Lead Status</th>
-                    <th className="px-6 py-5 text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100 text-xs">
-                  {filteredEnquiries.map((enq) => {
-                    const isExpanded = expandedId === enq.id;
-                    const dateStr = new Date(enq.createdAt).toLocaleDateString(undefined, {
-                      month: "short",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: false
-                    });
-                    const noteStatus = savedNotesStatus[enq.id] || "idle";
-
-                    return (
-                      <React.Fragment key={enq.id}>
-                        <tr className={`hover:bg-slate-50/70 transition-all duration-200 ${isExpanded ? "bg-slate-50/55" : ""}`}>
-                          <td className="px-6 py-5.5 font-bold text-slate-450 whitespace-nowrap">
-                            {dateStr}
-                          </td>
-                          <td className="px-6 py-5.5">
-                            <div className="font-black text-slate-900 text-sm">{enq.name}</div>
-                            {enq.companyName !== "N/A" ? (
-                              <div className="text-[10px] text-blue-600 font-bold mt-0.5">{enq.companyName}</div>
-                            ) : (
-                              <div className="text-[10px] text-slate-400 italic mt-0.5">No company listed</div>
-                            )}
-                          </td>
-                          <td className="px-6 py-5.5">
-                            <div className="flex flex-col gap-1">
-                              <a href={`tel:${enq.mobile}`} className="font-extrabold text-blue-600 hover:underline transition-colors flex items-center gap-1.5">
-                                <i className="fa-solid fa-square-phone text-blue-500/80 text-sm" /> {enq.mobile}
-                              </a>
-                              <a href={`mailto:${enq.email}`} className="text-[11px] text-slate-500 hover:underline transition-colors flex items-center gap-1.5">
-                                <i className="fa-solid fa-square-envelope text-slate-400 text-sm" /> {enq.email}
-                              </a>
-                              {enq.website !== "N/A" && (
-                                <a
-                                  href={enq.website.startsWith("http") ? enq.website : `https://${enq.website}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-[10px] text-emerald-600 font-bold hover:text-emerald-700 flex items-center gap-1.5 mt-0.5"
-                                >
-                                  <i className="fa-solid fa-globe text-emerald-500/70" /> Web Link
-                                </a>
-                              )}
-                            </div>
-                          </td>
-                          <td className="px-6 py-5.5 font-bold text-slate-800 max-w-[200px] truncate">
-                            {enq.service}
-                          </td>
-                          <td className="px-6 py-5.5">
-                            <span className="bg-slate-100 border border-slate-200 font-bold uppercase text-[9px] px-2.5 py-1 rounded-lg text-slate-650 inline-block shadow-sm">
-                              {enq.region}
-                            </span>
-                          </td>
-                          <td className="px-6 py-5.5">
-                            <select
-                              value={enq.status}
-                              onChange={(e) => handleStatusChange(enq.id, e.target.value)}
-                              className={`text-[10px] font-black px-2.5 py-1.5 rounded-xl border outline-none cursor-pointer shadow-sm transition-all focus:ring-4 ${
-                                enq.status === "New"
-                                  ? "bg-blue-50 border-blue-200 text-blue-600 focus:ring-blue-100"
-                                  : enq.status === "In Progress"
-                                  ? "bg-amber-50 border-amber-200 text-amber-700 focus:ring-amber-100"
-                                  : enq.status === "Contacted"
-                                  ? "bg-emerald-50 border-emerald-200 text-emerald-700 focus:ring-emerald-100"
-                                  : "bg-rose-50 border-rose-200 text-rose-700 focus:ring-rose-100"
-                              }`}
-                            >
-                              <option value="New">New</option>
-                              <option value="In Progress">In Progress</option>
-                              <option value="Contacted">Contacted</option>
-                              <option value="Rejected">Rejected</option>
-                            </select>
-                          </td>
-                          <td className="px-6 py-5.5 text-right">
-                            <div className="flex items-center justify-end gap-2.5">
-                              <button
-                                onClick={() => setExpandedId(isExpanded ? null : enq.id)}
-                                className={`w-8.5 h-8.5 rounded-xl text-xs flex items-center justify-center transition-all cursor-pointer ${
-                                  isExpanded 
-                                    ? "bg-slate-900 text-white shadow-md" 
-                                    : "bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-850"
-                                }`}
-                                title="Expand Details"
-                              >
-                                <i className={`fa-solid ${isExpanded ? "fa-folder-open" : "fa-chevron-down"}`} />
-                              </button>
-                              
-                              <button
-                                onClick={() => handleDelete(enq.id)}
-                                className="w-8.5 h-8.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200/50 text-rose-600 flex items-center justify-center transition-all cursor-pointer"
-                                title="Delete Lead"
-                              >
-                                <i className="fa-solid fa-trash-can" />
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                        
-                        {/* Expanded details & notes console row */}
-                        {isExpanded && (
-                          <tr className="bg-slate-50/45 border-b border-slate-150">
-                            <td colSpan={7} className="px-8 py-6">
-                              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                
-                                {/* Lead Details message */}
-                                <div className="flex flex-col gap-2.5">
-                                  <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-450 flex items-center gap-1.5">
-                                    <i className="fa-solid fa-comment-dots" /> Client Message Query
-                                  </h4>
-                                  <div className="bg-white border border-slate-200 rounded-2xl p-5 text-[12px] leading-relaxed text-slate-700 shadow-inner whitespace-pre-wrap min-h-[140px]">
-                                    {enq.message}
-                                  </div>
-                                  <div className="flex flex-wrap gap-4 text-[9px] text-slate-450 font-bold px-1 mt-1">
-                                    <span>Record UUID: <code className="bg-slate-100 px-1 py-0.5 rounded text-[8.5px] font-mono text-blue-600">{enq.id}</code></span>
-                                    <span>•</span>
-                                    <span>Acquisition Channel: <span className="text-slate-650 font-extrabold">{enq.source}</span></span>
-                                  </div>
-                                </div>
-
-                                {/* Notes Follow up */}
-                                <div className="flex flex-col gap-2.5">
-                                  <div className="flex justify-between items-center">
-                                    <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-450 flex items-center gap-1.5">
-                                      <i className="fa-solid fa-pen-to-square text-blue-500" /> Internal Follow-up Notes
-                                    </h4>
-                                    {noteStatus === "saved" && (
-                                      <span className="text-[9px] text-emerald-600 font-black bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 flex items-center gap-1">
-                                        <i className="fa-solid fa-circle-check" /> Updated!
-                                      </span>
-                                    )}
-                                  </div>
-                                  
-                                  <textarea
-                                    value={notesState[enq.id] || ""}
-                                    onChange={(e) => setNotesState({ ...notesState, [enq.id]: e.target.value })}
-                                    placeholder="Enter status updates, follow-up history, client response, or call details here..."
-                                    className="bg-white border border-slate-200 rounded-2xl p-4 text-[12px] text-slate-800 placeholder:text-slate-350 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/5 shadow-inner resize-none min-h-[140px] font-medium leading-relaxed"
-                                  />
-                                  
-                                  <button
-                                    onClick={() => handleSaveNotes(enq.id)}
-                                    disabled={noteStatus === "saving"}
-                                    className={`w-full lg:w-auto self-end px-6 py-3.5 rounded-xl font-extrabold text-xs shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer ${
-                                      noteStatus === "saving"
-                                        ? "bg-slate-100 border border-slate-200 text-slate-450 cursor-not-allowed"
-                                        : "bg-blue-600 hover:bg-blue-500 text-white shadow-sm"
-                                    }`}
-                                  >
-                                    <i className={`fa-solid ${noteStatus === "saving" ? "fa-circle-notch animate-spin" : "fa-floppy-disk"}`} />
-                                    {noteStatus === "saving" ? "Saving updates..." : "Save Follow-up Notes"}
-                                  </button>
-                                </div>
-
-                              </div>
-                            </td>
-                          </tr>
-                        )}
-                      </React.Fragment>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className="p-16 text-center flex flex-col items-center">
-              <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400 mb-4">
-                <i className="fa-solid fa-folder-open text-xl" />
+        {/* TAB CONTENT: User Session Heatmaps (Microsoft Clarity Details) */}
+        {activeTab === "heatmaps" && (
+          <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm max-w-3xl mx-auto mb-12 animate-fade-in">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-14 h-14 bg-orange-50 border border-orange-100 rounded-2xl flex items-center justify-center text-orange-500 shadow-sm shrink-0">
+                <i className="fa-solid fa-eye text-2xl animate-pulse" />
               </div>
-              <h3 className="font-extrabold text-sm text-slate-800 mb-1">No enquiries found</h3>
-              <p className="text-xs text-slate-500 max-w-[280px]">Your current database or active search query returned 0 listing records.</p>
+              <div>
+                <h3 className="text-lg font-black text-slate-900 leading-tight">Cursor Heatmaps & Session Recordings</h3>
+                <p className="text-xs text-slate-500 mt-0.5">Understand user behavior, click actions, and scrolling scrolls using Microsoft Clarity.</p>
+              </div>
             </div>
-          )}
-        </div>
+
+            <div className="text-xs text-slate-650 space-y-4 mb-8 leading-relaxed">
+              <p>
+                To provide smooth mouse tracking and click heatmaps without slowing down your Next.js application, we have integrated support for **Microsoft Clarity**—an industry-standard, 100% free behavior analytics platform.
+              </p>
+              
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 grid grid-cols-1 md:grid-cols-2 gap-6 text-slate-700">
+                <div className="flex gap-3">
+                  <span className="text-lg text-emerald-600"><i className="fa-solid fa-circle-check" /></span>
+                  <div>
+                    <strong className="block text-slate-900 mb-0.5">Click Heatmaps</strong>
+                    Identify where users click on your pages, which CTA buttons are most active, and which links get missed.
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <span className="text-lg text-emerald-600"><i className="fa-solid fa-circle-check" /></span>
+                  <div>
+                    <strong className="block text-slate-900 mb-0.5">Session Recordings</strong>
+                    Watch anonymous recordings of individual users as they navigate, scroll, and type to locate design friction.
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <span className="text-lg text-emerald-600"><i className="fa-solid fa-circle-check" /></span>
+                  <div>
+                    <strong className="block text-slate-900 mb-0.5">Scroll Depth</strong>
+                    See how far down users read your pages to optimize placement of key elements.
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <span className="text-lg text-emerald-600"><i className="fa-solid fa-circle-check" /></span>
+                  <div>
+                    <strong className="block text-slate-900 mb-0.5">Rage Clicks Detection</strong>
+                    Automatically detect frustrated clicks on broken layouts or non-interactive page objects.
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4.5 text-[11px] text-amber-800">
+                <p className="font-bold flex items-center gap-1.5 mb-1">
+                  <i className="fa-solid fa-circle-info" /> Setup Process Checklist:
+                </p>
+                <ol className="list-decimal pl-4 space-y-1 font-semibold text-amber-900/90">
+                  <li>Sign up for a free project account at <a href="https://clarity.microsoft.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-amber-950">clarity.microsoft.com</a>.</li>
+                  <li>Copy your project unique ID (e.g. `o9d6z133`).</li>
+                  <li>Add the Environment Variable in Vercel: **`NEXT_PUBLIC_CLARITY_ID`** = `[your-clarity-id]`.</li>
+                  <li>Redeploy your project, and click the button below to view user behavior charts!</li>
+                </ol>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 border-t border-slate-100 pt-6">
+              <a
+                href="https://clarity.microsoft.com/projects"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-xs px-8 py-4.5 rounded-xl shadow-md transition-all text-center flex items-center justify-center gap-2 cursor-pointer flex-1"
+              >
+                Open Clarity Heatmaps Console <i className="fa-solid fa-arrow-up-right-from-square" />
+              </a>
+              <a
+                href="https://clarity.microsoft.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-extrabold text-xs px-6 py-4.5 rounded-xl transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                Create Free Account
+              </a>
+            </div>
+          </div>
+        )}
 
       </div>
     </div>
