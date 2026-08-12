@@ -879,22 +879,19 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4.5 text-[11px] text-amber-800">
+              <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4.5 text-[11px] text-emerald-800">
                 <p className="font-bold flex items-center gap-1.5 mb-1">
-                  <i className="fa-solid fa-circle-info" /> Setup Process Checklist:
+                  <i className="fa-solid fa-circle-check" /> Clarity Integration status: ACTIVE & LIVE
                 </p>
-                <ol className="list-decimal pl-4 space-y-1 font-semibold text-amber-900/90">
-                  <li>Sign up for a free project account at <a href="https://clarity.microsoft.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-amber-950">clarity.microsoft.com</a>.</li>
-                  <li>Copy your project unique ID (e.g. `o9d6z133`).</li>
-                  <li>Add the Environment Variable in Vercel: **`NEXT_PUBLIC_CLARITY_ID`** = `[your-clarity-id]`.</li>
-                  <li>Redeploy your project, and click the button below to view user behavior charts!</li>
-                </ol>
+                <p className="font-semibold text-emerald-950">
+                  Your Microsoft Clarity project ID (`y1a7vgc8a7`) is successfully integrated into the website template layout. User cursor coordinates, scrolls, clicks, and page records are being captured automatically in the background.
+                </p>
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 border-t border-slate-100 pt-6">
               <a
-                href="https://clarity.microsoft.com/projects"
+                href="https://clarity.microsoft.com/projects/view/y1a7vgc8a7/dashboard"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-xs px-8 py-4.5 rounded-xl shadow-md transition-all text-center flex items-center justify-center gap-2 cursor-pointer flex-1"
@@ -907,7 +904,7 @@ export default function AdminPage() {
                 rel="noopener noreferrer"
                 className="bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-extrabold text-xs px-6 py-4.5 rounded-xl transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer"
               >
-                Create Free Account
+                Clarity Portal
               </a>
             </div>
           </div>

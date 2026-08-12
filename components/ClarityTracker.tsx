@@ -3,12 +3,8 @@
 import Script from "next/script";
 
 export default function ClarityTracker() {
-  const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
-
-  if (!clarityId) {
-    // If not set, do not inject script to avoid errors.
-    return null;
-  }
+  // Use the user's specific Clarity ID by default, fallback to env variable if present
+  const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID || "y1a7vgc8a7";
 
   return (
     <Script
