@@ -26,47 +26,33 @@ export async function POST(request: Request) {
       notes: ""
     };
 
-    let SUPABASE_URL = process.env.SUPABASE_URL;
-    const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
     let savedToDb = false;
+    const MONGODB_URI = process.env.MONGODB_URI;
 
-    if (SUPABASE_URL && !SUPABASE_URL.startsWith("http")) {
-      SUPABASE_URL = `https://${SUPABASE_URL}.supabase.co`;
-    }
-
-    if (SUPABASE_URL && SUPABASE_ANON_KEY) {
-      // 1. Save to Supabase Cloud Database via REST
+    if (MONGODB_URI) {
+      // 1. Save to MongoDB Atlas
       try {
-        const dbRes = await fetch(`${SUPABASE_URL}/rest/v1/enquiries`, {
-          method: "POST",
-          headers: {
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-            "Content-Type": "application/json",
-            "Prefer": "return=representation"
-          },
-          body: JSON.stringify({
-            id: newEnquiry.id,
-            name: newEnquiry.name,
-            company_name: newEnquiry.companyName,
-            website: newEnquiry.website,
-            email: newEnquiry.email,
-            mobile: newEnquiry.mobile,
-            service: newEnquiry.service,
-            message: newEnquiry.message,
-            source: newEnquiry.source,
-            region: newEnquiry.region,
-            status: newEnquiry.status,
-            created_at: newEnquiry.createdAt,
-            notes: ""
-          })
+        const { getDb } = await import("@/lib/mongodb");
+        const db = await getDb();
+        await db.collection("enquiries").insertOne({
+          _id: newEnquiry.id as any,
+          id: newEnquiry.id,
+          name: newEnquiry.name,
+          companyName: newEnquiry.companyName,
+          website: newEnquiry.website,
+          email: newEnquiry.email,
+          mobile: newEnquiry.mobile,
+          service: newEnquiry.service,
+          message: newEnquiry.message,
+          source: newEnquiry.source,
+          region: newEnquiry.region,
+          status: newEnquiry.status,
+          createdAt: newEnquiry.createdAt,
+          notes: ""
         });
-        if (!dbRes.ok) {
-          throw new Error(`Supabase returned status ${dbRes.status}: ${await dbRes.text()}`);
-        }
         savedToDb = true;
       } catch (dbError: any) {
-        console.error("Failed to save to Supabase Cloud Database (will attempt local file fallback if available):", dbError);
+        console.error("Failed to save to MongoDB Atlas (will attempt local file fallback if available):", dbError);
       }
     }
 

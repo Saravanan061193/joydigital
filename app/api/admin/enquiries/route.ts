@@ -28,29 +28,21 @@ function writeEnquiries(data: any) {
 }
 
 export async function GET() {
-  let SUPABASE_URL = process.env.SUPABASE_URL;
-  const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+  const MONGODB_URI = process.env.MONGODB_URI;
 
-  if (SUPABASE_URL && !SUPABASE_URL.startsWith("http")) {
-    SUPABASE_URL = `https://${SUPABASE_URL}.supabase.co`;
-  }
-
-  if (SUPABASE_URL && SUPABASE_ANON_KEY) {
+  if (MONGODB_URI) {
     try {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/enquiries?order=created_at.desc`, {
-        headers: {
-          "apikey": SUPABASE_ANON_KEY,
-          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-        }
-      });
-      if (!res.ok) {
-        throw new Error(`Supabase GET returned status ${res.status}`);
-      }
-      const data = await res.json();
+      const { getDb } = await import("@/lib/mongodb");
+      const db = await getDb();
+      const data = await db.collection("enquiries")
+        .find({})
+        .sort({ createdAt: -1 })
+        .toArray();
+
       const mapped = data.map((d: any) => ({
-        id: d.id,
+        id: d.id || d._id?.toString(),
         name: d.name,
-        companyName: d.company_name,
+        companyName: d.companyName,
         website: d.website,
         email: d.email,
         mobile: d.mobile,
@@ -59,12 +51,12 @@ export async function GET() {
         source: d.source,
         region: d.region,
         status: d.status,
-        createdAt: d.created_at,
+        createdAt: d.createdAt,
         notes: d.notes || ""
       }));
       return NextResponse.json(mapped);
     } catch (e: any) {
-      console.error("Error reading from Supabase:", e);
+      console.error("Error reading from MongoDB Atlas:", e);
       return NextResponse.json({ error: e.message }, { status: 500 });
     }
   } else {
@@ -80,33 +72,26 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: "Missing enquiry ID" }, { status: 400 });
     }
 
-    let SUPABASE_URL = process.env.SUPABASE_URL;
-    const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+    const MONGODB_URI = process.env.MONGODB_URI;
 
-    if (SUPABASE_URL && !SUPABASE_URL.startsWith("http")) {
-      SUPABASE_URL = `https://${SUPABASE_URL}.supabase.co`;
-    }
-
-    if (SUPABASE_URL && SUPABASE_ANON_KEY) {
+    if (MONGODB_URI) {
       try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/enquiries?id=eq.${id}`, {
-          method: "PATCH",
-          headers: {
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            ...(status !== undefined && { status }),
-            ...(notes !== undefined && { notes })
-          })
-        });
-        if (!res.ok) {
-          throw new Error(`Supabase PATCH returned status ${res.status}`);
+        const { getDb } = await import("@/lib/mongodb");
+        const db = await getDb();
+        const updateFields: any = {};
+        if (status !== undefined) updateFields.status = status;
+        if (notes !== undefined) updateFields.notes = notes;
+
+        const result = await db.collection("enquiries").updateOne(
+          { id: id },
+          { $set: updateFields }
+        );
+        if (result.matchedCount === 0) {
+          return NextResponse.json({ error: "Enquiry not found" }, { status: 404 });
         }
         return NextResponse.json({ success: true });
       } catch (e: any) {
-        console.error("Error updating Supabase:", e);
+        console.error("Error updating MongoDB Atlas:", e);
         return NextResponse.json({ error: e.message }, { status: 500 });
       }
     } else {
@@ -145,28 +130,19 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: "Missing ID" }, { status: 400 });
     }
 
-    let SUPABASE_URL = process.env.SUPABASE_URL;
-    const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+    const MONGODB_URI = process.env.MONGODB_URI;
 
-    if (SUPABASE_URL && !SUPABASE_URL.startsWith("http")) {
-      SUPABASE_URL = `https://${SUPABASE_URL}.supabase.co`;
-    }
-
-    if (SUPABASE_URL && SUPABASE_ANON_KEY) {
+    if (MONGODB_URI) {
       try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/enquiries?id=eq.${id}`, {
-          method: "DELETE",
-          headers: {
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-          }
-        });
-        if (!res.ok) {
-          throw new Error(`Supabase DELETE returned status ${res.status}`);
+        const { getDb } = await import("@/lib/mongodb");
+        const db = await getDb();
+        const result = await db.collection("enquiries").deleteOne({ id: id });
+        if (result.deletedCount === 0) {
+          return NextResponse.json({ error: "Enquiry not found" }, { status: 404 });
         }
         return NextResponse.json({ success: true });
       } catch (e: any) {
-        console.error("Error deleting from Supabase:", e);
+        console.error("Error deleting from MongoDB Atlas:", e);
         return NextResponse.json({ error: e.message }, { status: 500 });
       }
     } else {
