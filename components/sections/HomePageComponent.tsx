@@ -655,7 +655,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                         : `${countrySelect} ${mobileInput.trim()}`;
                       
                       try {
-                        const response = await fetch("https://formsubmit.co/ajax/saravanan061193@gmail.com", {
+                        const response = await fetch("/api/enquiry", {
                           method: "POST",
                           headers: { "Content-Type": "application/json", "Accept": "application/json" },
                           body: JSON.stringify({

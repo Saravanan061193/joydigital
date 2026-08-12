@@ -26,8 +26,13 @@ export async function POST(request: Request) {
       notes: ""
     };
 
-    const SUPABASE_URL = process.env.SUPABASE_URL;
+    let SUPABASE_URL = process.env.SUPABASE_URL;
     const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+    let savedToDb = false;
+
+    if (SUPABASE_URL && !SUPABASE_URL.startsWith("http")) {
+      SUPABASE_URL = `https://${SUPABASE_URL}.supabase.co`;
+    }
 
     if (SUPABASE_URL && SUPABASE_ANON_KEY) {
       // 1. Save to Supabase Cloud Database via REST
@@ -59,11 +64,14 @@ export async function POST(request: Request) {
         if (!dbRes.ok) {
           throw new Error(`Supabase returned status ${dbRes.status}: ${await dbRes.text()}`);
         }
-      } catch (dbError) {
-        console.error("Failed to save to Supabase Cloud Database:", dbError);
+        savedToDb = true;
+      } catch (dbError: any) {
+        console.error("Failed to save to Supabase Cloud Database (will attempt local file fallback if available):", dbError);
       }
-    } else {
-      // 2. Attempt to save locally in data/enquiries.json (for local runs)
+    }
+
+    // 2. Attempt to save locally in data/enquiries.json as fallback or for local runs
+    if (!savedToDb) {
       try {
         if (!fs.existsSync(DATA_DIR)) {
           fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -87,8 +95,9 @@ export async function POST(request: Request) {
     }
     
     // 3. Forward to FormSubmit.co server-side so owner still receives email
+    const recipientEmail = process.env.CONTACT_EMAIL || "saravanan061193@gmail.com";
     try {
-      await fetch("https://formsubmit.co/ajax/saravanan061193@gmail.com", {
+      const emailRes = await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -96,6 +105,10 @@ export async function POST(request: Request) {
         },
         body: JSON.stringify(body),
       });
+      if (!emailRes.ok) {
+        const errorText = await emailRes.text();
+        console.warn("FormSubmit response was not ok:", emailRes.status, errorText);
+      }
     } catch (formSubmitError) {
       console.error("Error forwarding submission to FormSubmit.co:", formSubmitError);
     }

@@ -28,8 +28,12 @@ function writeEnquiries(data: any) {
 }
 
 export async function GET() {
-  const SUPABASE_URL = process.env.SUPABASE_URL;
+  let SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+
+  if (SUPABASE_URL && !SUPABASE_URL.startsWith("http")) {
+    SUPABASE_URL = `https://${SUPABASE_URL}.supabase.co`;
+  }
 
   if (SUPABASE_URL && SUPABASE_ANON_KEY) {
     try {
@@ -76,8 +80,12 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: "Missing enquiry ID" }, { status: 400 });
     }
 
-    const SUPABASE_URL = process.env.SUPABASE_URL;
+    let SUPABASE_URL = process.env.SUPABASE_URL;
     const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+
+    if (SUPABASE_URL && !SUPABASE_URL.startsWith("http")) {
+      SUPABASE_URL = `https://${SUPABASE_URL}.supabase.co`;
+    }
 
     if (SUPABASE_URL && SUPABASE_ANON_KEY) {
       try {
@@ -137,8 +145,12 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: "Missing ID" }, { status: 400 });
     }
 
-    const SUPABASE_URL = process.env.SUPABASE_URL;
+    let SUPABASE_URL = process.env.SUPABASE_URL;
     const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+
+    if (SUPABASE_URL && !SUPABASE_URL.startsWith("http")) {
+      SUPABASE_URL = `https://${SUPABASE_URL}.supabase.co`;
+    }
 
     if (SUPABASE_URL && SUPABASE_ANON_KEY) {
       try {

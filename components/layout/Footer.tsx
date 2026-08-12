@@ -20,7 +20,7 @@ export default function Footer() {
     const email = emailInput?.value || "";
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/saravanan061193@gmail.com", {
+      const response = await fetch("/api/enquiry", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
