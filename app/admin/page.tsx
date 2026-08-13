@@ -398,8 +398,14 @@ export default function AdminPage() {
       {/* Scope Style Overrides */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-        .poppins-font, .poppins-font * {
+        .poppins-font {
           font-family: 'Poppins', sans-serif !important;
+        }
+        .poppins-font button, .poppins-font input, .poppins-font select, .poppins-font option, .poppins-font textarea {
+          font-family: 'Poppins', sans-serif !important;
+        }
+        .poppins-font i, .poppins-font .fa, .poppins-font [class*="fa-"] {
+          font-family: 'Font Awesome 6 Free', 'Font Awesome 6 Brands', 'Font Awesome 6 Pro', sans-serif !important;
         }
         .text-gradient {
           background: linear-gradient(135deg, #2563EB 0%, #EA580C 100%);
@@ -706,6 +712,7 @@ export default function AdminPage() {
                             hour12: false
                           });
                           const noteStatus = savedNotesStatus[enq.id] || "idle";
+                          const displayStatus = enq.status === "Rejeoted" ? "Rejected" : enq.status;
 
                           return (
                             <React.Fragment key={enq.id}>
@@ -751,14 +758,14 @@ export default function AdminPage() {
                                 </td>
                                 <td className="px-6 py-5.5">
                                   <select
-                                    value={enq.status}
+                                    value={displayStatus}
                                     onChange={(e) => handleStatusChange(enq.id, e.target.value)}
                                     className={`text-[10px] font-black px-2.5 py-1.5 rounded-xl border outline-none cursor-pointer shadow-sm transition-all focus:ring-4 ${
-                                      enq.status === "New"
+                                      displayStatus === "New"
                                         ? "bg-blue-50 border-blue-200 text-blue-600 focus:ring-blue-100"
-                                        : enq.status === "In Progress"
-                                        ? "bg-amber-50 border-amber-200 text-amber-755 focus:ring-amber-100"
-                                        : enq.status === "Contacted"
+                                        : displayStatus === "In Progress"
+                                        ? "bg-amber-50 border-amber-200 text-amber-700 focus:ring-amber-100"
+                                        : displayStatus === "Contacted"
                                         ? "bg-emerald-50 border-emerald-200 text-emerald-700 focus:ring-emerald-100"
                                         : "bg-rose-50 border-rose-200 text-rose-700 focus:ring-rose-100"
                                     }`}
