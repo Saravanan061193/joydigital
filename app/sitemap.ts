@@ -28,6 +28,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/google-business-profile-optimization',
     '/ecommerce-website-development',
     '/custom-software-development',
+    '/website-for-insurance-agents',
+    '/website-for-hospitals',
+    '/website-for-hotels',
+    '/website-for-real-estate',
+    '/website-for-tours-and-travels',
   ];
 
   // 1. Generate sitemap records for unified static routes

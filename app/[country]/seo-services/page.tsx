@@ -6,6 +6,8 @@ interface PageProps {
   params: Promise<{ country: string }>;
 }
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   return [
     { country: "us" },
@@ -65,20 +67,31 @@ const REGIONAL_CONFIGS: Record<string, {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { country } = await params;
-  const config = REGIONAL_CONFIGS[country] || REGIONAL_CONFIGS.us;
+  const countryLower = country.toLowerCase();
+  const config = REGIONAL_CONFIGS[countryLower] || REGIONAL_CONFIGS.us;
+
+  const countryNames: Record<string, string> = {
+    us: "US",
+    uk: "UK",
+    ae: "UAE",
+    in: "India",
+  };
+  const countryName = countryNames[countryLower] || "US";
+  const title = `SEO Services in ${countryName} | Drive Organic Growth - Joy Digital`;
   
   return {
-    title: `SEO Services in ${config.targetMarket} | Organic SEO Agency - Joy Digital`,
+    title,
     description: `Joy Digital is a professional SEO agency serving the ${config.targetMarket}. We rank your website on Google using technical audits, content clusters, and high-quality backlink outreach.`,
     alternates: {
-      canonical: `https://joydigital.in/${country}/seo-services`,
+      canonical: `https://joydigital.in/${countryLower}/seo-services`,
     },
   };
 }
 
 export default async function CountrySEOPage({ params }: PageProps) {
   const { country } = await params;
-  const config = REGIONAL_CONFIGS[country] || REGIONAL_CONFIGS.us;
+  const countryLower = country.toLowerCase();
+  const config = REGIONAL_CONFIGS[countryLower] || REGIONAL_CONFIGS.us;
 
   const getRegionalHref = (path: string) => {
     return country === "" ? path : `/${country}${path === "/" ? "" : path}`;

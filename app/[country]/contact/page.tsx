@@ -9,6 +9,8 @@ interface PageProps {
   params: Promise<{ country: string }>;
 }
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   return [
     { country: "us" },
@@ -67,20 +69,31 @@ const REGIONAL_CONTACTS: Record<string, {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { country } = await params;
-  const config = REGIONAL_CONTACTS[country] || REGIONAL_CONTACTS.us;
+  const countryLower = country.toLowerCase();
+  const config = REGIONAL_CONTACTS[countryLower] || REGIONAL_CONTACTS.us;
   
+  const countryNames: Record<string, string> = {
+    us: "US",
+    uk: "UK",
+    ae: "UAE",
+    in: "India",
+  };
+  const countryName = countryNames[countryLower] || "US";
+  const title = `Contact Joy Digital ${countryName} | Custom Web & SEO Solutions`;
+
   return {
-    title: `Contact Us | SEO & Web Development ${config.marketName} | Joy Digital`,
+    title,
     description: `Request a free Next.js website design quote, Core Web Vitals audit, or organic search SEO proposal. Speak to our ${config.marketName} consultation desk.`,
     alternates: {
-      canonical: `https://joydigital.in/${country}/contact`,
+      canonical: `https://joydigital.in/${countryLower}/contact`,
     },
   };
 }
 
 export default async function CountryContactPage({ params }: PageProps) {
   const { country } = await params;
-  const config = REGIONAL_CONTACTS[country] || REGIONAL_CONTACTS.us;
+  const countryLower = country.toLowerCase();
+  const config = REGIONAL_CONTACTS[countryLower] || REGIONAL_CONTACTS.us;
 
   return (
     <>

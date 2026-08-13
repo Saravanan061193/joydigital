@@ -6,6 +6,8 @@ interface PageProps {
   params: Promise<{ country: string }>;
 }
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   return [
     { country: "us" },
@@ -17,7 +19,7 @@ export async function generateStaticParams() {
 
 const METADATA_MAP: Record<string, { title: string; description: string }> = {
   us: {
-    title: "Global SEO & Next.js Web Development Agency USA | Joy Digital",
+    title: "Next.js Web Development & SEO Agency USA | Joy Digital",
     description: "Scale organic revenue. Joy Digital is a premium digital agency serving US businesses with custom web design, headless Next.js platforms, and results-driven SEO.",
   },
   uk: {
@@ -25,7 +27,7 @@ const METADATA_MAP: Record<string, { title: string; description: string }> = {
     description: "Convert search traffic into loyal buyers. Joy Digital constructs high-speed corporate sites and executes organic search engine marketing campaigns across the UK.",
   },
   ae: {
-    title: "Web Development & Performance SEO Agency Dubai & UAE | Joy Digital",
+    title: "Web Development & SEO Agency Dubai & UAE | Joy Digital",
     description: "Dominate Google search. Joy Digital builds speed-optimized corporate portals, e-commerce stores, and Google Map packs for businesses in the UAE.",
   },
   in: {
@@ -36,7 +38,8 @@ const METADATA_MAP: Record<string, { title: string; description: string }> = {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { country } = await params;
-  const data = METADATA_MAP[country] || {
+  const countryLower = country.toLowerCase();
+  const data = METADATA_MAP[countryLower] || {
     title: "Website Design & Global SEO Growth Agency | Joy Digital",
     description: "Joy Digital is a results-oriented global agency engineering fast Next.js sites and search marketing campaigns.",
   };
@@ -45,17 +48,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: data.title,
     description: data.description,
     alternates: {
-      canonical: `https://joydigital.in/${country}`,
+      canonical: `https://joydigital.in/${countryLower}`,
     },
   };
 }
 
 export default async function CountryHomePage({ params }: PageProps) {
   const { country } = await params;
+  const countryLower = country.toLowerCase();
   
   return (
     <>
-      <HomePageComponent country={country} />
+      <HomePageComponent country={countryLower} />
     </>
   );
 }

@@ -6,6 +6,8 @@ interface PageProps {
   params: Promise<{ country: string }>;
 }
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   return [
     { country: "us" },
@@ -65,20 +67,31 @@ const REGIONAL_CONFIGS: Record<string, {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { country } = await params;
-  const config = REGIONAL_CONFIGS[country] || REGIONAL_CONFIGS.us;
+  const countryLower = country.toLowerCase();
+  const config = REGIONAL_CONFIGS[countryLower] || REGIONAL_CONFIGS.us;
   
+  const countryNames: Record<string, string> = {
+    us: "US",
+    uk: "UK",
+    ae: "UAE",
+    in: "India",
+  };
+  const countryName = countryNames[countryLower] || "US";
+  const title = `Custom Next.js Web Development ${countryName} | Joy Digital`;
+
   return {
-    title: `Website Development in ${config.targetMarket} | Custom Next.js - Joy Digital`,
+    title,
     description: `Joy Digital is a top web development agency serving the ${config.targetMarket}. We engineer fast, secure, and mobile-responsive websites using Next.js & React to rank on Google and scale leads.`,
     alternates: {
-      canonical: `https://joydigital.in/${country}/website-development`,
+      canonical: `https://joydigital.in/${countryLower}/website-development`,
     },
   };
 }
 
 export default async function CountryWebDevPage({ params }: PageProps) {
   const { country } = await params;
-  const config = REGIONAL_CONFIGS[country] || REGIONAL_CONFIGS.us;
+  const countryLower = country.toLowerCase();
+  const config = REGIONAL_CONFIGS[countryLower] || REGIONAL_CONFIGS.us;
 
   const getRegionalHref = (path: string) => {
     return country === "" ? path : `/${country}${path === "/" ? "" : path}`;
