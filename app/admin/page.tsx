@@ -34,7 +34,7 @@ export default function AdminPage() {
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Tab State: "leads" | "map" | "heatmaps"
+  // Active Menu: "leads" | "map" | "heatmaps"
   const [activeTab, setActiveTab] = useState<"leads" | "map" | "heatmaps">("leads");
 
   // Analytics data state
@@ -61,8 +61,23 @@ export default function AdminPage() {
   // Live time counter
   const [liveTime, setLiveTime] = useState("");
 
-  // Mobile sidebar visibility state
+  // Sidebar drawers and modals visibility state
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isQuickAddOpen, setIsQuickAddOpen] = useState(false);
+  const [activeEllipsisMenu, setActiveEllipsisMenu] = useState<string | null>(null);
+
+  // Quick Add form state
+  const [quickAddForm, setQuickAddForm] = useState({
+    name: "",
+    companyName: "",
+    website: "",
+    email: "",
+    mobile: "",
+    service: "Next.js Web Design & Development",
+    message: "",
+    region: "GLOBAL"
+  });
+  const [quickAddSubmitting, setQuickAddSubmitting] = useState(false);
 
   useEffect(() => {
     const updateTime = () => {
@@ -91,6 +106,15 @@ export default function AdminPage() {
     } else {
       setLoading(false);
     }
+  }, []);
+
+  // Close menus on click outside
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setActiveEllipsisMenu(null);
+    };
+    window.addEventListener("click", handleClickOutside);
+    return () => window.removeEventListener("click", handleClickOutside);
   }, []);
 
   const handleLoginSubmit = (e: React.FormEvent) => {
@@ -202,6 +226,46 @@ export default function AdminPage() {
     setPin("");
   };
 
+  const handleQuickAddSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setQuickAddSubmitting(true);
+    try {
+      const res = await fetch("/api/enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...quickAddForm,
+          source: "CRM Dashboard Quick Add"
+        })
+      });
+      if (res.ok) {
+        setIsQuickAddOpen(false);
+        setQuickAddForm({
+          name: "",
+          companyName: "",
+          website: "",
+          email: "",
+          mobile: "",
+          service: "Next.js Web Design & Development",
+          message: "",
+          region: "GLOBAL"
+        });
+        await fetchEnquiries();
+      }
+    } catch (err) {
+      console.error("Error adding enquiry:", err);
+    } finally {
+      setQuickAddSubmitting(false);
+    }
+  };
+
+  const resetFilters = () => {
+    setSearch("");
+    setServiceFilter("all");
+    setStatusFilter("all");
+    setRegionFilter("all");
+  };
+
   // CSV Export utility
   const exportToCSV = () => {
     if (enquiries.length === 0) return;
@@ -272,15 +336,38 @@ export default function AdminPage() {
   const totalCount = enquiries.length;
   const newCount = enquiries.filter((e) => e.status === "New").length;
   const inProgressCount = enquiries.filter((e) => e.status === "In Progress").length;
-  const contactedCount = enquiries.filter((e) => e.status === "Contacted").length;
+  const contactedCount = enquiries.filter((e) => e.status === "Contacted" || e.status === "Closed").length;
+
+  const getAvatarInitials = (name: string) => {
+    if (!name) return "N";
+    const parts = name.trim().split(/\s+/);
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    return parts[0][0].toUpperCase();
+  };
+
+  const getAvatarBg = (name: string) => {
+    const colors = [
+      "bg-blue-100 text-blue-700",
+      "bg-emerald-100 text-emerald-700",
+      "bg-purple-100 text-purple-700",
+      "bg-amber-100 text-amber-700",
+      "bg-pink-100 text-pink-700",
+      "bg-indigo-100 text-indigo-700"
+    ];
+    if (!name) return colors[0];
+    const code = name.charCodeAt(0) % colors.length;
+    return colors[code];
+  };
 
   if (loading && !isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-6 poppins-font">
+      <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-6 inter-font">
         <style dangerouslySetInnerHTML={{ __html: `
-          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-          .poppins-font {
-            font-family: 'Poppins', sans-serif !important;
+          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+          .inter-font {
+            font-family: 'Inter', sans-serif !important;
           }
         ` }} />
         <div className="flex flex-col items-center gap-4">
@@ -299,11 +386,11 @@ export default function AdminPage() {
   // Security Login Screen (Clean Light Glass Card)
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#F1F5F9] flex items-center justify-center p-4 sm:p-6 relative overflow-hidden poppins-font">
+      <div className="min-h-screen bg-[#F1F5F9] flex items-center justify-center p-4 sm:p-6 relative overflow-hidden inter-font">
         <style dangerouslySetInnerHTML={{ __html: `
-          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-          .poppins-font {
-            font-family: 'Poppins', sans-serif !important;
+          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+          .inter-font {
+            font-family: 'Inter', sans-serif !important;
           }
           .text-gradient {
             background: linear-gradient(135deg, #2563EB 0%, #EA580C 100%);
@@ -311,19 +398,18 @@ export default function AdminPage() {
             -webkit-text-fill-color: transparent;
           }
         ` }} />
-        {/* Soft background light blobs */}
         <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-1/4 right-1/3 w-[500px] h-[500px] bg-orange-500/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
 
-        <div className="w-full max-w-md bg-white border border-slate-200/80 rounded-[32px] p-8 sm:p-10 shadow-[0_15px_50px_rgba(0,0,0,0.05)] relative z-10 transition-all hover:border-slate-300">
+        <div className="w-full max-w-md bg-white border border-slate-200/80 rounded-[32px] p-8 sm:p-10 shadow-[0_15px_50px_rgba(0,0,0,0.05)] relative z-10 transition-all hover:border-slate-350">
           <div className="text-center mb-8 flex flex-col items-center">
             <div className="w-14 h-14 bg-gradient-to-tr from-blue-600 to-orange-500 rounded-2xl flex items-center justify-center shadow-md shadow-blue-500/10 mb-5">
               <span className="font-black text-2xl text-white tracking-tighter">JD</span>
             </div>
             <span className="text-2xl font-black tracking-tight text-slate-900 flex items-center gap-1.5 justify-center">
               Joy<span className="text-gradient">Digital</span>
-              <span className="bg-blue-50 text-blue-600 text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded border border-blue-150 select-none align-middle">
+              <span className="bg-blue-50 text-[#2563EB] text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded border border-blue-150 select-none align-middle">
                 CRM
               </span>
             </span>
@@ -343,7 +429,7 @@ export default function AdminPage() {
                 onChange={(e) => setPin(e.target.value)}
                 placeholder="••••"
                 required
-                className="w-full text-center tracking-[0.75em] text-2xl font-bold bg-slate-50 border border-slate-200 text-slate-950 rounded-2xl px-4 py-4 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-300 placeholder:text-slate-300"
+                className="w-full text-center tracking-[0.75em] text-2xl font-bold bg-slate-50 border border-slate-200 text-slate-950 rounded-2xl px-4 py-4 outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/10 transition-all duration-300 placeholder:text-slate-300"
                 autoFocus
               />
             </div>
@@ -356,7 +442,7 @@ export default function AdminPage() {
 
             <button
               type="submit"
-              className="bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs py-4 rounded-2xl shadow-md transition-all duration-300 cursor-pointer mt-1 w-full hover:-translate-y-0.5"
+              className="bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-extrabold text-xs py-4 rounded-2xl shadow-md transition-all duration-150 cursor-pointer mt-1 w-full hover:-translate-y-0.5"
             >
               Unlock Terminal <i className="fa-solid fa-lock-open ml-1.5" />
             </button>
@@ -371,20 +457,20 @@ export default function AdminPage() {
       case "leads":
         return {
           title: "CRM Leads",
-          subtitle: "Analyze and manage incoming business inquiries, sitemaps queries, and lead statuses.",
-          icon: "fa-solid fa-address-book"
+          subtitle: "Manage website enquiries and sales pipeline",
+          icon: "fa-regular fa-address-book"
         };
       case "map":
         return {
           title: "Visitor Geolocation Map",
-          subtitle: "Track physical visitor origins using real-time geocoding and map citation tracking.",
-          icon: "fa-solid fa-map-location-dot"
+          subtitle: "Track physical visitor origins using real-time geocoding and map citations",
+          icon: "fa-regular fa-map"
         };
       case "heatmaps":
         return {
           title: "User Session Heatmaps",
-          subtitle: "Analyze mouse scrolls, clicks, and page records utilizing Microsoft Clarity.",
-          icon: "fa-solid fa-eye"
+          subtitle: "Analyze mouse scrolls, clicks, and page records utilizing Microsoft Clarity",
+          icon: "fa-regular fa-eye"
         };
     }
   };
@@ -392,19 +478,19 @@ export default function AdminPage() {
   const pageMeta = getPageDetails();
 
   return (
-    <div className="min-h-screen flex bg-[#F8FAFC] text-slate-800 relative overflow-hidden poppins-font">
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.015] pointer-events-none" />
+    <div className="min-h-screen flex bg-[#F8FAFC] text-slate-800 relative overflow-hidden inter-font select-none">
+      <div className="absolute inset-0 bg-grid-pattern opacity-[0.01] pointer-events-none" />
 
       {/* Scope Style Overrides */}
       <style dangerouslySetInnerHTML={{ __html: `
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-        .poppins-font {
-          font-family: 'Poppins', sans-serif !important;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        .inter-font {
+          font-family: 'Inter', sans-serif !important;
         }
-        .poppins-font button, .poppins-font input, .poppins-font select, .poppins-font option, .poppins-font textarea {
-          font-family: 'Poppins', sans-serif !important;
+        .inter-font button, .inter-font input, .inter-font select, .inter-font option, .inter-font textarea {
+          font-family: 'Inter', sans-serif !important;
         }
-        .poppins-font i, .poppins-font .fa, .poppins-font [class*="fa-"] {
+        .inter-font i, .inter-font .fa, .inter-font [class*="fa-"] {
           font-family: 'Font Awesome 6 Free', 'Font Awesome 6 Brands', 'Font Awesome 6 Pro', sans-serif !important;
         }
         .text-gradient {
@@ -418,34 +504,46 @@ export default function AdminPage() {
             linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
             linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
         }
+        /* Custom scrollbar to match Notion/HubSpot */
+        ::-webkit-scrollbar {
+          width: 6px;
+          height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+          background: #E2E8F0;
+          border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: #CBD5E1;
+        }
       ` }} />
 
       {/* Sidebar Overlay (Mobile Only) */}
       {isSidebarOpen && (
         <div 
-          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300"
+          className="fixed inset-0 bg-[#0F172A]/40 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-150"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
       {/* LEFT NAVIGATION SIDEBAR */}
       <aside 
-        className={`fixed inset-y-0 left-0 w-72 bg-[#0F172A] text-white flex flex-col z-50 transition-transform duration-300 lg:translate-x-0 lg:static lg:h-screen shrink-0 ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed inset-y-0 left-0 w-[260px] md:w-20 lg:w-[260px] bg-[#0F172A] text-white flex flex-col z-50 transition-all duration-150 lg:static lg:h-screen shrink-0 ${
+          isSidebarOpen ? "translate-x-0 w-[260px]" : "-translate-x-full lg:translate-x-0"
         }`}
       >
         {/* Sidebar Header */}
-        <div className="py-6 px-6 border-b border-slate-800 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-md shadow-blue-500/10">
-              <span className="font-black text-lg text-white tracking-tighter">JD</span>
+        <div className="h-16 border-b border-slate-800 flex items-center justify-between px-5">
+          <div className="flex items-center gap-3 overflow-hidden">
+            <div className="w-8.5 h-8.5 bg-[#2563EB] rounded-lg flex items-center justify-center shadow-md shrink-0">
+              <span className="font-extrabold text-sm text-white tracking-tighter">JD</span>
             </div>
-            <div>
-              <span className="font-extrabold text-base tracking-tight text-white flex items-center gap-1.5">
+            <div className="md:hidden lg:block">
+              <span className="font-extrabold text-sm tracking-tight text-white flex items-center gap-1.5">
                 Joy<span className="text-[#EA580C]">Digital</span>
-              </span>
-              <span className="text-[8px] bg-slate-800 text-blue-400 font-black uppercase tracking-widest px-1.5 py-0.5 rounded border border-slate-700/60">
-                Analytics CRM
               </span>
             </div>
           </div>
@@ -453,79 +551,89 @@ export default function AdminPage() {
             onClick={() => setIsSidebarOpen(false)}
             className="lg:hidden text-slate-400 hover:text-white cursor-pointer"
           >
-            <i className="fa-solid fa-xmark text-lg" />
+            <i className="fa-solid fa-xmark text-base" />
           </button>
-        </div>
-
-        {/* Database Status Panel */}
-        <div className="px-6 py-4 border-b border-slate-800/60 bg-slate-900/50">
-          <div className="flex items-center gap-2.5">
-            <span className="relative flex h-2 w-2 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Database Status</span>
-          </div>
-          <p className="text-xs font-bold text-slate-200 mt-1 select-none flex items-center gap-1">
-            <i className="fa-solid fa-leaf text-emerald-500 mr-1" /> MongoDB Atlas
-          </p>
         </div>
 
         {/* Sidebar Navigation */}
-        <nav className="flex-1 py-6 px-4 space-y-1.5 overflow-y-auto">
-          <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest pl-3 block mb-2 select-none">
-            Core Features
-          </span>
-          {[
-            { id: "leads", label: "CRM Leads", icon: "fa-solid fa-address-book" },
-            { id: "map", label: "Visitor Geolocation Map", icon: "fa-solid fa-map-location-dot" },
-            { id: "heatmaps", label: "User Session Heatmaps", icon: "fa-solid fa-eye" }
-          ].map((tab) => {
-            const isTabActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => {
-                  setActiveTab(tab.id as any);
-                  if (tab.id === "map") fetchAnalytics();
-                  setIsSidebarOpen(false); // Close mobile drawer
-                }}
-                className={`w-full flex items-center gap-3.5 py-3.5 px-4 rounded-xl text-xs font-extrabold transition-all duration-200 text-left cursor-pointer group ${
-                  isTabActive
-                    ? "bg-blue-600 text-white shadow-md shadow-blue-500/10"
-                    : "text-slate-400 hover:text-white hover:bg-slate-850"
-                }`}
-              >
-                <i className={`${tab.icon} text-sm ${isTabActive ? "text-white" : "text-slate-450 group-hover:text-white transition-colors"}`} />
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
+        <nav className="flex-1 py-6 px-3 space-y-7 overflow-y-auto">
+          {/* CORE SECTION */}
+          <div>
+            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-3 block mb-2 md:hidden lg:block select-none">
+              Workspace
+            </span>
+            <div className="space-y-1">
+              {[
+                { id: "leads", label: "CRM Leads", icon: "fa-regular fa-address-book" }
+              ].map((tab) => {
+                const isTabActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => {
+                      setActiveTab(tab.id as any);
+                      setIsSidebarOpen(false);
+                    }}
+                    className={`w-full flex items-center gap-3.5 py-2.5 px-3 rounded-lg text-xs font-semibold transition-all duration-150 text-left cursor-pointer group ${
+                      isTabActive
+                        ? "bg-[#2563EB] text-white shadow-sm"
+                        : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/40"
+                    }`}
+                    title={tab.label}
+                  >
+                    <i className={`${tab.icon} text-sm shrink-0 w-5 text-center`} />
+                    <span className="md:hidden lg:inline">{tab.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* ANALYTICS SECTION */}
+          <div>
+            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-3 block mb-2 md:hidden lg:block select-none">
+              Analytics
+            </span>
+            <div className="space-y-1">
+              {[
+                { id: "map", label: "Visitor Map", icon: "fa-regular fa-map" },
+                { id: "heatmaps", label: "Session Heatmaps", icon: "fa-regular fa-eye" }
+              ].map((tab) => {
+                const isTabActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => {
+                      setActiveTab(tab.id as any);
+                      if (tab.id === "map") fetchAnalytics();
+                      setIsSidebarOpen(false);
+                    }}
+                    className={`w-full flex items-center gap-3.5 py-2.5 px-3 rounded-lg text-xs font-semibold transition-all duration-150 text-left cursor-pointer group ${
+                      isTabActive
+                        ? "bg-[#2563EB] text-white shadow-sm"
+                        : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/40"
+                    }`}
+                    title={tab.label}
+                  >
+                    <i className={`${tab.icon} text-sm shrink-0 w-5 text-center`} />
+                    <span className="md:hidden lg:inline">{tab.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </nav>
 
         {/* Sidebar Footer */}
-        <div className="border-t border-slate-800 p-5 space-y-3.5">
-          {/* Live Clock Widget */}
-          <div className="bg-slate-950/60 border border-slate-850 px-4 py-2.5 rounded-xl text-slate-400 text-xs font-mono select-none flex items-center justify-center gap-2">
-            <span className="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping shrink-0" />
-            <span>LIVE: {liveTime || "00:00:00"}</span>
-          </div>
-
-          {/* CSV Export Trigger */}
-          <button
-            onClick={exportToCSV}
-            disabled={enquiries.length === 0}
-            className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs py-3.5 rounded-xl transition-all shadow-sm cursor-pointer border border-transparent disabled:opacity-40 disabled:cursor-not-allowed select-none"
-          >
-            <i className="fa-solid fa-file-csv text-sm" /> Export Database
-          </button>
-
+        <div className="border-t border-slate-800 p-4 space-y-2">
           {/* Logout Action */}
           <button
             onClick={handleLogout}
-            className="w-full bg-slate-800 hover:bg-rose-900/60 hover:text-white text-slate-300 font-black text-xs py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 border border-transparent cursor-pointer select-none"
+            className="w-full text-slate-400 hover:text-white hover:bg-slate-800/50 font-bold text-xs py-2 px-3 rounded-lg transition-all flex items-center gap-3 cursor-pointer select-none"
+            title="Log Out"
           >
-            Logout <i className="fa-solid fa-arrow-right-from-bracket text-[10px]" />
+            <i className="fa-solid fa-arrow-right-from-bracket text-sm w-5 text-center shrink-0" />
+            <span className="md:hidden lg:inline">Logout</span>
           </button>
         </div>
       </aside>
@@ -533,175 +641,227 @@ export default function AdminPage() {
       {/* RIGHT MAIN CONTENT AREA */}
       <main className="flex-1 h-screen overflow-y-auto bg-[#F8FAFC] flex flex-col min-w-0">
         
-        {/* Top Navbar */}
-        <header className="bg-white border-b border-slate-200/80 sticky top-0 z-30 px-6 py-4.5 flex items-center justify-between shrink-0 shadow-sm">
-          <div className="flex items-center gap-3">
-            {/* Mobile Hamburger menu toggle */}
+        {/* Top Header Panel (Modern SaaS Header Layout) */}
+        <header className="h-16 bg-white border-b border-slate-200/80 sticky top-0 z-30 px-6 flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-3.5">
+            {/* Mobile/Tablet Hamburger menu toggle */}
             <button 
               onClick={() => setIsSidebarOpen(true)}
-              className="lg:hidden w-10 h-10 border border-slate-200 rounded-xl flex items-center justify-center text-slate-600 bg-slate-50 hover:bg-slate-100 cursor-pointer"
+              className="lg:hidden w-8 h-8 border border-slate-200 rounded-lg flex items-center justify-center text-slate-600 bg-slate-50 hover:bg-slate-100 cursor-pointer transition-colors"
             >
-              <i className="fa-solid fa-bars" />
+              <i className="fa-solid fa-bars text-sm" />
             </button>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100/60 text-blue-600 flex items-center justify-center">
-                <i className={pageMeta.icon} />
+            
+            <div className="flex items-center gap-2">
+              <div className="hidden md:flex items-center gap-1 bg-emerald-50 border border-emerald-250 px-2 py-0.5 rounded text-[10px] font-bold text-emerald-700">
+                <span className="relative flex h-1.5 w-1.5 mr-0.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                </span>
+                <span>Active DB</span>
               </div>
-              <div>
-                <h1 className="text-base font-extrabold text-slate-900 leading-none">{pageMeta.title}</h1>
-                <p className="text-[10px] text-slate-500 mt-1 font-medium">{pageMeta.subtitle}</p>
+              
+              <div className="hidden sm:flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-2 py-0.5 rounded text-[10px] font-bold text-slate-500 font-mono">
+                <span className="w-1.5 h-1.5 bg-rose-500 rounded-full animate-pulse" />
+                <span>LIVE: {liveTime || "00:00:00"}</span>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
-            {/* Breadcrumb path */}
-            <div className="hidden md:flex items-center gap-1.5 text-xs text-slate-400 font-bold bg-slate-50 border border-slate-100 rounded-lg px-3 py-1.5 select-none">
-              <span>Admin</span>
-              <i className="fa-solid fa-chevron-right text-[8px]" />
-              <span className="text-slate-600 font-extrabold">{pageMeta.title}</span>
+          <div className="flex items-center gap-3">
+            {/* Notifications icon */}
+            <button className="w-8 h-8 border border-slate-200 rounded-xl flex items-center justify-center text-slate-500 hover:text-slate-800 bg-white relative transition-colors cursor-pointer">
+              <i className="fa-regular fa-bell text-sm" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full border border-white" />
+            </button>
+
+            {/* Quick Add Button */}
+            <button
+              onClick={() => setIsQuickAddOpen(true)}
+              className="bg-[#2563EB] hover:bg-[#1d4ed8] text-white text-xs font-bold px-3.5 py-1.75 rounded-xl shadow-sm hover:shadow transition-all cursor-pointer flex items-center gap-1.5 border border-transparent"
+            >
+              <i className="fa-solid fa-plus text-[10px]" />
+              <span className="hidden sm:inline">Add Lead</span>
+            </button>
+
+            {/* User Profile Avatar */}
+            <div className="w-8 h-8 bg-slate-100 border border-slate-200 rounded-full flex items-center justify-center text-slate-600 font-bold text-xs select-none">
+              AD
             </div>
           </div>
         </header>
 
-        {/* Content Pane */}
-        <div className="flex-1 p-6 md:p-8">
+        {/* Content Container */}
+        <div className="flex-1 overflow-y-auto px-6 py-8 max-w-[1440px] w-full mx-auto">
           
+          {/* Page Title & Subtitle block */}
+          <div className="mb-8">
+            <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">{pageMeta.title}</h2>
+            <p className="text-xs text-slate-500 mt-1 font-medium">{pageMeta.subtitle}</p>
+          </div>
+
           {/* TAB CONTENT: Leads CRM Manager */}
           {activeTab === "leads" && (
-            <div className="max-w-7xl mx-auto">
-              {/* Analytics Cards Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-fade-in">
-                <div className="bg-white rounded-3xl border border-slate-200/85 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.015)] flex items-center justify-between hover:border-slate-350 transition-all duration-300 group">
-                  <div className="flex flex-col">
-                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Total Enquiries</span>
-                    <span className="text-3xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">{totalCount}</span>
-                    <span className="text-[10px] text-slate-500 mt-2.5 font-medium">All channels combined</span>
+            <div className="space-y-6">
+              
+              {/* Four KPI Cards Row */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-in">
+                
+                {/* KPI Card 1: Total Enquiries */}
+                <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-[0_4px_20px_rgba(15,23,42,0.04)] flex items-center justify-between hover:shadow-[0_10px_30px_rgba(15,23,42,0.06)] hover:-translate-y-[2px] transition-all duration-150 group">
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Total Enquiries</span>
+                    <span className="text-3xl font-extrabold text-slate-900 leading-tight block">{totalCount}</span>
+                    <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-600">
+                      <span className="bg-emerald-50 px-1.5 py-0.5 rounded"><i className="fa-solid fa-arrow-trend-up mr-0.5" /> +12%</span>
+                      <span className="text-slate-400 font-medium">this month</span>
+                    </div>
                   </div>
-                  <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 text-xl shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
-                    <i className="fa-solid fa-database" />
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-3xl border border-slate-200/85 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.015)] flex items-center justify-between hover:border-slate-350 transition-all duration-300 group">
-                  <div className="flex flex-col">
-                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">New Leads</span>
-                    <span className="text-3xl font-black text-orange-600">{newCount}</span>
-                    <span className="text-[10px] text-orange-600 mt-2.5 font-semibold flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse" /> Requires attention
-                    </span>
-                  </div>
-                  <div className="w-14 h-14 rounded-2xl bg-orange-50 border border-orange-100 flex items-center justify-center text-orange-600 text-xl shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
-                    <i className="fa-solid fa-fire animate-pulse" />
+                  <div className="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2563EB] text-base shadow-sm shrink-0">
+                    <i className="fa-regular fa-folder-open" />
                   </div>
                 </div>
 
-                <div className="bg-white rounded-3xl border border-slate-200/85 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.015)] flex items-center justify-between hover:border-slate-350 transition-all duration-300 group">
-                  <div className="flex flex-col">
-                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">In Progress</span>
-                    <span className="text-3xl font-black text-amber-600">{inProgressCount}</span>
-                    <span className="text-[10px] text-slate-500 mt-2.5 font-medium">Currently consulting</span>
+                {/* KPI Card 2: New Leads */}
+                <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-[0_4px_20px_rgba(15,23,42,0.04)] flex items-center justify-between hover:shadow-[0_10px_30px_rgba(15,23,42,0.06)] hover:-translate-y-[2px] transition-all duration-150 group">
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">New Leads</span>
+                    <span className="text-3xl font-extrabold text-slate-900 leading-tight block">{newCount}</span>
+                    <div className="flex items-center gap-1.5 text-[10px] font-bold text-orange-600">
+                      <span className="bg-orange-50 px-1.5 py-0.5 rounded"><i className="fa-solid fa-fire mr-0.5" /> Hot</span>
+                      <span className="text-slate-400 font-medium">unresolved</span>
+                    </div>
                   </div>
-                  <div className="w-14 h-14 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 text-xl shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
-                    <i className="fa-solid fa-spinner animate-spin" style={{ animationDuration: "5s" }} />
+                  <div className="w-11 h-11 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center text-orange-600 text-base shadow-sm shrink-0">
+                    <i className="fa-regular fa-bell animate-pulse" />
                   </div>
                 </div>
 
-                <div className="bg-white rounded-3xl border border-slate-200/85 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.015)] flex items-center justify-between hover:border-slate-350 transition-all duration-300 group">
-                  <div className="flex flex-col">
-                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Contacted & Closed</span>
-                    <span className="text-3xl font-black text-emerald-600">{contactedCount}</span>
-                    <span className="text-[10px] text-slate-500 mt-2.5 font-medium">Proposal / Deal closed</span>
+                {/* KPI Card 3: In Progress */}
+                <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-[0_4px_20px_rgba(15,23,42,0.04)] flex items-center justify-between hover:shadow-[0_10px_30px_rgba(15,23,42,0.06)] hover:-translate-y-[2px] transition-all duration-150 group">
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">In Progress</span>
+                    <span className="text-3xl font-extrabold text-slate-900 leading-tight block">{inProgressCount}</span>
+                    <div className="flex items-center gap-1.5 text-[10px] font-bold text-amber-600">
+                      <span className="bg-amber-50 px-1.5 py-0.5 rounded"><i className="fa-solid fa-spinner mr-0.5 animate-spin" style={{ animationDuration: "3s" }} /> Active</span>
+                      <span className="text-slate-400 font-medium">discussions</span>
+                    </div>
                   </div>
-                  <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-xl shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
-                    <i className="fa-solid fa-circle-check" />
+                  <div className="w-11 h-11 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 text-base shadow-sm shrink-0">
+                    <i className="fa-solid fa-arrows-spin" />
                   </div>
                 </div>
+
+                {/* KPI Card 4: Contacted & Closed */}
+                <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-[0_4px_20px_rgba(15,23,42,0.04)] flex items-center justify-between hover:shadow-[0_10px_30px_rgba(15,23,42,0.06)] hover:-translate-y-[2px] transition-all duration-150 group">
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Contacted & Closed</span>
+                    <span className="text-3xl font-extrabold text-slate-900 leading-tight block">{contactedCount}</span>
+                    <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-600">
+                      <span className="bg-emerald-50 px-1.5 py-0.5 rounded"><i className="fa-solid fa-arrow-trend-up mr-0.5" /> +15%</span>
+                      <span className="text-slate-400 font-medium">deals won</span>
+                    </div>
+                  </div>
+                  <div className="w-11 h-11 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-base shadow-sm shrink-0">
+                    <i className="fa-regular fa-circle-check" />
+                  </div>
+                </div>
+
               </div>
 
-              {/* Filters Toolbar */}
-              <div className="bg-white rounded-2xl border border-slate-200/80 p-5 mb-8 shadow-[0_4px_20px_rgba(0,0,0,0.01)] flex flex-col lg:flex-row gap-4 items-center justify-between animate-fade-in">
-                <div className="relative w-full lg:w-96">
+              {/* Two-Row Search & Filters toolbar */}
+              <div className="bg-white border border-slate-200/85 rounded-2xl p-5 shadow-[0_4px_20px_rgba(15,23,42,0.02)] space-y-4">
+                {/* Row 1: Full-width Search */}
+                <div className="relative w-full">
                   <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 pointer-events-none">
-                    <i className="fa-solid fa-magnifying-glass text-[11px]" />
+                    <i className="fa-solid fa-magnifying-glass text-[12px]" />
                   </span>
                   <input
                     type="text"
-                    placeholder="Search by name, email, mobile, notes..."
+                    placeholder="Search by lead name, email address, mobile, queries..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="w-full text-xs pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/5 transition-all duration-200 font-medium"
+                    className="w-full text-xs pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 transition-all duration-150 font-medium"
                   />
                 </div>
 
-                <div className="flex flex-wrap gap-4 w-full lg:w-auto items-center justify-end">
-                  <div className="flex flex-col gap-1.5 w-full sm:w-44">
-                    <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest pl-1">Service Type</span>
-                    <select
-                      value={serviceFilter}
-                      onChange={(e) => setServiceFilter(e.target.value)}
-                      className="w-full text-[11px] px-3.5 py-2.5 border border-slate-200 bg-slate-50 text-slate-700 outline-none rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 transition-all font-semibold"
-                    >
-                      <option value="all">All Services</option>
-                      <option value="Next.js Web Design & Development">Next.js Web Design & Dev</option>
-                      <option value="Corporate Business Website">Corporate Business Website</option>
-                      <option value="Headless E-commerce Store">Headless E-commerce</option>
-                      <option value="Landing Page & Lead Funnel">Landing Page & Funnel</option>
-                      <option value="Custom React Web Application">Custom Web App</option>
-                      <option value="Maintenance / Custom Web Support">Support & Maintenance</option>
-                    </select>
+                {/* Row 2: Secondary filter row with equal height dropdown inputs */}
+                <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full md:w-auto flex-1">
+                    <div className="flex flex-col gap-1">
+                      <select
+                        value={serviceFilter}
+                        onChange={(e) => setServiceFilter(e.target.value)}
+                        className="w-full text-[11px] px-3 py-2.5 border border-slate-200 bg-slate-50 text-slate-700 outline-none rounded-xl focus:border-[#2563EB] focus:bg-white focus:ring-4 focus:ring-[#2563EB]/5 transition-all duration-150 font-semibold h-[38px] cursor-pointer"
+                      >
+                        <option value="all">All Services</option>
+                        <option value="Next.js Web Design & Development">Next.js Web Design & Dev</option>
+                        <option value="Corporate Business Website">Corporate Business Website</option>
+                        <option value="Headless E-commerce Store">Headless E-commerce</option>
+                        <option value="Landing Page & Lead Funnel">Landing Page & Funnel</option>
+                        <option value="Custom React Web Application">Custom Web App</option>
+                        <option value="Maintenance / Custom Web Support">Support & Maintenance</option>
+                      </select>
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <select
+                        value={statusFilter}
+                        onChange={(e) => setStatusFilter(e.target.value)}
+                        className="w-full text-[11px] px-3 py-2.5 border border-slate-200 bg-slate-50 text-slate-700 outline-none rounded-xl focus:border-[#2563EB] focus:bg-white focus:ring-4 focus:ring-[#2563EB]/5 transition-all duration-150 font-semibold h-[38px] cursor-pointer"
+                      >
+                        <option value="all">All Statuses</option>
+                        <option value="New">New</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Contacted">Contacted</option>
+                        <option value="Closed">Closed</option>
+                        <option value="Rejected">Rejected</option>
+                      </select>
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <select
+                        value={regionFilter}
+                        onChange={(e) => setRegionFilter(e.target.value)}
+                        className="w-full text-[11px] px-3 py-2.5 border border-slate-200 bg-slate-50 text-slate-700 outline-none rounded-xl focus:border-[#2563EB] focus:bg-white focus:ring-4 focus:ring-[#2563EB]/5 transition-all duration-150 font-semibold h-[38px] cursor-pointer"
+                      >
+                        <option value="all">All Regions</option>
+                        <option value="US">US</option>
+                        <option value="UK">UK</option>
+                        <option value="AE">UAE</option>
+                        <option value="IN">India</option>
+                        <option value="GLOBAL">Global</option>
+                      </select>
+                    </div>
                   </div>
 
-                  <div className="flex flex-col gap-1.5 w-full sm:w-36">
-                    <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest pl-1">Status</span>
-                    <select
-                      value={statusFilter}
-                      onChange={(e) => setStatusFilter(e.target.value)}
-                      className="w-full text-[11px] px-3.5 py-2.5 border border-slate-200 bg-slate-50 text-slate-700 outline-none rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 transition-all font-semibold"
-                    >
-                      <option value="all">All Statuses</option>
-                      <option value="New">New</option>
-                      <option value="In Progress">In Progress</option>
-                      <option value="Contacted">Contacted</option>
-                      <option value="Rejected">Rejected</option>
-                    </select>
-                  </div>
-
-                  <div className="flex flex-col gap-1.5 w-full sm:w-32">
-                    <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest pl-1">Region</span>
-                    <select
-                      value={regionFilter}
-                      onChange={(e) => setRegionFilter(e.target.value)}
-                      className="w-full text-[11px] px-3.5 py-2.5 border border-slate-200 bg-slate-50 text-slate-700 outline-none rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 transition-all font-semibold"
-                    >
-                      <option value="all">All Regions</option>
-                      <option value="US">US</option>
-                      <option value="UK">UK</option>
-                      <option value="AE">UAE</option>
-                      <option value="IN">India</option>
-                      <option value="GLOBAL">Global</option>
-                    </select>
-                  </div>
+                  {/* Reset Filters action */}
+                  <button
+                    onClick={resetFilters}
+                    className="w-full md:w-auto h-[38px] bg-slate-100 hover:bg-slate-200 text-slate-600 font-extrabold text-[11px] px-5 rounded-xl transition-all duration-150 cursor-pointer flex items-center justify-center gap-1.5 border border-transparent shadow-sm shrink-0"
+                  >
+                    <i className="fa-solid fa-arrow-rotate-left" /> Reset Filters
+                  </button>
                 </div>
               </div>
 
-              {/* CRM Lead Table */}
-              <div className="bg-white rounded-[32px] border border-slate-200/80 shadow-[0_15px_50px_rgba(0,0,0,0.015)] overflow-hidden mb-12 animate-fade-in">
+              {/* TABLE VIEW (Hidden on Mobile screens, visible on Tablet/Desktop) */}
+              <div className="hidden md:block bg-white rounded-2xl border border-slate-200/80 shadow-[0_4px_20px_rgba(15,23,42,0.04)] overflow-hidden mb-12 animate-fade-in relative">
                 {filteredEnquiries.length > 0 ? (
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse border-spacing-0">
                       <thead>
-                        <tr className="bg-slate-50 border-b border-slate-200 text-[9px] font-black uppercase tracking-wider text-slate-500">
-                          <th className="px-6 py-5">Date</th>
-                          <th className="px-6 py-5">Contact Details</th>
-                          <th className="px-6 py-5">Target Channels</th>
-                          <th className="px-6 py-5">Target Service</th>
-                          <th className="px-6 py-5">Region</th>
-                          <th className="px-6 py-5">Lead Status</th>
-                          <th className="px-6 py-5 text-right">Actions</th>
+                        <tr className="bg-slate-50/70 border-b border-slate-200 text-[10px] font-black uppercase tracking-wider text-slate-400 select-none sticky top-0 z-10 backdrop-blur-sm">
+                          <th className="px-6 py-4.5">Lead Name</th>
+                          <th className="px-6 py-4.5">Contact Detail</th>
+                          <th className="px-6 py-4.5">Region</th>
+                          <th className="px-6 py-4.5">Acquisition Channel</th>
+                          <th className="px-6 py-4.5">Target Service</th>
+                          <th className="px-6 py-4.5">Status</th>
+                          <th className="px-6 py-4.5 text-right">Actions</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-100 text-xs">
+                      <tbody className="divide-y divide-slate-150 text-xs">
                         {filteredEnquiries.map((enq) => {
                           const isExpanded = expandedId === enq.id;
                           const dateStr = new Date(enq.createdAt).toLocaleDateString(undefined, {
@@ -716,116 +876,150 @@ export default function AdminPage() {
 
                           return (
                             <React.Fragment key={enq.id}>
-                              <tr className={`hover:bg-slate-50/70 transition-all duration-200 ${isExpanded ? "bg-slate-50/55" : ""}`}>
-                                <td className="px-6 py-5.5 font-bold text-slate-450 whitespace-nowrap">
-                                  {dateStr}
-                                </td>
-                                <td className="px-6 py-5.5">
-                                  <div className="font-extrabold text-slate-900 text-sm">{enq.name}</div>
-                                  {enq.companyName !== "N/A" ? (
-                                    <div className="text-[10px] text-blue-600 font-bold mt-0.5">{enq.companyName}</div>
-                                  ) : (
-                                    <div className="text-[10px] text-slate-400 italic mt-0.5">No company listed</div>
-                                  )}
-                                </td>
-                                <td className="px-6 py-5.5">
-                                  <div className="flex flex-col gap-1">
-                                    <a href={`tel:${enq.mobile}`} className="font-extrabold text-blue-600 hover:underline transition-colors flex items-center gap-1.5">
-                                      <i className="fa-solid fa-square-phone text-blue-500/80 text-sm" /> {enq.mobile}
-                                    </a>
-                                    <a href={`mailto:${enq.email}`} className="text-[11px] text-slate-500 hover:underline transition-colors flex items-center gap-1.5">
-                                      <i className="fa-solid fa-square-envelope text-slate-400 text-sm" /> {enq.email}
-                                    </a>
-                                    {enq.website !== "N/A" && (
-                                      <a
-                                        href={enq.website.startsWith("http") ? enq.website : `https://${enq.website}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-[10px] text-emerald-600 font-bold hover:text-emerald-700 flex items-center gap-1.5 mt-0.5"
-                                      >
-                                        <i className="fa-solid fa-globe text-emerald-500/70" /> Web Link
-                                      </a>
-                                    )}
+                              {/* Row height 72px */}
+                              <tr className={`h-[72px] hover:bg-slate-50/40 transition-all duration-150 ${isExpanded ? "bg-slate-50/50" : ""}`}>
+                                <td className="px-6 py-3 whitespace-nowrap">
+                                  <div className="flex items-center gap-3">
+                                    {/* Initials Avatar */}
+                                    <div className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs shrink-0 select-none ${getAvatarBg(enq.name)}`}>
+                                      {getAvatarInitials(enq.name)}
+                                    </div>
+                                    <div>
+                                      <div className="font-bold text-slate-900 text-[13px]">{enq.name}</div>
+                                      {enq.companyName !== "N/A" ? (
+                                        <div className="text-[10px] text-blue-600 font-semibold mt-0.5">{enq.companyName}</div>
+                                      ) : (
+                                        <div className="text-[10px] text-slate-400 italic mt-0.5">Individual Lead</div>
+                                      )}
+                                    </div>
                                   </div>
                                 </td>
-                                <td className="px-6 py-5.5 font-bold text-slate-800 max-w-[200px] truncate">
-                                  {enq.service}
+                                <td className="px-6 py-3">
+                                  <div className="flex flex-col gap-1 justify-center">
+                                    <a href={`tel:${enq.mobile}`} className="font-semibold text-slate-700 hover:text-[#2563EB] hover:underline transition-colors flex items-center gap-1.5">
+                                      <i className="fa-solid fa-phone text-slate-400 text-[10px]" /> {enq.mobile}
+                                    </a>
+                                    <a href={`mailto:${enq.email}`} className="text-[11px] text-slate-400 hover:text-[#2563EB] hover:underline transition-colors flex items-center gap-1.5">
+                                      <i className="fa-regular fa-envelope text-slate-450 text-[11px]" /> {enq.email}
+                                    </a>
+                                  </div>
                                 </td>
-                                <td className="px-6 py-5.5">
+                                <td className="px-6 py-3 whitespace-nowrap">
                                   <span className="bg-slate-100 border border-slate-200 font-bold uppercase text-[9px] px-2.5 py-1 rounded-lg text-slate-600 inline-block shadow-sm">
                                     {enq.region}
                                   </span>
                                 </td>
-                                <td className="px-6 py-5.5">
+                                <td className="px-6 py-3 text-slate-450 font-medium whitespace-nowrap">
+                                  {enq.source.split(" - ")[0]}
+                                </td>
+                                <td className="px-6 py-3 font-semibold text-slate-800 max-w-[200px] truncate">
+                                  {enq.service}
+                                </td>
+                                <td className="px-6 py-3">
                                   <select
                                     value={displayStatus}
                                     onChange={(e) => handleStatusChange(enq.id, e.target.value)}
-                                    className={`text-[10px] font-black px-2.5 py-1.5 rounded-xl border outline-none cursor-pointer shadow-sm transition-all focus:ring-4 ${
+                                    className={`text-[10px] font-black px-2.5 py-1 rounded-full border outline-none cursor-pointer shadow-sm transition-all focus:ring-4 focus:ring-blue-150 ${
                                       displayStatus === "New"
-                                        ? "bg-blue-50 border-blue-200 text-blue-600 focus:ring-blue-100"
+                                        ? "bg-blue-50 border-blue-200 text-blue-700"
                                         : displayStatus === "In Progress"
-                                        ? "bg-amber-50 border-amber-200 text-amber-700 focus:ring-amber-100"
+                                        ? "bg-amber-50 border-amber-200 text-amber-700"
                                         : displayStatus === "Contacted"
-                                        ? "bg-emerald-50 border-emerald-200 text-emerald-700 focus:ring-emerald-100"
-                                        : "bg-rose-50 border-rose-200 text-rose-700 focus:ring-rose-100"
+                                        ? "bg-emerald-50 border-emerald-200 text-emerald-700"
+                                        : displayStatus === "Closed"
+                                        ? "bg-green-50 border-green-200 text-green-700"
+                                        : "bg-rose-600 border-transparent text-white font-extrabold"
                                     }`}
                                   >
                                     <option value="New">New</option>
                                     <option value="In Progress">In Progress</option>
                                     <option value="Contacted">Contacted</option>
+                                    <option value="Closed">Closed</option>
                                     <option value="Rejected">Rejected</option>
                                   </select>
                                 </td>
-                                <td className="px-6 py-5.5 text-right">
-                                  <div className="flex items-center justify-end gap-2.5">
+                                <td className="px-6 py-3 text-right">
+                                  <div className="flex items-center justify-end gap-2 relative">
                                     <button
                                       onClick={() => setExpandedId(isExpanded ? null : enq.id)}
-                                      className={`w-8.5 h-8.5 rounded-xl text-xs flex items-center justify-center transition-all cursor-pointer ${
+                                      className={`w-8 h-8 rounded-lg text-xs flex items-center justify-center transition-all cursor-pointer ${
                                         isExpanded 
-                                          ? "bg-slate-900 text-white shadow-md" 
-                                          : "bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800"
+                                          ? "bg-slate-900 text-white" 
+                                          : "bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-800"
                                       }`}
-                                      title="Expand Details"
+                                      title="View Details"
                                     >
-                                      <i className={`fa-solid ${isExpanded ? "fa-folder-open" : "fa-chevron-down"}`} />
+                                      <i className={`fa-regular ${isExpanded ? "fa-folder-open" : "fa-eye"}`} />
                                     </button>
-                                    
+
                                     <button
-                                      onClick={() => handleDelete(enq.id)}
-                                      className="w-8.5 h-8.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200/50 text-rose-600 flex items-center justify-center transition-all cursor-pointer"
-                                      title="Delete Lead"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        setActiveEllipsisMenu(activeEllipsisMenu === enq.id ? null : enq.id);
+                                      }}
+                                      className="w-8 h-8 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-all cursor-pointer"
+                                      title="Actions"
                                     >
-                                      <i className="fa-solid fa-trash-can" />
+                                      <i className="fa-solid fa-ellipsis-vertical" />
                                     </button>
+
+                                    {/* Action Dropdown Menu */}
+                                    {activeEllipsisMenu === enq.id && (
+                                      <div 
+                                        className="absolute right-0 top-10 w-44 bg-white border border-slate-200 rounded-xl shadow-lg z-20 py-1.5 animate-fade-in text-left"
+                                        onClick={(e) => e.stopPropagation()}
+                                      >
+                                        <button
+                                          onClick={() => {
+                                            setExpandedId(isExpanded ? null : enq.id);
+                                            setActiveEllipsisMenu(null);
+                                          }}
+                                          className="w-full px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2 font-bold cursor-pointer"
+                                        >
+                                          <i className="fa-regular fa-comment-dots text-slate-400 w-4" /> Edit Notes
+                                        </button>
+                                        
+                                        <button
+                                          onClick={() => {
+                                            handleDelete(enq.id);
+                                            setActiveEllipsisMenu(null);
+                                          }}
+                                          className="w-full px-4 py-2 text-xs text-rose-600 hover:bg-rose-50 flex items-center gap-2 font-bold cursor-pointer"
+                                        >
+                                          <i className="fa-regular fa-trash-can text-rose-455 w-4" /> Delete Lead
+                                        </button>
+                                      </div>
+                                    )}
                                   </div>
                                 </td>
                               </tr>
                               
+                              {/* Expanded followup note card details */}
                               {isExpanded && (
-                                <tr className="bg-slate-50/45 border-b border-slate-150 animate-fade-in">
+                                <tr className="bg-slate-50/25 border-b border-slate-150 animate-fade-in">
                                   <td colSpan={7} className="px-8 py-6">
                                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                                       <div className="flex flex-col gap-2.5">
-                                        <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-                                          <i className="fa-solid fa-comment-dots" /> Client Message Query
+                                        <h4 className="text-[10px] font-black uppercase tracking-wider text-slate-450 flex items-center gap-1.5">
+                                          <i className="fa-regular fa-comment text-[#2563EB]" /> Client Query Message
                                         </h4>
-                                        <div className="bg-white border border-slate-200 rounded-2xl p-5 text-[12px] leading-relaxed text-slate-700 shadow-inner whitespace-pre-wrap min-h-[140px]">
+                                        <div className="bg-white border border-slate-200 rounded-xl p-5 text-[12px] leading-relaxed text-slate-650 shadow-sm whitespace-pre-wrap min-h-[140px]">
                                           {enq.message}
                                         </div>
-                                        <div className="flex flex-wrap gap-4 text-[9px] text-slate-450 font-bold px-1 mt-1">
-                                          <span>Record UUID: <code className="bg-slate-100 px-1 py-0.5 rounded text-[8.5px] font-mono text-blue-600">{enq.id}</code></span>
+                                        <div className="flex flex-wrap gap-4 text-[9px] text-slate-400 font-bold px-1 mt-1">
+                                          <span>Record ID: <code className="bg-slate-100 px-1.5 py-0.5 rounded text-[8.5px] font-mono text-blue-600">{enq.id}</code></span>
                                           <span>•</span>
-                                          <span>Acquisition Channel: <span className="text-slate-650 font-extrabold">{enq.source}</span></span>
+                                          <span>Timestamp: <span className="text-slate-600 font-extrabold">{dateStr}</span></span>
                                         </div>
                                       </div>
 
                                       <div className="flex flex-col gap-2.5">
                                         <div className="flex justify-between items-center">
-                                          <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-                                            <i className="fa-solid fa-pen-to-square text-blue-500" /> Internal Follow-up Notes
+                                          <h4 className="text-[10px] font-black uppercase tracking-wider text-slate-450 flex items-center gap-1.5">
+                                            <i className="fa-regular fa-pen-to-square text-[#2563EB]" /> Internal Follow-up Notes
                                           </h4>
                                           {noteStatus === "saved" && (
-                                            <span className="text-[9px] text-emerald-600 font-black bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 flex items-center gap-1">
+                                            <span className="text-[9px] text-emerald-600 font-black bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200 flex items-center gap-1">
                                               <i className="fa-solid fa-circle-check" /> Updated!
                                             </span>
                                           )}
@@ -834,21 +1028,21 @@ export default function AdminPage() {
                                         <textarea
                                           value={notesState[enq.id] || ""}
                                           onChange={(e) => setNotesState({ ...notesState, [enq.id]: e.target.value })}
-                                          placeholder="Enter status updates, follow-up history, client response, or call details here..."
-                                          className="bg-white border border-slate-200 rounded-2xl p-4 text-[12px] text-slate-800 placeholder:text-slate-350 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/5 shadow-inner resize-none min-h-[140px] font-medium leading-relaxed"
+                                          placeholder="Enter follow-up details, client communications, or call history logs here..."
+                                          className="bg-white border border-slate-200 rounded-xl p-4 text-[12px] text-slate-800 placeholder:text-slate-400 outline-none focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 shadow-sm resize-none min-h-[140px] font-medium leading-relaxed"
                                         />
                                         
                                         <button
                                           onClick={() => handleSaveNotes(enq.id)}
                                           disabled={noteStatus === "saving"}
-                                          className={`w-full lg:w-auto self-end px-6 py-3.5 rounded-xl font-extrabold text-xs shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                                          className={`w-full lg:w-auto self-end px-5 py-3 rounded-xl font-extrabold text-xs shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer ${
                                             noteStatus === "saving"
-                                              ? "bg-slate-100 border border-slate-200 text-slate-455 cursor-not-allowed"
-                                              : "bg-blue-600 hover:bg-blue-500 text-white shadow-sm"
+                                              ? "bg-slate-100 border border-slate-200 text-slate-400 cursor-not-allowed"
+                                              : "bg-[#2563EB] hover:bg-[#1d4ed8] text-white"
                                           }`}
                                         >
                                           <i className={`fa-solid ${noteStatus === "saving" ? "fa-circle-notch animate-spin" : "fa-floppy-disk"}`} />
-                                          {noteStatus === "saving" ? "Saving updates..." : "Save Follow-up Notes"}
+                                          {noteStatus === "saving" ? "Saving logs..." : "Save Follow-up Logs"}
                                         </button>
                                       </div>
                                     </div>
@@ -863,14 +1057,117 @@ export default function AdminPage() {
                   </div>
                 ) : (
                   <div className="p-16 text-center flex flex-col items-center">
-                    <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400 mb-4">
-                      <i className="fa-solid fa-folder-open text-xl" />
+                    <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400 mb-4">
+                      <i className="fa-regular fa-folder-open text-lg" />
                     </div>
                     <h3 className="font-extrabold text-sm text-slate-800 mb-1">No enquiries found</h3>
-                    <p className="text-xs text-slate-500 max-w-[280px]">Your current database or active search query returned 0 listing records.</p>
+                    <p className="text-xs text-slate-500 max-w-[280px]">Your current database or active filter constraints returned zero records.</p>
                   </div>
                 )}
               </div>
+
+              {/* MOBILE LEAD LIST VIEW (Transforms table into responsive cards on mobile screens) */}
+              <div className="block md:hidden space-y-4 mb-12">
+                {filteredEnquiries.length > 0 ? (
+                  filteredEnquiries.map((enq) => {
+                    const displayStatus = enq.status === "Rejeoted" ? "Rejected" : enq.status;
+                    const isExpanded = expandedId === enq.id;
+                    return (
+                      <div key={enq.id} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-[0_4px_20px_rgba(15,23,42,0.03)] space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs select-none shrink-0 ${getAvatarBg(enq.name)}`}>
+                              {getAvatarInitials(enq.name)}
+                            </div>
+                            <div>
+                              <h4 className="font-extrabold text-slate-900 text-[13px]">{enq.name}</h4>
+                              <p className="text-[10px] text-slate-500 mt-0.5">{enq.companyName !== "N/A" ? enq.companyName : "Individual Lead"}</p>
+                            </div>
+                          </div>
+                          <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.75 rounded-full ${
+                            displayStatus === "New"
+                              ? "bg-blue-50 text-blue-700 border border-blue-200"
+                              : displayStatus === "In Progress"
+                              ? "bg-amber-50 text-amber-700 border border-amber-200"
+                              : displayStatus === "Contacted"
+                              ? "bg-emerald-50 text-emerald-700 border-emerald-250"
+                              : displayStatus === "Closed"
+                              ? "bg-green-50 text-green-700 border-green-250"
+                              : "bg-rose-650 text-white border-transparent"
+                          }`}>
+                            {displayStatus}
+                          </span>
+                        </div>
+
+                        <div className="text-xs space-y-2 border-t border-slate-100 pt-3 text-slate-600">
+                          <div className="flex items-center gap-2">
+                            <i className="fa-solid fa-phone text-slate-400 text-[10px] w-4 text-center" />
+                            <a href={`tel:${enq.mobile}`} className="hover:text-[#2563EB] hover:underline font-medium">{enq.mobile}</a>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <i className="fa-regular fa-envelope text-slate-400 text-[11px] w-4 text-center" />
+                            <a href={`mailto:${enq.email}`} className="hover:text-[#2563EB] hover:underline font-medium">{enq.email}</a>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <i className="fa-regular fa-folder text-slate-400 text-xs w-4 text-center" />
+                            <span className="font-semibold text-slate-700">{enq.service}</span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between gap-4 border-t border-slate-100 pt-3">
+                          <button
+                            onClick={() => setExpandedId(isExpanded ? null : enq.id)}
+                            className="flex-1 bg-slate-50 border border-slate-200 hover:bg-slate-100 py-2 rounded-xl text-xs font-bold text-slate-600 cursor-pointer flex items-center justify-center gap-1.5 transition-all duration-150"
+                          >
+                            <i className={`fa-regular ${isExpanded ? "fa-folder-open" : "fa-eye"}`} />
+                            {isExpanded ? "Hide Details" : "View Message"}
+                          </button>
+                          
+                          <button
+                            onClick={() => handleDelete(enq.id)}
+                            className="bg-rose-50 hover:bg-rose-100 border border-rose-250 py-2 px-3.5 rounded-xl text-xs text-rose-600 cursor-pointer transition-all duration-150"
+                            title="Delete Lead"
+                          >
+                            <i className="fa-regular fa-trash-can" />
+                          </button>
+                        </div>
+
+                        {isExpanded && (
+                          <div className="bg-slate-50 border border-slate-200 rounded-xl p-4.5 space-y-4 animate-fade-in text-left">
+                            <div className="space-y-1.5">
+                              <span className="text-[9px] font-black uppercase text-slate-400 tracking-wider">Client Query Detail</span>
+                              <p className="text-xs text-slate-700 whitespace-pre-wrap leading-relaxed bg-white border border-slate-150 rounded-lg p-3 shadow-inner">{enq.message}</p>
+                            </div>
+                            <div className="space-y-2">
+                              <span className="text-[9px] font-black uppercase text-slate-400 tracking-wider">Internal Follow-up Notes</span>
+                              <textarea
+                                value={notesState[enq.id] || ""}
+                                onChange={(e) => setNotesState({ ...notesState, [enq.id]: e.target.value })}
+                                placeholder="Write follow-up notes here..."
+                                className="w-full bg-white border border-slate-200 rounded-lg p-3 text-xs text-slate-800 placeholder:text-slate-350 shadow-inner resize-none min-h-[100px] outline-none focus:border-[#2563EB]"
+                              />
+                              <button
+                                onClick={() => handleSaveNotes(enq.id)}
+                                className="w-full bg-[#2563EB] text-white py-2.5 rounded-xl font-bold text-xs cursor-pointer shadow-sm hover:bg-[#1d4ed8]"
+                              >
+                                Save Follow-up Notes
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="p-16 text-center bg-white border border-slate-200 rounded-2xl flex flex-col items-center">
+                    <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400 mb-4">
+                      <i className="fa-regular fa-folder-open text-lg" />
+                    </div>
+                    <h3 className="font-extrabold text-sm text-slate-800 mb-1">No enquiries found</h3>
+                  </div>
+                )}
+              </div>
+
             </div>
           )}
 
@@ -880,7 +1177,7 @@ export default function AdminPage() {
               {/* Visual Leaflet Map */}
               <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm lg:col-span-2">
                 <h3 className="text-xs font-black uppercase tracking-[0.1em] text-slate-450 mb-4 flex items-center gap-2">
-                  <i className="fa-solid fa-map text-emerald-600" /> Interactive Traffic Heatmap
+                  <i className="fa-regular fa-map text-emerald-600" /> Interactive Traffic Heatmap
                 </h3>
                 <VisitorMap markers={analytics.mapMarkers} />
               </div>
@@ -944,7 +1241,7 @@ export default function AdminPage() {
             <div className="max-w-3xl mx-auto bg-white border border-slate-200 rounded-3xl p-8 shadow-sm mb-12 animate-fade-in">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-14 h-14 bg-orange-50 border border-orange-100 rounded-2xl flex items-center justify-center text-orange-500 shadow-sm shrink-0">
-                  <i className="fa-solid fa-eye text-2xl animate-pulse" />
+                  <i className="fa-regular fa-eye text-2xl animate-pulse text-[#2563EB]" />
                 </div>
                 <div>
                   <h3 className="text-lg font-black text-slate-900 leading-tight">Cursor Heatmaps & Session Recordings</h3>
@@ -988,7 +1285,7 @@ export default function AdminPage() {
                   </div>
                 </div>
 
-                <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4.5 text-[11px] text-emerald-800">
+                <div className="bg-emerald-50 border border-emerald-250 rounded-2xl p-4.5 text-[11px] text-emerald-800">
                   <p className="font-bold flex items-center gap-1.5 mb-1">
                     <i className="fa-solid fa-circle-check" /> Clarity Integration status: ACTIVE & LIVE
                   </p>
@@ -1021,6 +1318,151 @@ export default function AdminPage() {
 
         </div>
       </main>
+
+      {/* QUICK ADD LEAD MODAL DIALOG */}
+      {isQuickAddOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* backdrop */}
+          <div className="absolute inset-0 bg-[#0F172A]/50 backdrop-blur-sm" onClick={() => setIsQuickAddOpen(false)} />
+          
+          <div className="bg-white border border-slate-200 rounded-[24px] shadow-2xl relative z-10 w-full max-w-xl p-6 md:p-8 animate-fade-in text-left">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h3 className="text-base font-extrabold text-slate-900 leading-none">Add Customer Lead</h3>
+                <p className="text-[10px] text-slate-550 mt-1.5 font-medium">Record a custom inquiry manually into the sales dashboard pipeline.</p>
+              </div>
+              <button onClick={() => setIsQuickAddOpen(false)} className="w-8 h-8 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-700 cursor-pointer flex items-center justify-center transition-colors">
+                <i className="fa-solid fa-xmark text-sm" />
+              </button>
+            </div>
+
+            <form onSubmit={handleQuickAddSubmit} className="space-y-4.5 text-xs text-slate-700">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4.5">
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-slate-600">Lead Name *</label>
+                  <input
+                    type="text"
+                    required
+                    value={quickAddForm.name}
+                    onChange={(e) => setQuickAddForm({ ...quickAddForm, name: e.target.value })}
+                    className="border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 font-medium"
+                    placeholder="E.g. John Doe"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-slate-600">Company Name</label>
+                  <input
+                    type="text"
+                    value={quickAddForm.companyName}
+                    onChange={(e) => setQuickAddForm({ ...quickAddForm, companyName: e.target.value })}
+                    className="border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 font-medium"
+                    placeholder="E.g. Acme Corp"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4.5">
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-slate-600">Email Address *</label>
+                  <input
+                    type="email"
+                    required
+                    value={quickAddForm.email}
+                    onChange={(e) => setQuickAddForm({ ...quickAddForm, email: e.target.value })}
+                    className="border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 font-medium"
+                    placeholder="E.g. john@doe.com"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-slate-600">Mobile Phone *</label>
+                  <input
+                    type="text"
+                    required
+                    value={quickAddForm.mobile}
+                    onChange={(e) => setQuickAddForm({ ...quickAddForm, mobile: e.target.value })}
+                    className="border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 font-medium"
+                    placeholder="E.g. +91 9876543210"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4.5">
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-slate-600">Target Region</label>
+                  <select
+                    value={quickAddForm.region}
+                    onChange={(e) => setQuickAddForm({ ...quickAddForm, region: e.target.value })}
+                    className="border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 font-semibold cursor-pointer"
+                  >
+                    <option value="US">United States (US)</option>
+                    <option value="UK">United Kingdom (UK)</option>
+                    <option value="AE">United Arab Emirates (UAE)</option>
+                    <option value="IN">India (IN)</option>
+                    <option value="GLOBAL">Global</option>
+                  </select>
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-bold text-slate-600">Website Url</label>
+                  <input
+                    type="text"
+                    value={quickAddForm.website}
+                    onChange={(e) => setQuickAddForm({ ...quickAddForm, website: e.target.value })}
+                    className="border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 font-medium"
+                    placeholder="E.g. www.doe.com"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="font-bold text-slate-600">Requested Service Type</label>
+                <select
+                  value={quickAddForm.service}
+                  onChange={(e) => setQuickAddForm({ ...quickAddForm, service: e.target.value })}
+                  className="border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 font-semibold cursor-pointer"
+                >
+                  <option value="Next.js Web Design & Development">Next.js Web Design & Dev</option>
+                  <option value="Corporate Business Website">Corporate Business Website</option>
+                  <option value="Headless E-commerce Store">Headless E-commerce</option>
+                  <option value="Landing Page & Lead Funnel">Landing Page & Funnel</option>
+                  <option value="Custom React Web Application">Custom Web App</option>
+                  <option value="Maintenance / Custom Web Support">Support & Maintenance</option>
+                </select>
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="font-bold text-slate-600">Client Description Query</label>
+                <textarea
+                  value={quickAddForm.message}
+                  onChange={(e) => setQuickAddForm({ ...quickAddForm, message: e.target.value })}
+                  className="border border-slate-200 bg-slate-50 p-3 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 font-medium min-h-[80px] resize-none"
+                  placeholder="Type descriptive details here..."
+                />
+              </div>
+
+              <div className="flex items-center justify-end gap-3.5 border-t border-slate-100 pt-5">
+                <button
+                  type="button"
+                  onClick={() => setIsQuickAddOpen(false)}
+                  className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-extrabold cursor-pointer transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={quickAddSubmitting}
+                  className="px-6 py-2.5 rounded-xl bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-extrabold cursor-pointer transition-all shadow-sm disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  {quickAddSubmitting ? "Saving Lead..." : "Save Record"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
