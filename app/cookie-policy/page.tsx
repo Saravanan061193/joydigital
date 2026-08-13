@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
 
 export const metadata: Metadata = {
-  title: "Cookie Policy | Joy Digital",
+  title: "Cookie Policy & Data Tracking Terms | Joy Digital",
   description: "Read the Cookie Policy for Joy Digital to understand how we use cookies to improve your user experience.",
 };
 

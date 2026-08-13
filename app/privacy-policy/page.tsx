@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Joy Digital",
+  title: "Privacy Policy & Data Protection Terms | Joy Digital",
   description: "Read the Privacy Policy of Joy Digital to understand how we collect, use, and protect your personal information.",
 };
 
