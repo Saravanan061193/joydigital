@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { getUtmParameters } from "@/lib/utmTracker";
 
 interface LeadFormProps {
   layout?: "vertical" | "horizontal";
@@ -10,6 +11,7 @@ interface LeadFormProps {
   ctaText?: string;
   source?: string;
   showWebsiteField?: boolean;
+  hideEmailField?: boolean;
 }
 
 const COUNTRY_CODES = [
@@ -50,6 +52,7 @@ export default function LeadForm({
   ctaText = "Submit Request",
   source = "General Lead Funnel",
   showWebsiteField = true,
+  hideEmailField = false,
 }: LeadFormProps) {
   const pathname = usePathname();
 
@@ -125,12 +128,14 @@ export default function LeadForm({
       tempErrors.name = "Full Name is required.";
     }
 
-    if (!formData.email.trim()) {
-      tempErrors.email = "Email Address is required.";
-    } else {
-      const emailReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!emailReg.test(formData.email.trim())) {
-        tempErrors.email = "Please enter a valid email address.";
+    if (!hideEmailField) {
+      if (!formData.email.trim()) {
+        tempErrors.email = "Email Address is required.";
+      } else {
+        const emailReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailReg.test(formData.email.trim())) {
+          tempErrors.email = "Please enter a valid email address.";
+        }
       }
     }
 
@@ -166,11 +171,12 @@ export default function LeadForm({
 
     setIsLoading(true);
     try {
+      const utm = getUtmParameters();
       const payload = {
         Name: formData.name.trim(),
         CompanyName: formData.companyName.trim() || "N/A",
         Website: formData.website.trim() || "N/A",
-        Email: formData.email.trim(),
+        Email: hideEmailField ? "N/A" : formData.email.trim(),
         Mobile: formData.mobile.trim().startsWith("+")
           ? formData.mobile.trim()
           : `${selectedCountryCode} ${formData.mobile.trim()}`,
@@ -178,6 +184,7 @@ export default function LeadForm({
         Message: formData.message.trim() || "No extra details provided.",
         Source: source,
         TargetRegion: formData.region.toUpperCase(),
+        utmParams: utm || undefined,
         _subject: `🔥 Simplified Lead [${formData.region.toUpperCase()}] - Joy Digital`,
         _captcha: "false",
         _template: "table",
@@ -431,28 +438,30 @@ export default function LeadForm({
             )}
 
             {/* Email Address */}
-            <div className="flex flex-col gap-1">
-              <label htmlFor="email" className="text-[10px] font-extrabold text-text-secondary uppercase tracking-widest mb-1 block">
-                Email ID <span className="text-error-red">*</span>
-              </label>
-              <div className={`flex items-center gap-3 bg-light-bg rounded-xl border px-4 py-3 group transition-all duration-300 focus-within:bg-white focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#2563EB]/10 ${
-                errors.email ? "border-[#ef4444] bg-red-50/10" : "border-[#E5E7EB] hover:border-gray-300"
-              }`}>
-                <span className={`text-xs transition-colors duration-300 shrink-0 ${errors.email ? "text-error-red" : "text-text-muted group-focus-within:text-[#2563EB]"}`}>
-                  <i className="fa-solid fa-envelope" />
-                </span>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="you@example.com"
-                  className="w-full text-xs bg-transparent outline-none border-none text-text-primary placeholder:text-text-muted font-medium"
-                />
+            {!hideEmailField && (
+              <div className="flex flex-col gap-1">
+                <label htmlFor="email" className="text-[10px] font-extrabold text-text-secondary uppercase tracking-widest mb-1 block">
+                  Email ID <span className="text-error-red">*</span>
+                </label>
+                <div className={`flex items-center gap-3 bg-light-bg rounded-xl border px-4 py-3 group transition-all duration-300 focus-within:bg-white focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#2563EB]/10 ${
+                  errors.email ? "border-[#ef4444] bg-red-50/10" : "border-[#E5E7EB] hover:border-gray-300"
+                }`}>
+                  <span className={`text-xs transition-colors duration-300 shrink-0 ${errors.email ? "text-error-red" : "text-text-muted group-focus-within:text-[#2563EB]"}`}>
+                    <i className="fa-solid fa-envelope" />
+                  </span>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="you@example.com"
+                    className="w-full text-xs bg-transparent outline-none border-none text-text-primary placeholder:text-text-muted font-medium"
+                  />
+                </div>
+                {errors.email && <span className="text-[9px] font-semibold text-[#ef4444] mt-0.5">{errors.email}</span>}
               </div>
-              {errors.email && <span className="text-[9px] font-semibold text-[#ef4444] mt-0.5">{errors.email}</span>}
-            </div>
+            )}
 
             {/* Required Services Dropdown Container */}
             <div className="flex flex-col gap-1">

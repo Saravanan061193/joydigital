@@ -23,7 +23,21 @@ export async function POST(request: Request) {
       region: body.TargetRegion || body.region || "GLOBAL",
       status: "New",
       createdAt: new Date().toISOString(),
-      notes: ""
+      notes: "",
+      followUpDate: body.followUpDate || null,
+      pipelineStage: body.pipelineStage || "new",
+      assignedTo: body.assignedTo || "",
+      utmParams: body.utmParams || null,
+      activities: body.activities || [
+        {
+          id: crypto.randomUUID(),
+          timestamp: new Date().toISOString(),
+          type: "created",
+          message: "Lead registered in CRM",
+          agent: "System"
+        }
+      ],
+      proposals: body.proposals || []
     };
 
     let savedToDb = false;
@@ -48,7 +62,13 @@ export async function POST(request: Request) {
           region: newEnquiry.region,
           status: newEnquiry.status,
           createdAt: newEnquiry.createdAt,
-          notes: ""
+          notes: "",
+          followUpDate: newEnquiry.followUpDate,
+          pipelineStage: newEnquiry.pipelineStage,
+          assignedTo: newEnquiry.assignedTo,
+          utmParams: newEnquiry.utmParams,
+          activities: newEnquiry.activities,
+          proposals: newEnquiry.proposals
         });
         savedToDb = true;
       } catch (dbError: any) {

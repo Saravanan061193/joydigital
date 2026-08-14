@@ -2,12 +2,16 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { captureUtmParameters } from "@/lib/utmTracker";
 
 export default function AnalyticsTracker() {
   const pathname = usePathname();
   const prevPath = useRef<string | null>(null);
 
   useEffect(() => {
+    // Capture UTM search parameters on load/navigation
+    captureUtmParameters();
+
     if (prevPath.current === pathname) return;
     prevPath.current = pathname;
 
@@ -33,3 +37,4 @@ export default function AnalyticsTracker() {
 
   return null;
 }
+

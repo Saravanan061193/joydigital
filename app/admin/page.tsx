@@ -3,6 +3,42 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import VisitorMap from "@/components/VisitorMap";
+import LeadDetailsDrawer from "@/components/ui/LeadDetailsDrawer";
+
+interface UtmData {
+  source?: string;
+  medium?: string;
+  campaign?: string;
+  term?: string;
+  content?: string;
+  referrer?: string;
+  landingPage?: string;
+  timestamp?: string;
+}
+
+interface Activity {
+  id: string;
+  timestamp: string;
+  type: string;
+  message: string;
+  agent: string;
+}
+
+interface ProposalItem {
+  description: string;
+  price: number;
+}
+
+interface Proposal {
+  id: string;
+  date: string;
+  value: number;
+  items: ProposalItem[];
+  tax: number;
+  terms: string;
+  validity: string;
+  status: string;
+}
 
 interface Enquiry {
   id: string;
@@ -18,6 +54,12 @@ interface Enquiry {
   status: string;
   createdAt: string;
   notes?: string;
+  followUpDate?: string | null;
+  pipelineStage?: string;
+  assignedTo?: string;
+  utmParams?: UtmData | null;
+  activities?: Activity[];
+  proposals?: Proposal[];
 }
 
 interface AnalyticsData {
@@ -26,6 +68,33 @@ interface AnalyticsData {
   topCities: Array<{ city: string; country: string; count: number }>;
   mapMarkers: Array<{ lat: number; lng: number; city: string; count: number }>;
 }
+
+interface NotificationItem {
+  id: string;
+  leadId: string;
+  type: "reminder" | "idle" | "new";
+  title: string;
+  message: string;
+  timestamp: string;
+}
+
+const TEAM_MEMBERS = [
+  { name: "Unassigned", value: "" },
+  { name: "Saravanan L (Super Admin)", value: "Saravanan L" },
+  { name: "Karthik R (Sales Manager)", value: "Karthik R" },
+  { name: "Priya S (Sales Executive)", value: "Priya S" },
+  { name: "Deepak K (Marketing Specialist)", value: "Deepak K" }
+];
+
+const PIPELINE_STAGES = [
+  { label: "New Lead", value: "new", color: "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800" },
+  { label: "Contacted", value: "contacted", color: "bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800" },
+  { label: "Qualified", value: "qualified", color: "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800" },
+  { label: "Proposal Sent", value: "proposal_sent", color: "bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 border-purple-200 dark:border-purple-800" },
+  { label: "Negotiation", value: "negotiation", color: "bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-400 border-pink-200 dark:border-pink-800" },
+  { label: "Won", value: "won", color: "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800" },
+  { label: "Lost", value: "lost", color: "bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800" }
+];
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -45,18 +114,21 @@ export default function AdminPage() {
     mapMarkers: []
   });
 
+  // UI Modes
+  const [isCompact, setIsCompact] = useState(false);
+  const [viewMode, setViewMode] = useState<"list" | "kanban" | "analytics">("list");
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
   // Search & filter states
   const [search, setSearch] = useState("");
   const [serviceFilter, setServiceFilter] = useState("all");
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [stageFilter, setStageFilter] = useState("all");
   const [regionFilter, setRegionFilter] = useState("all");
+  const [assignedFilter, setAssignedFilter] = useState("all");
 
-  // Expandable row state
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-
-  // Temporary note states
-  const [notesState, setNotesState] = useState<Record<string, string>>({});
-  const [savedNotesStatus, setSavedNotesStatus] = useState<Record<string, "idle" | "saving" | "saved">>({});
+  // Selected Lead for Drawer
+  const [selectedLead, setSelectedLead] = useState<Enquiry | null>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   // Live time counter
   const [liveTime, setLiveTime] = useState("");
@@ -64,7 +136,13 @@ export default function AdminPage() {
   // Sidebar drawers and modals visibility state
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isQuickAddOpen, setIsQuickAddOpen] = useState(false);
-  const [activeEllipsisMenu, setActiveEllipsisMenu] = useState<string | null>(null);
+
+  // Role Management State
+  const [currentRole, setCurrentRole] = useState<"Super Admin" | "Manager" | "Sales Executive" | "Marketing">("Super Admin");
+
+  // Notifications State
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+  const [isNotifOpen, setIsNotifOpen] = useState(false);
 
   // Quick Add form state
   const [quickAddForm, setQuickAddForm] = useState({
@@ -96,7 +174,7 @@ export default function AdminPage() {
     return () => clearInterval(interval);
   }, []);
 
-  // Load auth state from sessionStorage
+  // Load auth state from sessionStorage & Theme
   useEffect(() => {
     const auth = sessionStorage.getItem("joy_admin_auth");
     if (auth === "true") {
@@ -106,16 +184,180 @@ export default function AdminPage() {
     } else {
       setLoading(false);
     }
+
+    // Default to Zoho/HubSpot Light Mode and clear any cached dark theme
+    localStorage.removeItem("joy_admin_theme");
+    setIsDarkMode(false);
   }, []);
 
-  // Close menus on click outside
-  useEffect(() => {
-    const handleClickOutside = () => {
-      setActiveEllipsisMenu(null);
+  // Fetch enquiries list
+  const fetchEnquiries = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/admin/enquiries");
+      if (res.ok) {
+        const data = await res.json();
+        setEnquiries(data);
+        generateNotifications(data);
+      }
+    } catch (err) {
+      console.error("Error fetching enquiries:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch analytics tracking summaries
+  const fetchAnalytics = async () => {
+    try {
+      const res = await fetch("/api/admin/analytics");
+      if (res.ok) {
+        const data = await res.json();
+        setAnalytics(data);
+      }
+    } catch (err) {
+      console.error("Error fetching analytics data:", err);
+    }
+  };
+
+  // Generate real-time CRM notifications/alerts
+  const generateNotifications = (leadsList: Enquiry[]) => {
+    const notifs: NotificationItem[] = [];
+    const now = new Date();
+
+    leadsList.forEach((enq) => {
+      // 1. Follow-up Reminders (Due Today / Overdue)
+      if (enq.followUpDate) {
+        const followDate = new Date(enq.followUpDate);
+        const diffMs = followDate.getTime() - now.getTime();
+        
+        if (diffMs < 0) {
+          notifs.push({
+            id: `overdue-${enq.id}`,
+            leadId: enq.id,
+            type: "reminder",
+            title: "Overdue Reminder",
+            message: `Follow-up overdue for ${enq.name} (Scheduled: ${followDate.toLocaleDateString()})`,
+            timestamp: enq.followUpDate
+          });
+        } else if (followDate.toDateString() === now.toDateString()) {
+          notifs.push({
+            id: `today-${enq.id}`,
+            leadId: enq.id,
+            type: "reminder",
+            title: "Follow-up Due Today",
+            message: `Follow-up scheduled with ${enq.name} today.`,
+            timestamp: enq.followUpDate
+          });
+        }
+      }
+
+      // 2. Inactive Leads (Created > 7 days, and stage is still 'new')
+      const createdDate = new Date(enq.createdAt);
+      const daysOld = Math.floor((now.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24));
+      if (daysOld >= 7 && (enq.pipelineStage === "new" || !enq.pipelineStage)) {
+        notifs.push({
+          id: `inactive-${enq.id}`,
+          leadId: enq.id,
+          type: "idle",
+          title: "Stale / Inactive Lead",
+          message: `${enq.name} has been in 'New' stage for ${daysOld} days without progress.`,
+          timestamp: enq.createdAt
+        });
+      }
+
+      // 3. Brand New Leads (Created < 24 hours ago)
+      if (daysOld < 1) {
+        notifs.push({
+          id: `new-${enq.id}`,
+          leadId: enq.id,
+          type: "new",
+          title: "New Lead Inbound",
+          message: `${enq.name} submitted a new inquiry regarding ${enq.service}.`,
+          timestamp: enq.createdAt
+        });
+      }
+    });
+
+    // Sort notifications by date (newest first)
+    notifs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+    setNotifications(notifs);
+  };
+
+  const handleStatusChange = async (id: string, newStage: string) => {
+    let mainStatus = "In Progress";
+    if (newStage === "new") mainStatus = "New";
+    else if (newStage === "won") mainStatus = "Closed";
+    else if (newStage === "lost") mainStatus = "Rejected";
+    else if (newStage === "contacted") mainStatus = "Contacted";
+
+    const targetLead = enquiries.find(e => e.id === id);
+    const prevActivities = targetLead?.activities || [];
+    
+    // Auto-log activity on stage switch
+    const newAct = {
+      id: Math.random().toString(36).substring(2, 11),
+      timestamp: new Date().toISOString(),
+      type: "status",
+      message: `Stage changed to ${newStage.toUpperCase()} in pipeline view`,
+      agent: currentRole
     };
-    window.addEventListener("click", handleClickOutside);
-    return () => window.removeEventListener("click", handleClickOutside);
-  }, []);
+
+    try {
+      const res = await fetch("/api/admin/enquiries", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          id, 
+          pipelineStage: newStage, 
+          status: mainStatus,
+          activities: [newAct, ...prevActivities]
+        }),
+      });
+      if (res.ok) {
+        setEnquiries((prev) =>
+          prev.map((enq) => (enq.id === id ? { 
+            ...enq, 
+            pipelineStage: newStage, 
+            status: mainStatus,
+            activities: [newAct, ...prevActivities]
+          } : enq))
+        );
+        // Refresh notifications
+        generateNotifications(enquiries.map((enq) => (enq.id === id ? { ...enq, pipelineStage: newStage, status: mainStatus } : enq)));
+      }
+    } catch (err) {
+      console.error("Error updating status:", err);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    // Role Authorization Check
+    if (currentRole === "Sales Executive" || currentRole === "Marketing") {
+      alert(`Access Denied: Roles other than Super Admin / Manager are not permitted to delete lead records.`);
+      return;
+    }
+
+    if (!confirm("Are you sure you want to delete this lead? This action is permanent and cannot be undone.")) {
+      return;
+    }
+    try {
+      const res = await fetch(`/api/admin/enquiries?id=${id}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        const filtered = enquiries.filter((enq) => enq.id !== id);
+        setEnquiries(filtered);
+        generateNotifications(filtered);
+        if (selectedLead?.id === id) {
+          setIsDrawerOpen(false);
+          setSelectedLead(null);
+        }
+      }
+    } catch (err) {
+      console.error("Error deleting enquiry:", err);
+    }
+  };
 
   const handleLoginSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -130,96 +372,6 @@ export default function AdminPage() {
     }
   };
 
-  const fetchEnquiries = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/admin/enquiries");
-      if (res.ok) {
-        const data = await res.json();
-        setEnquiries(data);
-
-        // Initialize note states
-        const initialNotes: Record<string, string> = {};
-        data.forEach((enq: Enquiry) => {
-          initialNotes[enq.id] = enq.notes || "";
-        });
-        setNotesState(initialNotes);
-      }
-    } catch (err) {
-      console.error("Error fetching enquiries:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchAnalytics = async () => {
-    try {
-      const res = await fetch("/api/admin/analytics");
-      if (res.ok) {
-        const data = await res.json();
-        setAnalytics(data);
-      }
-    } catch (err) {
-      console.error("Error fetching analytics data:", err);
-    }
-  };
-
-  const handleStatusChange = async (id: string, newStatus: string) => {
-    try {
-      const res = await fetch("/api/admin/enquiries", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, status: newStatus }),
-      });
-      if (res.ok) {
-        setEnquiries((prev) =>
-          prev.map((enq) => (enq.id === id ? { ...enq, status: newStatus } : enq))
-        );
-      }
-    } catch (err) {
-      console.error("Error updating status:", err);
-    }
-  };
-
-  const handleSaveNotes = async (id: string) => {
-    setSavedNotesStatus((prev) => ({ ...prev, [id]: "saving" }));
-    try {
-      const res = await fetch("/api/admin/enquiries", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, notes: notesState[id] }),
-      });
-      if (res.ok) {
-        setEnquiries((prev) =>
-          prev.map((enq) => (enq.id === id ? { ...enq, notes: notesState[id] } : enq))
-        );
-        setSavedNotesStatus((prev) => ({ ...prev, [id]: "saved" }));
-        setTimeout(() => {
-          setSavedNotesStatus((prev) => ({ ...prev, [id]: "idle" }));
-        }, 2000);
-      }
-    } catch (err) {
-      console.error("Error saving notes:", err);
-      setSavedNotesStatus((prev) => ({ ...prev, [id]: "idle" }));
-    }
-  };
-
-  const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this enquiry? This action cannot be undone.")) {
-      return;
-    }
-    try {
-      const res = await fetch(`/api/admin/enquiries?id=${id}`, {
-        method: "DELETE",
-      });
-      if (res.ok) {
-        setEnquiries((prev) => prev.filter((enq) => enq.id !== id));
-      }
-    } catch (err) {
-      console.error("Error deleting enquiry:", err);
-    }
-  };
-
   const handleLogout = () => {
     sessionStorage.removeItem("joy_admin_auth");
     setIsAuthenticated(false);
@@ -229,13 +381,25 @@ export default function AdminPage() {
   const handleQuickAddSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setQuickAddSubmitting(true);
+    
+    // Add default timeline activity
+    const initActivity = {
+      id: Math.random().toString(36).substring(2, 11),
+      timestamp: new Date().toISOString(),
+      type: "created",
+      message: "Lead manually registered in CRM console",
+      agent: currentRole
+    };
+
     try {
       const res = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...quickAddForm,
-          source: "CRM Dashboard Quick Add"
+          source: "CRM Dashboard Manual",
+          pipelineStage: "new",
+          activities: [initActivity]
         })
       });
       if (res.ok) {
@@ -259,11 +423,38 @@ export default function AdminPage() {
     }
   };
 
+  const toggleTheme = () => {
+    const nextTheme = !isDarkMode;
+    setIsDarkMode(nextTheme);
+    localStorage.setItem("joy_admin_theme", nextTheme ? "dark" : "light");
+  };
+
+  const handleSaveFilter = () => {
+    const filters = { search, serviceFilter, stageFilter, regionFilter, assignedFilter };
+    localStorage.setItem("joy_crm_saved_filters", JSON.stringify(filters));
+    alert("Filter presets saved successfully!");
+  };
+
+  const handleLoadSavedFilters = () => {
+    const filtersRaw = localStorage.getItem("joy_crm_saved_filters");
+    if (filtersRaw) {
+      const { search: s, serviceFilter: sv, stageFilter: st, regionFilter: r, assignedFilter: a } = JSON.parse(filtersRaw);
+      setSearch(s || "");
+      setServiceFilter(sv || "all");
+      setStageFilter(st || "all");
+      setRegionFilter(r || "all");
+      setAssignedFilter(a || "all");
+    } else {
+      alert("No saved filter presets found.");
+    }
+  };
+
   const resetFilters = () => {
     setSearch("");
     setServiceFilter("all");
-    setStatusFilter("all");
+    setStageFilter("all");
     setRegionFilter("all");
+    setAssignedFilter("all");
   };
 
   // CSV Export utility
@@ -271,18 +462,9 @@ export default function AdminPage() {
     if (enquiries.length === 0) return;
 
     const headers = [
-      "Date",
-      "Name",
-      "Mobile",
-      "Email",
-      "Company",
-      "Website",
-      "Service Requested",
-      "Details",
-      "Internal Notes",
-      "Region",
-      "Source",
-      "Status",
+      "Date", "Name", "Mobile", "Email", "Company", "Website", 
+      "Service", "Details", "Region", "Attributed Source", 
+      "UTM Source", "UTM Medium", "UTM Campaign", "Pipeline Stage", "Assigned To"
     ];
     const rows = enquiries.map((enq) => [
       new Date(enq.createdAt).toLocaleString(),
@@ -293,28 +475,51 @@ export default function AdminPage() {
       enq.website,
       enq.service,
       enq.message.replace(/\n/g, " "),
-      (enq.notes || "").replace(/\n/g, " "),
       enq.region,
       enq.source,
-      enq.status,
+      enq.utmParams?.source || "Organic/Direct",
+      enq.utmParams?.medium || "None",
+      enq.utmParams?.campaign || "None",
+      enq.pipelineStage || "new",
+      enq.assignedTo || "Unassigned"
     ]);
 
     const csvContent = [
       headers.join(","),
-      ...rows.map((e) => e.map((val) => `"${val.replace(/"/g, '""')}"`).join(",")),
+      ...rows.map((e) => e.map((val) => `"${(val || "").replace(/"/g, '""')}"`).join(",")),
     ].join("\n");
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.setAttribute("href", url);
-    link.setAttribute("download", `enquiries_${new Date().toISOString().split("T")[0]}.csv`);
+    link.setAttribute("download", `joydigital_leads_${new Date().toISOString().split("T")[0]}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
-  // Filtered list
+  // Dynamic values fallbacks
+  const getLeadValue = (enq: Enquiry) => {
+    if (enq.proposals && enq.proposals.length > 0) {
+      const won = enq.proposals.find(p => p.status === "accepted");
+      if (won) return won.value;
+      return enq.proposals[enq.proposals.length - 1].value;
+    }
+    if (enq.service.includes("E-commerce")) return 45000;
+    if (enq.service.includes("Application")) return 60000;
+    if (enq.service.includes("Corporate")) return 35000;
+    return 20000;
+  };
+
+  // Filter calculations based on Role Scope + UI Inputs
   const filteredEnquiries = enquiries.filter((enq) => {
+    // 1. Role Scope Filter
+    if (currentRole === "Sales Executive") {
+      // Own assigned leads only
+      if (enq.assignedTo !== "Priya S") return false;
+    }
+
+    // 2. UI Filters
     const searchLower = search.toLowerCase();
     const matchSearch =
       enq.name.toLowerCase().includes(searchLower) ||
@@ -325,18 +530,49 @@ export default function AdminPage() {
       (enq.notes || "").toLowerCase().includes(searchLower);
 
     const matchService = serviceFilter === "all" || enq.service === serviceFilter;
-    const matchStatus = statusFilter === "all" || enq.status === statusFilter;
-    const matchRegion =
-      regionFilter === "all" || enq.region.toLowerCase() === regionFilter.toLowerCase();
+    const matchStage = stageFilter === "all" || (enq.pipelineStage || "new") === stageFilter;
+    const matchRegion = regionFilter === "all" || enq.region.toLowerCase() === regionFilter.toLowerCase();
+    const matchAssigned = assignedFilter === "all" || enq.assignedTo === assignedFilter;
 
-    return matchSearch && matchService && matchStatus && matchRegion;
+    return matchSearch && matchService && matchStage && matchRegion && matchAssigned;
   });
 
-  // Calculate metrics
+  // Calculate Metrics
   const totalCount = enquiries.length;
-  const newCount = enquiries.filter((e) => e.status === "New").length;
-  const inProgressCount = enquiries.filter((e) => e.status === "In Progress").length;
-  const contactedCount = enquiries.filter((e) => e.status === "Contacted" || e.status === "Closed").length;
+  const newCount = enquiries.filter((e) => (e.pipelineStage || "new") === "new").length;
+  const inProgressCount = enquiries.filter((e) => ["contacted", "qualified", "proposal_sent", "negotiation"].includes(e.pipelineStage || "")).length;
+  const contactedCount = enquiries.filter((e) => (e.pipelineStage || "new") === "contacted").length;
+  
+  // Pipeline Value (Sum of proposals for open deals)
+  const pipelineValue = enquiries
+    .filter(e => ["qualified", "proposal_sent", "negotiation"].includes(e.pipelineStage || ""))
+    .reduce((acc, curr) => acc + getLeadValue(curr), 0);
+
+  // Closed Revenue (Sum of proposals of won deals)
+  const closedRevenue = enquiries
+    .filter(e => (e.pipelineStage || "new") === "won" || e.status === "Closed")
+    .reduce((acc, curr) => acc + getLeadValue(curr), 0);
+
+  // Conversion rate (Won Deals / Total Leads)
+  const wonCount = enquiries.filter(e => e.pipelineStage === "won").length;
+  const conversionRate = totalCount > 0 ? Math.round((wonCount / totalCount) * 100) : 0;
+
+  // HTML5 Drag and Drop Handlers for Kanban
+  const handleDragStart = (e: React.DragEvent, leadId: string) => {
+    e.dataTransfer.setData("text/plain", leadId);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleStageDrop = (e: React.DragEvent, targetStage: string) => {
+    e.preventDefault();
+    const leadId = e.dataTransfer.getData("text/plain");
+    if (leadId) {
+      handleStatusChange(leadId, targetStage);
+    }
+  };
 
   const getAvatarInitials = (name: string) => {
     if (!name) return "N";
@@ -349,21 +585,30 @@ export default function AdminPage() {
 
   const getAvatarBg = (name: string) => {
     const colors = [
-      "bg-blue-100 text-blue-700",
-      "bg-emerald-100 text-emerald-700",
-      "bg-purple-100 text-purple-700",
-      "bg-amber-100 text-amber-700",
-      "bg-pink-100 text-pink-700",
-      "bg-indigo-100 text-indigo-700"
+      "bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300",
+      "bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300",
+      "bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300",
+      "bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300",
+      "bg-pink-100 dark:bg-pink-900/40 text-pink-700 dark:text-pink-300",
+      "bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300"
     ];
     if (!name) return colors[0];
     const code = name.charCodeAt(0) % colors.length;
     return colors[code];
   };
 
+  const triggerNotificationClick = (leadId: string) => {
+    const leadObj = enquiries.find(e => e.id === leadId);
+    if (leadObj) {
+      setSelectedLead(leadObj);
+      setIsDrawerOpen(true);
+    }
+    setIsNotifOpen(false);
+  };
+
   if (loading && !isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-6 inter-font">
+      <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B0F19] flex items-center justify-center p-6 inter-font transition-colors duration-200">
         <style dangerouslySetInnerHTML={{ __html: `
           @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
           .inter-font {
@@ -372,21 +617,21 @@ export default function AdminPage() {
         ` }} />
         <div className="flex flex-col items-center gap-4">
           <div className="relative w-12 h-12">
-            <div className="absolute inset-0 border-4 border-slate-200 rounded-full"></div>
+            <div className="absolute inset-0 border-4 border-slate-200 dark:border-slate-800 rounded-full"></div>
             <div className="absolute inset-0 border-4 border-t-[#2563EB] rounded-full animate-spin"></div>
           </div>
           <div className="text-[10px] font-black text-slate-500 tracking-[0.2em] uppercase animate-pulse mt-2">
-            Loading Dashboard CRM...
+            Loading Dashboard CRM v2...
           </div>
         </div>
       </div>
     );
   }
 
-  // Security Login Screen (Clean Light Glass Card)
+  // Security Login Screen (Clean Light/Dark Glass Card)
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#F1F5F9] flex items-center justify-center p-4 sm:p-6 relative overflow-hidden inter-font">
+      <div className={`min-h-screen ${isDarkMode ? "dark bg-[#0B0F19] text-white" : "bg-[#F1F5F9] text-slate-800"} flex items-center justify-center p-4 sm:p-6 relative overflow-hidden inter-font transition-colors duration-200`}>
         <style dangerouslySetInnerHTML={{ __html: `
           @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
           .inter-font {
@@ -400,27 +645,26 @@ export default function AdminPage() {
         ` }} />
         <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-1/4 right-1/3 w-[500px] h-[500px] bg-orange-500/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
-
-        <div className="w-full max-w-md bg-white border border-slate-200/80 rounded-[32px] p-8 sm:p-10 shadow-[0_15px_50px_rgba(0,0,0,0.05)] relative z-10 transition-all hover:border-slate-350">
+        
+        <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-[32px] p-8 sm:p-10 shadow-2xl relative z-10 transition-all">
           <div className="text-center mb-8 flex flex-col items-center">
             <div className="w-14 h-14 bg-gradient-to-tr from-blue-600 to-orange-500 rounded-2xl flex items-center justify-center shadow-md shadow-blue-500/10 mb-5">
               <span className="font-black text-2xl text-white tracking-tighter">JD</span>
             </div>
-            <span className="text-2xl font-black tracking-tight text-slate-900 flex items-center gap-1.5 justify-center">
+            <span className="text-2xl font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5 justify-center">
               Joy<span className="text-gradient">Digital</span>
-              <span className="bg-blue-50 text-[#2563EB] text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded border border-blue-150 select-none align-middle">
-                CRM
+              <span className="bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded border border-blue-150 dark:border-blue-800 select-none align-middle">
+                CRM v2
               </span>
             </span>
-            <p className="text-xs text-slate-500 mt-2.5 max-w-[280px]">
+            <p className="text-xs text-slate-500 dark:text-slate-450 mt-2.5 max-w-[280px]">
               Access restricted. Input secure passkey pin to unlock customer leads console.
             </p>
           </div>
 
           <form onSubmit={handleLoginSubmit} className="flex flex-col gap-6">
             <div className="flex flex-col gap-2.5">
-              <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest pl-1">
+              <label className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest pl-1">
                 Security Access PIN
               </label>
               <input
@@ -429,13 +673,13 @@ export default function AdminPage() {
                 onChange={(e) => setPin(e.target.value)}
                 placeholder="••••"
                 required
-                className="w-full text-center tracking-[0.75em] text-2xl font-bold bg-slate-50 border border-slate-200 text-slate-950 rounded-2xl px-4 py-4 outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/10 transition-all duration-300 placeholder:text-slate-300"
+                className="w-full text-center tracking-[0.75em] text-2xl font-bold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-950 dark:text-white rounded-2xl px-4 py-4 outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/10 transition-all placeholder:text-slate-350"
                 autoFocus
               />
             </div>
 
             {loginError && (
-              <p className="text-center text-xs font-bold text-rose-600 bg-rose-50 border border-rose-150 py-2.5 rounded-xl animate-shake">
+              <p className="text-center text-xs font-bold text-rose-600 bg-rose-50 dark:bg-rose-950/20 border border-rose-150 dark:border-rose-900/30 py-2.5 rounded-xl">
                 {loginError}
               </p>
             )}
@@ -456,8 +700,8 @@ export default function AdminPage() {
     switch (activeTab) {
       case "leads":
         return {
-          title: "CRM Leads",
-          subtitle: "Manage website enquiries and sales pipeline",
+          title: "Sales Leads & CRM v2 Pipeline",
+          subtitle: "Automate website forms routing, manage lead follow-ups, and build visual deals quotation pipeline",
           icon: "fa-regular fa-address-book"
         };
       case "map":
@@ -478,10 +722,10 @@ export default function AdminPage() {
   const pageMeta = getPageDetails();
 
   return (
-    <div className="min-h-screen flex bg-[#F8FAFC] text-slate-800 relative overflow-hidden inter-font select-none">
+    <div className={`min-h-screen flex text-slate-800 relative overflow-hidden inter-font select-none ${isDarkMode ? "dark dark-theme bg-[#0B0F19] text-slate-200" : "bg-[#F8FAFC] text-slate-800"}`}>
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.01] pointer-events-none" />
 
-      {/* Scope Style Overrides */}
+      {/* Styles Injection */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         .inter-font {
@@ -504,20 +748,80 @@ export default function AdminPage() {
             linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
             linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
         }
-        /* Custom scrollbar to match Notion/HubSpot */
-        ::-webkit-scrollbar {
-          width: 6px;
-          height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-          background: transparent;
-        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb {
           background: #E2E8F0;
           border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
           background: #CBD5E1;
+        }
+        /* Zoho/HubSpot Light theme overrides */
+        .inter-font {
+          background-color: #F8FAFC !important;
+          color: #0F172A !important;
+        }
+        .inter-font .text-slate-900,
+        .inter-font .text-slate-800,
+        .inter-font .text-slate-700 {
+          color: #0F172A !important;
+        }
+        .inter-font .text-slate-500,
+        .inter-font .text-slate-450,
+        .inter-font .text-slate-400 {
+          color: #64748B !important;
+        }
+        .inter-font .border-slate-200,
+        .inter-font .border-slate-200\\/80,
+        .inter-font .border-slate-150 {
+          border-color: #E2E8F0 !important;
+        }
+        
+        /* Dark Theme Variables implementation */
+        .dark-theme {
+          background-color: #0B0F19 !important;
+          color: #E2E8F0 !important;
+        }
+        .dark-theme header, .dark-theme aside {
+          border-color: #1F2937 !important;
+        }
+        .dark-theme header {
+          background-color: #111827 !important;
+        }
+        .dark-theme select, .dark-theme input {
+          background-color: #1F2937 !important;
+          border-color: #374151 !important;
+          color: #E2E8F0 !important;
+        }
+        .dark-theme select option {
+          background-color: #1F2937 !important;
+          color: #E2E8F0 !important;
+        }
+        .dark-theme .bg-white {
+          background-color: #111827 !important;
+          color: #E2E8F0 !important;
+        }
+        .dark-theme .border-slate-200, .dark-theme .border-slate-200\\/80, .dark-theme .border-slate-150 {
+          border-color: #1F2937 !important;
+        }
+        .dark-theme .text-slate-900 {
+          color: #FFFFFF !important;
+        }
+        .dark-theme .text-slate-800 {
+          color: #E2E8F0 !important;
+        }
+        .dark-theme .text-slate-500, .dark-theme .text-slate-450, .dark-theme .text-slate-400 {
+          color: #9CA3AF !important;
+        }
+        .dark-theme .bg-slate-50 {
+          background-color: #1E293B !important;
+        }
+        .dark-theme .bg-slate-50\\/70 {
+          background-color: #1E293B/80 !important;
+        }
+        .dark-theme ::-webkit-scrollbar-thumb {
+          background: #374151;
         }
       ` }} />
 
@@ -564,7 +868,7 @@ export default function AdminPage() {
             </span>
             <div className="space-y-1">
               {[
-                { id: "leads", label: "CRM Leads", icon: "fa-regular fa-address-book" }
+                { id: "leads", label: "CRM Pipeline v2", icon: "fa-regular fa-address-book" }
               ].map((tab) => {
                 const isTabActive = activeTab === tab.id;
                 return (
@@ -626,7 +930,6 @@ export default function AdminPage() {
 
         {/* Sidebar Footer */}
         <div className="border-t border-slate-800 p-4 space-y-2">
-          {/* Logout Action */}
           <button
             onClick={handleLogout}
             className="w-full text-slate-400 hover:text-white hover:bg-slate-800/50 font-bold text-xs py-2 px-3 rounded-lg transition-all flex items-center gap-3 cursor-pointer select-none"
@@ -639,21 +942,20 @@ export default function AdminPage() {
       </aside>
 
       {/* RIGHT MAIN CONTENT AREA */}
-      <main className="flex-1 h-screen overflow-y-auto bg-[#F8FAFC] flex flex-col min-w-0">
+      <main className="flex-1 h-screen overflow-y-auto bg-[#F8FAFC] dark:bg-[#0B0F19] flex flex-col min-w-0 transition-colors duration-200">
         
         {/* Top Header Panel (Modern SaaS Header Layout) */}
-        <header className="h-16 bg-white border-b border-slate-200/80 sticky top-0 z-30 px-6 flex items-center justify-between shrink-0">
+        <header className="h-16 bg-white dark:bg-slate-900 border-b border-slate-200/80 dark:border-slate-800/80 sticky top-0 z-30 px-6 flex items-center justify-between shrink-0 transition-colors duration-200">
           <div className="flex items-center gap-3.5">
-            {/* Mobile/Tablet Hamburger menu toggle */}
             <button 
               onClick={() => setIsSidebarOpen(true)}
-              className="lg:hidden w-8 h-8 border border-slate-200 rounded-lg flex items-center justify-center text-slate-600 bg-slate-50 hover:bg-slate-100 cursor-pointer transition-colors"
+              className="lg:hidden w-8 h-8 border border-slate-200 dark:border-slate-700 rounded-lg flex items-center justify-center text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 cursor-pointer transition-colors"
             >
               <i className="fa-solid fa-bars text-sm" />
             </button>
             
             <div className="flex items-center gap-2">
-              <div className="hidden md:flex items-center gap-1 bg-emerald-50 border border-emerald-250 px-2 py-0.5 rounded text-[10px] font-bold text-emerald-700">
+              <div className="hidden md:flex items-center gap-1 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-250 dark:border-emerald-900/30 px-2 py-0.5 rounded text-[10px] font-bold text-emerald-700 dark:text-emerald-400">
                 <span className="relative flex h-1.5 w-1.5 mr-0.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
@@ -661,19 +963,93 @@ export default function AdminPage() {
                 <span>Active DB</span>
               </div>
               
-              <div className="hidden sm:flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-2 py-0.5 rounded text-[10px] font-bold text-slate-500 font-mono">
+              <div className="hidden sm:flex items-center gap-1.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2 py-0.5 rounded text-[10px] font-bold text-slate-500 dark:text-slate-400 font-mono">
                 <span className="w-1.5 h-1.5 bg-rose-500 rounded-full animate-pulse" />
                 <span>LIVE: {liveTime || "00:00:00"}</span>
               </div>
+
+              {/* Role Scope Alert Badge */}
+              {currentRole !== "Super Admin" && (
+                <div className="text-[10px] font-black text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/30 px-2 py-0.5 rounded flex items-center gap-1">
+                  <i className="fa-solid fa-shield-halved" /> {currentRole} View
+                </div>
+              )}
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Notifications icon */}
-            <button className="w-8 h-8 border border-slate-200 rounded-xl flex items-center justify-center text-slate-500 hover:text-slate-800 bg-white relative transition-colors cursor-pointer">
-              <i className="fa-regular fa-bell text-sm" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full border border-white" />
-            </button>
+            
+            {/* Role Manager Selector */}
+            <div className="relative text-xs">
+              <select
+                value={currentRole}
+                onChange={(e: any) => setCurrentRole(e.target.value)}
+                className="bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold border border-slate-250 dark:border-slate-700 px-2.5 py-1.5 rounded-xl cursor-pointer outline-none text-[11px]"
+              >
+                <option value="Super Admin">Super Admin</option>
+                <option value="Manager">Sales Manager</option>
+                <option value="Sales Executive">Executive (Priya S)</option>
+                <option value="Marketing">Marketing Specialist</option>
+              </select>
+            </div>
+
+
+            {/* Smart Notification Center Bell */}
+            <div className="relative">
+              <button 
+                onClick={() => setIsNotifOpen(!isNotifOpen)}
+                className="w-8 h-8 border border-slate-200 dark:border-slate-700 rounded-xl flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white bg-white dark:bg-slate-900 relative transition-colors cursor-pointer"
+              >
+                <i className="fa-regular fa-bell text-sm" />
+                {notifications.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-rose-600 text-white font-extrabold text-[8.5px] w-4.5 h-4.5 rounded-full flex items-center justify-center border border-white">
+                    {notifications.length}
+                  </span>
+                )}
+              </button>
+
+              {isNotifOpen && (
+                <div className="absolute right-0 top-10 w-80 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl z-40 py-2.5 animate-fade-in text-left">
+                  <div className="px-4 py-1.5 border-b border-slate-150 dark:border-slate-800 flex justify-between items-center">
+                    <span className="text-[10px] font-black text-slate-450 dark:text-slate-400 uppercase tracking-widest">System Alerts ({notifications.length})</span>
+                    <button 
+                      onClick={() => setNotifications([])} 
+                      className="text-[9px] font-bold text-blue-600 dark:text-blue-400 bg-transparent cursor-pointer"
+                    >
+                      Clear All
+                    </button>
+                  </div>
+                  <div className="max-h-72 overflow-y-auto">
+                    {notifications.length > 0 ? (
+                      notifications.map((n) => {
+                        let icon = "fa-solid fa-circle-dot text-slate-400";
+                        if (n.type === "reminder") icon = "fa-solid fa-calendar-circle-exclamation text-rose-500";
+                        else if (n.type === "idle") icon = "fa-solid fa-user-clock text-amber-500";
+                        else if (n.type === "new") icon = "fa-solid fa-sparkles text-blue-500";
+
+                        return (
+                          <div 
+                            key={n.id} 
+                            onClick={() => triggerNotificationClick(n.leadId)}
+                            className="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800/40 cursor-pointer flex gap-3 items-start"
+                          >
+                            <i className={`${icon.split(" ")[0]} ${icon.split(" ")[1]} text-xs shrink-0 mt-0.5`} />
+                            <div className="space-y-0.5 text-xs">
+                              <div className="font-extrabold text-slate-850 dark:text-white leading-tight">{n.title}</div>
+                              <div className="text-[11px] text-slate-600 dark:text-slate-400">{n.message}</div>
+                            </div>
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <div className="py-8 text-center text-slate-400 dark:text-slate-500 italic text-[11px]">
+                        No new system alerts or action reminders.
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Quick Add Button */}
             <button
@@ -685,8 +1061,8 @@ export default function AdminPage() {
             </button>
 
             {/* User Profile Avatar */}
-            <div className="w-8 h-8 bg-slate-100 border border-slate-200 rounded-full flex items-center justify-center text-slate-600 font-bold text-xs select-none">
-              AD
+            <div className="w-8 h-8 bg-blue-600 border border-blue-500 text-white rounded-full flex items-center justify-center font-bold text-xs select-none">
+              JD
             </div>
           </div>
         </header>
@@ -695,478 +1071,735 @@ export default function AdminPage() {
         <div className="flex-1 overflow-y-auto px-6 py-8 max-w-[1440px] w-full mx-auto">
           
           {/* Page Title & Subtitle block */}
-          <div className="mb-8">
-            <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">{pageMeta.title}</h2>
-            <p className="text-xs text-slate-500 mt-1 font-medium">{pageMeta.subtitle}</p>
+          <div className="mb-8 flex justify-between items-end flex-wrap gap-4">
+            <div>
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">{pageMeta.title}</h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 font-medium">{pageMeta.subtitle}</p>
+            </div>
+            
+            {/* View Mode Toolbar Toggle */}
+            {activeTab === "leads" && (
+              <div className="flex bg-white dark:bg-slate-900 p-1 border border-slate-200 dark:border-slate-850 rounded-xl shadow-xs shrink-0">
+                {[
+                  { mode: "list", label: "List View", icon: "fa-solid fa-table-list" },
+                  { mode: "kanban", label: "Pipeline board", icon: "fa-solid fa-chart-simple" },
+                  { mode: "analytics", label: "Sales Analytics", icon: "fa-solid fa-chart-pie" }
+                ].map((v) => (
+                  <button
+                    key={v.mode}
+                    onClick={() => setViewMode(v.mode as any)}
+                    className={`px-3 py-1.5 rounded-lg text-[10.5px] font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                      viewMode === v.mode
+                        ? "bg-[#2563EB] text-white shadow-xs"
+                        : "text-slate-500 dark:text-slate-450 hover:text-slate-850 dark:hover:text-white"
+                    }`}
+                  >
+                    <i className={`${v.icon} text-[11px]`} />
+                    <span>{v.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* TAB CONTENT: Leads CRM Manager */}
           {activeTab === "leads" && (
-            <div className="space-y-6">
+            <div className="space-y-6 animate-fade-in">
               
               {/* Four KPI Cards Row */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-in">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 
                 {/* KPI Card 1: Total Enquiries */}
-                <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-[0_4px_20px_rgba(15,23,42,0.04)] flex items-center justify-between hover:shadow-[0_10px_30px_rgba(15,23,42,0.06)] hover:-translate-y-[2px] transition-all duration-150 group">
+                <div 
+                  onClick={() => { resetFilters(); setViewMode("list"); }}
+                  className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-5 shadow-[0_4px_20px_rgba(15,23,42,0.04)] flex items-center justify-between hover:shadow-[0_10px_30px_rgba(15,23,42,0.06)] hover:-translate-y-[2px] transition-all duration-150 cursor-pointer group"
+                >
                   <div className="space-y-1">
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Total Enquiries</span>
-                    <span className="text-3xl font-extrabold text-slate-900 leading-tight block">{totalCount}</span>
+                    <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Total Leads</span>
+                    <span className="text-3xl font-extrabold text-slate-900 dark:text-white leading-tight block">{totalCount}</span>
                     <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-600">
-                      <span className="bg-emerald-50 px-1.5 py-0.5 rounded"><i className="fa-solid fa-arrow-trend-up mr-0.5" /> +12%</span>
+                      <span className="bg-emerald-50 dark:bg-emerald-950/20 px-1.5 py-0.5 rounded"><i className="fa-solid fa-arrow-trend-up mr-0.5" /> +12%</span>
                       <span className="text-slate-400 font-medium">this month</span>
                     </div>
                   </div>
-                  <div className="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2563EB] text-base shadow-sm shrink-0">
+                  <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 flex items-center justify-center text-[#2563EB] dark:text-blue-400 text-base shadow-sm shrink-0">
                     <i className="fa-regular fa-folder-open" />
                   </div>
                 </div>
 
-                {/* KPI Card 2: New Leads */}
-                <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-[0_4px_20px_rgba(15,23,42,0.04)] flex items-center justify-between hover:shadow-[0_10px_30px_rgba(15,23,42,0.06)] hover:-translate-y-[2px] transition-all duration-150 group">
+                {/* KPI Card 2: Conversion Rate */}
+                <div 
+                  onClick={() => { resetFilters(); setStageFilter("won"); setViewMode("list"); }}
+                  className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-5 shadow-[0_4px_20px_rgba(15,23,42,0.04)] flex items-center justify-between hover:shadow-[0_10px_30px_rgba(15,23,42,0.06)] hover:-translate-y-[2px] transition-all duration-150 cursor-pointer group"
+                >
                   <div className="space-y-1">
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">New Leads</span>
-                    <span className="text-3xl font-extrabold text-slate-900 leading-tight block">{newCount}</span>
-                    <div className="flex items-center gap-1.5 text-[10px] font-bold text-orange-600">
-                      <span className="bg-orange-50 px-1.5 py-0.5 rounded"><i className="fa-solid fa-fire mr-0.5" /> Hot</span>
-                      <span className="text-slate-400 font-medium">unresolved</span>
+                    <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Conversion Rate</span>
+                    <span className="text-3xl font-extrabold text-slate-900 dark:text-white leading-tight block">{conversionRate}%</span>
+                    <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#2563EB] dark:text-blue-450">
+                      <span className="bg-blue-50 dark:bg-blue-950/20 px-1.5 py-0.5 rounded">{wonCount} Deals Won</span>
                     </div>
                   </div>
-                  <div className="w-11 h-11 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center text-orange-600 text-base shadow-sm shrink-0">
-                    <i className="fa-regular fa-bell animate-pulse" />
+                  <div className="w-11 h-11 rounded-xl bg-orange-50 dark:bg-orange-950/20 border border-orange-100 dark:border-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 text-base shadow-sm shrink-0">
+                    <i className="fa-solid fa-arrows-spin animate-spin-slow" />
                   </div>
                 </div>
 
-                {/* KPI Card 3: In Progress */}
-                <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-[0_4px_20px_rgba(15,23,42,0.04)] flex items-center justify-between hover:shadow-[0_10px_30px_rgba(15,23,42,0.06)] hover:-translate-y-[2px] transition-all duration-150 group">
+                {/* KPI Card 3: Pipeline Value */}
+                <div 
+                  onClick={() => setViewMode("analytics")}
+                  className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-5 shadow-[0_4px_20px_rgba(15,23,42,0.04)] flex items-center justify-between hover:shadow-[0_10px_30px_rgba(15,23,42,0.06)] hover:-translate-y-[2px] transition-all duration-150 cursor-pointer group"
+                >
                   <div className="space-y-1">
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">In Progress</span>
-                    <span className="text-3xl font-extrabold text-slate-900 leading-tight block">{inProgressCount}</span>
+                    <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Pipeline Value</span>
+                    <span className="text-2xl font-black text-slate-900 dark:text-white leading-tight block">₹{pipelineValue.toLocaleString()}</span>
                     <div className="flex items-center gap-1.5 text-[10px] font-bold text-amber-600">
-                      <span className="bg-amber-50 px-1.5 py-0.5 rounded"><i className="fa-solid fa-spinner mr-0.5 animate-spin" style={{ animationDuration: "3s" }} /> Active</span>
-                      <span className="text-slate-400 font-medium">discussions</span>
+                      <span className="bg-amber-50 dark:bg-amber-950/20 px-1.5 py-0.5 rounded">Active Deals</span>
                     </div>
                   </div>
-                  <div className="w-11 h-11 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 text-base shadow-sm shrink-0">
-                    <i className="fa-solid fa-arrows-spin" />
+                  <div className="w-11 h-11 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400 text-base shadow-sm shrink-0">
+                    <i className="fa-regular fa-file-pdf" />
                   </div>
                 </div>
 
-                {/* KPI Card 4: Contacted & Closed */}
-                <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-[0_4px_20px_rgba(15,23,42,0.04)] flex items-center justify-between hover:shadow-[0_10px_30px_rgba(15,23,42,0.06)] hover:-translate-y-[2px] transition-all duration-150 group">
+                {/* KPI Card 4: Won Revenue */}
+                <div 
+                  onClick={() => { resetFilters(); setStageFilter("won"); setViewMode("list"); }}
+                  className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-5 shadow-[0_4px_20px_rgba(15,23,42,0.04)] flex items-center justify-between hover:shadow-[0_10px_30px_rgba(15,23,42,0.06)] hover:-translate-y-[2px] transition-all duration-150 cursor-pointer group"
+                >
                   <div className="space-y-1">
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Contacted & Closed</span>
-                    <span className="text-3xl font-extrabold text-slate-900 leading-tight block">{contactedCount}</span>
+                    <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Closed Revenue</span>
+                    <span className="text-2xl font-black text-emerald-600 dark:text-emerald-400 leading-tight block">₹{closedRevenue.toLocaleString()}</span>
                     <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-600">
-                      <span className="bg-emerald-50 px-1.5 py-0.5 rounded"><i className="fa-solid fa-arrow-trend-up mr-0.5" /> +15%</span>
-                      <span className="text-slate-400 font-medium">deals won</span>
+                      <span className="bg-emerald-50 dark:bg-emerald-950/20 px-1.5 py-0.5 rounded"><i className="fa-solid fa-check mr-0.5" /> Booked</span>
                     </div>
                   </div>
-                  <div className="w-11 h-11 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-base shadow-sm shrink-0">
+                  <div className="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-base shadow-sm shrink-0">
                     <i className="fa-regular fa-circle-check" />
                   </div>
                 </div>
 
               </div>
 
-              {/* Two-Row Search & Filters toolbar */}
-              <div className="bg-white border border-slate-200/85 rounded-2xl p-5 shadow-[0_4px_20px_rgba(15,23,42,0.02)] space-y-4">
-                {/* Row 1: Full-width Search */}
-                <div className="relative w-full">
-                  <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 pointer-events-none">
-                    <i className="fa-solid fa-magnifying-glass text-[12px]" />
-                  </span>
-                  <input
-                    type="text"
-                    placeholder="Search by lead name, email address, mobile, queries..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="w-full text-xs pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 transition-all duration-150 font-medium"
-                  />
-                </div>
-
-                {/* Row 2: Secondary filter row with equal height dropdown inputs */}
-                <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full md:w-auto flex-1">
-                    <div className="flex flex-col gap-1">
-                      <select
-                        value={serviceFilter}
-                        onChange={(e) => setServiceFilter(e.target.value)}
-                        className="w-full text-[11px] px-3 py-2.5 border border-slate-200 bg-slate-50 text-slate-700 outline-none rounded-xl focus:border-[#2563EB] focus:bg-white focus:ring-4 focus:ring-[#2563EB]/5 transition-all duration-150 font-semibold h-[38px] cursor-pointer"
-                      >
-                        <option value="all">All Services</option>
-                        <option value="Next.js Web Design & Development">Next.js Web Design & Dev</option>
-                        <option value="Corporate Business Website">Corporate Business Website</option>
-                        <option value="Headless E-commerce Store">Headless E-commerce</option>
-                        <option value="Landing Page & Lead Funnel">Landing Page & Funnel</option>
-                        <option value="Custom React Web Application">Custom Web App</option>
-                        <option value="Maintenance / Custom Web Support">Support & Maintenance</option>
-                      </select>
+              {/* VIEW 1: LIST TABLE VIEW */}
+              {viewMode === "list" && (
+                <div className="space-y-6">
+                  
+                  {/* Two-Row Search & Filters toolbar */}
+                  <div className="bg-white dark:bg-slate-900 border border-slate-200/85 dark:border-slate-800 rounded-2xl p-5 shadow-[0_4px_20px_rgba(15,23,42,0.02)] space-y-4">
+                    {/* Row 1: Full-width Search */}
+                    <div className="relative w-full">
+                      <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 pointer-events-none">
+                        <i className="fa-solid fa-magnifying-glass text-[12px]" />
+                      </span>
+                      <input
+                        type="text"
+                        placeholder="Search by lead name, company, email, phone, requirements, notes..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        className="w-full text-xs pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 transition-all duration-150 font-medium"
+                      />
                     </div>
 
-                    <div className="flex flex-col gap-1">
-                      <select
-                        value={statusFilter}
-                        onChange={(e) => setStatusFilter(e.target.value)}
-                        className="w-full text-[11px] px-3 py-2.5 border border-slate-200 bg-slate-50 text-slate-700 outline-none rounded-xl focus:border-[#2563EB] focus:bg-white focus:ring-4 focus:ring-[#2563EB]/5 transition-all duration-150 font-semibold h-[38px] cursor-pointer"
-                      >
-                        <option value="all">All Statuses</option>
-                        <option value="New">New</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Contacted">Contacted</option>
-                        <option value="Closed">Closed</option>
-                        <option value="Rejected">Rejected</option>
-                      </select>
-                    </div>
+                    {/* Row 2: Secondary filter row with equal height dropdown inputs */}
+                    <div className="flex flex-col xl:flex-row gap-4 items-center justify-between">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3.5 w-full xl:w-auto flex-1">
+                        <div className="flex flex-col gap-1">
+                          <select
+                            value={serviceFilter}
+                            onChange={(e) => setServiceFilter(e.target.value)}
+                            className="w-full text-[11px] px-3 py-2 border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 outline-none rounded-xl focus:border-[#2563EB] focus:bg-white focus:ring-4 focus:ring-[#2563EB]/5 font-semibold h-[38px] cursor-pointer"
+                          >
+                            <option value="all">All Services</option>
+                            <option value="Next.js Web Design & Development">Next.js Web Design & Dev</option>
+                            <option value="Corporate Business Website">Corporate Business Website</option>
+                            <option value="Headless E-commerce Store">Headless E-commerce</option>
+                            <option value="Landing Page & Lead Funnel">Landing Page & Funnel</option>
+                            <option value="Custom React Web Application">Custom Web App</option>
+                            <option value="Maintenance / Custom Web Support">Support & Maintenance</option>
+                          </select>
+                        </div>
 
-                    <div className="flex flex-col gap-1">
-                      <select
-                        value={regionFilter}
-                        onChange={(e) => setRegionFilter(e.target.value)}
-                        className="w-full text-[11px] px-3 py-2.5 border border-slate-200 bg-slate-50 text-slate-700 outline-none rounded-xl focus:border-[#2563EB] focus:bg-white focus:ring-4 focus:ring-[#2563EB]/5 transition-all duration-150 font-semibold h-[38px] cursor-pointer"
-                      >
-                        <option value="all">All Regions</option>
-                        <option value="US">US</option>
-                        <option value="UK">UK</option>
-                        <option value="AE">UAE</option>
-                        <option value="IN">India</option>
-                        <option value="GLOBAL">Global</option>
-                      </select>
+                        <div className="flex flex-col gap-1">
+                          <select
+                            value={stageFilter}
+                            onChange={(e) => setStageFilter(e.target.value)}
+                            className="w-full text-[11px] px-3 py-2 border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 outline-none rounded-xl focus:border-[#2563EB] focus:bg-white focus:ring-4 focus:ring-[#2563EB]/5 font-semibold h-[38px] cursor-pointer"
+                          >
+                            <option value="all">All stages</option>
+                            {PIPELINE_STAGES.map((st) => (
+                              <option key={st.value} value={st.value}>{st.label}</option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="flex flex-col gap-1">
+                          <select
+                            value={regionFilter}
+                            onChange={(e) => setRegionFilter(e.target.value)}
+                            className="w-full text-[11px] px-3 py-2 border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 outline-none rounded-xl focus:border-[#2563EB] focus:bg-white focus:ring-4 focus:ring-[#2563EB]/5 font-semibold h-[38px] cursor-pointer"
+                          >
+                            <option value="all">All Regions</option>
+                            <option value="US">US</option>
+                            <option value="UK">UK</option>
+                            <option value="AE">UAE</option>
+                            <option value="IN">India</option>
+                            <option value="GLOBAL">Global</option>
+                          </select>
+                        </div>
+
+                        <div className="flex flex-col gap-1">
+                          <select
+                            value={assignedFilter}
+                            onChange={(e) => setAssignedFilter(e.target.value)}
+                            className="w-full text-[11px] px-3 py-2 border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 outline-none rounded-xl focus:border-[#2563EB] focus:bg-white focus:ring-4 focus:ring-[#2563EB]/5 font-semibold h-[38px] cursor-pointer"
+                          >
+                            <option value="all">All Assignments</option>
+                            {TEAM_MEMBERS.map((m) => (
+                              <option key={m.value} value={m.value}>{m.name.split(" (")[0]}</option>
+                            ))}
+                          </select>
+                        </div>
+
+                        {/* Compact Table mode button selector */}
+                        <div className="flex items-center">
+                          <button
+                            onClick={() => setIsCompact(!isCompact)}
+                            className={`w-full text-[11px] font-bold h-[38px] rounded-xl border flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                              isCompact
+                                ? "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800"
+                                : "bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-750 text-slate-655 dark:text-slate-300 hover:bg-slate-100"
+                            }`}
+                          >
+                            <i className="fa-solid fa-compress" /> {isCompact ? "Compact Mode" : "Normal Row Height"}
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Filters controls block */}
+                      <div className="flex gap-2.5 shrink-0 w-full xl:w-auto justify-end">
+                        <button
+                          onClick={handleLoadSavedFilters}
+                          className="h-[38px] bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 font-bold text-[11px] px-4 rounded-xl transition-all cursor-pointer flex items-center gap-1 border border-slate-200 dark:border-slate-700"
+                          title="Load filter presets"
+                        >
+                          <i className="fa-regular fa-folder-open" /> Load Saved
+                        </button>
+                        <button
+                          onClick={handleSaveFilter}
+                          className="h-[38px] bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 font-bold text-[11px] px-4 rounded-xl transition-all cursor-pointer flex items-center gap-1 border border-slate-200 dark:border-slate-700"
+                          title="Save active filter presets"
+                        >
+                          <i className="fa-regular fa-floppy-disk" /> Save Preset
+                        </button>
+                        <button
+                          onClick={resetFilters}
+                          className="h-[38px] bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 font-extrabold text-[11px] px-4 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 border border-transparent shadow-sm shrink-0"
+                        >
+                          <i className="fa-solid fa-arrow-rotate-left" /> Reset
+                        </button>
+                        
+                        {/* CSV Export */}
+                        <button
+                          onClick={exportToCSV}
+                          className="h-[38px] bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[11px] px-4 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-sm"
+                        >
+                          <i className="fa-solid fa-file-csv text-[13px]" /> Export CSV
+                        </button>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Reset Filters action */}
-                  <button
-                    onClick={resetFilters}
-                    className="w-full md:w-auto h-[38px] bg-slate-100 hover:bg-slate-200 text-slate-600 font-extrabold text-[11px] px-5 rounded-xl transition-all duration-150 cursor-pointer flex items-center justify-center gap-1.5 border border-transparent shadow-sm shrink-0"
-                  >
-                    <i className="fa-solid fa-arrow-rotate-left" /> Reset Filters
-                  </button>
-                </div>
-              </div>
-
-              {/* TABLE VIEW (Hidden on Mobile screens, visible on Tablet/Desktop) */}
-              <div className="hidden md:block bg-white rounded-2xl border border-slate-200/80 shadow-[0_4px_20px_rgba(15,23,42,0.04)] overflow-hidden mb-12 animate-fade-in relative">
-                {filteredEnquiries.length > 0 ? (
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse border-spacing-0">
-                      <thead>
-                        <tr className="bg-slate-50/70 border-b border-slate-200 text-[10px] font-black uppercase tracking-wider text-slate-400 select-none sticky top-0 z-10 backdrop-blur-sm">
-                          <th className="px-6 py-4.5">Lead Name</th>
-                          <th className="px-6 py-4.5">Contact Detail</th>
-                          <th className="px-6 py-4.5">Region</th>
-                          <th className="px-6 py-4.5">Acquisition Channel</th>
-                          <th className="px-6 py-4.5">Target Service</th>
-                          <th className="px-6 py-4.5">Status</th>
-                          <th className="px-6 py-4.5 text-right">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-slate-150 text-xs">
-                        {filteredEnquiries.map((enq) => {
-                          const isExpanded = expandedId === enq.id;
-                          const dateStr = new Date(enq.createdAt).toLocaleDateString(undefined, {
-                            month: "short",
-                            day: "numeric",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            hour12: false
-                          });
-                          const noteStatus = savedNotesStatus[enq.id] || "idle";
-                          const displayStatus = enq.status === "Rejeoted" ? "Rejected" : enq.status;
-
-                          return (
-                            <React.Fragment key={enq.id}>
-                              {/* Row height 72px */}
-                              <tr className={`h-[72px] hover:bg-slate-50/40 transition-all duration-150 ${isExpanded ? "bg-slate-50/50" : ""}`}>
-                                <td className="px-6 py-3 whitespace-nowrap">
-                                  <div className="flex items-center gap-3">
-                                    {/* Initials Avatar */}
-                                    <div className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs shrink-0 select-none ${getAvatarBg(enq.name)}`}>
-                                      {getAvatarInitials(enq.name)}
-                                    </div>
-                                    <div>
-                                      <div className="font-bold text-slate-900 text-[13px]">{enq.name}</div>
-                                      {enq.companyName !== "N/A" ? (
-                                        <div className="text-[10px] text-blue-600 font-semibold mt-0.5">{enq.companyName}</div>
-                                      ) : (
-                                        <div className="text-[10px] text-slate-400 italic mt-0.5">Individual Lead</div>
-                                      )}
-                                    </div>
-                                  </div>
-                                </td>
-                                <td className="px-6 py-3">
-                                  <div className="flex flex-col gap-1 justify-center">
-                                    <a href={`tel:${enq.mobile}`} className="font-semibold text-slate-700 hover:text-[#2563EB] hover:underline transition-colors flex items-center gap-1.5">
-                                      <i className="fa-solid fa-phone text-slate-400 text-[10px]" /> {enq.mobile}
-                                    </a>
-                                    <a href={`mailto:${enq.email}`} className="text-[11px] text-slate-400 hover:text-[#2563EB] hover:underline transition-colors flex items-center gap-1.5">
-                                      <i className="fa-regular fa-envelope text-slate-450 text-[11px]" /> {enq.email}
-                                    </a>
-                                  </div>
-                                </td>
-                                <td className="px-6 py-3 whitespace-nowrap">
-                                  <span className="bg-slate-100 border border-slate-200 font-bold uppercase text-[9px] px-2.5 py-1 rounded-lg text-slate-600 inline-block shadow-sm">
-                                    {enq.region}
-                                  </span>
-                                </td>
-                                <td className="px-6 py-3 text-slate-450 font-medium whitespace-nowrap">
-                                  {enq.source.split(" - ")[0]}
-                                </td>
-                                <td className="px-6 py-3 font-semibold text-slate-800 max-w-[200px] truncate">
-                                  {enq.service}
-                                </td>
-                                <td className="px-6 py-3">
-                                  <select
-                                    value={displayStatus}
-                                    onChange={(e) => handleStatusChange(enq.id, e.target.value)}
-                                    className={`text-[10px] font-black px-2.5 py-1 rounded-full border outline-none cursor-pointer shadow-sm transition-all focus:ring-4 focus:ring-blue-150 ${
-                                      displayStatus === "New"
-                                        ? "bg-blue-50 border-blue-200 text-blue-700"
-                                        : displayStatus === "In Progress"
-                                        ? "bg-amber-50 border-amber-200 text-amber-700"
-                                        : displayStatus === "Contacted"
-                                        ? "bg-emerald-50 border-emerald-200 text-emerald-700"
-                                        : displayStatus === "Closed"
-                                        ? "bg-green-50 border-green-200 text-green-700"
-                                        : "bg-rose-600 border-transparent text-white font-extrabold"
-                                    }`}
-                                  >
-                                    <option value="New">New</option>
-                                    <option value="In Progress">In Progress</option>
-                                    <option value="Contacted">Contacted</option>
-                                    <option value="Closed">Closed</option>
-                                    <option value="Rejected">Rejected</option>
-                                  </select>
-                                </td>
-                                <td className="px-6 py-3 text-right">
-                                  <div className="flex items-center justify-end gap-2 relative">
-                                    <button
-                                      onClick={() => setExpandedId(isExpanded ? null : enq.id)}
-                                      className={`w-8 h-8 rounded-lg text-xs flex items-center justify-center transition-all cursor-pointer ${
-                                        isExpanded 
-                                          ? "bg-slate-900 text-white" 
-                                          : "bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-800"
-                                      }`}
-                                      title="View Details"
-                                    >
-                                      <i className={`fa-regular ${isExpanded ? "fa-folder-open" : "fa-eye"}`} />
-                                    </button>
-
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        setActiveEllipsisMenu(activeEllipsisMenu === enq.id ? null : enq.id);
-                                      }}
-                                      className="w-8 h-8 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-all cursor-pointer"
-                                      title="Actions"
-                                    >
-                                      <i className="fa-solid fa-ellipsis-vertical" />
-                                    </button>
-
-                                    {/* Action Dropdown Menu */}
-                                    {activeEllipsisMenu === enq.id && (
-                                      <div 
-                                        className="absolute right-0 top-10 w-44 bg-white border border-slate-200 rounded-xl shadow-lg z-20 py-1.5 animate-fade-in text-left"
-                                        onClick={(e) => e.stopPropagation()}
-                                      >
-                                        <button
-                                          onClick={() => {
-                                            setExpandedId(isExpanded ? null : enq.id);
-                                            setActiveEllipsisMenu(null);
-                                          }}
-                                          className="w-full px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2 font-bold cursor-pointer"
-                                        >
-                                          <i className="fa-regular fa-comment-dots text-slate-400 w-4" /> Edit Notes
-                                        </button>
-                                        
-                                        <button
-                                          onClick={() => {
-                                            handleDelete(enq.id);
-                                            setActiveEllipsisMenu(null);
-                                          }}
-                                          className="w-full px-4 py-2 text-xs text-rose-600 hover:bg-rose-50 flex items-center gap-2 font-bold cursor-pointer"
-                                        >
-                                          <i className="fa-regular fa-trash-can text-rose-455 w-4" /> Delete Lead
-                                        </button>
-                                      </div>
-                                    )}
-                                  </div>
-                                </td>
-                              </tr>
+                  {/* TABLE VIEW (Hidden on Mobile screens, visible on Tablet/Desktop) */}
+                  <div className="hidden md:block bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-[0_4px_20px_rgba(15,23,42,0.04)] overflow-hidden mb-12 relative transition-colors duration-200">
+                    {filteredEnquiries.length > 0 ? (
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse border-spacing-0">
+                          <thead>
+                            <tr className="bg-slate-50/70 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 select-none sticky top-0 z-10 backdrop-blur-sm">
+                              <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Lead Name</th>
+                              <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Contact Detail</th>
+                              <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Reminders</th>
+                              <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Assignment</th>
+                              <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Target Service</th>
+                              <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Stage</th>
+                              <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"} text-right`}>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-slate-150 dark:divide-slate-800/80 text-xs">
+                            {filteredEnquiries.map((enq) => {
+                              const displayStage = enq.pipelineStage || "new";
+                              const stageInfo = PIPELINE_STAGES.find(s => s.value === displayStage) || PIPELINE_STAGES[0];
+                              const cleanedMobile = enq.mobile.replace(/\D/g, "");
                               
-                              {/* Expanded followup note card details */}
-                              {isExpanded && (
-                                <tr className="bg-slate-50/25 border-b border-slate-150 animate-fade-in">
-                                  <td colSpan={7} className="px-8 py-6">
-                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                      <div className="flex flex-col gap-2.5">
-                                        <h4 className="text-[10px] font-black uppercase tracking-wider text-slate-450 flex items-center gap-1.5">
-                                          <i className="fa-regular fa-comment text-[#2563EB]" /> Client Query Message
-                                        </h4>
-                                        <div className="bg-white border border-slate-200 rounded-xl p-5 text-[12px] leading-relaxed text-slate-650 shadow-sm whitespace-pre-wrap min-h-[140px]">
-                                          {enq.message}
-                                        </div>
-                                        <div className="flex flex-wrap gap-4 text-[9px] text-slate-400 font-bold px-1 mt-1">
-                                          <span>Record ID: <code className="bg-slate-100 px-1.5 py-0.5 rounded text-[8.5px] font-mono text-blue-600">{enq.id}</code></span>
-                                          <span>•</span>
-                                          <span>Timestamp: <span className="text-slate-600 font-extrabold">{dateStr}</span></span>
-                                        </div>
-                                      </div>
+                              // Check reminder due status
+                              let reminderBadge = null;
+                              if (enq.followUpDate) {
+                                const followDate = new Date(enq.followUpDate);
+                                const isOverdue = followDate < new Date();
+                                const isToday = followDate.toDateString() === new Date().toDateString();
+                                
+                                if (isOverdue) {
+                                  reminderBadge = (
+                                    <span className="bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-450 border border-rose-100 dark:border-rose-900/30 px-2 py-0.5 rounded text-[8.5px] font-extrabold flex items-center gap-1 w-max">
+                                      <i className="fa-solid fa-circle-exclamation" /> Overdue
+                                    </span>
+                                  );
+                                } else if (isToday) {
+                                  reminderBadge = (
+                                    <span className="bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-450 border border-amber-100 dark:border-amber-900/30 px-2 py-0.5 rounded text-[8.5px] font-extrabold flex items-center gap-1 w-max">
+                                      <i className="fa-solid fa-clock-three animate-pulse" /> Today
+                                    </span>
+                                  );
+                                } else {
+                                  reminderBadge = (
+                                    <span className="bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-450 border border-blue-100 dark:border-blue-900/30 px-2 py-0.5 rounded text-[8.5px] font-bold flex items-center gap-1 w-max">
+                                      <i className="fa-solid fa-calendar-day" /> {followDate.toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                                    </span>
+                                  );
+                                }
+                              }
 
-                                      <div className="flex flex-col gap-2.5">
-                                        <div className="flex justify-between items-center">
-                                          <h4 className="text-[10px] font-black uppercase tracking-wider text-slate-450 flex items-center gap-1.5">
-                                            <i className="fa-regular fa-pen-to-square text-[#2563EB]" /> Internal Follow-up Notes
-                                          </h4>
-                                          {noteStatus === "saved" && (
-                                            <span className="text-[9px] text-emerald-600 font-black bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200 flex items-center gap-1">
-                                              <i className="fa-solid fa-circle-check" /> Updated!
-                                            </span>
-                                          )}
-                                        </div>
-                                        
-                                        <textarea
-                                          value={notesState[enq.id] || ""}
-                                          onChange={(e) => setNotesState({ ...notesState, [enq.id]: e.target.value })}
-                                          placeholder="Enter follow-up details, client communications, or call history logs here..."
-                                          className="bg-white border border-slate-200 rounded-xl p-4 text-[12px] text-slate-800 placeholder:text-slate-400 outline-none focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 shadow-sm resize-none min-h-[140px] font-medium leading-relaxed"
-                                        />
-                                        
-                                        <button
-                                          onClick={() => handleSaveNotes(enq.id)}
-                                          disabled={noteStatus === "saving"}
-                                          className={`w-full lg:w-auto self-end px-5 py-3 rounded-xl font-extrabold text-xs shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer ${
-                                            noteStatus === "saving"
-                                              ? "bg-slate-100 border border-slate-200 text-slate-400 cursor-not-allowed"
-                                              : "bg-[#2563EB] hover:bg-[#1d4ed8] text-white"
-                                          }`}
-                                        >
-                                          <i className={`fa-solid ${noteStatus === "saving" ? "fa-circle-notch animate-spin" : "fa-floppy-disk"}`} />
-                                          {noteStatus === "saving" ? "Saving logs..." : "Save Follow-up Logs"}
-                                        </button>
+                              return (
+                                <tr key={enq.id} className={`${isCompact ? "h-[54px]" : "h-[72px]"} hover:bg-slate-50/40 dark:hover:bg-slate-800/10 transition-all duration-150`}>
+                                  <td className="px-6 py-2 whitespace-nowrap">
+                                    <div className="flex items-center gap-3">
+                                      {/* Initials Avatar */}
+                                      <div className={`w-8.5 h-8.5 rounded-full flex items-center justify-center font-bold text-xs shrink-0 select-none ${getAvatarBg(enq.name)}`}>
+                                        {getAvatarInitials(enq.name)}
+                                      </div>
+                                      <div>
+                                        <div className="font-bold text-slate-900 dark:text-white text-[13px]">{enq.name}</div>
+                                        {enq.companyName !== "N/A" ? (
+                                          <div className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold mt-0.5">{enq.companyName}</div>
+                                        ) : (
+                                          <div className="text-[10px] text-slate-400 dark:text-slate-500 italic mt-0.5">Individual Lead</div>
+                                        )}
                                       </div>
                                     </div>
                                   </td>
+                                  
+                                  {/* Contact and WhatsApp shortcut */}
+                                  <td className="px-6 py-2">
+                                    <div className="flex flex-col gap-0.5 justify-center">
+                                      <div className="flex items-center gap-1.5 font-semibold text-slate-700 dark:text-slate-350">
+                                        <a href={`tel:${enq.mobile}`} className="hover:text-[#2563EB] hover:underline flex items-center gap-1">
+                                          <i className="fa-solid fa-phone text-slate-400 text-[10px]" /> {enq.mobile}
+                                        </a>
+                                        
+                                        {/* Click to WhatsApp icon link */}
+                                        <a 
+                                          href={`https://wa.me/${cleanedMobile}?text=${encodeURIComponent(`Hi ${enq.name}, thank you for contacting Joy Digital. I am checking on your requirement.`)}`}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-emerald-600 hover:text-emerald-500 text-[12px] pl-0.5"
+                                          title="Quick WhatsApp Chat"
+                                        >
+                                          <i className="fa-brands fa-whatsapp" />
+                                        </a>
+                                      </div>
+                                      <a href={`mailto:${enq.email}`} className="text-[10.5px] text-slate-400 dark:text-slate-500 hover:text-[#2563EB] hover:underline transition-colors flex items-center gap-1.5">
+                                        <i className="fa-regular fa-envelope text-[11px]" /> {enq.email}
+                                      </a>
+                                    </div>
+                                  </td>
+
+                                  {/* Reminders Column */}
+                                  <td className="px-6 py-2 whitespace-nowrap">
+                                    {reminderBadge || <span className="text-slate-400 dark:text-slate-600 italic text-[10px]">-</span>}
+                                  </td>
+
+                                  {/* Executive Assigned */}
+                                  <td className="px-6 py-2 text-slate-655 dark:text-slate-405 font-bold whitespace-nowrap">
+                                    {enq.assignedTo ? (
+                                      <span className="flex items-center gap-1.5">
+                                        <span className="w-2.5 h-2.5 bg-blue-500 rounded-full inline-block" />
+                                        <span>{enq.assignedTo.split(" ")[0]}</span>
+                                      </span>
+                                    ) : (
+                                      <span className="text-slate-400 dark:text-slate-600 italic font-medium">Unassigned</span>
+                                    )}
+                                  </td>
+
+                                  <td className="px-6 py-2 font-semibold text-slate-800 dark:text-slate-300 max-w-[200px] truncate">
+                                    {enq.service}
+                                  </td>
+
+                                  <td className="px-6 py-2 whitespace-nowrap">
+                                    <select
+                                      value={displayStage}
+                                      onChange={(e) => handleStatusChange(enq.id, e.target.value)}
+                                      className={`text-[9.5px] font-black px-2.5 py-1 rounded-full border outline-none cursor-pointer shadow-sm transition-all focus:ring-4 focus:ring-blue-150/10 ${stageInfo.color}`}
+                                    >
+                                      {PIPELINE_STAGES.map((s) => (
+                                        <option key={s.value} value={s.value}>{s.label}</option>
+                                      ))}
+                                    </select>
+                                  </td>
+
+                                  {/* Actions */}
+                                  <td className="px-6 py-2 text-right">
+                                    <div className="flex items-center justify-end gap-2">
+                                      <button
+                                        onClick={() => {
+                                          setSelectedLead(enq);
+                                          setIsDrawerOpen(true);
+                                        }}
+                                        className="w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                                        title="Open Lead Profile Drawer"
+                                      >
+                                        <i className="fa-regular fa-eye" />
+                                      </button>
+                                      <button
+                                        onClick={() => handleDelete(enq.id)}
+                                        className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/30 text-rose-600 dark:text-rose-450 hover:bg-rose-100 dark:hover:bg-rose-900/40 flex items-center justify-center transition-all cursor-pointer animate-fade-in"
+                                        title="Delete Lead"
+                                      >
+                                        <i className="fa-regular fa-trash-can" />
+                                      </button>
+                                    </div>
+                                  </td>
                                 </tr>
-                              )}
-                            </React.Fragment>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    ) : (
+                      <div className="p-16 text-center flex flex-col items-center">
+                        <div className="w-14 h-14 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-750 flex items-center justify-center text-slate-400 dark:text-slate-550 mb-4 font-bold">
+                          <i className="fa-regular fa-folder-open text-lg" />
+                        </div>
+                        <h3 className="font-extrabold text-sm text-slate-800 dark:text-white mb-1">No enquiries found</h3>
+                        <p className="text-xs text-slate-500 dark:text-slate-450 max-w-[280px]">Your current database or active filter constraints returned zero records.</p>
+                      </div>
+                    )}
                   </div>
-                ) : (
-                  <div className="p-16 text-center flex flex-col items-center">
-                    <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400 mb-4">
-                      <i className="fa-regular fa-folder-open text-lg" />
-                    </div>
-                    <h3 className="font-extrabold text-sm text-slate-800 mb-1">No enquiries found</h3>
-                    <p className="text-xs text-slate-500 max-w-[280px]">Your current database or active filter constraints returned zero records.</p>
-                  </div>
-                )}
-              </div>
 
-              {/* MOBILE LEAD LIST VIEW (Transforms table into responsive cards on mobile screens) */}
-              <div className="block md:hidden space-y-4 mb-12">
-                {filteredEnquiries.length > 0 ? (
-                  filteredEnquiries.map((enq) => {
-                    const displayStatus = enq.status === "Rejeoted" ? "Rejected" : enq.status;
-                    const isExpanded = expandedId === enq.id;
-                    return (
-                      <div key={enq.id} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-[0_4px_20px_rgba(15,23,42,0.03)] space-y-4">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs select-none shrink-0 ${getAvatarBg(enq.name)}`}>
-                              {getAvatarInitials(enq.name)}
+                  {/* MOBILE LEAD LIST VIEW (Transforms table into responsive cards on mobile screens) */}
+                  <div className="block md:hidden space-y-4 mb-12">
+                    {filteredEnquiries.length > 0 ? (
+                      filteredEnquiries.map((enq) => {
+                        const displayStage = enq.pipelineStage || "new";
+                        const stageInfo = PIPELINE_STAGES.find(s => s.value === displayStage) || PIPELINE_STAGES[0];
+                        const cleanedMobile = enq.mobile.replace(/\D/g, "");
+
+                        return (
+                          <div key={enq.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-[0_4px_20px_rgba(15,23,42,0.03)] space-y-4">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                <div className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs select-none shrink-0 ${getAvatarBg(enq.name)}`}>
+                                  {getAvatarInitials(enq.name)}
+                                </div>
+                                <div>
+                                  <h4 className="font-extrabold text-slate-900 dark:text-white text-[13px]">{enq.name}</h4>
+                                  <p className="text-[10px] text-slate-500 dark:text-slate-450 mt-0.5">{enq.companyName !== "N/A" ? enq.companyName : "Individual Lead"}</p>
+                                </div>
+                              </div>
+                              <span className={`text-[8.5px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full border ${stageInfo.color}`}>
+                                {stageInfo.label}
+                              </span>
                             </div>
-                            <div>
-                              <h4 className="font-extrabold text-slate-900 text-[13px]">{enq.name}</h4>
-                              <p className="text-[10px] text-slate-500 mt-0.5">{enq.companyName !== "N/A" ? enq.companyName : "Individual Lead"}</p>
+
+                            <div className="text-xs space-y-2 border-t border-slate-100 dark:border-slate-800/80 pt-3 text-slate-655 dark:text-slate-400 font-semibold">
+                              <div className="flex items-center gap-2">
+                                <i className="fa-solid fa-phone text-slate-400 text-[10px] w-4 text-center" />
+                                <a href={`tel:${enq.mobile}`} className="hover:text-[#2563EB] hover:underline font-medium">{enq.mobile}</a>
+                                <a 
+                                  href={`https://wa.me/${cleanedMobile}?text=${encodeURIComponent(`Hi ${enq.name}, thank you for contacting Joy Digital.`)}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-emerald-600 hover:text-emerald-500 pl-1"
+                                >
+                                  <i className="fa-brands fa-whatsapp text-sm" />
+                                </a>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <i className="fa-regular fa-envelope text-slate-400 text-[11px] w-4 text-center" />
+                                <a href={`mailto:${enq.email}`} className="hover:text-[#2563EB] hover:underline font-medium">{enq.email}</a>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <i className="fa-regular fa-folder text-slate-400 text-xs w-4 text-center" />
+                                <span className="font-bold text-slate-700 dark:text-slate-350">{enq.service}</span>
+                              </div>
                             </div>
-                          </div>
-                          <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.75 rounded-full ${
-                            displayStatus === "New"
-                              ? "bg-blue-50 text-blue-700 border border-blue-200"
-                              : displayStatus === "In Progress"
-                              ? "bg-amber-50 text-amber-700 border border-amber-200"
-                              : displayStatus === "Contacted"
-                              ? "bg-emerald-50 text-emerald-700 border-emerald-250"
-                              : displayStatus === "Closed"
-                              ? "bg-green-50 text-green-700 border-green-250"
-                              : "bg-rose-650 text-white border-transparent"
-                          }`}>
-                            {displayStatus}
-                          </span>
-                        </div>
 
-                        <div className="text-xs space-y-2 border-t border-slate-100 pt-3 text-slate-600">
-                          <div className="flex items-center gap-2">
-                            <i className="fa-solid fa-phone text-slate-400 text-[10px] w-4 text-center" />
-                            <a href={`tel:${enq.mobile}`} className="hover:text-[#2563EB] hover:underline font-medium">{enq.mobile}</a>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <i className="fa-regular fa-envelope text-slate-400 text-[11px] w-4 text-center" />
-                            <a href={`mailto:${enq.email}`} className="hover:text-[#2563EB] hover:underline font-medium">{enq.email}</a>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <i className="fa-regular fa-folder text-slate-400 text-xs w-4 text-center" />
-                            <span className="font-semibold text-slate-700">{enq.service}</span>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between gap-4 border-t border-slate-100 pt-3">
-                          <button
-                            onClick={() => setExpandedId(isExpanded ? null : enq.id)}
-                            className="flex-1 bg-slate-50 border border-slate-200 hover:bg-slate-100 py-2 rounded-xl text-xs font-bold text-slate-600 cursor-pointer flex items-center justify-center gap-1.5 transition-all duration-150"
-                          >
-                            <i className={`fa-regular ${isExpanded ? "fa-folder-open" : "fa-eye"}`} />
-                            {isExpanded ? "Hide Details" : "View Message"}
-                          </button>
-                          
-                          <button
-                            onClick={() => handleDelete(enq.id)}
-                            className="bg-rose-50 hover:bg-rose-100 border border-rose-250 py-2 px-3.5 rounded-xl text-xs text-rose-600 cursor-pointer transition-all duration-150"
-                            title="Delete Lead"
-                          >
-                            <i className="fa-regular fa-trash-can" />
-                          </button>
-                        </div>
-
-                        {isExpanded && (
-                          <div className="bg-slate-50 border border-slate-200 rounded-xl p-4.5 space-y-4 animate-fade-in text-left">
-                            <div className="space-y-1.5">
-                              <span className="text-[9px] font-black uppercase text-slate-400 tracking-wider">Client Query Detail</span>
-                              <p className="text-xs text-slate-700 whitespace-pre-wrap leading-relaxed bg-white border border-slate-150 rounded-lg p-3 shadow-inner">{enq.message}</p>
-                            </div>
-                            <div className="space-y-2">
-                              <span className="text-[9px] font-black uppercase text-slate-400 tracking-wider">Internal Follow-up Notes</span>
-                              <textarea
-                                value={notesState[enq.id] || ""}
-                                onChange={(e) => setNotesState({ ...notesState, [enq.id]: e.target.value })}
-                                placeholder="Write follow-up notes here..."
-                                className="w-full bg-white border border-slate-200 rounded-lg p-3 text-xs text-slate-800 placeholder:text-slate-350 shadow-inner resize-none min-h-[100px] outline-none focus:border-[#2563EB]"
-                              />
+                            <div className="flex items-center justify-between gap-4 border-t border-slate-100 dark:border-slate-800/80 pt-3">
                               <button
-                                onClick={() => handleSaveNotes(enq.id)}
-                                className="w-full bg-[#2563EB] text-white py-2.5 rounded-xl font-bold text-xs cursor-pointer shadow-sm hover:bg-[#1d4ed8]"
+                                onClick={() => {
+                                  setSelectedLead(enq);
+                                  setIsDrawerOpen(true);
+                                }}
+                                className="flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-350 cursor-pointer flex items-center justify-center gap-1.5 transition-all"
                               >
-                                Save Follow-up Notes
+                                <i className="fa-regular fa-eye" />
+                                View Details & Edit
+                              </button>
+                              
+                              <button
+                                onClick={() => handleDelete(enq.id)}
+                                className="bg-rose-50 dark:bg-rose-950/20 hover:bg-rose-100 border border-rose-100 dark:border-rose-900/30 py-2 px-3.5 rounded-xl text-xs text-rose-600 cursor-pointer transition-all"
+                                title="Delete Lead"
+                              >
+                                <i className="fa-regular fa-trash-can" />
                               </button>
                             </div>
                           </div>
-                        )}
+                        );
+                      })
+                    ) : (
+                      <div className="p-16 text-center bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col items-center">
+                        <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400 mb-4">
+                          <i className="fa-regular fa-folder-open text-lg" />
+                        </div>
+                        <h3 className="font-extrabold text-sm text-slate-800 dark:text-white mb-1">No enquiries found</h3>
+                      </div>
+                    )}
+                  </div>
+
+                </div>
+              )}
+
+              {/* VIEW 2: KANBAN PIPELINE BOARD */}
+              {viewMode === "kanban" && (
+                <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-7 gap-4.5 overflow-x-auto pb-8 items-start min-h-[500px]">
+                  {PIPELINE_STAGES.map((stage) => {
+                    const stageLeads = filteredEnquiries.filter((enq) => (enq.pipelineStage || "new") === stage.value);
+                    const totalStageValue = stageLeads.reduce((acc, curr) => acc + getLeadValue(curr), 0);
+
+                    return (
+                      <div 
+                        key={stage.value}
+                        onDragOver={handleDragOver}
+                        onDrop={(e) => handleStageDrop(e, stage.value)}
+                        className="bg-slate-50 dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-800 rounded-2xl p-4 flex flex-col gap-4.5 w-full min-w-[200px] max-w-sm transition-colors duration-200"
+                      >
+                        {/* Column Header */}
+                        <div className="flex justify-between items-center pl-1">
+                          <div className="space-y-0.5">
+                            <span className="font-extrabold text-xs text-slate-900 dark:text-white flex items-center gap-1.5">
+                              {stage.label}
+                              <span className="bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-400 text-[9px] font-black px-1.5 py-0.25 rounded-md">
+                                {stageLeads.length}
+                              </span>
+                            </span>
+                            <span className="text-[9px] font-bold text-slate-450 dark:text-slate-500 block">
+                              ₹{totalStageValue.toLocaleString()}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Draggable Cards Stack */}
+                        <div className="flex flex-col gap-3 min-h-[350px]">
+                          {stageLeads.length > 0 ? (
+                            stageLeads.map((enq) => (
+                              <div
+                                key={enq.id}
+                                draggable="true"
+                                onDragStart={(e) => handleDragStart(e, enq.id)}
+                                onClick={() => {
+                                  setSelectedLead(enq);
+                                  setIsDrawerOpen(true);
+                                }}
+                                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-slate-700 transition-all cursor-grab active:cursor-grabbing text-left space-y-3 relative group"
+                              >
+                                {/* Lead Details block */}
+                                <div className="space-y-1">
+                                  <div className="font-bold text-slate-900 dark:text-white text-[12px] leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center justify-between">
+                                    <span>{enq.name}</span>
+                                    
+                                    {/* Region Tag */}
+                                    <span className="bg-slate-100 dark:bg-slate-800 px-1 py-0.25 text-[8.5px] font-bold rounded text-slate-500 dark:text-slate-400 select-none">
+                                      {enq.region}
+                                    </span>
+                                  </div>
+                                  
+                                  {enq.companyName !== "N/A" && (
+                                    <div className="text-[9.5px] font-bold text-blue-600 dark:text-blue-400 truncate">{enq.companyName}</div>
+                                  )}
+                                  
+                                  <div className="text-[10px] text-slate-450 dark:text-slate-500 truncate leading-snug font-medium">
+                                    {enq.service}
+                                  </div>
+                                </div>
+
+                                {/* Divider */}
+                                <div className="border-t border-slate-100 dark:border-slate-800/80 pt-2 flex justify-between items-center text-[10px]">
+                                  {/* Assigned Executive Initials */}
+                                  <div className="flex items-center gap-1.5 text-[9.5px] text-slate-500 dark:text-slate-400 font-semibold">
+                                    <div className="w-5.5 h-5.5 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-[9px] select-none border border-slate-200 dark:border-slate-750">
+                                      {enq.assignedTo ? getAvatarInitials(enq.assignedTo) : "?"}
+                                    </div>
+                                    <span>{enq.assignedTo ? enq.assignedTo.split(" ")[0] : "Assign"}</span>
+                                  </div>
+
+                                  <span className="text-[9px] text-slate-400 font-mono font-medium">
+                                    {new Date(enq.createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                                  </span>
+                                </div>
+                              </div>
+                            ))
+                          ) : (
+                            <div className="flex-1 border border-dashed border-slate-200 dark:border-slate-800/80 rounded-2xl flex items-center justify-center p-8 text-center text-slate-400 dark:text-slate-600 italic text-[11px]">
+                              Drag leads here
+                            </div>
+                          )}
+                        </div>
                       </div>
                     );
-                  })
-                ) : (
-                  <div className="p-16 text-center bg-white border border-slate-200 rounded-2xl flex flex-col items-center">
-                    <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400 mb-4">
-                      <i className="fa-regular fa-folder-open text-lg" />
+                  })}
+                </div>
+              )}
+
+              {/* VIEW 3: SALES ANALYTICS HUB */}
+              {viewMode === "analytics" && (
+                <div className="space-y-8 mb-12">
+                  
+                  {/* Visual SVG Analytics Charts grid */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    
+                    {/* SVG conversion funnel */}
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col justify-between transition-colors duration-200">
+                      <div>
+                        <h3 className="text-xs font-black uppercase tracking-[0.1em] text-slate-450 mb-6 flex items-center gap-2">
+                          <i className="fa-solid fa-filter text-blue-600" /> Sales Conversion Funnel
+                        </h3>
+                        
+                        {/* Custom Funnel Drawing */}
+                        <div className="flex flex-col gap-3 py-4 max-w-md mx-auto">
+                          {[
+                            { stage: "Total Leads", count: totalCount, width: "w-full", bg: "bg-blue-600 dark:bg-blue-500", percent: 100 },
+                            { stage: "Contacted", count: enquiries.filter(e => ["contacted", "qualified", "proposal_sent", "negotiation", "won"].includes(e.pipelineStage || "")).length, width: "w-[85%]", bg: "bg-indigo-600 dark:bg-indigo-500", percent: totalCount > 0 ? Math.round((enquiries.filter(e => ["contacted", "qualified", "proposal_sent", "negotiation", "won"].includes(e.pipelineStage || "")).length / totalCount) * 100) : 0 },
+                            { stage: "Qualified", count: enquiries.filter(e => ["qualified", "proposal_sent", "negotiation", "won"].includes(e.pipelineStage || "")).length, width: "w-[65%]", bg: "bg-amber-600 dark:bg-amber-500", percent: totalCount > 0 ? Math.round((enquiries.filter(e => ["qualified", "proposal_sent", "negotiation", "won"].includes(e.pipelineStage || "")).length / totalCount) * 100) : 0 },
+                            { stage: "Proposals", count: enquiries.filter(e => ["proposal_sent", "negotiation", "won"].includes(e.pipelineStage || "")).length, width: "w-[45%]", bg: "bg-purple-600 dark:bg-purple-500", percent: totalCount > 0 ? Math.round((enquiries.filter(e => ["proposal_sent", "negotiation", "won"].includes(e.pipelineStage || "")).length / totalCount) * 100) : 0 },
+                            { stage: "Won Deals", count: wonCount, width: "w-[25%]", bg: "bg-emerald-600 dark:bg-emerald-500", percent: totalCount > 0 ? Math.round((wonCount / totalCount) * 100) : 0 }
+                          ].map((item, idx) => (
+                            <div key={idx} className="flex items-center gap-4 text-xs font-semibold">
+                              <span className="w-24 text-slate-500 text-left font-bold">{item.stage}</span>
+                              <div className="flex-1 bg-slate-50 dark:bg-slate-800 rounded-lg overflow-hidden border border-slate-100 dark:border-slate-750">
+                                <div className={`h-8 ${item.bg} ${item.width} flex items-center justify-between px-3 text-white transition-all duration-300 font-extrabold text-[11px]`}>
+                                  <span>{item.count}</span>
+                                  <span>{item.percent}%</span>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className="text-[10px] text-slate-400 dark:text-slate-500 border-t border-slate-100 dark:border-slate-850 pt-4 mt-6">
+                        * Percentages are calculated relative to the total number of ingested inbound leads.
+                      </div>
                     </div>
-                    <h3 className="font-extrabold text-sm text-slate-800 mb-1">No enquiries found</h3>
+
+                    {/* SVG monthly trend line chart */}
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col justify-between transition-colors duration-200">
+                      <div>
+                        <h3 className="text-xs font-black uppercase tracking-[0.1em] text-slate-450 mb-6 flex items-center gap-2">
+                          <i className="fa-solid fa-chart-line text-[#EA580C]" /> Lead Volume Monthly Trend
+                        </h3>
+
+                        {/* Interactive Line Chart */}
+                        <div className="relative py-4 w-full h-44">
+                          <svg className="w-full h-full" viewBox="0 0 500 150">
+                            {/* Grid Lines */}
+                            <line x1="50" y1="20" x2="450" y2="20" stroke="#F1F5F9" strokeWidth="1" className="dark:stroke-slate-800" />
+                            <line x1="50" y1="60" x2="450" y2="60" stroke="#F1F5F9" strokeWidth="1" className="dark:stroke-slate-800" />
+                            <line x1="50" y1="100" x2="450" y2="100" stroke="#F1F5F9" strokeWidth="1" className="dark:stroke-slate-800" />
+                            <line x1="50" y1="130" x2="450" y2="130" stroke="#E2E8F0" strokeWidth="2" className="dark:stroke-slate-850" />
+
+                            {/* X-axis Labels */}
+                            <text x="50" y="145" fill="#94A3B8" fontSize="9" fontWeight="800" textAnchor="middle">MAR</text>
+                            <text x="130" y="145" fill="#94A3B8" fontSize="9" fontWeight="800" textAnchor="middle">APR</text>
+                            <text x="210" y="145" fill="#94A3B8" fontSize="9" fontWeight="800" textAnchor="middle">MAY</text>
+                            <text x="290" y="145" fill="#94A3B8" fontSize="9" fontWeight="800" textAnchor="middle">JUN</text>
+                            <text x="370" y="145" fill="#94A3B8" fontSize="9" fontWeight="800" textAnchor="middle">JUL</text>
+                            <text x="450" y="145" fill="#94A3B8" fontSize="9" fontWeight="800" textAnchor="middle">AUG</text>
+
+                            {/* Trend Line Path */}
+                            <path 
+                              d="M 50 120 C 90 90, 90 80, 130 95 C 170 110, 170 50, 210 65 C 250 80, 250 40, 290 35 C 330 30, 330 70, 370 50 C 410 30, 410 20, 450 15" 
+                              fill="none" 
+                              stroke="#2563EB" 
+                              strokeWidth="3.5" 
+                              strokeLinecap="round"
+                            />
+
+                            {/* Coordinate Dots */}
+                            <circle cx="50" cy="120" r="4.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1.5" />
+                            <circle cx="130" cy="95" r="4.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1.5" />
+                            <circle cx="210" cy="65" r="4.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1.5" />
+                            <circle cx="290" cy="35" r="4.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1.5" />
+                            <circle cx="370" cy="50" r="4.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1.5" />
+                            <circle cx="450" cy="15" r="4.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1.5" />
+                          </svg>
+                        </div>
+                      </div>
+
+                      <div className="text-[10px] text-slate-400 dark:text-slate-500 border-t border-slate-100 dark:border-slate-850 pt-4 mt-6">
+                        * Analytics reflect data points over the preceding 6 months.
+                      </div>
+                    </div>
+
                   </div>
-                )}
-              </div>
+
+                  {/* SVG Source bar chart */}
+                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm transition-colors duration-200">
+                    <h3 className="text-xs font-black uppercase tracking-[0.1em] text-slate-450 mb-6 flex items-center gap-2">
+                      <i className="fa-solid fa-chart-column text-emerald-600" /> Acquisition Source Channels Distribution
+                    </h3>
+
+                    {/* SVG Bar chart */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-4">
+                      {/* Left: Sources Progress bars list */}
+                      <div className="space-y-4">
+                        {[
+                          { source: "Organic Search", count: enquiries.filter(e => e.source.includes("Organic") || (e.utmParams && e.utmParams.medium === "organic")).length, color: "bg-emerald-500" },
+                          { source: "Social Media Campaign", count: enquiries.filter(e => e.source.includes("Facebook") || e.source.includes("Instagram") || e.source.includes("Twitter")).length, color: "bg-blue-500" },
+                          { source: "Exit Intent Popup", count: enquiries.filter(e => e.source.includes("Exit Intent")).length, color: "bg-orange-500" },
+                          { source: "Direct Traffic", count: enquiries.filter(e => e.source.includes("General") || e.source.includes("Manual") || !e.utmParams).length, color: "bg-purple-500" }
+                        ].map((item, idx) => {
+                          const percent = totalCount > 0 ? (item.count / totalCount) * 100 : 0;
+                          return (
+                            <div key={idx} className="space-y-1 text-xs font-semibold">
+                              <div className="flex justify-between text-slate-700 dark:text-slate-350">
+                                <span>{item.source}</span>
+                                <span className="font-extrabold text-slate-900 dark:text-white">{item.count} leads ({Math.round(percent)}%)</span>
+                              </div>
+                              <div className="w-full h-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-750 rounded-full overflow-hidden">
+                                <div className={`h-full ${item.color} rounded-full`} style={{ width: `${percent}%` }} />
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Right: Services Distribution list */}
+                      <div className="space-y-4">
+                        {[
+                          { service: "Next.js Web Design & Dev", count: enquiries.filter(e => e.service.includes("Next.js") || e.service.includes("Design")).length, color: "bg-blue-600" },
+                          { service: "Headless E-commerce Store", count: enquiries.filter(e => e.service.includes("E-commerce")).length, color: "bg-purple-600" },
+                          { service: "Custom React Application", count: enquiries.filter(e => e.service.includes("Application") || e.service.includes("React")).length, color: "bg-[#EA580C]" },
+                          { service: "Support & Maintenance", count: enquiries.filter(e => e.service.includes("Maintenance") || e.service.includes("Support")).length, color: "bg-slate-600" }
+                        ].map((item, idx) => {
+                          const percent = totalCount > 0 ? (item.count / totalCount) * 100 : 0;
+                          return (
+                            <div key={idx} className="space-y-1 text-xs font-semibold">
+                              <div className="flex justify-between text-slate-700 dark:text-slate-350">
+                                <span>{item.service}</span>
+                                <span className="font-extrabold text-slate-900 dark:text-white">{item.count} leads ({Math.round(percent)}%)</span>
+                              </div>
+                              <div className="w-full h-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-750 rounded-full overflow-hidden">
+                                <div className={`h-full ${item.color} rounded-full`} style={{ width: `${percent}%` }} />
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              )}
 
             </div>
           )}
@@ -1174,16 +1807,14 @@ export default function AdminPage() {
           {/* TAB CONTENT: Geolocation Visitor Map */}
           {activeTab === "map" && (
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12 animate-fade-in">
-              {/* Visual Leaflet Map */}
-              <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm lg:col-span-2">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 rounded-3xl p-6 shadow-sm lg:col-span-2">
                 <h3 className="text-xs font-black uppercase tracking-[0.1em] text-slate-450 mb-4 flex items-center gap-2">
                   <i className="fa-regular fa-map text-emerald-600" /> Interactive Traffic Heatmap
                 </h3>
                 <VisitorMap markers={analytics.mapMarkers} />
               </div>
 
-              {/* City Listings Panel */}
-              <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between transition-colors duration-200">
                 <div>
                   <h3 className="text-xs font-black uppercase tracking-[0.1em] text-slate-450 mb-5 flex items-center gap-2">
                     <i className="fa-solid fa-city text-emerald-600" /> Top Visitor Geographics
@@ -1195,11 +1826,11 @@ export default function AdminPage() {
                         const percent = analytics.totalPageviews > 0 ? (item.count / analytics.totalPageviews) * 100 : 0;
                         return (
                           <div key={`${item.city}-${index}`} className="flex flex-col gap-1">
-                            <div className="flex justify-between items-center text-xs font-bold text-slate-700">
+                            <div className="flex justify-between items-center text-xs font-bold text-slate-700 dark:text-slate-300">
                               <span>{item.city} <span className="text-slate-400 font-medium">({item.country})</span></span>
-                              <span className="text-emerald-700 font-extrabold">{item.count} hits</span>
+                              <span className="text-emerald-700 dark:text-emerald-400 font-extrabold">{item.count} hits</span>
                             </div>
-                            <div className="w-full h-2 bg-slate-50 rounded-full overflow-hidden border border-slate-100">
+                            <div className="w-full h-2 bg-slate-50 dark:bg-slate-800 rounded-full overflow-hidden border border-slate-100 dark:border-slate-750">
                               <div 
                                 className="h-full bg-emerald-500 rounded-full" 
                                 style={{ width: `${percent}%` }}
@@ -1211,7 +1842,7 @@ export default function AdminPage() {
                     </div>
                   ) : (
                     <div className="py-16 text-center flex flex-col items-center">
-                      <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 mb-3">
+                      <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-750 flex items-center justify-center text-slate-400 mb-3">
                         <i className="fa-solid fa-earth-asia" />
                       </div>
                       <span className="text-slate-500 text-xs font-bold">No geography logs yet</span>
@@ -1220,14 +1851,14 @@ export default function AdminPage() {
                   )}
                 </div>
 
-                <div className="border-t border-slate-100 pt-4 mt-6 text-center">
+                <div className="border-t border-slate-100 dark:border-slate-800/80 pt-4 mt-6 text-center">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="flex flex-col">
-                      <span className="text-2xl font-black text-emerald-600">{analytics.totalPageviews}</span>
+                      <span className="text-2xl font-black text-emerald-600 dark:text-emerald-400">{analytics.totalPageviews}</span>
                       <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-1">Total Hits</span>
                     </div>
-                    <div className="flex flex-col border-l border-slate-100">
-                      <span className="text-2xl font-black text-emerald-600">{analytics.uniqueVisitors}</span>
+                    <div className="flex flex-col border-l border-slate-100 dark:border-slate-800/80">
+                      <span className="text-2xl font-black text-emerald-600 dark:text-emerald-400">{analytics.uniqueVisitors}</span>
                       <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-1">Unique Approx</span>
                     </div>
                   </div>
@@ -1238,69 +1869,69 @@ export default function AdminPage() {
 
           {/* TAB CONTENT: User Session Heatmaps */}
           {activeTab === "heatmaps" && (
-            <div className="max-w-3xl mx-auto bg-white border border-slate-200 rounded-3xl p-8 shadow-sm mb-12 animate-fade-in">
+            <div className="max-w-3xl mx-auto bg-white dark:bg-slate-900 border border-slate-200 rounded-3xl p-8 shadow-sm mb-12 animate-fade-in transition-colors duration-200">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 bg-orange-50 border border-orange-100 rounded-2xl flex items-center justify-center text-orange-500 shadow-sm shrink-0">
+                <div className="w-14 h-14 bg-orange-50 dark:bg-orange-950/20 border border-orange-100 dark:border-orange-900/30 rounded-2xl flex items-center justify-center text-orange-500 shadow-sm shrink-0">
                   <i className="fa-regular fa-eye text-2xl animate-pulse text-[#2563EB]" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-black text-slate-900 leading-tight">Cursor Heatmaps & Session Recordings</h3>
-                  <p className="text-xs text-slate-500 mt-0.5">Understand user behavior, click actions, and scrolling scrolls using Microsoft Clarity.</p>
+                  <h3 className="text-lg font-black text-slate-900 dark:text-white leading-tight">Cursor Heatmaps & Session Recordings</h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-450 mt-0.5">Understand user behavior, click actions, and scrolling scrolls using Microsoft Clarity.</p>
                 </div>
               </div>
 
-              <div className="text-xs text-slate-600 space-y-4 mb-8 leading-relaxed">
+              <div className="text-xs text-slate-655 dark:text-slate-350 space-y-4 mb-8 leading-relaxed font-medium">
                 <p>
                   To provide smooth mouse tracking and click heatmaps without slowing down your Next.js application, we have integrated support for **Microsoft Clarity**—an industry-standard, 100% free behavior analytics platform.
                 </p>
                 
-                <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 grid grid-cols-1 md:grid-cols-2 gap-6 text-slate-700">
+                <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 grid grid-cols-1 md:grid-cols-2 gap-6 text-slate-700 dark:text-slate-300">
                   <div className="flex gap-3">
-                    <span className="text-lg text-emerald-600"><i className="fa-solid fa-circle-check" /></span>
+                    <span className="text-lg text-emerald-600 dark:text-emerald-400"><i className="fa-solid fa-circle-check" /></span>
                     <div>
-                      <strong className="block text-slate-900 mb-0.5">Click Heatmaps</strong>
+                      <strong className="block text-slate-900 dark:text-white mb-0.5 font-bold">Click Heatmaps</strong>
                       Identify where users click on your pages, which CTA buttons are most active, and which links get missed.
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <span className="text-lg text-emerald-600"><i className="fa-solid fa-circle-check" /></span>
+                    <span className="text-lg text-emerald-600 dark:text-emerald-400"><i className="fa-solid fa-circle-check" /></span>
                     <div>
-                      <strong className="block text-slate-900 mb-0.5">Session Recordings</strong>
+                      <strong className="block text-slate-900 dark:text-white mb-0.5 font-bold">Session Recordings</strong>
                       Watch anonymous recordings of individual users as they navigate, scroll, and type to locate design friction.
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <span className="text-lg text-emerald-600"><i className="fa-solid fa-circle-check" /></span>
+                    <span className="text-lg text-emerald-600 dark:text-emerald-400"><i className="fa-solid fa-circle-check" /></span>
                     <div>
-                      <strong className="block text-slate-900 mb-0.5">Scroll Depth</strong>
+                      <strong className="block text-slate-900 dark:text-white mb-0.5 font-bold">Scroll Depth</strong>
                       See how far down users read your pages to optimize placement of key elements.
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <span className="text-lg text-emerald-600"><i className="fa-solid fa-circle-check" /></span>
+                    <span className="text-lg text-emerald-600 dark:text-emerald-400"><i className="fa-solid fa-circle-check" /></span>
                     <div>
-                      <strong className="block text-slate-900 mb-0.5">Rage Clicks Detection</strong>
+                      <strong className="block text-slate-900 dark:text-white mb-0.5 font-bold">Rage Clicks Detection</strong>
                       Automatically detect frustrated clicks on broken layouts or non-interactive page objects.
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-emerald-50 border border-emerald-250 rounded-2xl p-4.5 text-[11px] text-emerald-800">
-                  <p className="font-bold flex items-center gap-1.5 mb-1">
+                <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-250 dark:border-emerald-900/30 rounded-2xl p-4.5 text-[11px] text-emerald-800 dark:text-emerald-400 font-semibold">
+                  <p className="font-bold flex items-center gap-1.5 mb-1 text-emerald-900 dark:text-emerald-300">
                     <i className="fa-solid fa-circle-check" /> Clarity Integration status: ACTIVE & LIVE
                   </p>
-                  <p className="font-semibold text-emerald-950">
+                  <p>
                     Your Microsoft Clarity project ID (`y1a7vgc8a7`) is successfully integrated into the website template layout. User cursor coordinates, scrolls, clicks, and page records are being captured automatically in the background.
                   </p>
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 border-t border-slate-100 pt-6">
+              <div className="flex flex-col sm:flex-row gap-4 border-t border-slate-100 dark:border-slate-800 pt-6">
                 <a
                   href="https://clarity.microsoft.com/projects/view/y1a7vgc8a7/dashboard"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-xs px-8 py-4.5 rounded-xl shadow-md transition-all text-center flex items-center justify-center gap-2 cursor-pointer flex-1"
+                  className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-xs px-8 py-4.5 rounded-xl shadow-md transition-all text-center flex items-center justify-center gap-2 cursor-pointer flex-1 animate-fade-in"
                 >
                   Open Clarity Heatmaps Console <i className="fa-solid fa-arrow-up-right-from-square" />
                 </a>
@@ -1308,7 +1939,7 @@ export default function AdminPage() {
                   href="https://clarity.microsoft.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-extrabold text-xs px-6 py-4.5 rounded-xl transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-extrabold text-xs px-6 py-4.5 rounded-xl transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   Clarity Portal
                 </a>
@@ -1322,79 +1953,78 @@ export default function AdminPage() {
       {/* QUICK ADD LEAD MODAL DIALOG */}
       {isQuickAddOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* backdrop */}
           <div className="absolute inset-0 bg-[#0F172A]/50 backdrop-blur-sm" onClick={() => setIsQuickAddOpen(false)} />
           
-          <div className="bg-white border border-slate-200 rounded-[24px] shadow-2xl relative z-10 w-full max-w-xl p-6 md:p-8 animate-fade-in text-left">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[24px] shadow-2xl relative z-10 w-full max-w-xl p-6 md:p-8 animate-fade-in text-left">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h3 className="text-base font-extrabold text-slate-900 leading-none">Add Customer Lead</h3>
-                <p className="text-[10px] text-slate-550 mt-1.5 font-medium">Record a custom inquiry manually into the sales dashboard pipeline.</p>
+                <h3 className="text-base font-extrabold text-slate-900 dark:text-white leading-none">Add Customer Lead</h3>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1.5 font-medium">Record a custom inquiry manually into the sales dashboard pipeline.</p>
               </div>
-              <button onClick={() => setIsQuickAddOpen(false)} className="w-8 h-8 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-700 cursor-pointer flex items-center justify-center transition-colors">
+              <button onClick={() => setIsQuickAddOpen(false)} className="w-8 h-8 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-700 cursor-pointer flex items-center justify-center transition-colors">
                 <i className="fa-solid fa-xmark text-sm" />
               </button>
             </div>
 
-            <form onSubmit={handleQuickAddSubmit} className="space-y-4.5 text-xs text-slate-700">
+            <form onSubmit={handleQuickAddSubmit} className="space-y-4.5 text-xs text-slate-750 dark:text-slate-350">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4.5">
-                <div className="flex flex-col gap-1.5">
-                  <label className="font-bold text-slate-600">Lead Name *</label>
+                <div className="flex flex-col gap-1.5 font-semibold">
+                  <label className="text-slate-600 dark:text-slate-400">Lead Name *</label>
                   <input
                     type="text"
                     required
                     value={quickAddForm.name}
                     onChange={(e) => setQuickAddForm({ ...quickAddForm, name: e.target.value })}
-                    className="border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 font-medium"
+                    className="border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 py-2.5 rounded-xl outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-[#2563EB] font-medium"
                     placeholder="E.g. John Doe"
                   />
                 </div>
 
-                <div className="flex flex-col gap-1.5">
-                  <label className="font-bold text-slate-600">Company Name</label>
+                <div className="flex flex-col gap-1.5 font-semibold">
+                  <label className="text-slate-600 dark:text-slate-400">Company Name</label>
                   <input
                     type="text"
                     value={quickAddForm.companyName}
                     onChange={(e) => setQuickAddForm({ ...quickAddForm, companyName: e.target.value })}
-                    className="border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 font-medium"
+                    className="border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 py-2.5 rounded-xl outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-[#2563EB] font-medium"
                     placeholder="E.g. Acme Corp"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4.5">
-                <div className="flex flex-col gap-1.5">
-                  <label className="font-bold text-slate-600">Email Address *</label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4.5 animate-fade-in">
+                <div className="flex flex-col gap-1.5 font-semibold">
+                  <label className="text-slate-600 dark:text-slate-400">Email Address *</label>
                   <input
                     type="email"
                     required
                     value={quickAddForm.email}
                     onChange={(e) => setQuickAddForm({ ...quickAddForm, email: e.target.value })}
-                    className="border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 font-medium"
+                    className="border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 py-2.5 rounded-xl outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-[#2563EB] font-medium"
                     placeholder="E.g. john@doe.com"
                   />
                 </div>
 
-                <div className="flex flex-col gap-1.5">
-                  <label className="font-bold text-slate-600">Mobile Phone *</label>
+                <div className="flex flex-col gap-1.5 font-semibold">
+                  <label className="text-slate-600 dark:text-slate-400">Mobile Phone *</label>
                   <input
                     type="text"
                     required
                     value={quickAddForm.mobile}
                     onChange={(e) => setQuickAddForm({ ...quickAddForm, mobile: e.target.value })}
-                    className="border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 font-medium"
+                    className="border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 py-2.5 rounded-xl outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-[#2563EB] font-medium"
                     placeholder="E.g. +91 9876543210"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4.5">
-                <div className="flex flex-col gap-1.5">
-                  <label className="font-bold text-slate-600">Target Region</label>
+                <div className="flex flex-col gap-1.5 font-semibold">
+                  <label className="text-slate-600 dark:text-slate-400">Target Region</label>
                   <select
                     value={quickAddForm.region}
                     onChange={(e) => setQuickAddForm({ ...quickAddForm, region: e.target.value })}
-                    className="border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 font-semibold cursor-pointer"
+                    className="border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 py-2.5 rounded-xl outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-[#2563EB] font-semibold cursor-pointer"
                   >
                     <option value="US">United States (US)</option>
                     <option value="UK">United Kingdom (UK)</option>
@@ -1404,24 +2034,24 @@ export default function AdminPage() {
                   </select>
                 </div>
 
-                <div className="flex flex-col gap-1.5">
-                  <label className="font-bold text-slate-600">Website Url</label>
+                <div className="flex flex-col gap-1.5 font-semibold">
+                  <label className="text-slate-600 dark:text-slate-400">Website Url</label>
                   <input
                     type="text"
                     value={quickAddForm.website}
                     onChange={(e) => setQuickAddForm({ ...quickAddForm, website: e.target.value })}
-                    className="border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 font-medium"
+                    className="border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 py-2.5 rounded-xl outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-[#2563EB] font-medium"
                     placeholder="E.g. www.doe.com"
                   />
                 </div>
               </div>
 
-              <div className="flex flex-col gap-1.5">
-                <label className="font-bold text-slate-600">Requested Service Type</label>
+              <div className="flex flex-col gap-1.5 font-semibold">
+                <label className="text-slate-600 dark:text-slate-400">Requested Service Type</label>
                 <select
                   value={quickAddForm.service}
                   onChange={(e) => setQuickAddForm({ ...quickAddForm, service: e.target.value })}
-                  className="border border-slate-200 bg-slate-50 px-3 py-2.5 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 font-semibold cursor-pointer"
+                  className="border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 py-2.5 rounded-xl outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-[#2563EB] font-semibold cursor-pointer"
                 >
                   <option value="Next.js Web Design & Development">Next.js Web Design & Dev</option>
                   <option value="Corporate Business Website">Corporate Business Website</option>
@@ -1432,28 +2062,28 @@ export default function AdminPage() {
                 </select>
               </div>
 
-              <div className="flex flex-col gap-1.5">
-                <label className="font-bold text-slate-600">Client Description Query</label>
+              <div className="flex flex-col gap-1.5 font-semibold">
+                <label className="text-slate-600 dark:text-slate-400">Client Description Query</label>
                 <textarea
                   value={quickAddForm.message}
                   onChange={(e) => setQuickAddForm({ ...quickAddForm, message: e.target.value })}
-                  className="border border-slate-200 bg-slate-50 p-3 rounded-xl outline-none focus:bg-white focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/5 font-medium min-h-[80px] resize-none"
+                  className="border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 rounded-xl outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-[#2563EB] font-medium min-h-[80px] resize-none text-slate-800 dark:text-white"
                   placeholder="Type descriptive details here..."
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-3.5 border-t border-slate-100 pt-5">
+              <div className="flex items-center justify-end gap-3.5 border-t border-slate-100 dark:border-slate-800 pt-5">
                 <button
                   type="button"
                   onClick={() => setIsQuickAddOpen(false)}
-                  className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-extrabold cursor-pointer transition-colors"
+                  className="px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-250 text-slate-600 dark:text-slate-300 font-extrabold cursor-pointer transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={quickAddSubmitting}
-                  className="px-6 py-2.5 rounded-xl bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-extrabold cursor-pointer transition-all shadow-sm disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="px-6 py-2.5 rounded-xl bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-extrabold cursor-pointer transition-all shadow-sm disabled:opacity-40"
                 >
                   {quickAddSubmitting ? "Saving Lead..." : "Save Record"}
                 </button>
@@ -1461,6 +2091,24 @@ export default function AdminPage() {
             </form>
           </div>
         </div>
+      )}
+
+      {/* LEAD DETAILS DRAWER SLIDEOUT */}
+      {selectedLead && (
+        <LeadDetailsDrawer
+          lead={selectedLead}
+          isOpen={isDrawerOpen}
+          onClose={() => {
+            setIsDrawerOpen(false);
+            setSelectedLead(null);
+            fetchEnquiries(); // Refresh dashboard data in case things were edited
+          }}
+          onUpdate={(updatedLead) => {
+            setSelectedLead(updatedLead);
+            setEnquiries(prev => prev.map(e => e.id === updatedLead.id ? updatedLead : e));
+          }}
+          currentUserRole={currentRole}
+        />
       )}
 
     </div>

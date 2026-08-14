@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import FontAwesomeLoader from "@/components/layout/FontAwesomeLoader";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import ClarityTracker from "@/components/ClarityTracker";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import "./globals.css";
 
 
@@ -65,6 +66,7 @@ export default function RootLayout({
         <FontAwesomeLoader />
       </head>
       <body className="min-h-full flex flex-col bg-light-bg text-text-primary">
+        <GoogleAnalytics />
         <AnalyticsTracker />
         <ClarityTracker />
         {children}

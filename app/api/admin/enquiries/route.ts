@@ -52,7 +52,13 @@ export async function GET() {
         region: d.region,
         status: d.status,
         createdAt: d.createdAt,
-        notes: d.notes || ""
+        notes: d.notes || "",
+        followUpDate: d.followUpDate || null,
+        pipelineStage: d.pipelineStage || "new",
+        assignedTo: d.assignedTo || "",
+        utmParams: d.utmParams || null,
+        activities: d.activities || [],
+        proposals: d.proposals || []
       }));
       return NextResponse.json(mapped);
     } catch (e: any) {
@@ -61,13 +67,35 @@ export async function GET() {
     }
   } else {
     const enquiries = readEnquiries();
-    return NextResponse.json(enquiries);
+    const mapped = enquiries.map((enq: any) => ({
+      id: enq.id,
+      name: enq.name,
+      companyName: enq.companyName,
+      website: enq.website,
+      email: enq.email,
+      mobile: enq.mobile,
+      service: enq.service,
+      message: enq.message,
+      source: enq.source,
+      region: enq.region,
+      status: enq.status,
+      createdAt: enq.createdAt,
+      notes: enq.notes || "",
+      followUpDate: enq.followUpDate || null,
+      pipelineStage: enq.pipelineStage || "new",
+      assignedTo: enq.assignedTo || "",
+      utmParams: enq.utmParams || null,
+      activities: enq.activities || [],
+      proposals: enq.proposals || []
+    }));
+    return NextResponse.json(mapped);
   }
 }
 
 export async function PATCH(request: Request) {
   try {
-    const { id, status, notes } = await request.json();
+    const body = await request.json();
+    const { id, status, notes, followUpDate, pipelineStage, assignedTo, activities, proposals } = body;
     if (!id) {
       return NextResponse.json({ error: "Missing enquiry ID" }, { status: 400 });
     }
@@ -81,6 +109,11 @@ export async function PATCH(request: Request) {
         const updateFields: any = {};
         if (status !== undefined) updateFields.status = status;
         if (notes !== undefined) updateFields.notes = notes;
+        if (followUpDate !== undefined) updateFields.followUpDate = followUpDate;
+        if (pipelineStage !== undefined) updateFields.pipelineStage = pipelineStage;
+        if (assignedTo !== undefined) updateFields.assignedTo = assignedTo;
+        if (activities !== undefined) updateFields.activities = activities;
+        if (proposals !== undefined) updateFields.proposals = proposals;
 
         const result = await db.collection("enquiries").updateOne(
           { id: id },
@@ -105,6 +138,11 @@ export async function PATCH(request: Request) {
             ...enq,
             ...(status !== undefined && { status }),
             ...(notes !== undefined && { notes }),
+            ...(followUpDate !== undefined && { followUpDate }),
+            ...(pipelineStage !== undefined && { pipelineStage }),
+            ...(assignedTo !== undefined && { assignedTo }),
+            ...(activities !== undefined && { activities }),
+            ...(proposals !== undefined && { proposals }),
           };
         }
         return enq;

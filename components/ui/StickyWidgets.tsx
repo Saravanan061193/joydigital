@@ -43,7 +43,13 @@ export default function StickyWidgets() {
           <span className="text-[13px] font-bold text-primary-dark">Free SEO & Design Audit</span>
         </div>
         <Link
-          href="/contact?type=audit"
+          href="/#audit-section"
+          onClick={() => {
+            const tracker = (window as any).trackJoyDigitalEvent;
+            if (typeof tracker === "function") {
+              tracker("cta_click", { button_text: "Claim Audit", location: "sticky mobile banner" });
+            }
+          }}
           className="bg-accent text-white font-bold text-xs px-4 py-2.5 rounded-md shadow-sm hover:bg-accent-dark transition-all duration-300"
         >
           Claim Audit
@@ -70,6 +76,12 @@ export default function StickyWidgets() {
       {/* Floating Call Button */}
       <a
         href="tel:+919080026133"
+        onClick={() => {
+          const tracker = (window as any).trackJoyDigitalEvent;
+          if (typeof tracker === "function") {
+            tracker("call_click", { location: "floating button" });
+          }
+        }}
         className="fixed bottom-36 lg:bottom-24 right-6 w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center text-2xl shadow-lg hover:scale-110 transition-all duration-300 z-40"
         aria-label="Call Us Now"
         title="Call Us Now"
@@ -84,6 +96,12 @@ export default function StickyWidgets() {
         href="https://wa.me/919080026133?text=Hello%20Joy%20Digital,%20I'd%20like%20to%20get%20a%20free%20consultation%20for%20my%20business."
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => {
+          const tracker = (window as any).trackJoyDigitalEvent;
+          if (typeof tracker === "function") {
+            tracker("whatsapp_click", { location: "floating button" });
+          }
+        }}
         className={`fixed bottom-20 lg:bottom-8 right-6 w-14 h-14 bg-whatsapp-green text-white rounded-full flex items-center justify-center text-3xl shadow-lg hover:scale-110 hover:rotate-[5deg] transition-all duration-300 z-40 group`}
         aria-label="Chat on WhatsApp"
         title="Chat on WhatsApp"

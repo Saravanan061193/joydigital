@@ -3,21 +3,21 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Next.js Web Development Company in Chennai | Fast React Sites",
-  description: "Looking for a Next.js web development company in Chennai? We are fast loading website developers specializing in react js web app development.",
+  title: "Website Development Company in Chennai | Next.js & React JS",
+  description: "Looking for a Next.js website development company in Chennai? We build fast React JS platforms and corporate websites that score 95+ on Core Web Vitals.",
   alternates: {
     canonical: "https://joydigital.in/website-development-company-chennai",
   },
   openGraph: {
-    title: "Next.js Web Development Company in Chennai | Fast React Sites",
-    description: "Looking for a Next.js web development company in Chennai? We are fast loading website developers specializing in react js web app development.",
+    title: "Website Development Company in Chennai | Next.js & React JS",
+    description: "Looking for a Next.js website development company in Chennai? We build fast React JS platforms and corporate websites that score 95+ on Core Web Vitals.",
     url: "https://joydigital.in/website-development-company-chennai",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Next.js Web Development Company in Chennai | Fast React Sites",
-    description: "Looking for a Next.js web development company in Chennai? We are fast loading website developers specializing in react js web app development.",
+    title: "Website Development Company in Chennai | Next.js & React JS",
+    description: "Looking for a Next.js website development company in Chennai? We build fast React JS platforms and corporate websites that score 95+ on Core Web Vitals.",
   }
 };
 
@@ -34,10 +34,8 @@ const pageSchema = {
     "priceRange": "₹₹",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Old Perungalathur",
       "addressLocality": "Chennai",
       "addressRegion": "Tamil Nadu",
-      "postalCode": "600063",
       "addressCountry": "IN"
     }
   },
@@ -51,26 +49,34 @@ const pageSchema = {
   }
 };
 
-export default function NextJsWebDevChennai() {
+export default function WebDevChennai() {
   return (
     <ServicePageTemplate
-      serviceName="Next.js Web Development Company Chennai"
-      heroTitle="Next.js Web Development Company in Chennai"
+      serviceName="Website Development Chennai"
+      heroTitle="Website Development Company in Chennai"
       heroSubtitle="Get dynamic React JS web app development and launch fast loading website assets. As a leading Next.js web development company in Chennai, we build platforms that rank top on search results."
       leadSource="Next.js Web Development Chennai Landing Page"
       canonicalUrl="https://joydigital.in/website-development-company-chennai"
       overviewTitle="High-Speed Next.js & React JS Web App Development in Chennai"
       overviewContent={
-        <div className="space-y-6">
+        <div className="space-y-6 text-justify">
           <p>
-            For modern businesses seeking maximum conversions and top search rankings, standard website templates no longer suffice. We are a specialized <strong>Next.js web development company in Chennai</strong> focused on coding custom React sites. We bypass slow databases and heavy plugins to engineer platforms that load in under 1.5 seconds.
+            In the tech-driven ecosystem of Chennai—from the IT corridors of OMR and corporate parks of Guindy to growing hubs in Velachery and Ambattur—digital competition is intense. For modern companies, basic online brochures no longer stand out. If your business wants to capture high-intent inquiries and rank at the top of Google searches, custom coding is essential. We are a specialized <strong>Next.js web development company in Chennai</strong> focusing on writing clean React JS frontend pages. We skip bloated database dependencies to build web platforms that load in under 1.5 seconds.
           </p>
           <p>
-            As professional <strong>fast loading website developers</strong>, our team structures every element of your project for speed, search visibility, and conversion. From local GBP alignment to complex API syncs, we handle the technical design so you can grow your business.
+            As professional <strong>fast loading website developers</strong>, we make sure that speed, design structure, and search engine parameters are fully optimized from day one. Standard template systems often introduce layout shift errors and contain unnecessary scripts that increase mobile load times. We code your website block by block, guaranteeing optimal Core Web Vitals and a smooth user experience.
           </p>
-          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Why React JS Web App Development Leads the Market</h3>
+          <h3 className="text-xl font-bold text-[#0F172A] mt-8 mb-4">Why Next.js & React JS Web App Development Matter</h3>
           <p>
-            Using legacy builders like WordPress often introduces server latency, bloated Javascript chunks, and security vulnerabilities. Our <strong>React JS web app development</strong> utilizes modern serverless hosting on global CDNs. This guarantees 100% uptime, zero database injection risks, and an instant mobile rendering experience for your visitors.
+            WordPress and drag-and-drop builders load heavy files, require frequent security updates, and crash during traffic peaks. Our React architectures utilize static pre-rendering distributed across global edge networks. This guarantees fast responses on mobile devices, eliminates SQL injection risks, and provides a secure, lightweight platform for your business.
+          </p>
+          <h3 className="text-xl font-bold text-[#0F172A] mt-8 mb-4">Optimized to Rank in Local Map Packs and organic search</h3>
+          <p>
+            Chennai-based services need local visibility to win clients. We inject structured JSON-LD schemas, local business coordinates, and keyword-rich headers directly into the website code. This aligns your platform with Google search rules, helping your business appear in map search results when customers search for your services.
+          </p>
+          <h3 className="text-xl font-bold text-[#0F172A] mt-8 mb-4">Conversion Rate Optimization (CRO) & Interactive CTAs</h3>
+          <p>
+            Traffic only brings value if it converts. We focus on placing call buttons, sticky headers, and quick-load contact fields exactly where users look. By integrating direct WhatsApp messaging paths and simple forms, we help you capture qualified leads from Chennai and other regions in India efficiently.
           </p>
         </div>
       }
@@ -115,13 +121,13 @@ export default function NextJsWebDevChennai() {
           step: "1",
           icon: "fa-solid fa-compass-drafting",
           title: "Keyword & Wireframe Plan",
-          description: "We map out navigation flow, LSI keywords, and wireframe pages customized to your local industry niche.",
+          description: "We map out navigation flow, target keywords, and wireframe pages customized to your local industry niche.",
         },
         {
           step: "2",
           icon: "fa-solid fa-code",
           title: "React/Next.js Coding Sprints",
-          description: "We convert your approved Figmas into fast, semantic, fully responsive HTML & TypeScript code.",
+          description: "We convert your approved layouts into fast, semantic, fully responsive HTML & TypeScript code.",
         },
         {
           step: "3",
@@ -187,23 +193,23 @@ export default function NextJsWebDevChennai() {
       ]}
       faqs={[
         {
-          question: "Why is Next.js better than traditional WordPress for local SEO?",
-          answer: "Next.js websites load under 1.5 seconds and score 95+ on Core Web Vitals, which is a major Google ranking factor. Unlike legacy WordPress, Next.js generates static HTML pre-rendered on global CDNs, has no heavy databases or plugins to hack, and outputs clean, semantic code with optimized meta tags and structured local schemas for local search maps ranking.",
+          question: "Which areas in Chennai do you cover?",
+          answer: "We cover all major locations in Chennai remotely, including OMR, Adyar, Guindy, Velachery, Ambattur, T.Nagar, Annanagar, Tambaram, and Perungalathur. Our communication models are fully online via calls, Zoom, and WhatsApp.",
         },
         {
-          question: "How fast should a corporate website load to rank on Google?",
-          answer: "A corporate website should ideally load in under 2 seconds. According to Google speed guidelines, any site loading slower than 3 seconds suffers from high mobile bounce rates, directly harming organic search visibility. Building websites with modern frameworks like React and Next.js ensures maximum speed and lower bounce rates.",
+          question: "Can we track lead conversions in Google Analytics and GSC?",
+          answer: "Yes, we integrate Google Analytics 4 (GA4) and track client clicks, WhatsApp enquiries, form submissions, and telephone calls to measure your marketing return on investment.",
         },
         {
-          question: "How much does a custom website design cost in Chennai?",
-          answer: "A custom website design in Chennai starts from ₹15,000 for a starter business landing page. Custom website development projects, complex e-commerce portals, and enterprise web solutions are priced based on the page count, custom features, API integrations, and ongoing technical support needs.",
+          question: "What is your website maintenance policy?",
+          answer: "We support you for 1 year with initial hosting setup and minor adjustments. There are no lock-in maintenance contracts—you retain complete ownership of the code repository and files.",
         },
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
-        { href: "/website-design-company-in-chennai", label: "Web Design Chennai" },
-        { href: "/seo-services-in-chennai", label: "SEO Services Chennai" },
-        { href: "/affordable-web-design-agency-chennai", label: "Affordable Web Design" },
+        { href: "/website-development-company-madurai", label: "Web Development Madurai" },
+        { href: "/seo-services-chennai", label: "SEO Services Chennai" },
+        { href: "/seo-services-madurai", label: "SEO Services Madurai" },
       ]}
     />
   );

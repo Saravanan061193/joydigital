@@ -81,9 +81,10 @@ export default function Footer() {
               Joy<span className="text-accent">Digital</span>
             </span>
           </Link>
-          <p className="text-text-secondary text-xs leading-relaxed">
-            High-performance web agency delivering custom website development, premium React/Next.js design, and conversion-focused digital platforms.
-          </p>
+          <div className="text-text-secondary text-xs leading-relaxed flex flex-col gap-3">
+            <p className="font-bold text-[#0F172A]">Website Design | Web Development | SEO | Digital Marketing</p>
+            <p>Based in Tamil Nadu, India. Serving businesses across Madurai, Chennai, Coimbatore, Bangalore, Hyderabad, Mumbai, and other cities across India through remote support.</p>
+          </div>
           <div className="flex items-center gap-3">
             <a
               href="https://wa.me/919080026133"
@@ -176,13 +177,13 @@ export default function Footer() {
               </li>
             ))}
             <li className="border-t border-[#E5E7EB] pt-2 mt-1">
-              <Link href="/website-development-company-chennai" className="hover:text-accent hover:pl-1 transition-all block">
-                Website Development Chennai
+              <Link href="/website-development" className="hover:text-accent hover:pl-1 transition-all block">
+                Web Development Services India
               </Link>
             </li>
             <li>
-              <Link href="/website-design-company-in-chennai" className="hover:text-accent hover:pl-1 transition-all block">
-                Website Design Chennai
+              <Link href="/web-design-services" className="hover:text-accent hover:pl-1 transition-all block">
+                Website Design Services India
               </Link>
             </li>
           </ul>
@@ -287,7 +288,7 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-[#E5E7EB] mt-8 flex flex-col gap-6 text-center text-xs text-text-secondary">
         <p className="font-semibold text-slate-500">
-          Joy Digital – Website Development Company in Chennai | Web Design | Ecommerce Development | SEO Services | Digital Marketing
+          Joy Digital – Web Design, Web Development & SEO Services in India | Serving Chennai, Madurai, Coimbatore, Bangalore, Hyderabad, Mumbai, and other cities.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 w-full">
           <p>
