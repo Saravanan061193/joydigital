@@ -57,30 +57,35 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
       title: "Website Design",
       description: "Professional, mobile-responsive web layouts for startups and corporate brands in India. We design user-centric interfaces that represent your company and convert traffic.",
       href: "/web-design-services",
+      linkText: "Explore Web Design Services",
     },
     {
       icon: "fa-solid fa-code",
       title: "Web Development",
       description: "Custom React and Next.js website engineering. We build high-speed corporate portals, e-commerce storefronts, and digital platforms optimized for performance.",
       href: "/website-development",
+      linkText: "Explore Website Development",
     },
     {
       icon: "fa-solid fa-magnifying-glass-chart",
       title: "SEO Services",
       description: "India-wide SEO solutions to get your business onto Google page one. We optimize speed, clean semantic code structures, and handle indexing barriers for long-term organic growth.",
       href: "/seo-services",
+      linkText: "Explore SEO Services",
     },
     {
       icon: "fa-solid fa-chart-line",
       title: "Digital Marketing",
       description: "Expand your reach and attract prospects with targeted campaigns. We structure distraction-free landing pages and setup conversion tracking models to measure ROI.",
       href: "/contact",
+      linkText: "Contact Joy Digital",
     },
     {
       icon: "fa-solid fa-map-location-dot",
       title: "Google Business Profile Optimization",
       description: "Dominate local search queries in your target city. We optimize GMB maps proximity, setup local citation directories, and construct review acquisition funnels.",
       href: "/google-business-profile-setup",
+      linkText: "Explore Google Business Profile Setup",
     },
   ];
 
@@ -378,7 +383,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                     href={s.href}
                     className="text-xs font-bold text-[#2563EB] flex items-center gap-1.5 mt-2 transition-colors hover:text-[#3B82F6]"
                   >
-                    Learn More <i className="fa-solid fa-chevron-right text-[9px] group-hover:translate-x-1 transition-transform" />
+                    {s.linkText} <i className="fa-solid fa-chevron-right text-[9px] group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </article>
               ))}
