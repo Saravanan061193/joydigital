@@ -12,6 +12,7 @@ interface BlogPost {
   date: string;
   category: string;
   author: string;
+  image?: string;
 }
 
 interface BlogListingContainerProps {
@@ -172,7 +173,7 @@ export default function BlogListingContainer({ posts }: BlogListingContainerProp
                     {/* Thumbnail representation */}
                     <div className="relative w-full h-48 bg-slate-50 overflow-hidden border-b border-[#E2E8F0]">
                       <Image
-                        src={getThumbnail(post.category)}
+                        src={post.image || getThumbnail(post.category)}
                         alt={`${post.title} preview`}
                         fill
                         sizes="(max-w-768px) 100vw, 33vw"

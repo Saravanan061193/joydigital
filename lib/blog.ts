@@ -11,6 +11,7 @@ export interface BlogPost {
   date: string;
   category: string;
   author: string;
+  image?: string;
   content: string;
 }
 
@@ -36,6 +37,7 @@ export function getAllPosts(): BlogPost[] {
         date: data.date || "",
         category: data.category || "General",
         author: data.author || "Admin",
+        image: data.image || "",
         content,
       };
     });
@@ -68,6 +70,7 @@ export function getPostBySlug(slug: string): BlogPost | null {
       date: data.date || "",
       category: data.category || "General",
       author: data.author || "Admin",
+      image: data.image || "",
       content,
     };
   } catch (error) {

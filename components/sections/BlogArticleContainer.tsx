@@ -12,6 +12,7 @@ interface BlogPost {
   date: string;
   category: string;
   author: string;
+  image?: string;
 }
 
 interface BlogArticleContainerProps {
@@ -307,7 +308,7 @@ export default function BlogArticleContainer({ post, htmlContent, relatedPosts, 
                 <div>
                   <div className="relative w-full h-40 bg-slate-50 border-b border-[#E9E4F2] overflow-hidden">
                     <Image
-                      src={getThumbnail(rPost.category)}
+                      src={rPost.image || getThumbnail(rPost.category)}
                       alt={`${rPost.title} preview`}
                       fill
                       sizes="(max-w-768px) 100vw, 33vw"

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import VisitorMap from "@/components/VisitorMap";
 import LeadDetailsDrawer from "@/components/ui/LeadDetailsDrawer";
+import BlogAdminPanel from "@/components/admin/BlogAdminPanel";
 
 interface UtmData {
   source?: string;
@@ -103,8 +104,8 @@ export default function AdminPage() {
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Active Menu: "leads" | "map" | "heatmaps"
-  const [activeTab, setActiveTab] = useState<"leads" | "map" | "heatmaps">("leads");
+  // Active Menu: "leads" | "map" | "heatmaps" | "blog"
+  const [activeTab, setActiveTab] = useState<"leads" | "map" | "heatmaps" | "blog">("leads");
 
   // Analytics data state
   const [analytics, setAnalytics] = useState<AnalyticsData>({
@@ -716,6 +717,12 @@ export default function AdminPage() {
           subtitle: "Analyze mouse scrolls, clicks, and page records utilizing Microsoft Clarity",
           icon: "fa-regular fa-eye"
         };
+      case "blog":
+        return {
+          title: "Blog Publisher & CMS Desk",
+          subtitle: "Draft modern technical articles, upload thumbnails, manage SEO settings, and generate static articles",
+          icon: "fa-regular fa-pen-to-square"
+        };
     }
   };
 
@@ -868,7 +875,8 @@ export default function AdminPage() {
             </span>
             <div className="space-y-1">
               {[
-                { id: "leads", label: "CRM Pipeline v2", icon: "fa-regular fa-address-book" }
+                { id: "leads", label: "CRM Pipeline v2", icon: "fa-regular fa-address-book" },
+                { id: "blog", label: "Blog Editor Desk", icon: "fa-regular fa-pen-to-square" }
               ].map((tab) => {
                 const isTabActive = activeTab === tab.id;
                 return (
@@ -1944,6 +1952,12 @@ export default function AdminPage() {
                   Clarity Portal
                 </a>
               </div>
+            </div>
+          )}
+
+          {activeTab === "blog" && (
+            <div className="w-full animate-fade-in">
+              <BlogAdminPanel />
             </div>
           )}
 

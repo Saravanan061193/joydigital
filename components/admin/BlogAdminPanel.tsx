@@ -1,0 +1,610 @@
+"use client";
+
+import React, { useState, useEffect, useRef } from "react";
+
+interface BlogPost {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+  category: string;
+  author: string;
+  image?: string;
+  content: string;
+}
+
+export default function BlogAdminPanel() {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editorMode, setEditorMode] = useState<"create" | "edit">("create");
+  
+  // Form state
+  const [title, setTitle] = useState("");
+  const [slug, setSlug] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("SEO");
+  const [author, setAuthor] = useState("Saravanan L");
+  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [content, setContent] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState("");
+  const [existingImage, setExistingImage] = useState("");
+  
+  // UI states
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [msg, setMsg] = useState({ text: "", type: "" });
+  const [previewActive, setPreviewActive] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Fetch posts on mount
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const fetchPosts = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/admin/blog");
+      if (res.ok) {
+        const data = await res.json();
+        setPosts(data);
+      }
+    } catch (err) {
+      console.error("Error fetching posts:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Sync slug from title
+  const handleTitleChange = (val: string) => {
+    setTitle(val);
+    if (editorMode === "create") {
+      const suggestedSlug = val
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "") // remove special chars
+        .replace(/\s+/g, "-") // replace spaces with dashes
+        .replace(/-+/g, "-") // collapse consecutive dashes
+        .substring(0, 50); // limit length
+      setSlug(suggestedSlug);
+    }
+  };
+
+  // Handle image choice
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files[0]) {
+      const file = files[0];
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  // Trigger file click
+  const triggerFileSelect = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleEditClick = (post: BlogPost) => {
+    setEditorMode("edit");
+    setTitle(post.title);
+    setSlug(post.slug);
+    setDescription(post.description);
+    setCategory(post.category);
+    setAuthor(post.author);
+    setDate(post.date);
+    setContent(post.content);
+    setExistingImage(post.image || "");
+    setImagePreview(post.image || "");
+    setImageFile(null);
+    setIsEditing(true);
+    setPreviewActive(false);
+    setMsg({ text: "", type: "" });
+  };
+
+  const handleCreateClick = () => {
+    setEditorMode("create");
+    setTitle("");
+    setSlug("");
+    setDescription("");
+    setCategory("SEO");
+    setAuthor("Saravanan L");
+    setDate(new Date().toISOString().split("T")[0]);
+    setContent("");
+    setExistingImage("");
+    setImagePreview("");
+    setImageFile(null);
+    setIsEditing(true);
+    setPreviewActive(false);
+    setMsg({ text: "", type: "" });
+  };
+
+  const handleDeleteClick = async (postSlug: string) => {
+    if (!confirm(`Are you sure you want to delete the blog post "${postSlug}"? This action cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/admin/blog?slug=${postSlug}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        setMsg({ text: "Blog post deleted successfully!", type: "success" });
+        fetchPosts();
+      } else {
+        const err = await res.json();
+        setMsg({ text: err.error || "Failed to delete post.", type: "error" });
+      }
+    } catch (error) {
+      setMsg({ text: "Request error deleting post.", type: "error" });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!title || !slug || !content) {
+      setMsg({ text: "Please fill out all required fields: Title, Slug, and Content.", type: "error" });
+      return;
+    }
+
+    setSubmitLoading(true);
+    setMsg({ text: "", type: "" });
+
+    try {
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("slug", slug);
+      formData.append("description", description);
+      formData.append("category", category);
+      formData.append("author", author);
+      formData.append("date", date);
+      formData.append("content", content);
+      
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
+      if (existingImage) {
+        formData.append("existingImage", existingImage);
+      }
+
+      const res = await fetch("/api/admin/blog", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (res.ok) {
+        setMsg({ 
+          text: editorMode === "create" ? "Blog article published successfully!" : "Blog article updated successfully!", 
+          type: "success" 
+        });
+        setIsEditing(false);
+        fetchPosts();
+      } else {
+        const err = await res.json();
+        setMsg({ text: err.error || "Publishing failed.", type: "error" });
+      }
+    } catch (error) {
+      console.error(error);
+      setMsg({ text: "Error submitting request.", type: "error" });
+    } finally {
+      setSubmitLoading(false);
+    }
+  };
+
+  // Convert simple markdown to HTML elements for preview
+  const renderMarkdownPreview = (text: string) => {
+    if (!text) return <p className="text-slate-450 italic">No content written yet.</p>;
+
+    const lines = text.split("\n");
+    return lines.map((line, idx) => {
+      // Headers
+      if (line.startsWith("## ")) {
+        return <h2 key={idx} className="text-lg font-bold text-slate-800 dark:text-white mt-5 mb-2.5 border-b border-slate-100 pb-1">{line.substring(3)}</h2>;
+      }
+      if (line.startsWith("### ")) {
+        return <h3 key={idx} className="text-base font-semibold text-slate-800 dark:text-white mt-4 mb-2">{line.substring(4)}</h3>;
+      }
+      if (line.startsWith("# ")) {
+        return <h1 key={idx} className="text-xl font-black text-slate-900 dark:text-white mt-6 mb-3">{line.substring(2)}</h1>;
+      }
+      // Bullet list
+      if (line.startsWith("- ") || line.startsWith("* ")) {
+        return <li key={idx} className="text-xs text-slate-650 dark:text-slate-350 ml-4 list-disc mb-1">{line.substring(2)}</li>;
+      }
+      // Blockquote
+      if (line.startsWith("> ")) {
+        return (
+          <blockquote key={idx} className="border-l-4 border-primary/40 bg-slate-50 dark:bg-slate-800/40 px-4 py-2 my-3 text-xs italic text-slate-600 dark:text-slate-450">
+            {line.substring(2)}
+          </blockquote>
+        );
+      }
+      // Empty line
+      if (line.trim() === "") {
+        return <div key={idx} className="h-2" />;
+      }
+      // Standard paragraph
+      return <p key={idx} className="text-xs text-slate-650 dark:text-slate-350 leading-relaxed mb-2.5">{line}</p>;
+    });
+  };
+
+  return (
+    <div className="flex flex-col gap-6 w-full text-slate-900">
+      
+      {/* Alert Banner */}
+      {msg.text && (
+        <div className={`p-4 rounded-xl text-xs font-bold border flex items-center justify-between ${
+          msg.type === "success" 
+            ? "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-400 border-emerald-250 dark:border-emerald-900/30"
+            : "bg-rose-50 dark:bg-rose-950/20 text-rose-700 dark:text-rose-400 border-rose-250 dark:border-rose-900/30"
+        }`}>
+          <span>{msg.text}</span>
+          <button onClick={() => setMsg({ text: "", type: "" })} className="text-[10px] cursor-pointer hover:opacity-75">✕</button>
+        </div>
+      )}
+
+      {/* A. CMS DIRECTORY VIEW */}
+      {!isEditing && (
+        <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
+          <div className="flex items-center justify-between gap-4 mb-6">
+            <div>
+              <h3 className="text-sm font-black text-slate-900">Published Blog Articles</h3>
+              <p className="text-[10px] text-slate-500 font-semibold mt-0.5">Manage existing files in content/blog directory</p>
+            </div>
+            
+            <button
+              onClick={handleCreateClick}
+              className="bg-primary hover:bg-primary-light text-white font-extrabold text-[10px] uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-sm hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-1.5"
+            >
+              <i className="fa-solid fa-plus" /> Draft New Post
+            </button>
+          </div>
+
+          {loading ? (
+            <div className="py-12 flex flex-col items-center justify-center gap-3">
+              <div className="w-6 h-6 border-2 border-slate-200 border-t-primary rounded-full animate-spin" />
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Syncing articles...</span>
+            </div>
+          ) : posts.length === 0 ? (
+            <div className="py-16 text-center border-2 border-dashed border-slate-200 rounded-2xl">
+              <i className="fa-regular fa-folder-open text-2xl text-slate-300 mb-3 block" />
+              <p className="text-xs font-bold text-slate-500">No blog files discovered in content/blog/</p>
+              <p className="text-[10px] text-slate-400 mt-1">Create your first post to display it in the listing.</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-200 text-slate-500 font-black text-[9px] uppercase tracking-wider">
+                    <th className="py-3 px-4">Title / Slug</th>
+                    <th className="py-3 px-4">Category</th>
+                    <th className="py-3 px-4">Date</th>
+                    <th className="py-3 px-4">Author</th>
+                    <th className="py-3 px-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {posts.map((post) => (
+                    <tr key={post.slug} className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
+                      <td className="py-4 px-4 max-w-sm">
+                        <div className="font-bold text-slate-900 truncate">{post.title}</div>
+                        <div className="text-[10px] text-slate-450 font-semibold mt-0.5 select-all font-mono">
+                          {post.slug}
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className="bg-primary/10 text-primary border border-primary/20 text-[9px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                          {post.category}
+                        </span>
+                      </td>
+                      <td className="py-4 px-4 text-slate-500 font-semibold">{post.date}</td>
+                      <td className="py-4 px-4 text-slate-550 font-semibold">{post.author}</td>
+                      <td className="py-4 px-4 text-right">
+                        <div className="inline-flex gap-2">
+                          <button
+                            onClick={() => handleEditClick(post)}
+                            className="bg-slate-100 hover:bg-slate-200/80 text-slate-700 hover:text-slate-900 border border-slate-200 text-[10px] font-extrabold px-3 py-1.5 rounded-lg cursor-pointer transition-all"
+                          >
+                            <i className="fa-solid fa-pen-to-square mr-1" /> Edit
+                          </button>
+                          <button
+                            onClick={() => handleDeleteClick(post.slug)}
+                            className="bg-rose-50 hover:bg-rose-100 text-rose-700 hover:text-rose-800 border border-rose-150 text-[10px] font-extrabold px-3 py-1.5 rounded-lg cursor-pointer transition-all"
+                          >
+                            <i className="fa-solid fa-trash-can mr-1" /> Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* B. BLOG EDITOR WINDOW */}
+      {isEditing && (
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          
+          {/* Main Edit Form Panel (Left) */}
+          <div className="lg:col-span-8 bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm flex flex-col gap-5">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+              <div>
+                <h3 className="text-sm font-black text-slate-900">
+                  {editorMode === "create" ? "Create New Blog Post" : "Edit Blog Post"}
+                </h3>
+                <p className="text-[10px] text-slate-500 mt-0.5">Define your post structure, tags, SEO settings, and content</p>
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setPreviewActive(!previewActive)}
+                  className="bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-extrabold px-3.5 py-2 rounded-xl cursor-pointer"
+                >
+                  <i className={`fa-regular ${previewActive ? "fa-pen-to-square" : "fa-eye"} mr-1`} /> 
+                  {previewActive ? "Back to Write" : "Live Preview"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsEditing(false)}
+                  className="bg-slate-100 hover:bg-slate-200/60 text-slate-700 text-[10px] font-extrabold px-3.5 py-2 rounded-xl cursor-pointer"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+
+            {previewActive ? (
+              // Preview Mode
+              <div className="border border-slate-200 rounded-2xl p-6 min-h-[450px] bg-slate-50/50 max-h-[600px] overflow-y-auto">
+                <div className="mb-6 pb-6 border-b border-slate-200/80">
+                  <div className="flex gap-2 mb-3">
+                    <span className="bg-primary/10 text-primary text-[9px] font-extrabold px-3 py-0.5 rounded-full uppercase tracking-wider">
+                      {category}
+                    </span>
+                  </div>
+                  <h1 className="text-2xl font-black text-slate-950 mb-3">{title || "Untitled Post"}</h1>
+                  <div className="flex items-center gap-2.5 text-[11px] text-slate-500 font-semibold">
+                    <span>By {author}</span>
+                    <span>•</span>
+                    <span>{date}</span>
+                  </div>
+                </div>
+
+                {imagePreview && (
+                  <div className="relative w-full h-56 rounded-xl overflow-hidden mb-6 border border-slate-200">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={imagePreview} alt="Thumbnail preview" className="w-full h-full object-cover" />
+                  </div>
+                )}
+
+                <div className="prose max-w-none text-left">
+                  {renderMarkdownPreview(content)}
+                </div>
+              </div>
+            ) : (
+              // Editing Form Input Areas
+              <div className="flex flex-col gap-4">
+                {/* Title */}
+                <div className="flex flex-col gap-2">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-0.5">
+                    Post Title <span className="text-rose-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={title}
+                    onChange={(e) => handleTitleChange(e.target.value)}
+                    placeholder="e.g. Why Page Speed Matters for Conversions in 2026"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-semibold"
+                  />
+                </div>
+
+                {/* Slug & Category (Two columns) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-0.5">
+                      URL Slug <span className="text-rose-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={slug}
+                      onChange={(e) => setSlug(e.target.value.toLowerCase().replace(/\s+/g, "-"))}
+                      placeholder="e.g. why-page-speed-matters"
+                      disabled={editorMode === "edit"}
+                      className={`w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-mono font-semibold ${
+                        editorMode === "edit" ? "opacity-60 cursor-not-allowed" : ""
+                      }`}
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-0.5">
+                      Category
+                    </label>
+                    <select
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-bold"
+                    >
+                      <option value="SEO">SEO</option>
+                      <option value="Web Development">Web Development</option>
+                      <option value="Website Design">Website Design</option>
+                      <option value="E-commerce">E-commerce</option>
+                      <option value="Digital Marketing">Digital Marketing</option>
+                      <option value="Branding">Branding</option>
+                      <option value="General">General</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Date & Author (Two columns) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-0.5">
+                      Publish Date
+                    </label>
+                    <input
+                      type="date"
+                      required
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-semibold"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-0.5">
+                      Author Profile
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={author}
+                      onChange={(e) => setAuthor(e.target.value)}
+                      placeholder="e.g. Saravanan L"
+                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-semibold"
+                    />
+                  </div>
+                </div>
+
+                {/* Content Area */}
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-0.5">
+                      Markdown Body Content <span className="text-rose-500">*</span>
+                    </label>
+                    <span className="text-[9px] text-slate-400 font-semibold">Supports headers (##), blockquotes (&gt;), and bullet points (-)</span>
+                  </div>
+                  <textarea
+                    required
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    placeholder="Write article markdown contents here..."
+                    rows={16}
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-mono leading-relaxed"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Sidebar SEO & Assets Form (Right) */}
+          <div className="lg:col-span-4 flex flex-col gap-6">
+            
+            {/* Thumbnail Image Section */}
+            <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm text-left flex flex-col gap-4">
+              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider">Thumbnail Image</h3>
+              <p className="text-[10px] text-slate-500 font-semibold leading-normal">
+                Upload a cover thumbnail image for the blog post. Mapped fallbacks will render if empty.
+              </p>
+
+              <input
+                type="file"
+                ref={fileInputRef}
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
+
+              {imagePreview ? (
+                <div className="relative w-full h-40 bg-slate-50 rounded-xl overflow-hidden border border-slate-200 group">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={imagePreview} alt="Preview thumbnail" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                    <button
+                      type="button"
+                      onClick={triggerFileSelect}
+                      className="bg-white text-slate-900 text-[10px] font-extrabold px-3 py-1.5 rounded-lg shadow-sm hover:scale-105 transition-all cursor-pointer"
+                    >
+                      Replace
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setImagePreview("");
+                        setImageFile(null);
+                        setExistingImage("");
+                      }}
+                      className="bg-rose-600 text-white text-[10px] font-extrabold px-3 py-1.5 rounded-lg shadow-sm hover:scale-105 transition-all cursor-pointer"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  onClick={triggerFileSelect}
+                  className="w-full h-40 border-2 border-dashed border-slate-200 rounded-xl hover:border-primary/50 transition-colors flex flex-col items-center justify-center gap-2.5 cursor-pointer bg-slate-50"
+                >
+                  <i className="fa-regular fa-image text-xl text-slate-350" />
+                  <span className="text-[10px] font-bold text-slate-500">Upload Image Cover</span>
+                </div>
+              )}
+            </div>
+
+            {/* SEO Metadata Settings */}
+            <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm text-left flex flex-col gap-4">
+              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider">SEO Metadata</h3>
+              
+              <div className="flex flex-col gap-2">
+                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-0.5">
+                  SEO Meta Description
+                </label>
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="e.g. Discover essential web optimization tools and speeds..."
+                  rows={4}
+                  maxLength={170}
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-semibold leading-relaxed"
+                />
+                <div className="flex justify-between items-center text-[9px] text-slate-400 font-bold px-0.5 mt-0.5">
+                  <span>Google recommended length: 155 chars</span>
+                  <span className={description.length > 155 ? "text-rose-500" : ""}>{description.length}/170</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Submit Action */}
+            <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm text-left flex flex-col gap-3">
+              <button
+                type="submit"
+                disabled={submitLoading}
+                className="w-full bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-extrabold text-xs py-3.5 rounded-xl shadow-md cursor-pointer transition-all duration-150 flex items-center justify-center gap-2 disabled:opacity-50"
+              >
+                {submitLoading ? (
+                  <>
+                    <div className="w-3.5 h-3.5 border border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Publishing...</span>
+                  </>
+                ) : (
+                  <>
+                    <i className="fa-solid fa-cloud-arrow-up" />
+                    <span>Publish Article</span>
+                  </>
+                )}
+              </button>
+              
+              <button
+                type="button"
+                onClick={() => setIsEditing(false)}
+                className="w-full bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 font-extrabold text-xs py-3 rounded-xl cursor-pointer"
+              >
+                Back to List
+              </button>
+            </div>
+
+          </div>
+
+        </form>
+      )}
+
+    </div>
+  );
+}
