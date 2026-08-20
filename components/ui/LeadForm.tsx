@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { getUtmParameters } from "@/lib/utmTracker";
 
 interface LeadFormProps {
@@ -45,6 +45,20 @@ const SERVICE_OPTIONS = [
   { value: "Other Web Services", label: "Maintenance / Custom Web Support", desc: "Migrations, speed tuning, or maintenance contracts", icon: "fa-solid fa-screwdriver-wrench" },
 ];
 
+const BUDGET_OPTIONS = [
+  { value: "15k_50k", label: "₹15,000 - ₹50,000 (approx. $200 - $600)" },
+  { value: "50k_1.5l", label: "₹50,000 - ₹1.5L (approx. $600 - $2,000)" },
+  { value: "1.5l_5l", label: "₹1.5L - ₹5L (approx. $2,000 - $6,000)" },
+  { value: "above_5l", label: "Above ₹5L ($6,000+)" },
+];
+
+const TIMELINE_OPTIONS = [
+  { value: "immediate", label: "Immediate (Within 1 week)" },
+  { value: "1_2_weeks", label: "1-2 Weeks" },
+  { value: "1_month", label: "Within 1 Month" },
+  { value: "flexible", label: "Flexible / Researching" },
+];
+
 export default function LeadForm({
   layout = "vertical",
   title = "Get a Free Growth Consultation",
@@ -55,6 +69,7 @@ export default function LeadForm({
   hideEmailField = false,
 }: LeadFormProps) {
   const pathname = usePathname();
+  const router = useRouter();
 
   // Detect current region from pathname
   const parts = pathname.split("/").filter(Boolean);
@@ -80,6 +95,8 @@ export default function LeadForm({
     email: "",
     mobile: "",
     service: "",
+    budget: "",
+    timeline: "",
     message: "",
     region: detectedRegion || "in",
   }));
@@ -181,6 +198,8 @@ export default function LeadForm({
           ? formData.mobile.trim()
           : `${selectedCountryCode} ${formData.mobile.trim()}`,
         Service: formData.service,
+        Budget: formData.budget || "N/A",
+        Timeline: formData.timeline || "N/A",
         Message: formData.message.trim() || "No extra details provided.",
         Source: source,
         TargetRegion: formData.region.toUpperCase(),
@@ -203,8 +222,6 @@ export default function LeadForm({
         throw new Error("Failed to submit form");
       }
 
-      setIsSuccess(true);
-      
       // Unified Conversion Tracking
       if (typeof window !== "undefined") {
         const tracker = (window as any).trackJoyDigitalEvent;
@@ -212,6 +229,8 @@ export default function LeadForm({
           tracker("contact_form_submission", {
             form_source: source,
             page_url: window.location.href,
+            budget: formData.budget,
+            timeline: formData.timeline,
           });
         } else {
           const gtag = (window as any).gtag;
@@ -219,6 +238,8 @@ export default function LeadForm({
             gtag("event", "contact_form_submission", {
               form_source: source,
               page_url: window.location.href,
+              budget: formData.budget,
+              timeline: formData.timeline,
             });
           }
         }
@@ -232,10 +253,15 @@ export default function LeadForm({
         email: "",
         mobile: "",
         service: "",
+        budget: "",
+        timeline: "",
         message: "",
         region: detectedRegion || "in",
       });
       setErrors({});
+      
+      // Redirect to thank you page
+      router.push("/thank-you");
     } catch (err) {
       console.error(err);
       alert("Enquiry delivery failed. Please email us at saravanan061193@gmail.com directly.");
@@ -524,6 +550,54 @@ export default function LeadForm({
                 )}
               </div>
               {errors.service && <span className="text-[9px] font-semibold text-[#ef4444] mt-0.5">{errors.service}</span>}
+            </div>
+
+            {/* Budget Range Dropdown Container */}
+            <div className="flex flex-col gap-1">
+              <label htmlFor="budget" className="text-[10px] font-extrabold text-text-secondary uppercase tracking-widest mb-1 block">
+                Budget Range
+              </label>
+              <div className="flex items-center gap-3 bg-light-bg rounded-xl border border-[#E5E7EB] px-4 py-3 hover:border-gray-300 transition-all duration-300 focus-within:bg-white focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#2563EB]/10">
+                <span className="text-xs text-text-muted shrink-0">
+                  <i className="fa-solid fa-coins" />
+                </span>
+                <select
+                  id="budget"
+                  name="budget"
+                  value={formData.budget}
+                  onChange={handleChange}
+                  className="w-full text-xs bg-transparent outline-none border-none text-text-primary font-semibold cursor-pointer"
+                >
+                  <option value="">Select Budget Range</option>
+                  {BUDGET_OPTIONS.map(opt => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Project Timeline Dropdown Container */}
+            <div className="flex flex-col gap-1">
+              <label htmlFor="timeline" className="text-[10px] font-extrabold text-text-secondary uppercase tracking-widest mb-1 block">
+                Project Timeline
+              </label>
+              <div className="flex items-center gap-3 bg-light-bg rounded-xl border border-[#E5E7EB] px-4 py-3 hover:border-gray-300 transition-all duration-300 focus-within:bg-white focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#2563EB]/10">
+                <span className="text-xs text-text-muted shrink-0">
+                  <i className="fa-solid fa-calendar-days" />
+                </span>
+                <select
+                  id="timeline"
+                  name="timeline"
+                  value={formData.timeline}
+                  onChange={handleChange}
+                  className="w-full text-xs bg-transparent outline-none border-none text-text-primary font-semibold cursor-pointer"
+                >
+                  <option value="">Select Timeline</option>
+                  {TIMELINE_OPTIONS.map(opt => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))}
+                </select>
+              </div>
             </div>
 
           </div>

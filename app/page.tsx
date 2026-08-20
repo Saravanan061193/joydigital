@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   verification: {
     google: "yYfFlGYZPthQmXcw3V9yq2U2OlPPPxWBCtG7URIXDwQ",
   },
-  title: "Web Design, Web Development & SEO Services in India | Joy Digital",
-  description: "Joy Digital is a premium web development and SEO agency. We design fast, high-converting React/Next.js websites and optimize search engine visibility for startups and growing companies across India.",
+  title: "Web Design, Web Development & SEO Services Worldwide | Joy Digital",
+  description: "Joy Digital is a premium web development and SEO agency. We design fast, high-converting Next.js websites and optimize search engine visibility for startups, small businesses, and growing companies worldwide.",
   alternates: {
     canonical: "./",
   },
@@ -22,21 +22,21 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://joydigital.in",
     siteName: "Joy Digital Agency",
-    title: "Web Design, Web Development & SEO Services in India | Joy Digital",
-    description: "Joy Digital is a premium web development and SEO agency. We design fast, high-converting React/Next.js websites and optimize search engine visibility for startups and growing companies across India.",
+    title: "Web Design, Web Development & SEO Services Worldwide | Joy Digital",
+    description: "Joy Digital is a premium web development and SEO agency. We design fast, high-converting Next.js websites and optimize search engine visibility for startups, small businesses, and growing companies worldwide.",
     images: [
       {
         url: "/assets/images/hero-banner.webp",
         width: 1024,
         height: 1024,
-        alt: "Joy Digital - Web Design, Web Development & SEO Services India",
+        alt: "Joy Digital - Web Design, Web Development & SEO Services Worldwide",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Web Design, Web Development & SEO Services in India | Joy Digital",
-    description: "Joy Digital is a premium web development and SEO agency. We design fast, high-converting React/Next.js websites and optimize search engine visibility for startups and growing companies across India.",
+    title: "Web Design, Web Development & SEO Services Worldwide | Joy Digital",
+    description: "Joy Digital is a premium web development and SEO agency. We design fast, high-converting Next.js websites and optimize search engine visibility for startups, small businesses, and growing companies worldwide.",
     images: ["/assets/images/hero-banner.webp"],
   },
 };

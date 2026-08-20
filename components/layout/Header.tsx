@@ -123,7 +123,7 @@ export default function Header() {
           <Link href={getRegionalHref("/")} title="Joy Digital Home" className="flex items-center gap-3 flex-shrink-0">
             <Image
               src="/assets/images/logo.webp"
-              alt="Joy Digital - Website Design & SEO Agency in Chennai"
+              alt="Joy Digital - Web Design, Web Development & SEO Services Worldwide"
               title="Joy Digital Logo"
               width={isScrolled ? 50 : 60}
               height={isScrolled ? 50 : 60}
@@ -140,7 +140,7 @@ export default function Header() {
             <Link
               href={getRegionalHref("/")}
               title="Home"
-              className={`font-semibold text-sm transition-colors hover:text-accent ${
+              className={`font-semibold text-sm transition-colors hover:text-accent nav-link-underline ${
                 isActive("/") ? "text-accent" : "text-text-primary"
               }`}
             >
@@ -154,7 +154,7 @@ export default function Header() {
               onMouseLeave={() => setIsServicesDropdownOpen(false)}
             >
               <button
-                className={`font-semibold text-sm flex items-center gap-1 transition-colors hover:text-accent ${
+                className={`font-semibold text-sm flex items-center gap-1 transition-colors hover:text-accent nav-link-underline ${
                   pathname.includes("-services") || pathname.includes("-development") || pathname.includes("-setup") || pathname.includes("marketing")
                     ? "text-accent"
                     : "text-text-primary"
@@ -193,7 +193,7 @@ export default function Header() {
             <Link
               href="/about"
               title="About Us"
-              className={`font-semibold text-sm transition-colors hover:text-accent ${
+              className={`font-semibold text-sm transition-colors hover:text-accent nav-link-underline ${
                 isActive("/about") ? "text-accent" : "text-text-primary"
               }`}
             >
@@ -203,7 +203,7 @@ export default function Header() {
             <Link
               href="/portfolio"
               title="Portfolio"
-              className={`font-semibold text-sm transition-colors hover:text-accent ${
+              className={`font-semibold text-sm transition-colors hover:text-accent nav-link-underline ${
                 isActive("/portfolio") ? "text-accent" : "text-text-primary"
               }`}
             >
@@ -213,7 +213,7 @@ export default function Header() {
             <Link
               href="/blog"
               title="Blog"
-              className={`font-semibold text-sm transition-colors hover:text-accent ${
+              className={`font-semibold text-sm transition-colors hover:text-accent nav-link-underline ${
                 isActive("/blog") ? "text-accent" : "text-text-primary"
               }`}
             >
@@ -223,7 +223,7 @@ export default function Header() {
             <Link
               href={getRegionalHref("/contact")}
               title="Contact Us"
-              className={`font-semibold text-sm transition-colors hover:text-accent ${
+              className={`font-semibold text-sm transition-colors hover:text-accent nav-link-underline ${
                 isActive("/contact") ? "text-accent" : "text-text-primary"
               }`}
             >

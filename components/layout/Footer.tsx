@@ -6,48 +6,15 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const REGIONAL_SITES = [
+  { code: "", label: "Global (USD)", flag: "🌐" },
+  { code: "us", label: "United States (USD)", flag: "🇺🇸" },
+  { code: "uk", label: "United Kingdom (GBP)", flag: "🇬🇧" },
+  { code: "ae", label: "United Arab Emirates (AED)", flag: "🇦🇪" },
   { code: "in", label: "India (INR)", flag: "🇮🇳" },
 ];
 
 export default function Footer() {
   const pathname = usePathname();
-  const [subscribed, setSubscribed] = React.useState(false);
-
-  const handleNewsletterSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement;
-    const email = emailInput?.value || "";
-
-    try {
-      const response = await fetch("/api/enquiry", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-        },
-        body: JSON.stringify({
-          Email: email,
-          Source: "Newsletter Footer Form",
-          Message: "Newsletter subscription request.",
-          _subject: "📬 Newsletter Subscription - Joy Digital",
-          _captcha: "false",
-        }),
-      });
-      if (response.ok) {
-        setSubscribed(true);
-        emailInput.value = "";
-        
-        // Track event
-        const tracker = (window as any).trackJoyDigitalEvent;
-        if (typeof tracker === "function") {
-          tracker("newsletter_signup", { email });
-        }
-      }
-    } catch (err) {
-      console.error("Newsletter submission failed:", err);
-    }
-  };
 
   // Detect current region from pathname
   const parts = pathname.split("/").filter(Boolean);
@@ -82,8 +49,8 @@ export default function Footer() {
             </span>
           </Link>
           <div className="text-text-secondary text-xs leading-relaxed flex flex-col gap-3">
-            <p className="font-bold text-[#0F172A]">Website Design | Web Development | SEO | Digital Marketing</p>
-            <p>Based in Tamil Nadu, India. Serving businesses across Madurai, Chennai, Coimbatore, Bangalore, Hyderabad, Mumbai, and other cities across India through remote support.</p>
+            <p className="font-bold text-[#0F172A]">Websites, SEO & Digital Marketing for Businesses Worldwide</p>
+            <p>Based in India, serving startups, small businesses, and growing companies globally. Delivering premium web solutions and conversion-focused search optimizations through direct remote collaboration.</p>
           </div>
           <div className="flex items-center gap-3">
             <a
@@ -130,32 +97,6 @@ export default function Footer() {
             >
               <i className="fa-solid fa-envelope"></i>
             </a>
-          </div>
-
-          {/* Newsletter Box */}
-          <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-gray-200">
-            <span className="text-[10px] font-bold text-[#111827] uppercase tracking-wider">Subscribe to Newsletter</span>
-            <p className="text-[10px] text-text-secondary leading-tight">Get weekly web design & speed optimization tips to grow your business.</p>
-            {subscribed ? (
-              <span className="text-emerald-600 text-xs font-semibold flex items-center gap-1 mt-1">
-                <i className="fa-solid fa-circle-check" /> You're subscribed!
-              </span>
-            ) : (
-              <form onSubmit={handleNewsletterSubmit} className="flex gap-1.5 w-full mt-1">
-                <input
-                  type="email"
-                  placeholder="Enter email..."
-                  required
-                  className="bg-white border border-[#E5E7EB] text-xs px-3.5 py-2.5 rounded-lg outline-none focus:border-accent w-full"
-                />
-                <button
-                  type="submit"
-                  className="bg-[#2563EB] hover:bg-[#3B82F6] text-white text-xs px-4 py-2.5 rounded-lg font-bold shadow-sm transition-all cursor-pointer"
-                >
-                  Join
-                </button>
-              </form>
-            )}
           </div>
         </div>
 
@@ -288,7 +229,7 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-[#E5E7EB] mt-8 flex flex-col gap-6 text-center text-xs text-text-secondary">
         <p className="font-semibold text-slate-500">
-          Joy Digital – Web Design, Web Development & SEO Services in India | Serving Chennai, Madurai, Coimbatore, Bangalore, Hyderabad, Mumbai, and other cities.
+          Joy Digital – Premium Web Design, High-Speed Next.js Web Development & Search Engine Optimization (SEO) for Businesses Worldwide.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 w-full">
           <p>

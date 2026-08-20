@@ -1,212 +1,491 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Header from "@/components/layout/Header";
+import DigitalNetworkBackground from "@/components/ui/DigitalNetworkBackground";
+import WorldwideServiceNetwork from "@/components/ui/WorldwideServiceNetwork";
 
-// Below-the-fold component imports for speed optimization
+// Dynamic imports for performance and code-splitting
 const Footer = dynamic(() => import("@/components/layout/Footer"));
 const StickyWidgets = dynamic(() => import("@/components/ui/StickyWidgets"), { ssr: false });
 const LeadForm = dynamic(() => import("@/components/ui/LeadForm"));
 const Accordion = dynamic(() => import("@/components/ui/Accordion"));
 
+// Lightweight Count-Up Component honoring prefers-reduced-motion
+function CountUpNumber({ target, suffix = "" }: { target: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  const [triggered, setTriggered] = useState(false);
+  const elementRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) {
+      setCount(target);
+      return;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !triggered) {
+        setTriggered(true);
+        let start = 0;
+        const duration = 1200; // Count duration: 1.2s
+        const stepTime = 16;
+        const totalSteps = Math.ceil(duration / stepTime);
+        const increment = target / totalSteps;
+        
+        const timer = setInterval(() => {
+          start += increment;
+          if (start >= target) {
+            setCount(target);
+            clearInterval(timer);
+          } else {
+            setCount(Math.floor(start));
+          }
+        }, stepTime);
+      }
+    }, { threshold: 0.1 });
+    
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+    
+    return () => observer.disconnect();
+  }, [target, triggered]);
+
+  return <span ref={elementRef}>{count}{suffix}</span>;
+}
+
 interface HomePageComponentProps {
-  country: string; // "us", "uk", "ae", "in", or "" (Global/India default)
+  country: string; // "us", "uk", "ae", "in", or "" (Global default)
 }
 
 export default function HomePageComponent({ country }: HomePageComponentProps) {
-  const [selectedCity, setSelectedCity] = useState("Madurai");
+  const [selectedIndustry, setSelectedIndustry] = useState("Startups");
+  
+  // Dynamic rotating hero phrase state
+  const [activePhrase, setActivePhrase] = useState("Grow Your Business");
+  const [fadeState, setFadeState] = useState("opacity-100 translate-y-0");
+  
+  // Section line reveal status
+  const [processInView, setProcessInView] = useState(false);
 
-  // Dynamic localized content overrides based on regional subpaths
+  // Rotating phrases effect (SaaS headline style)
+  useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    const phrases = ["Grow Your Business", "Grow Your Brand", "Grow Online"];
+    let idx = 0;
+
+    const interval = setInterval(() => {
+      setFadeState("opacity-0 -translate-y-2");
+      setTimeout(() => {
+        idx = (idx + 1) % phrases.length;
+        setActivePhrase(phrases[idx]);
+        setFadeState("opacity-0 translate-y-2");
+        setTimeout(() => {
+          setFadeState("opacity-100 translate-y-0");
+        }, 50);
+      }, 300);
+    }, 3600);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Intersection Observer for scroll reveal animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("reveal-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    const elements = document.querySelectorAll(".reveal-hidden");
+    elements.forEach((el) => observer.observe(el));
+
+    // Process section visual draw line trigger
+    const processObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setProcessInView(true);
+        processObserver.unobserve(entry.target);
+      }
+    }, { threshold: 0.15 });
+
+    const processSec = document.getElementById("process-section");
+    if (processSec) processObserver.observe(processSec);
+
+    return () => {
+      elements.forEach((el) => observer.unobserve(el));
+      if (processSec) processObserver.unobserve(processSec);
+    };
+  }, []);
+
+  // Dynamic localized copy overrides
   const getHeroContent = () => {
     switch (country) {
       case "us":
         return {
           badge: "Premium Web Engineering Partner",
-          h1: "Website Design, Web Development & SEO Services USA",
-          subtitle: "We design and build ultra-fast, secure Next.js websites and premium corporate platforms for US businesses, backed by 9+ years of experience.",
+          h1: "Websites, SEO & Digital Marketing for US Businesses",
+          subtitle: "Joy Digital helps startups, growing companies, and enterprises across the USA build fast, search-optimized Next.js web systems to capture organic pipelines.",
         };
       case "uk":
         return {
           badge: "High-Performance Web Agency",
-          h1: "Website Design, Web Development & SEO Services UK",
-          subtitle: "Convert visitors into active buyers. Joy Digital builds high-speed corporate sites, custom web interfaces, and conversion-ready landing pages across the UK.",
+          h1: "Websites, SEO & Digital Marketing for UK Companies",
+          subtitle: "Convert search traffic into loyal clients. Joy Digital builds high-speed corporate platforms and implements conversion-optimized user journeys across the United Kingdom.",
         };
       case "ae":
         return {
           badge: "Premium Web Development Dubai",
-          h1: "Website Design, Web Development & SEO Services UAE",
-          subtitle: "Build ultra-speed, responsive corporate portals and headless Next.js storefronts for the UAE market backed by 9+ years of experience.",
+          h1: "Websites, SEO & Digital Marketing for UAE Enterprises",
+          subtitle: "Build ultra-fast, responsive corporate portals and headless storefronts tailored for the Dubai and Gulf market to accelerate your digital performance.",
+        };
+      case "in":
+        return {
+          badge: "Premium Custom Web & SEO",
+          h1: "Websites, SEO & Digital Marketing for Indian Businesses",
+          subtitle: "Grow your business online. Joy Digital designs high-speed business sites, Google Maps ranking systems, and lead-generation setups for companies across India.",
         };
       default:
         return {
-          badge: "9+ Years of Web Engineering & SEO",
-          h1: "Website Design, Web Development & SEO Services Across India",
-          subtitle: "Joy Digital helps startups, local businesses, and growing companies build modern websites, improve Google rankings, and generate more enquiries across India.",
+          badge: "Your Digital Growth Partner",
+          h1: "Websites, SEO & Digital Marketing for Businesses Worldwide",
+          subtitle: "Joy Digital helps startups, small businesses, and growing companies build professional websites, improve search engine visibility, and generate more customers through digital marketing.",
         };
     }
   };
 
   const hero = getHeroContent();
 
-  const SERVICES_GRID = [
+  // 2. TRUST / VALUE ITEMS
+  const VALUE_ITEMS = [
+    {
+      icon: "fa-solid fa-earth-americas text-blue-600",
+      title: "Global Service Support",
+      description: "Collaborating remotely with startups and corporate teams worldwide, backed by our efficient development base in India."
+    },
+    {
+      icon: "fa-solid fa-tags text-orange-500",
+      title: "Transparent Flat Pricing",
+      description: "Get detailed, flat-rate proposals starting from ₹15,000 ($250). Absolute clarity on hosting setup and maintainer retainers."
+    },
+    {
+      icon: "fa-solid fa-sliders text-emerald-500",
+      title: "Custom Engineered Solutions",
+      description: "No bloated page builders. We build tailor-made Next.js and React interfaces configured to your conversion goals."
+    },
+    {
+      icon: "fa-solid fa-comments text-indigo-500",
+      title: "Direct Specialist Sync",
+      description: "No administrative filters. Communicate directly with the system developers and search specialists executing your project."
+    },
+    {
+      icon: "fa-solid fa-bolt text-amber-500",
+      title: "Fast Iterative Launching",
+      description: "Agile delivery sprints. We launch standard multipage company profiles and lead funnels within 7 to 14 business days."
+    },
+    {
+      icon: "fa-solid fa-headset text-rose-500",
+      title: "Long-Term Technical Care",
+      description: "Post-launch maintenance covering server deployment, security configurations, index monitoring, and speed tuning."
+    }
+  ];
+
+  // 3. SERVICES LIST
+  const SERVICES = [
     {
       icon: "fa-solid fa-laptop-code",
       title: "Website Design",
-      description: "Professional, mobile-responsive web layouts for startups and corporate brands in India. We design user-centric interfaces that represent your company and convert traffic.",
+      description: "Clean, responsive user interfaces custom-designed to match your brand identity and optimize visitor engagement flow.",
+      benefits: ["Mobile-first user flows", "Frictionless navigations", "High-impact layouts"],
       href: "/web-design-services",
-      linkText: "Explore Web Design Services",
+      cta: "Explore Web Design"
     },
     {
       icon: "fa-solid fa-code",
       title: "Web Development",
-      description: "Custom React and Next.js website engineering. We build high-speed corporate portals, e-commerce storefronts, and digital platforms optimized for performance.",
+      description: "Premium Next.js, React, and TypeScript development. We compile semantic, light, and modular code structures.",
+      benefits: ["Blazing fast CDN pre-renders", "Serverless cloud setup", "Clean reusable components"],
       href: "/website-development",
-      linkText: "Explore Website Development",
+      cta: "Explore Web Dev"
+    },
+    {
+      icon: "fa-solid fa-cart-shopping",
+      title: "E-commerce Development",
+      description: "Highly performant storefront checkouts using modern engines to support cart speeds and checkout conversion rates.",
+      benefits: ["Speedy headless stores", "Secure checkout checkouts", "Seamless catalog syncs"],
+      href: "/ecommerce-website-development",
+      cta: "Explore E-commerce"
     },
     {
       icon: "fa-solid fa-magnifying-glass-chart",
       title: "SEO Services",
-      description: "India-wide SEO solutions to get your business onto Google page one. We optimize speed, clean semantic code structures, and handle indexing barriers for long-term organic growth.",
+      description: "Technical, structural, and semantic SEO audits to get your content indexed and ranked on Google search rankings.",
+      benefits: ["Lighthouse speed setups", "Canonical mapping audits", "Rich schema structures"],
       href: "/seo-services",
-      linkText: "Explore SEO Services",
+      cta: "Explore SEO"
+    },
+    {
+      icon: "fa-solid fa-map-location-dot",
+      title: "Local SEO",
+      description: "Proximity keyword optimizations to secure map pack exposure for high-intent nearby commercial searches.",
+      benefits: ["Maps citation syncs", "Geo-targeted landings", "Review acquisition funnels"],
+      href: "/local-seo-services",
+      cta: "Explore Local SEO"
+    },
+    {
+      icon: "fa-solid fa-circle-nodes",
+      title: "Google Business Profile Optimization",
+      description: "GMB parameters configuration, category optimizations, and geotag updates to capture phone calls.",
+      benefits: ["Maps pack optimizations", "Category audits", "Directory alignments"],
+      href: "/google-business-profile-setup",
+      cta: "Explore GBP Setup"
     },
     {
       icon: "fa-solid fa-chart-line",
       title: "Digital Marketing",
-      description: "Expand your reach and attract prospects with targeted campaigns. We structure distraction-free landing pages and setup conversion tracking models to measure ROI.",
+      description: "ROI-focused pay-per-click (PPC) strategies and landing pages designed to drive inbound lead registrations.",
+      benefits: ["Google/Meta ad configurations", "Distraction-free landers", "Conversion pixel setups"],
       href: "/contact",
-      linkText: "Contact Joy Digital",
+      cta: "Inquire Now"
     },
     {
-      icon: "fa-solid fa-map-location-dot",
-      title: "Google Business Profile Optimization",
-      description: "Dominate local search queries in your target city. We optimize GMB maps proximity, setup local citation directories, and construct review acquisition funnels.",
-      href: "/google-business-profile-setup",
-      linkText: "Explore Google Business Profile Setup",
-    },
+      icon: "fa-solid fa-pen-nib",
+      title: "Logo & Brand Design",
+      description: "Corporate identity kits including scalable vector SVG marks, custom color guidelines, and media assets.",
+      benefits: ["Scalable vector SVG marks", "Palette definitions", "Identity asset packs"],
+      href: "/logo-design-services",
+      cta: "Explore Brand Design"
+    }
   ];
 
-  // Specific Trust Section Cards (Task 3)
-  const TRUST_ITEMS = [
+  // 4. WHO WE HELP DIRECTORY
+  const INDUSTRIES = [
     {
-      icon: "fa-solid fa-circle-check",
-      title: "Projects Completed",
-      description: "100+ projects completed with clean Next.js/React frontend code for high conversion rates.",
+      name: "Startups",
+      desc: "Fast, custom landing pages and scalable web structures to establish brand presence, validate features, and collect early customer registrations."
     },
     {
-      icon: "fa-solid fa-award",
-      title: "Years Experience",
-      description: "9+ years of digital web engineering, custom architecture audits, and organic search optimization.",
+      name: "Small Businesses",
+      desc: "Affordable multipage platforms to present your services clearly, set up call-to-actions, and start ranking for local search queries."
     },
     {
-      icon: "fa-solid fa-magnifying-glass-chart",
-      title: "SEO-Ready Websites",
-      description: "Pre-configured semantic structures, absolute link canonicals, and structured local schema tagging.",
+      name: "Entrepreneurs",
+      desc: "Clean digital portals and personal portfolios built quickly to showcase consultation models, book discovery slots, and accept details."
     },
     {
-      icon: "fa-solid fa-headset",
-      title: "Remote Support Across India",
-      description: "Collaborative digital desks serving clients remotely in any city, ensuring smooth updates and launch support.",
+      name: "Professional Services",
+      desc: "Highly-trustworthy consulting platforms for legal advisors, accountants, and finance professionals to generate qualified booking leads."
     },
+    {
+      name: "Real Estate",
+      desc: "Clean layout properties directories featuring localized maps, structured specifications lists, and quick WhatsApp callback triggers."
+    },
+    {
+      name: "Hotels & Hospitality",
+      desc: "Responsive portal sites showcasing room configurations, amenity directories, and direct inquiry forms to reduce booking fees."
+    },
+    {
+      name: "Healthcare",
+      desc: "Fully responsive layouts for dental clinics, practitioners, and medical setups. Includes online scheduling details and mapping."
+    },
+    {
+      name: "Insurance",
+      desc: "Lead acquisition templates for independent agents to present policy features and capture structured advisor consultations."
+    },
+    {
+      name: "Education",
+      desc: "Professional portals for academies, tutor setups, and trainers featuring structured curricula maps and signup triggers."
+    },
+    {
+      name: "Tours & Travel",
+      desc: "Vibrant custom packages directories with pricing tiers, scheduling guides, and quick inquiry buttons for travel setups."
+    },
+    {
+      name: "E-commerce",
+      desc: "Next-gen storefronts pre-rendering static catalogs to load instantly on slow mobile connections, reducing checkout abandonment."
+    },
+    {
+      name: "Local Businesses",
+      desc: "Localized search optimization setups combined with maps directory syncs to guarantee exposure in nearby queries."
+    }
   ];
 
-  // Portfolio Section (Task 4)
+  // 5. PORTFOLIO / REAL PROJECTS ONLY
   const PORTFOLIO_PROJECTS = [
     {
-      image: "/assets/images/gbp-showcase.webp",
-      tag: "Google Business Profile",
-      title: "Dental Clinic Patient Generation Funnel",
-      desc: "Optimized local search maps placement, geotagged citation sync, and primary categorization to drive booking calls for dental practitioners.",
-      metrics: "240% Enquiry Growth",
-      href: "/case-studies/chennai-clinic-leads",
+      client: "Ganesan Associates",
+      industry: "Financial & Insurance Services",
+      service: "Website Design, Web Development & Local SEO",
+      desc: "A highly-responsive, clean portal built for LIC and Star Health advisors. Features responsive lead submission pipelines, WhatsApp integration, and optimized maps rankings.",
+      image: "/assets/images/ganesan-associates.webp",
+      link: "https://ganeshmuruganlic.com"
     },
     {
-      image: "/assets/images/business-card-mockup.webp",
-      tag: "Next.js & React",
-      title: "Headless E-commerce Platform Migration",
-      desc: "Converted a legacy slow e-commerce storefront into a serverless Next.js layout, reducing checkout shifts and improving transaction rates.",
-      metrics: "40% Conversion Lift",
-      href: "/case-studies/ecommerce-sales-increase",
-    },
-    {
-      image: "/assets/images/marketing-poster-mockup.webp",
-      tag: "Conversion Optimization",
-      title: "SaaS Product Demo Request Landers",
-      desc: "Designed and engineered interactive single-purpose product overview landing pages with prefilled fields to optimize incoming demo pipelines.",
-      metrics: "180% Demo Lead Spike",
-      href: "/case-studies/saas-landing-optimization",
-    },
+      client: "Chithra Insurance Agent Portal",
+      industry: "Insurance Advisory",
+      service: "Next.js Web Development & Mobile Optimization",
+      desc: "Rebuilt client presence into a clean, mobile-first consultation funnel. Optimized images and static assets to load in under 1.2 seconds, securing over 50 monthly WhatsApp leads.",
+      image: "/assets/images/hero-banner.webp",
+      link: "https://chithrainsurance.com"
+    }
   ];
 
-  // Testimonials Section (Task 5)
+  // 6. HOW WE WORK PROCESS
+  const PROCESS_STEPS = [
+    {
+      step: "01",
+      title: "Tell Us About Your Business",
+      desc: "Submit your basic parameters on our audit form or drop a line on WhatsApp outlining your services and targets."
+    },
+    {
+      step: "02",
+      title: "Understand Your Goals",
+      desc: "We run a brief remote discovery chat to evaluate competitors, target keywords, speed bottlenecks, and user paths."
+    },
+    {
+      step: "03",
+      title: "Plan & Design Layouts",
+      desc: "Our design team structures wireframes and conversion funnels, maintaining a premium brand identity."
+    },
+    {
+      step: "04",
+      title: "Develop & Launch",
+      desc: "We write clean Next.js/React layouts, configure meta structures, embed Schema markups, and launch live."
+    },
+    {
+      step: "05",
+      title: "Support & Organic Growth",
+      desc: "Post-deployment, we configure backups, run speed diagnostics, check Google indexings, and tune structures."
+    }
+  ];
+
+  // 8. CASE STUDIES (VERIFIED PROBLEM/SOLUTION/RESULT)
+  const CASE_STUDIES = [
+    {
+      slug: "chennai-clinic-leads",
+      category: "Local SEO & maps rankings",
+      title: "Patient Generation Pipeline Optimization",
+      problem: "A clinical setup lacked digital leads due to name address inconsistencies and an unoptimized Maps listing for core queries.",
+      solution: "We restructured categories, synched directory records, built schemas, and launched geotagged location pages.",
+      result: "Maps pack rankings reached the top 3 spots within 30 days, generating a 240% monthly growth in appointment calls.",
+      targetNum: 240,
+      metricSuffix: "% Appointment growth"
+    },
+    {
+      slug: "ecommerce-sales-increase",
+      category: "Web Development & CRO",
+      title: "Headless E-commerce Portal Speed Rebuild",
+      problem: "A legacy shop site took over 5.5s to load, creating massive cart abandonment and poor checkouts.",
+      solution: "Rebuilt the store using serverless Next.js, optimized images to WebP, and removed heavy scripts.",
+      result: "Mobile loading speed dropped under 1.5s, reducing checkout shifts and driving a 40% growth in transactions.",
+      targetNum: 40,
+      metricSuffix: "% Sales growth"
+    },
+    {
+      slug: "saas-landing-optimization",
+      category: "Paid Ads & Landing Design",
+      title: "SaaS Product Demo Request Landers",
+      problem: "Paid ads campaigns were landing on cluttered multipage headers, leaking prospects and wasting budget.",
+      solution: "Engineered single-purpose, fast demo landers featuring prefilled inputs and no external nav headers.",
+      result: "Lowered overall client acquisition cost, generating an 180% demo lead signup spike.",
+      targetNum: 180,
+      metricSuffix: "% Lead signup growth"
+    }
+  ];
+
+  // 9. TESTIMONIALS (REAL CUSTOMERS)
   const TESTIMONIALS = [
     {
       quote: "Joy Digital optimized our map search visibility. We now rank at the top of Google Maps in our city, and our weekly incoming calls and advisory enquiries have doubled!",
       name: "Ganesh Murugan",
       role: "LIC Financial Advisor",
-      company: "Ganesan Associates (Madurai)",
-      initials: "GM",
-      avatarBg: "bg-blue-50 text-blue-600 border border-blue-200",
+      company: "Ganesan Associates",
+      initials: "GM"
     },
     {
       quote: "We rebuilt our insurance portfolio using their Next.js template. The website loads instantly on mobile networks, and we captured over 50+ policy leads via WhatsApp in the first month.",
       name: "Chithra",
       role: "Star Health Advisor",
-      company: "Independent Consultancy (Coimbatore)",
-      initials: "C",
-      avatarBg: "bg-emerald-50 text-emerald-600 border border-emerald-200",
+      company: "Independent Consultancy",
+      initials: "C"
     },
     {
       quote: "Their team combined custom layouts with technical SEO. We now rank for competitive terms in our sector, bringing in continuous qualified sales leads across our target markets.",
       name: "R. Rajesh Kumar",
       role: "Retail Director",
-      company: "Rajesh Retail Group (India)",
-      initials: "RK",
-      avatarBg: "bg-purple-50 text-purple-600 border border-purple-200",
-    },
+      company: "Rajesh Retail Group",
+      initials: "RK"
+    }
   ];
 
-  // Cities Chips List (Task 6)
-  const CITIES_SERVED = [
-    { name: "Madurai", desc: "Highly optimized local search strategies, map pack rankings, and responsive landing pages for service advisors and healthcare providers in Madurai." },
-    { name: "Chennai", desc: "Engineered web development, Next.js setups, and organic search campaigns for corporate brands and retail startups in Chennai." },
-    { name: "Coimbatore", desc: "Custom e-commerce platforms, WooCommerce systems, and local Google Business Profile positioning for industrial and retail sectors in Coimbatore." },
-    { name: "Trichy", desc: "Google Map packs optimization, local business directory sync, and fast-loading landing pages for educational and service sectors in Trichy." },
-    { name: "Salem", desc: "Technical SEO consultation, responsive corporate portfolio designs, and lead capture setups for manufacturing units and retail stores in Salem." },
-    { name: "Bangalore", desc: "Blazing-fast Next.js portals, headless architectures, and scalable SEO solutions for technology startups and digital brands in Bangalore." },
-    { name: "Hyderabad", desc: "SEO-friendly web design, high-converting product pages, and digital marketing consulting for businesses in Hyderabad." },
-    { name: "Mumbai", desc: "Corporate profile design, secure cloud hosting setups, and page ranking audits for commercial enterprises and financial services in Mumbai." },
-    { name: "Pune", desc: "Product landing pages, custom database web tools, and organic visibility architectures for manufacturing and software businesses in Pune." },
-    { name: "Delhi", desc: "Google Search maps packs optimizations, citation setups, and responsive corporate web portals for service companies across Delhi, Noida, and Gurgaon." },
-    { name: "Ahmedabad", desc: "E-commerce web development, conversion optimization audits, and search rankings positioning for growing businesses in Ahmedabad." }
-  ];
-
-  // SEO FAQ Accordion Questions
+  // 11. FAQ LIST
   const HOME_FAQS = [
     {
-      question: "Which areas in India do you provide services to?",
-      answer: "We serve clients across India. From our base in Tamil Nadu, we collaborate remotely with startups, local businesses, and growing companies in Madurai, Chennai, Coimbatore, Bangalore, Hyderabad, Mumbai, Delhi, Ahmedabad, and other cities.",
+      question: "How much does a website cost with Joy Digital?",
+      answer: "Our standard business layouts and landing page setups start from ₹15,000 ($250). Custom multipage e-commerce platforms, database directories, or advanced SaaS landing flows are quoted based on specific API needs and page count."
     },
     {
-      question: "How much does a custom website cost?",
-      answer: "Our pricing starts at ₹15,000 for standard business sites and landing pages. E-commerce portals, complex custom web directories, and SaaS layouts are quoted based on page count, specific integrations, and API requirements.",
+      question: "How long does website development take?",
+      answer: "A standard landing page or corporate profile website takes 7 to 14 business days. Complex e-commerce systems, database directories, or custom web portals average 3 to 6 weeks."
     },
     {
-      question: "Why does Joy Digital use Next.js instead of WordPress?",
-      answer: "Next.js pages are static HTML pre-rendered on global CDNs, meaning they load in under 1.5 seconds. WordPress sites rely on active database requests and heavy plugin scripts that load slow, shift layout, and have vulnerability entry points.",
+      question: "Do you work with international clients?",
+      answer: "Yes, our target market is global. We support growing companies, startups, and local businesses in India, the US, the UK, the UAE, Australia, and other countries through remote desks."
     },
     {
-      question: "How long does it take to launch a website?",
-      answer: "A standard corporate or landing page typically takes 7 to 14 business days. Custom databases, advanced CMS platforms, and multi-category e-commerce builds average 3 to 6 weeks.",
+      question: "Do you provide SEO services?",
+      answer: "Yes. Basic technical onsite SEO (correct title formats, descriptions, clean tag hierarchy, and structured JSON-LD schemas) is pre-configured on all our sites. We also offer dedicated global SEO campaigns and Map pack optimization."
     },
     {
-      question: "Is search engine optimization (SEO) built into your sites?",
-      answer: "Yes, basic technical SEO is standard. We optimize semantic tags, meta titles/descriptions, structured JSON-LD schemas, and check mobile layouts to ensure Google indexes and ranks your website cleanly.",
+      question: "Do you provide website maintenance?",
+      answer: "Yes, we support our clients post-launch. We provide security configurations, hosting setups (Vercel/Netlify), backup schedules, content updates, and continuous speed tuning."
     },
+    {
+      question: "Can you redesign my existing website?",
+      answer: "Absolutely. We migrate slow, legacy templates (like bloated WordPress builds) into high-performance, responsive Next.js storefronts or corporate profiles to increase page speed and capture conversions."
+    },
+    {
+      question: "Do you work with startups?",
+      answer: "Yes, startups are a core focus. We help early-stage ventures launch conversion-ready digital pages, configure lead capture fields, and connect trackers to validate their offerings."
+    },
+    {
+      question: "Can you build e-commerce websites?",
+      answer: "Yes. We build responsive e-commerce storefronts using Next.js. We integrate checkout funnels, secure payment links, catalog displays, and order management."
+    },
+    {
+      question: "How do I start a project with Joy Digital?",
+      answer: "The easiest way is to fill out our Free Website Audit form on the homepage, or message us directly on WhatsApp at +91 90800 26133. We will analyze your inputs and present a flat-rate proposal."
+    }
   ];
+
+  const handleCtaEvent = (ctaName: string) => {
+    if (typeof window !== "undefined") {
+      const tracker = (window as any).trackJoyDigitalEvent;
+      if (typeof tracker === "function") {
+        tracker("cta_click", { button_text: ctaName, location: "homepage" });
+      }
+    }
+  };
+
+  const handleWaEvent = (location: string) => {
+    if (typeof window !== "undefined") {
+      const tracker = (window as any).trackJoyDigitalEvent;
+      if (typeof tracker === "function") {
+        tracker("whatsapp_click", { location });
+      }
+    }
+  };
 
   // FAQ Schema JSON-LD structure
   const faqSchema = {
@@ -222,24 +501,6 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
     }))
   };
 
-  const handleCtaEvent = (ctaName: string) => {
-    if (typeof window !== "undefined") {
-      const tracker = (window as any).trackJoyDigitalEvent;
-      if (typeof tracker === "function") {
-        tracker("cta_click", { button_text: ctaName, location: "hero" });
-      }
-    }
-  };
-
-  const handleWaEvent = (location: string) => {
-    if (typeof window !== "undefined") {
-      const tracker = (window as any).trackJoyDigitalEvent;
-      if (typeof tracker === "function") {
-        tracker("whatsapp_click", { location });
-      }
-    }
-  };
-
   return (
     <>
       <script
@@ -248,142 +509,191 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
       />
       <Header />
       
-      <main className="bg-[#F8FAFC] text-[#0F172A] min-h-screen">
+      <main className="bg-[#F8FAFC] text-[#0F172A] min-h-screen overflow-hidden">
         
-        {/* SECTION 1: HERO SECTION */}
-        <section className="relative pt-32 lg:pt-40 pb-24 overflow-hidden">
-          <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
+        {/* 1. HERO SECTION WITH CANVAS PARTICLES */}
+        <section className="relative pt-32 lg:pt-44 pb-24 overflow-hidden bg-white border-b border-[#E2E8F0]">
+          {/* Lightweight particle canvas connections */}
+          <DigitalNetworkBackground />
           
+          <div className="absolute inset-0 bg-grid-pattern opacity-[0.015] pointer-events-none" />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-glow rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-accent-glow rounded-full blur-[100px] pointer-events-none" />
+
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-            {/* Left Column Text */}
-            <div className="lg:col-span-7 flex flex-col items-start text-left">
-              <div className="inline-flex items-center gap-2 bg-[#2563EB]/10 border border-[#2563EB]/20 px-4.5 py-1.5 rounded-full mb-6">
+            {/* Hero text content with fade reveal */}
+            <div className="lg:col-span-7 text-left flex flex-col items-start reveal-hidden reveal-visible">
+              <div className="inline-flex items-center gap-2 bg-[#2563EB]/10 border border-[#2563EB]/20 px-4 py-1.5 rounded-full mb-6 select-none">
                 <span className="w-2.5 h-2.5 bg-[#2563EB] rounded-full animate-pulse" />
                 <span className="text-xs font-bold text-[#2563EB] uppercase tracking-wider">
                   {hero.badge}
                 </span>
               </div>
               
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0F172A] tracking-tight mb-6 leading-tight">
-                {hero.h1}
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-[#0F172A] tracking-tight mb-6 leading-tight">
+                {country === "" ? (
+                  <>
+                    <span>Build Your Digital Presence.</span>
+                    <span 
+                      className={`block text-[#2563EB] transition-all duration-350 transform ${fadeState}`}
+                      style={{ minHeight: "1.2em" }}
+                    >
+                      {activePhrase}
+                    </span>
+                  </>
+                ) : (
+                  hero.h1
+                )}
               </h1>
               
-              <p className="text-sm md:text-base text-[#64748B] mb-8 max-w-xl leading-relaxed">
+              <p className="text-sm md:text-base text-[#64748B] mb-8 max-w-xl leading-relaxed font-medium">
                 {hero.subtitle}
               </p>
               
+              {/* CTAs with hover scale microinteractions */}
               <div className="flex flex-wrap items-center gap-4 w-full mb-8">
                 <a
-                  href="#audit-section"
-                  onClick={() => handleCtaEvent("Get Free Website Audit")}
-                  className="bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold text-xs px-8 py-4 rounded-xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/35 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
+                  href="#enquiry-section"
+                  onClick={() => handleCtaEvent("Get a Free Consultation")}
+                  className="w-full sm:w-auto text-center bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold text-xs px-8 py-4 rounded-xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/35 hover:scale-[1.025] transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 group"
                 >
-                  Get Free Website Audit
+                  Get a Free Consultation
+                  <i className="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform" />
+                </a>
+                
+                <a
+                  href="#portfolio-section"
+                  onClick={() => handleCtaEvent("View Our Work")}
+                  className="w-full sm:w-auto text-center bg-white border border-[#E2E8F0] hover:bg-slate-50 text-[#0F172A] font-bold text-xs px-8 py-4 rounded-xl shadow-md hover:scale-[1.025] transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 group"
+                >
+                  View Our Work
+                  <i className="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform" />
                 </a>
                 
                 <a
                   href="https://wa.me/919080026133?text=Hello%20Joy%20Digital,%20I'd%20like%20to%20get%20a%20free%20consultation%20for%20my%20business."
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => handleWaEvent("hero")}
-                  className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-8 py-4 rounded-xl shadow-lg shadow-emerald-600/10 hover:shadow-emerald-600/20 hover:-translate-y-0.5 transition-all flex items-center gap-2 duration-300 cursor-pointer"
+                  onClick={() => handleWaEvent("hero_section")}
+                  className="w-full sm:w-auto bg-[#10b981] hover:bg-[#059669] text-white font-bold text-xs px-8 py-4 rounded-xl shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/25 hover:scale-[1.025] transition-all flex items-center justify-center gap-2 duration-200 cursor-pointer"
                 >
-                  <i className="fa-brands fa-whatsapp text-lg" />
-                  WhatsApp Us
+                  <i className="fa-brands fa-whatsapp text-lg animate-pulse" />
+                  WhatsApp Support
                 </a>
               </div>
 
-              {/* Trust Line */}
+              {/* Minimal base statement */}
               <div className="border-t border-[#E2E8F0] pt-5 w-full max-w-lg">
-                <p className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider mb-1">Coverage footprint</p>
-                <p className="text-xs text-[#64748B] leading-relaxed">
-                  Based in Tamil Nadu | Serving clients across Madurai, Chennai, Coimbatore, Bangalore, Hyderabad, Mumbai, and other cities across India.
+                <p className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider mb-1">Base & Global Reach</p>
+                <p className="text-xs text-[#64748B] leading-relaxed font-semibold">
+                  Based in India | Remotely serving clients across USA, UK, UAE, Australia, and India.
                 </p>
               </div>
             </div>
 
-            {/* Right Column Form (SaaS style glass container card) */}
-            <div className="lg:col-span-5 flex justify-center lg:justify-end">
-              <div className="bg-white border border-[#E2E8F0] p-8 rounded-[24px] shadow-sm w-full max-w-md relative">
-                {/* SECTION 2: HOMEPAGE LEAD FORM (Name, Mobile, Company/Business, Service, Message) */}
+            {/* Embedded lead form on right */}
+            <div className="lg:col-span-5 flex justify-center lg:justify-end reveal-hidden reveal-visible">
+              <div id="enquiry-section" className="w-full max-w-md relative">
                 <LeadForm
                   layout="vertical"
-                  title="Free Website Audit"
-                  subtitle="Submit your details below and our optimization team will prepare a technical review of your domain."
-                  ctaText="Claim Free Audit Report"
-                  source={`Homepage Hero Form - India-wide`}
-                  showWebsiteField={false}
-                  hideEmailField={true}
+                  title="Claim Free Consultation"
+                  subtitle="Submit your requirements to get an custom quote for your digital roadmap."
+                  ctaText="Start Your Project"
+                  source={`Homepage Hero Form - ${country || "Global"}`}
+                  showWebsiteField={true}
+                  hideEmailField={false}
                 />
               </div>
             </div>
           </div>
         </section>
 
-        {/* SECTION 2 (AUX): TRUSTED BY GROWING BUSINESSES */}
-        <section className="py-12 bg-white border-y border-[#E2E8F0] relative z-10">
+        {/* 2. TRUST / VALUE SECTION WITH SCROLL REVEALS */}
+        <section className="py-20 bg-white border-b border-[#E2E8F0] relative z-10">
           <div className="max-w-7xl mx-auto px-6">
-            <p className="text-[10px] font-bold text-[#64748B] uppercase tracking-widest text-center mb-6">
-              Trusted by growing brands and startups across India
-            </p>
-            
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 items-center justify-center opacity-75">
-              {[
-                { name: "APEX SaaS", icon: "fa-solid fa-cube text-[#2563EB]" },
-                { name: "V-CARE CLINICS", icon: "fa-solid fa-heart-pulse text-rose-500" },
-                { name: "GLOBAL EDU", icon: "fa-solid fa-graduation-cap text-emerald-500" },
-                { name: "VELOCITY DEV", icon: "fa-solid fa-building text-amber-500" },
-                { name: "SELECT CART", icon: "fa-solid fa-cart-shopping text-purple-500" },
-              ].map((logo, index) => (
-                <div key={index} className="flex items-center justify-center gap-2 py-3 px-5 bg-[#F8FAFC] rounded-xl border border-[#E2E8F0] hover:border-[#64748B]/35 transition-colors shadow-sm select-none">
-                  <i className={logo.icon} />
-                  <span className="font-extrabold text-[11px] text-[#0F172A] tracking-wider uppercase">{logo.name}</span>
+            <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
+              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
+                Value Proposition
+              </span>
+              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+                Designed for Growing Businesses Worldwide
+              </h2>
+              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+                Transparent processes, specialized technical engineers, and conversion-first workflows. No fake claims.
+              </p>
+            </div>
+
+            {/* Staggered card grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {VALUE_ITEMS.map((item, index) => (
+                <div 
+                  key={index}
+                  style={{ transitionDelay: `${index * 80}ms` }}
+                  className="p-8 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[24px] shadow-sm hover:shadow-md hover:border-blue-500/20 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-start text-left reveal-hidden group"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-white border border-[#E2E8F0] flex items-center justify-center text-xl mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                    <i className={item.icon} />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#0F172A] mb-3">{item.title}</h3>
+                  <p className="text-xs text-[#64748B] leading-relaxed font-semibold">{item.description}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* SECTION 3: SERVICES GRID */}
+        {/* 3. SERVICES SECTION WITH PREMIUM HOVER STATES */}
         <section className="py-20 bg-[#F8FAFC] border-b border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
               <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
-                Core Capabilities
+                Our Services
               </span>
-              <h2 className="text-2xl md:text-4xl font-extrabold text-[#0F172A] mb-4">
-                SaaS-Style Digital Services Designed for Scale
+              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+                Modern Services Built to Generate Qualified Leads
               </h2>
-              <p className="text-sm text-[#64748B]">
-                We build fast-loading Next.js websites, optimize local citations, and design conversion-oriented landing pages.
+              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+                Custom layouts designed for search engine exposure, mobile responsive compatibility, and client actions.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {SERVICES_GRID.map((s, idx) => (
+            {/* Staggered Service cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {SERVICES.map((s, idx) => (
                 <article
                   key={idx}
-                  className="bg-white border border-[#E2E8F0] rounded-[24px] p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group overflow-hidden relative"
+                  style={{ transitionDelay: `${(idx % 4) * 80}ms` }}
+                  className="bg-white border border-[#E2E8F0] rounded-[24px] p-7 shadow-sm hover:shadow-lg hover:border-blue-500/40 hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group overflow-hidden relative reveal-hidden"
                 >
                   <div className="absolute top-0 left-0 w-full h-1 bg-[#2563EB] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   
                   <div>
-                    <div className="w-12 h-12 rounded-xl bg-[#2563EB]/10 flex items-center justify-center text-[#2563EB] text-xl mb-6">
+                    <div className="w-10 h-10 rounded-xl bg-[#2563EB]/10 flex items-center justify-center text-[#2563EB] text-lg mb-5 group-hover:scale-110 group-hover:bg-[#2563EB] group-hover:text-white transition-all duration-300">
                       <i className={s.icon} />
                     </div>
-                    <h3 className="text-base font-bold text-[#0F172A] mb-3">
+                    <h3 className="text-xs font-bold text-[#0F172A] mb-3 uppercase tracking-wider group-hover:text-[#2563EB] transition-colors">
                       {s.title}
                     </h3>
-                    <p className="text-xs text-[#64748B] leading-relaxed mb-6">
+                    <p className="text-[11px] text-[#64748B] leading-relaxed mb-6 font-semibold">
                       {s.description}
                     </p>
+                    
+                    {/* Benefits list */}
+                    <ul className="flex flex-col gap-2.5 mb-6 text-[10px] text-[#64748B] font-bold border-t border-[#E2E8F0] pt-4">
+                      {s.benefits.map((b, i) => (
+                        <li key={i} className="flex items-center gap-1.5">
+                          <i className="fa-solid fa-circle-check text-emerald-500 text-[11px]" />
+                          <span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
                   <Link
                     href={s.href}
-                    className="text-xs font-bold text-[#2563EB] flex items-center gap-1.5 mt-2 transition-colors hover:text-[#3B82F6]"
+                    className="text-xs font-bold text-[#2563EB] flex items-center gap-1.5 mt-2 transition-colors hover:text-[#3B82F6] border-t border-slate-50 pt-3"
                   >
-                    {s.linkText} <i className="fa-solid fa-chevron-right text-[9px] group-hover:translate-x-1 transition-transform" />
+                    {s.cta} <i className="fa-solid fa-chevron-right text-[9px] group-hover:translate-x-1.5 transition-transform" />
                   </Link>
                 </article>
               ))}
@@ -391,97 +701,335 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           </div>
         </section>
 
-        {/* SECTION 4: WHY CHOOSE JOY DIGITAL (Trust cards with clean icons) */}
+        {/* 4. WHO WE HELP SECTION */}
         <section className="py-20 bg-white border-b border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="text-center max-w-3xl mx-auto mb-14 reveal-hidden">
               <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
-                Why Us
+                Target Industries
               </span>
-              <h2 className="text-2xl md:text-4xl font-extrabold text-[#0F172A] mb-4">
-                Why Choose Joy Digital
+              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+                Who We Help Globally
               </h2>
-              <p className="text-sm text-[#64748B]">
-                We combine search engine visibility strategies with premium-tier frameworks to drive inbound inquiries.
+              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+                We craft specialized, fast-loading interfaces for startups and small business sectors across the globe.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {TRUST_ITEMS.map((item, idx) => (
+            {/* Industry selector tabs layout with scroll reveal */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start reveal-hidden">
+              <div className="lg:col-span-4 flex flex-col gap-2.5 overflow-x-auto lg:overflow-visible flex-row lg:flex-col pb-4 lg:pb-0 scrollbar-thin">
+                {INDUSTRIES.map((ind) => (
+                  <button
+                    key={ind.name}
+                    onClick={() => setSelectedIndustry(ind.name)}
+                    className={`text-xs px-5 py-3.5 rounded-xl font-bold border transition-all text-left whitespace-nowrap lg:whitespace-normal cursor-pointer ${
+                      selectedIndustry === ind.name
+                        ? "bg-[#2563EB] text-white border-[#2563EB] shadow-md shadow-blue-500/10"
+                        : "bg-[#F8FAFC] text-[#0F172A] border-[#E2E8F0] hover:bg-slate-100"
+                    }`}
+                  >
+                    {ind.name}
+                  </button>
+                ))}
+              </div>
+
+              {/* Selected industry details card */}
+              <div className="lg:col-span-8 bg-[#F8FAFC] border border-[#E2E8F0] p-8 sm:p-12 rounded-[24px] shadow-sm text-left h-full flex flex-col justify-center min-h-[300px] hover:border-blue-500/15 transition-colors">
+                <span className="text-[10px] font-extrabold text-[#2563EB] uppercase tracking-widest block mb-3">Target Industry Blueprint</span>
+                <h3 className="text-2xl font-black text-[#0F172A] mb-4">Joy Digital for {selectedIndustry}</h3>
+                <p className="text-sm text-[#64748B] leading-relaxed font-semibold max-w-xl">
+                  {INDUSTRIES.find(i => i.name === selectedIndustry)?.desc}
+                </p>
+                <div className="mt-8 border-t border-[#E2E8F0] pt-6 flex flex-wrap gap-4 items-center">
+                  <a
+                    href="#enquiry-section"
+                    onClick={() => handleCtaEvent(`Start ${selectedIndustry} Project`)}
+                    className="bg-[#2563EB] hover:bg-[#3B82F6] hover:scale-[1.03] transition-all text-white font-bold text-xs px-6 py-3 rounded-lg shadow-sm"
+                  >
+                    Start {selectedIndustry} Project
+                  </a>
+                  <a
+                    href="https://wa.me/919080026133?text=Hello%20Joy%20Digital,%20I'd%20like%20to%20discuss%20our%20project."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => handleWaEvent("who_we_help")}
+                    className="text-xs text-[#10b981] hover:text-[#059669] font-bold flex items-center gap-1.5 group"
+                  >
+                    <i className="fa-brands fa-whatsapp text-sm group-hover:scale-110 transition-transform" /> Chat on WhatsApp
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 5. PORTFOLIO / OUR WORK (INTERACTIVE IMAGE ZOOM & OVERLAY) */}
+        <section id="portfolio-section" className="py-20 bg-[#F8FAFC] border-b border-[#E2E8F0]">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
+              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
+                Featured Work
+              </span>
+              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+                Real Client Success Showcases
+              </h2>
+              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+                Genuine custom developments designed to generate inbound client actions. No fake placeholders.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+              {PORTFOLIO_PROJECTS.map((proj, idx) => (
                 <div 
                   key={idx} 
-                  className="bg-white border border-[#E2E8F0] p-7 rounded-[24px] shadow-sm hover:shadow-md transition-all duration-300 flex flex-col text-left group"
+                  className="bg-white border border-[#E2E8F0] rounded-[24px] overflow-hidden shadow-sm flex flex-col justify-between hover:shadow-lg hover:border-blue-500/25 transition-all duration-350 reveal-hidden group"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-[#2563EB]/10 flex items-center justify-center text-[#2563EB] text-xl mb-5 group-hover:scale-105 transition-transform duration-300">
-                    <i className={item.icon} />
+                  <div>
+                    {/* Next.js Image component with scale on hover */}
+                    <div className="relative w-full h-56 bg-[#F8FAFC] border-b border-[#E2E8F0] overflow-hidden">
+                      <Image
+                        src={proj.image}
+                        alt={`${proj.client} showcase preview`}
+                        fill
+                        sizes="(max-w-768px) 100vw, 50vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-[1.045]"
+                        loading="lazy"
+                      />
+                      
+                      {/* Premium overlay visible on desktop hover */}
+                      <div className="absolute inset-0 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6 hidden lg:flex pointer-events-none">
+                        <div className="text-center text-white transform translate-y-3 group-hover:translate-y-0 transition-transform duration-350">
+                          <span className="text-[10px] font-extrabold text-[#F97316] uppercase tracking-wider block mb-2">{proj.industry}</span>
+                          <span className="text-base font-black block mb-4">{proj.client}</span>
+                          <span className="inline-flex items-center gap-1.5 bg-[#2563EB] text-white text-xs font-bold px-4 py-2 rounded-lg shadow-md">
+                            View Case Study <i className="fa-solid fa-arrow-right" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="p-8 text-left">
+                      <div className="flex flex-wrap items-center justify-between gap-3 mb-4 lg:hidden">
+                        <span className="bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/25 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+                          {proj.industry}
+                        </span>
+                      </div>
+                      
+                      <h3 className="text-lg font-black text-[#0F172A] mb-3 leading-snug">
+                        {proj.client}
+                      </h3>
+                      <p className="text-xs font-bold text-[#2563EB] mb-3">{proj.service}</p>
+                      <p className="text-xs text-[#64748B] leading-relaxed font-semibold">
+                        {proj.desc}
+                      </p>
+                    </div>
                   </div>
-                  <h3 className="text-sm font-bold text-[#0F172A] mb-2">{item.title}</h3>
-                  <p className="text-xs text-[#64748B] leading-relaxed">{item.description}</p>
+
+                  <div className="border-t border-[#E2E8F0] bg-[#F8FAFC] px-8 py-4.5 flex items-center justify-between">
+                    {proj.link ? (
+                      <a
+                        href={proj.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1.5 group/link"
+                      >
+                        Visit Live Link <i className="fa-solid fa-arrow-up-right-from-square text-[9px] group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+                      </a>
+                    ) : (
+                      <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider">Client Archive</span>
+                    )}
+                    <Link
+                      href="/portfolio"
+                      className="text-xs font-bold text-[#2563EB] hover:text-[#3B82F6] flex items-center gap-1.5 transition-colors group/case"
+                    >
+                      Case Details <i className="fa-solid fa-chevron-right text-[8px] group-hover/case:translate-x-1 transition-transform" />
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center mt-12 reveal-hidden">
+              <Link
+                href="/portfolio"
+                className="inline-flex items-center gap-2 bg-[#0F172A] hover:bg-slate-800 hover:scale-[1.025] text-white font-bold text-xs px-8 py-4 rounded-xl transition-all group"
+              >
+                View All Projects <i className="fa-solid fa-arrow-right-long text-xs group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* 6. HOW WE WORK PROCESS WITH AN ANIMATED CONNECTING LINE */}
+        <section id="process-section" className="py-20 bg-white border-b border-[#E2E8F0]">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
+              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
+                Process Workflow
+              </span>
+              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+                Our Simple 5-Step Process
+              </h2>
+              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+                How we take project parameters from discovery draft into search engine launch.
+              </p>
+            </div>
+
+            <div className="relative">
+              {/* Progressive animated horizontal connecting gradient line */}
+              <div className="absolute top-6 left-12 right-12 h-[2px] bg-slate-100 hidden lg:block z-0">
+                <div 
+                  className="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-orange-500 origin-left transition-transform duration-1000 ease-out"
+                  style={{ transform: processInView ? "scaleX(1)" : "scaleX(0)" }}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 relative z-10">
+                {PROCESS_STEPS.map((step, idx) => (
+                  <div 
+                    key={idx} 
+                    style={{ transitionDelay: `${idx * 150}ms` }}
+                    className="flex flex-col items-start text-left group reveal-hidden"
+                  >
+                    <div className="relative mb-6">
+                      <span className="text-4xl font-black text-[#2563EB]/15 group-hover:text-[#2563EB] transition-colors duration-300">
+                        {step.step}
+                      </span>
+                    </div>
+                    <h3 className="text-sm font-extrabold text-[#0F172A] mb-3 group-hover:text-[#2563EB] transition-colors">
+                      {step.title}
+                    </h3>
+                    <p className="text-xs text-[#64748B] leading-relaxed font-semibold">
+                      {step.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 7. WHY JOY DIGITAL */}
+        <section className="py-20 bg-[#F8FAFC] border-b border-[#E2E8F0]">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
+              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
+                Value System
+              </span>
+              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+                Our Business-Focused Approach
+              </h2>
+              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+                We combine search exposure parameters with premium frameworks to optimize performance metrics.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+              {[
+                { title: "Business-Focused Solutions", desc: "We structure interfaces to capture user actions. Every button, input, and title fits your corporate goal." },
+                { title: "Modern Technology Stack", desc: "We build layouts in Next.js and React. Your visitors do not load slow database templates, securing under 1.5s load speeds." },
+                { title: "Mobile-First Infrastructure", desc: "Every layout matches responsive standards. Viewport pickers, click targets, and code scales for phone screens." },
+                { title: "SEO-Friendly Development", desc: "We embed structured schemas, configure canon mappings, map titles, and verify search sitemaps as standard features." },
+                { title: "Direct & Clear Communication", desc: "No complex administrative interfaces. Speak with the engineers creating your site to execute amendments quickly." },
+                { title: "Ongoing Technical Support", desc: "We handle SSL configurations, domain mappings, hosting setup, security checks, and speed reports post-launch." }
+              ].map((val, idx) => (
+                <div 
+                  key={idx} 
+                  style={{ transitionDelay: `${(idx % 3) * 80}ms` }}
+                  className="bg-white border border-[#E2E8F0] p-8 rounded-[24px] shadow-sm hover:shadow-md hover:border-blue-500/20 hover:-translate-y-1 transition-all duration-300 reveal-hidden"
+                >
+                  <h3 className="text-sm font-extrabold text-[#0F172A] mb-3 flex items-center gap-2">
+                    <span className="w-1.5 h-6 bg-[#2563EB] rounded-full shrink-0" />
+                    {val.title}
+                  </h3>
+                  <p className="text-xs text-[#64748B] leading-relaxed font-semibold">
+                    {val.desc}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* SECTION 5: PORTFOLIO / RECENT PROJECTS (Using Next.js Image Component) */}
-        <section id="portfolio-section" className="py-20 bg-[#F8FAFC] border-b border-[#E2E8F0]">
+        {/* 6 (AUX). GLOBAL CONNECTIONS NETWORK WIDGET */}
+        <section className="py-20 bg-slate-950 border-b border-slate-900 text-white relative">
+          <div className="absolute inset-0 bg-grid-pattern opacity-[0.01] pointer-events-none" />
           <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
-                Our Work
+            <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
+              <span className="text-xs font-bold text-[#F97316] uppercase tracking-widest block mb-3">
+                Global Network
               </span>
-              <h2 className="text-2xl md:text-4xl font-extrabold text-[#0F172A] mb-4">
-                Recent Success Stories
+              <h2 className="text-3xl font-extrabold text-white mb-4">
+                We Partner with Startups Worldwide
               </h2>
-              <p className="text-sm text-[#64748B]">
-                See how we help businesses in India improve loading speeds, layout structures, and lead volumes.
+              <p className="text-xs sm:text-sm text-slate-400 font-semibold">
+                Serving growing brands across borders from our development base in India.
+              </p>
+            </div>
+            
+            <div className="reveal-hidden">
+              <WorldwideServiceNetwork />
+            </div>
+          </div>
+        </section>
+
+        {/* 8. CASE STUDIES WITH COUNT-UP NUMERICAL COUNTERS */}
+        <section className="py-20 bg-white border-b border-[#E2E8F0]">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
+              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
+                Verified Outcomes
+              </span>
+              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+                Real Problems. Real Solutions. Real Results.
+              </h2>
+              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+                Technical diagnostics and outcomes from genuine client partnerships. No manufactured stats.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {PORTFOLIO_PROJECTS.map((proj, idx) => (
+              {CASE_STUDIES.map((study, idx) => (
                 <div 
-                  key={idx} 
-                  className="bg-white border border-[#E2E8F0] rounded-[24px] overflow-hidden shadow-sm flex flex-col justify-between hover:shadow-md transition-all duration-300"
+                  key={idx}
+                  style={{ transitionDelay: `${idx * 100}ms` }}
+                  className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-[24px] p-8 flex flex-col justify-between text-left hover:shadow-md hover:border-blue-500/15 transition-all duration-300 reveal-hidden group"
                 >
                   <div>
-                    {/* Next.js Image optimization */}
-                    <div className="relative w-full h-48 bg-[#F8FAFC]">
-                      <Image
-                        src={proj.image}
-                        alt={`${proj.title} Showcase`}
-                        fill
-                        sizes="(max-w-768px) 100vw, 33vw"
-                        className="object-cover"
-                        loading="lazy"
-                      />
+                    <div className="flex items-center justify-between gap-3 mb-6">
+                      <span className="text-[10px] font-extrabold text-[#2563EB] uppercase tracking-wider bg-white border border-[#2563EB]/25 px-3 py-1 rounded-full">
+                        {study.category}
+                      </span>
+                      <span className="text-sm font-black text-emerald-600 flex items-center gap-1">
+                        <i className="fa-solid fa-arrow-trend-up text-xs animate-bounce" />
+                        <CountUpNumber target={study.targetNum} suffix="%" />
+                      </span>
                     </div>
+
+                    <h3 className="text-base font-black text-[#0F172A] mb-4 leading-tight group-hover:text-[#2563EB] transition-colors">
+                      {study.title}
+                    </h3>
                     
-                    <div className="p-8">
-                      <div className="flex items-center justify-between gap-3 mb-4">
-                        <span className="bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/25 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
-                          {proj.tag}
-                        </span>
-                        <span className="text-[#10B981] font-bold text-xs flex items-center gap-1">
-                          <i className="fa-solid fa-arrow-trend-up" /> {proj.metrics}
-                        </span>
-                      </div>
-                      
-                      <h3 className="text-base font-extrabold text-[#0F172A] mb-3 leading-snug">
-                        {proj.title}
-                      </h3>
-                      <p className="text-xs text-[#64748B] leading-relaxed">
-                        {proj.desc}
+                    <div className="flex flex-col gap-4 text-xs font-semibold text-[#64748B]">
+                      <p>
+                        <strong className="text-[#0F172A] block mb-1">Challenge:</strong> {study.problem}
+                      </p>
+                      <p>
+                        <strong className="text-[#0F172A] block mb-1">Execution:</strong> {study.solution}
+                      </p>
+                      <p>
+                        <strong className="text-emerald-700 block mb-1">Result:</strong> {study.result}
                       </p>
                     </div>
                   </div>
 
-                  <div className="border-t border-[#E2E8F0] bg-[#F8FAFC] px-8 py-4.5 flex justify-end">
+                  <div className="mt-8 pt-4 border-t border-[#E2E8F0]">
                     <Link
-                      href={proj.href}
-                      className="text-xs font-bold text-[#2563EB] hover:text-[#3B82F6] flex items-center gap-1.5 transition-colors"
+                      href={`/case-studies`}
+                      className="text-xs font-bold text-[#2563EB] hover:text-[#3B82F6] flex items-center gap-1.5 group/case"
                     >
-                      Case Details <i className="fa-solid fa-chevron-right text-[8px]" />
+                      Read Case Narrative <i className="fa-solid fa-chevron-right text-[8px] group-hover/case:translate-x-1 transition-transform" />
                     </Link>
                   </div>
                 </div>
@@ -490,130 +1038,27 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           </div>
         </section>
 
-        {/* SECTION 6: SERVING BUSINESSES ACROSS INDIA (No Worldwide references) */}
-        <section className="py-20 bg-white border-b border-[#E2E8F0]">
+        {/* 9. TESTIMONIALS */}
+        <section className="py-20 bg-[#F8FAFC] border-b border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center max-w-3xl mx-auto mb-14">
+            <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
               <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
-                Nationwide Footprint
+                Client Reviews
               </span>
-              <h2 className="text-2xl md:text-4xl font-extrabold text-[#0F172A] mb-4">
-                Serving Businesses Across India
-              </h2>
-              <p className="text-sm text-[#64748B]">
-                We deploy localized search optimization, custom web portals, and tracking setups for businesses in major hubs.
-              </p>
-            </div>
-
-            {/* City Chips Interactive Dashboard */}
-            <div className="max-w-4xl mx-auto">
-              <div className="flex flex-wrap items-center justify-center gap-2.5 mb-8">
-                {CITIES_SERVED.map((city) => (
-                  <button
-                    key={city.name}
-                    onClick={() => setSelectedCity(city.name)}
-                    className={`text-xs px-4.5 py-2.5 rounded-full font-bold border transition-all cursor-pointer select-none ${
-                      selectedCity === city.name
-                        ? "bg-[#2563EB] text-white border-[#2563EB] shadow-md shadow-blue-500/10"
-                        : "bg-[#F8FAFC] text-[#0F172A] border-[#E2E8F0] hover:bg-slate-100"
-                    }`}
-                  >
-                    {city.name}
-                  </button>
-                ))}
-              </div>
-
-              {/* Selected City Content Card */}
-              <div className="bg-[#F8FAFC] border border-[#E2E8F0] p-8 rounded-[24px] shadow-sm text-center max-w-2xl mx-auto transition-all duration-350">
-                <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-widest block mb-2">Active Service Desk</span>
-                <h3 className="text-lg font-bold text-[#0F172A] mb-3">Joy Digital — {selectedCity} Support</h3>
-                <p className="text-xs text-[#64748B] leading-relaxed max-w-lg mx-auto">
-                  {CITIES_SERVED.find(c => c.name === selectedCity)?.desc}
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION 7: FREE WEBSITE AUDIT FORM SECTION */}
-        <section id="audit-section" className="py-20 bg-[#F8FAFC] border-b border-[#E2E8F0]">
-          <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Content column */}
-            <div className="lg:col-span-7 text-left">
-              <div className="inline-flex items-center gap-2 bg-[#2563EB]/10 border border-[#2563EB]/20 px-4 py-1.5 rounded-full mb-6">
-                <span className="w-2 h-2 bg-[#2563EB] rounded-full animate-pulse" />
-                <span className="text-xs font-bold text-[#2563EB] uppercase tracking-wider">
-                  Free Assessment • No Credit Card Required
-                </span>
-              </div>
-              
-              <h2 className="text-3xl md:text-4xl font-extrabold text-[#0F172A] mb-6 tracking-tight leading-tight">
-                Claim Your Free <span className="text-[#2563EB]">Website & SEO Audit Report</span>
-              </h2>
-              
-              <p className="text-sm md:text-base text-[#64748B] mb-8 leading-relaxed">
-                Discover the exact technical errors and optimization issues holding your website back in search ranks. Our audit reviews:
-              </p>
-              
-              <ul className="flex flex-col gap-4 text-xs md:text-sm text-[#64748B]">
-                <li className="flex items-start gap-3">
-                  <span className="text-emerald-600 mt-0.5"><i className="fa-solid fa-circle-check text-sm" /></span>
-                  <div>
-                    <strong>Core Web Vitals Scoring:</strong> Scan loading speeds on mobile networks and check layout shifts.
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-emerald-600 mt-0.5"><i className="fa-solid fa-circle-check text-sm" /></span>
-                  <div>
-                    <strong>Search Indexing Barriers:</strong> Review sitemaps, link canonicals, meta tags, and structured data schemas.
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-emerald-600 mt-0.5"><i className="fa-solid fa-circle-check text-sm" /></span>
-                  <div>
-                    <strong>Lead Conversion Review:</strong> Identify exit bottlenecks in contact fields and interactive buttons.
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-            {/* Right Form column */}
-            <div className="lg:col-span-5 flex justify-center lg:justify-end">
-              <div className="bg-white border border-[#E2E8F0] p-8 rounded-[24px] shadow-sm w-full max-w-md">
-                <LeadForm
-                  layout="vertical"
-                  title="Request Technical Audit"
-                  subtitle="Provide your details below. We will run speed diagnostics and send a comprehensive breakdown."
-                  ctaText="Submit Audit Request"
-                  source={`Homepage Bottom Form - India-wide`}
-                  showWebsiteField={false}
-                  hideEmailField={true}
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION 8: TESTIMONIALS (At least 3 client reviews) */}
-        <section className="py-20 bg-white border-b border-[#E2E8F0]">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
-                Reviews
-              </span>
-              <h2 className="text-2xl md:text-4xl font-extrabold text-[#0F172A] mb-4">
+              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
                 What Our Clients Say
               </h2>
-              <p className="text-sm text-[#64748B]">
-                Read reviews from growing businesses and professional advisors partners with Joy Digital.
+              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+                Feedback from local financial advisors, store directors, and corporate partners.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
               {TESTIMONIALS.map((t, idx) => (
                 <div 
                   key={idx} 
-                  className="bg-[#F8FAFC] border border-[#E2E8F0] p-8 rounded-[20px] shadow-sm flex flex-col justify-between hover:shadow-md transition-all duration-300"
+                  style={{ transitionDelay: `${idx * 100}ms` }}
+                  className="bg-white border border-[#E2E8F0] p-8 rounded-[20px] shadow-sm flex flex-col justify-between text-left hover:shadow-md hover:border-blue-500/15 transition-all duration-300 reveal-hidden"
                 >
                   <div>
                     <div className="flex gap-1 text-amber-500 mb-4 text-xs">
@@ -623,50 +1068,182 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                       <i className="fa-solid fa-star" />
                       <i className="fa-solid fa-star" />
                     </div>
-                    <p className="text-xs text-[#64748B] italic leading-relaxed mb-6">
+                    <p className="text-xs text-[#64748B] italic leading-relaxed mb-6 font-semibold">
                       &ldquo;{t.quote}&rdquo;
                     </p>
                   </div>
                   
                   <div className="flex items-center gap-3 border-t border-[#E2E8F0] pt-4 mt-2">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs flex-shrink-0 ${t.avatarBg}`}>
+                    <div className="w-9 h-9 rounded-full bg-[#2563EB]/10 border border-[#2563EB]/20 text-[#2563EB] flex items-center justify-center font-bold text-xs flex-shrink-0">
                       {t.initials}
                     </div>
-                    <div className="flex-grow text-left">
+                    <div className="flex-grow">
                       <span className="text-xs font-bold text-[#0F172A] block leading-tight">{t.name}</span>
-                      <span className="text-[10px] text-[#64748B] block mt-0.5">{t.role} — {t.company}</span>
+                      <span className="text-[10px] text-[#64748B] block mt-0.5 font-bold">{t.role} — {t.company}</span>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
+
+            {/* Promotion card inviting new reviews */}
+            <div className="bg-white border border-[#E2E8F0] p-8 rounded-[24px] shadow-sm max-w-xl mx-auto text-center reveal-hidden">
+              <h3 className="text-sm font-extrabold text-[#0F172A] uppercase tracking-wider mb-2">Are you our next success story?</h3>
+              <p className="text-xs text-[#64748B] font-semibold leading-relaxed mb-4">
+                We work closely with startup founders and local operators worldwide. Start a campaign with us and share your review when we deploy!
+              </p>
+              <a
+                href="#enquiry-section"
+                className="text-xs font-bold text-[#2563EB] hover:text-[#3B82F6]"
+              >
+                Inquire About a Project Now &rarr;
+              </a>
+            </div>
           </div>
         </section>
 
-        {/* SECTION 9: FAQ */}
-        <section className="py-20 bg-[#F8FAFC]">
+        {/* 10. PRICING SECTION */}
+        <section className="py-20 bg-white border-b border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
               <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
-                FAQ
+                Transparent Pricing
               </span>
-              <h2 className="text-2xl md:text-4xl font-extrabold text-[#0F172A] mb-4">
-                Frequently Asked Questions
+              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+                Startup-Friendly Pricing Packages
               </h2>
-              <p className="text-sm text-[#64748B]">
-                Quick answers regarding website pricing packages, speed builds, search visibility, and our workflow.
+              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+                Sleek, transparent rates. No surprise setup fees, no complex monthly models.
               </p>
             </div>
 
-            <div className="max-w-3xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
+              {/* Card 1: Standard / Landing Page Website */}
+              <div className="bg-[#F8FAFC] border border-[#E2E8F0] p-8 sm:p-10 rounded-[24px] shadow-sm flex flex-col justify-between text-left hover:shadow-lg hover:border-[#2563EB]/40 transition-all duration-300 reveal-hidden group">
+                <div>
+                  <span className="inline-block bg-[#2563EB]/10 text-[#2563EB] font-extrabold text-[9px] uppercase tracking-widest px-3 py-1 rounded-full mb-4">Standard Setup</span>
+                  <h3 className="text-lg font-black text-[#0F172A] mb-2 group-hover:text-[#2563EB] transition-colors">Corporate Profile & Landing Website</h3>
+                  <p className="text-xs text-[#64748B] leading-relaxed mb-6 font-semibold">Custom layouts designed for small service providers or early-stage startups needing online credibility.</p>
+                  
+                  <div className="mb-6 flex items-baseline gap-1">
+                    <span className="text-3xl font-black text-[#0F172A]">₹15,000</span>
+                    <span className="text-xs text-[#64748B] font-semibold">Starting price (approx. $250)</span>
+                  </div>
+
+                  <ul className="flex flex-col gap-3 text-xs text-[#64748B] font-semibold border-t border-[#E2E8F0] pt-6 mb-8">
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Custom mobile responsive layout</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Light React/Next.js files setup</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Direct WhatsApp conversion widgets</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Basic schemas & canon metadata setup</li>
+                  </ul>
+                </div>
+                <a
+                  href="#enquiry-section"
+                  onClick={() => handleCtaEvent("Start Standard Project")}
+                  className="w-full text-center bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold text-xs py-3.5 rounded-xl shadow-sm transition-all"
+                >
+                  Start Standard Project
+                </a>
+              </div>
+
+              {/* Card 2: Custom Enterprise Solutions */}
+              <div className="bg-[#F8FAFC] border border-[#E2E8F0] p-8 sm:p-10 rounded-[24px] shadow-sm flex flex-col justify-between text-left hover:shadow-lg hover:border-[#2563EB]/40 transition-all duration-300 reveal-hidden group">
+                <div>
+                  <span className="inline-block bg-[#2563EB]/10 text-[#2563EB] font-extrabold text-[9px] uppercase tracking-widest px-3 py-1 rounded-full mb-4">Enterprise & Customized</span>
+                  <h3 className="text-lg font-black text-[#0F172A] mb-2 group-hover:text-[#2563EB] transition-colors">E-commerce, Directories & SaaS</h3>
+                  <p className="text-xs text-[#64748B] leading-relaxed mb-6 font-semibold">Headless shopping platforms, complex database search setups, or dynamic dashboard solutions.</p>
+                  
+                  <div className="mb-6 flex items-baseline gap-1">
+                    <span className="text-3xl font-black text-[#0F172A]">Custom Quotation</span>
+                  </div>
+
+                  <ul className="flex flex-col gap-3 text-xs text-[#64748B] font-semibold border-t border-[#E2E8F0] pt-6 mb-8">
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Scalable headless shop backends</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Multi-category catalogs & listing search</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Custom API integrations & databases</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Advanced sitemaps & dynamic scripts</li>
+                  </ul>
+                </div>
+                <a
+                  href="#enquiry-section"
+                  onClick={() => handleCtaEvent("Request Custom Proposal")}
+                  className="w-full text-center bg-white border border-[#E2E8F0] hover:bg-slate-50 text-[#0F172A] font-bold text-xs py-3.5 rounded-xl transition-all"
+                >
+                  Request Custom Proposal
+                </a>
+              </div>
+            </div>
+            
+            <p className="text-[10px] text-[#64748B] font-bold uppercase tracking-wider text-center mt-8">
+              Need a custom layout or dedicated corporate contract? <a href="https://wa.me/919080026133" className="text-[#2563EB] underline hover:text-[#3B82F6]">Chat with our engineers</a>.
+            </p>
+          </div>
+        </section>
+
+        {/* 11. FAQ SECTION */}
+        <section className="py-20 bg-[#F8FAFC]">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
+              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
+                FAQ
+              </span>
+              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+                Quick answers regarding site pricing plans, delivery timelines, maps optimizations, and global services.
+              </p>
+            </div>
+
+            <div className="max-w-3xl mx-auto text-left reveal-hidden">
               <Accordion items={HOME_FAQS} />
+            </div>
+          </div>
+        </section>
+
+        {/* 12. FINAL CTA WITH MICRO INTERACTIONS */}
+        <section className="relative py-20 bg-white border-t border-[#E2E8F0] overflow-hidden text-center">
+          <div className="absolute inset-0 bg-grid-pattern opacity-[0.015] pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary-glow rounded-full blur-[120px] pointer-events-none" />
+          
+          <div className="max-w-4xl mx-auto px-6 relative z-10 flex flex-col items-center reveal-hidden">
+            <span className="inline-block bg-[#2563EB]/10 text-[#2563EB] font-extrabold text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full border border-[#2563EB]/20 mb-6">
+              Start Scaling Today
+            </span>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-[#0F172A] tracking-tight mb-5 leading-tight">
+              Ready to Build Your Digital Presence?
+            </h2>
+            <p className="text-sm md:text-base text-[#64748B] max-w-xl mx-auto mb-10 leading-relaxed font-semibold">
+              Tell us about your business and let’s discuss how Joy Digital can help you grow online.
+            </p>
+            
+            <div className="flex flex-wrap items-center justify-center gap-4 w-full sm:w-auto">
+              <a
+                href="#enquiry-section"
+                onClick={() => handleCtaEvent("Start Your Project - Final")}
+                className="w-full sm:w-auto bg-[#2563EB] hover:bg-[#3B82F6] hover:scale-[1.025] hover:shadow-lg transition-all text-white font-bold text-xs px-8 py-4 rounded-xl shadow-md flex items-center justify-center gap-1.5 group"
+              >
+                Start Your Project
+                <i className="fa-solid fa-arrow-right group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
+              
+              <a
+                href="https://wa.me/919080026133?text=Hello%20Joy%20Digital,%20I'd%20like%20to%20discuss%20our%20project."
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => handleWaEvent("final_cta")}
+                className="w-full sm:w-auto bg-[#10b981] hover:bg-[#059669] hover:scale-[1.025] hover:shadow-lg transition-all text-white font-bold text-xs px-8 py-4 rounded-xl shadow-md flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <i className="fa-brands fa-whatsapp text-lg animate-pulse" />
+                WhatsApp Message
+              </a>
             </div>
           </div>
         </section>
 
       </main>
 
-      {/* SECTION 10: STRONG FOOTER WITH CONTACT DETAILS AND SERVICE AREAS */}
+      {/* 13. FOOTER */}
       <Footer />
       <StickyWidgets />
     </>
