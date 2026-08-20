@@ -155,18 +155,18 @@ export default function BlogArticleContainer({ post, htmlContent, relatedPosts, 
     <div className="max-w-7xl mx-auto px-6 py-10 select-text">
       
       {/* Breadcrumbs Navigation with subtle fade */}
-      <nav className="text-[10px] sm:text-xs font-bold text-[#64748B] uppercase tracking-wider mb-8 select-none animate-fade-in text-left">
-        <Link href="/" className="hover:text-[#2563EB] transition-colors">Home</Link>
+      <nav className="text-[10px] sm:text-xs font-bold text-[#6B6478] uppercase tracking-wider mb-8 select-none animate-fade-in text-left">
+        <Link href="/" className="hover:text-primary transition-colors">Home</Link>
         <span className="mx-2 text-slate-300">/</span>
-        <Link href="/blog" className="hover:text-[#2563EB] transition-colors">Blog</Link>
+        <Link href="/blog" className="hover:text-primary transition-colors">Blog</Link>
         <span className="mx-2 text-slate-300">/</span>
-        <span className="text-[#0F172A] truncate max-w-[200px] inline-block align-bottom">{post.title}</span>
+        <span className="text-slate-900 truncate max-w-[200px] inline-block align-bottom">{post.title}</span>
       </nav>
 
       {/* Header Details with Slide-up Animation */}
       <header className="mb-12 text-left max-w-4xl animate-slide-up">
         <div className="flex items-center gap-3.5 mb-5 select-none">
-          <span className="bg-[#2563EB]/10 text-[#2563EB] border border-blue-500/25 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+          <span className="bg-primary/10 text-primary border border-primary-light/20 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
             {post.category}
           </span>
           <span className="text-[11px] text-[#64748B] font-semibold">
@@ -184,8 +184,8 @@ export default function BlogArticleContainer({ post, htmlContent, relatedPosts, 
           {post.title}
         </h1>
 
-        <div className="flex items-center gap-3 border-t border-b border-[#E2E8F0] py-4.5 select-none">
-          <div className="w-8 h-8 rounded-full bg-[#2563EB]/10 border border-[#2563EB]/25 text-[#2563EB] font-bold text-xs flex items-center justify-center">
+        <div className="flex items-center gap-3 border-t border-b border-[#E9E4F2] py-4.5 select-none">
+          <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary-light/20 text-primary font-bold text-xs flex items-center justify-center">
             {post.author.charAt(0)}
           </div>
           <div>
@@ -209,7 +209,7 @@ export default function BlogArticleContainer({ post, htmlContent, relatedPosts, 
                 <a
                   href={`#${item.id}`}
                   onClick={(e) => handleTocClick(e, item.id)}
-                  className={`block border-l-2 border-transparent transition-all duration-250 cursor-pointer text-left pl-3.5 hover:text-[#2563EB] hover:border-[#2563EB]/40 ${
+                  className={`block border-l-2 border-transparent transition-all duration-250 cursor-pointer text-left pl-3.5 hover:text-primary hover:border-primary/45 ${
                     activeId === item.id 
                       ? "toc-item-active" 
                       : ""
@@ -236,8 +236,8 @@ export default function BlogArticleContainer({ post, htmlContent, relatedPosts, 
                        prose-p:mb-5 prose-p:leading-relaxed
                        prose-ul:list-disc prose-ul:pl-6 prose-ul:mb-5 prose-ul:space-y-2
                        prose-ol:list-decimal prose-ol:pl-6 prose-ol:mb-5 prose-ol:space-y-2
-                       prose-blockquote:border-l-4 prose-blockquote:border-[#2563EB] prose-blockquote:bg-slate-50 prose-blockquote:py-4.5 prose-blockquote:px-6 prose-blockquote:rounded-r-2xl prose-blockquote:italic prose-blockquote:font-semibold prose-blockquote:text-slate-700
-                       prose-img:rounded-2xl prose-img:shadow-md prose-img:border prose-img:border-[#E2E8F0] prose-img:mx-auto prose-img:my-8 prose-img:hover:scale-[1.015] prose-img:transition-transform
+                       prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:bg-slate-50 prose-blockquote:py-4.5 prose-blockquote:px-6 prose-blockquote:rounded-r-2xl prose-blockquote:italic prose-blockquote:font-semibold prose-blockquote:text-slate-700
+                       prose-img:rounded-2xl prose-img:shadow-md prose-img:border prose-img:border-[#E9E4F2] prose-img:mx-auto prose-img:my-8 prose-img:hover:scale-[1.015] prose-img:transition-transform
                        prose-table:w-full prose-table:border-collapse prose-table:my-6
                        prose-th:bg-slate-50 prose-th:border prose-th:border-[#E2E8F0] prose-th:p-3.5 prose-th:text-xs prose-th:font-extrabold prose-th:text-slate-900
                        prose-td:border prose-td:border-[#E2E8F0] prose-td:p-3.5 prose-td:text-xs prose-td:font-semibold"
@@ -245,10 +245,10 @@ export default function BlogArticleContainer({ post, htmlContent, relatedPosts, 
           />
 
           {/* Inline article link back */}
-          <div className="border-t border-[#E2E8F0] mt-12 pt-8 text-center select-none">
+          <div className="border-t border-[#E9E4F2] mt-12 pt-8 text-center select-none">
             <Link
               href="/blog"
-              className="text-xs font-bold text-[#2563EB] hover:text-[#3B82F6] flex items-center justify-center gap-2 group"
+              className="text-xs font-bold text-primary hover:text-primary-light flex items-center justify-center gap-2 group"
             >
               <i className="fa-solid fa-arrow-left-long group-hover:-translate-x-1.5 transition-transform" /> Back to Blog Articles
             </Link>
@@ -273,7 +273,7 @@ export default function BlogArticleContainer({ post, htmlContent, relatedPosts, 
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/contact"
-              className="bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold text-xs px-6 py-3.5 rounded-xl shadow-md transition-all hover:scale-[1.025]"
+              className="bg-primary hover:bg-[#6D28D9] text-white font-bold text-xs px-6 py-3.5 rounded-xl shadow-md transition-all hover:scale-[1.025]"
             >
               Talk to Joy Digital
             </Link>
@@ -291,9 +291,9 @@ export default function BlogArticleContainer({ post, htmlContent, relatedPosts, 
 
       {/* 4. RELATED ARTICLES (3 Grid Cards with hover scale & shadow transitions) */}
       {relatedPosts.length > 0 && (
-        <section className="mt-20 border-t border-[#E2E8F0] pt-16">
+        <section className="mt-20 border-t border-[#E9E4F2] pt-16">
           <div className="text-left mb-10 select-none">
-            <span className="text-[10px] font-black text-[#2563EB] uppercase tracking-widest block mb-2">Recommended</span>
+            <span className="text-[10px] font-black text-primary uppercase tracking-widest block mb-2">Recommended</span>
             <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">You May Also Like</h3>
           </div>
 
@@ -305,7 +305,7 @@ export default function BlogArticleContainer({ post, htmlContent, relatedPosts, 
                 className="bg-white border border-[#E2E8F0] rounded-[24px] overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
-                  <div className="relative w-full h-40 bg-slate-50 border-b border-[#E2E8F0] overflow-hidden">
+                  <div className="relative w-full h-40 bg-slate-50 border-b border-[#E9E4F2] overflow-hidden">
                     <Image
                       src={getThumbnail(rPost.category)}
                       alt={`${rPost.title} preview`}
@@ -315,14 +315,14 @@ export default function BlogArticleContainer({ post, htmlContent, relatedPosts, 
                       loading="lazy"
                     />
                     <div className="absolute top-4 left-4 z-10">
-                      <span className="bg-[#2563EB] text-white font-extrabold text-[8px] uppercase tracking-wider px-2 py-0.5 rounded-md shadow-sm border border-blue-500/10">
+                      <span className="bg-primary text-white font-extrabold text-[8px] uppercase tracking-wider px-2 py-0.5 rounded-md shadow-sm border border-primary-light/20">
                         {rPost.category}
                       </span>
                     </div>
                   </div>
 
                   <div className="p-6">
-                    <h4 className="text-sm font-extrabold text-slate-900 leading-snug group-hover:text-[#2563EB] transition-colors mb-2 line-clamp-2">
+                    <h4 className="text-sm font-extrabold text-slate-900 leading-snug group-hover:text-primary transition-colors mb-2 line-clamp-2">
                       <Link href={`/blog/${rPost.slug}`} title={rPost.title}>
                         {rPost.title}
                       </Link>
@@ -333,13 +333,13 @@ export default function BlogArticleContainer({ post, htmlContent, relatedPosts, 
                   </div>
                 </div>
 
-                <div className="px-6 py-3.5 border-t border-[#E2E8F0] bg-slate-50/50 flex items-center justify-between">
-                  <span className="text-[9px] text-[#64748B] font-bold">
+                <div className="px-6 py-3.5 border-t border-[#E9E4F2] bg-slate-50/50 flex items-center justify-between">
+                  <span className="text-[9px] text-[#6B6478] font-bold">
                     By {rPost.author}
                   </span>
                   <Link
                     href={`/blog/${rPost.slug}`}
-                    className="text-[11px] font-bold text-[#2563EB] hover:text-[#3B82F6] flex items-center gap-1.5"
+                    className="text-[11px] font-bold text-primary hover:text-primary-light flex items-center gap-1.5"
                   >
                     Read Guide &rarr;
                   </Link>

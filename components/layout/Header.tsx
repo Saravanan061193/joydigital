@@ -114,7 +114,7 @@ export default function Header() {
       <header
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-[#E5E7EB] py-3"
+            ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-[#E9E4F2] py-3"
             : "bg-transparent py-5"
         }`}
       >
@@ -130,8 +130,8 @@ export default function Header() {
               className="object-contain transition-all duration-300"
               priority
             />
-            <span className="font-bold text-xl tracking-tight text-primary-dark">
-              Joy<span className="text-accent">Digital</span>
+            <span className={`font-bold text-xl tracking-tight transition-colors duration-300 ${isScrolled ? "text-primary-dark" : "text-white"}`}>
+              Joy<span className={isScrolled ? "text-accent" : "text-primary-light"}>Digital</span>
             </span>
           </Link>
 
@@ -140,8 +140,12 @@ export default function Header() {
             <Link
               href={getRegionalHref("/")}
               title="Home"
-              className={`font-semibold text-sm transition-colors hover:text-accent nav-link-underline ${
-                isActive("/") ? "text-accent" : "text-text-primary"
+              className={`font-semibold text-sm transition-colors nav-link-underline ${
+                isScrolled ? "hover:text-accent" : "hover:text-primary-light"
+              } ${
+                isActive("/") 
+                  ? (isScrolled ? "text-accent" : "text-primary-light") 
+                  : (isScrolled ? "text-text-primary" : "text-slate-100")
               }`}
             >
               Home
@@ -154,10 +158,12 @@ export default function Header() {
               onMouseLeave={() => setIsServicesDropdownOpen(false)}
             >
               <button
-                className={`font-semibold text-sm flex items-center gap-1 transition-colors hover:text-accent nav-link-underline ${
+                className={`font-semibold text-sm flex items-center gap-1 transition-colors nav-link-underline ${
+                  isScrolled ? "hover:text-accent" : "hover:text-primary-light"
+                } ${
                   pathname.includes("-services") || pathname.includes("-development") || pathname.includes("-setup") || pathname.includes("marketing")
-                    ? "text-accent"
-                    : "text-text-primary"
+                    ? (isScrolled ? "text-accent" : "text-primary-light")
+                    : (isScrolled ? "text-text-primary" : "text-slate-100")
                 }`}
               >
                 Services
@@ -166,7 +172,7 @@ export default function Header() {
 
               {/* Dropdown Menu */}
               <div
-                className={`absolute left-0 mt-2 w-64 bg-white border border-[#E5E7EB] rounded-lg shadow-lg py-2 transition-all duration-200 ${
+                className={`absolute left-0 mt-2 w-64 bg-white border border-[#E9E4F2] rounded-lg shadow-lg py-2 transition-all duration-200 ${
                   isServicesDropdownOpen
                     ? "opacity-100 visible translate-y-0"
                     : "opacity-0 invisible -translate-y-2 pointer-events-none"
@@ -179,8 +185,8 @@ export default function Header() {
                       key={link.href}
                       href={targetHref}
                       title={link.label}
-                      className={`block px-4 py-2 text-sm transition-colors hover:bg-gray-50 hover:text-accent ${
-                        pathname === targetHref ? "text-accent bg-gray-50/50" : "text-text-primary"
+                      className={`block px-4 py-2 text-sm transition-colors hover:bg-[#FAF9FF] hover:text-primary ${
+                        pathname === targetHref ? "text-primary bg-[#FAF9FF]" : "text-text-primary"
                       }`}
                     >
                       {link.label}
@@ -193,8 +199,12 @@ export default function Header() {
             <Link
               href="/about"
               title="About Us"
-              className={`font-semibold text-sm transition-colors hover:text-accent nav-link-underline ${
-                isActive("/about") ? "text-accent" : "text-text-primary"
+              className={`font-semibold text-sm transition-colors nav-link-underline ${
+                isScrolled ? "hover:text-accent" : "hover:text-primary-light"
+              } ${
+                isActive("/about") 
+                  ? (isScrolled ? "text-accent" : "text-primary-light") 
+                  : (isScrolled ? "text-text-primary" : "text-slate-100")
               }`}
             >
               About Us
@@ -203,8 +213,12 @@ export default function Header() {
             <Link
               href="/portfolio"
               title="Portfolio"
-              className={`font-semibold text-sm transition-colors hover:text-accent nav-link-underline ${
-                isActive("/portfolio") ? "text-accent" : "text-text-primary"
+              className={`font-semibold text-sm transition-colors nav-link-underline ${
+                isScrolled ? "hover:text-accent" : "hover:text-primary-light"
+              } ${
+                isActive("/portfolio") 
+                  ? (isScrolled ? "text-accent" : "text-primary-light") 
+                  : (isScrolled ? "text-text-primary" : "text-slate-100")
               }`}
             >
               Portfolio
@@ -213,8 +227,12 @@ export default function Header() {
             <Link
               href="/blog"
               title="Blog"
-              className={`font-semibold text-sm transition-colors hover:text-accent nav-link-underline ${
-                isActive("/blog") ? "text-accent" : "text-text-primary"
+              className={`font-semibold text-sm transition-colors nav-link-underline ${
+                isScrolled ? "hover:text-accent" : "hover:text-primary-light"
+              } ${
+                isActive("/blog") 
+                  ? (isScrolled ? "text-accent" : "text-primary-light") 
+                  : (isScrolled ? "text-text-primary" : "text-slate-100")
               }`}
             >
               Blog
@@ -223,8 +241,12 @@ export default function Header() {
             <Link
               href={getRegionalHref("/contact")}
               title="Contact Us"
-              className={`font-semibold text-sm transition-colors hover:text-accent nav-link-underline ${
-                isActive("/contact") ? "text-accent" : "text-text-primary"
+              className={`font-semibold text-sm transition-colors nav-link-underline ${
+                isScrolled ? "hover:text-accent" : "hover:text-primary-light"
+              } ${
+                isActive("/contact") 
+                  ? (isScrolled ? "text-accent" : "text-primary-light") 
+                  : (isScrolled ? "text-text-primary" : "text-slate-100")
               }`}
             >
               Contact
@@ -269,7 +291,7 @@ export default function Header() {
             <Link
               href={getRegionalHref("/contact")}
               title="Book Free Consultation"
-              className="bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold text-xs px-6 py-3 rounded-full shadow-md hover:-translate-y-0.5 transition-all duration-300 flex-shrink-0"
+              className="bg-primary hover:bg-primary-light text-white font-bold text-xs px-6 py-3 rounded-full shadow-md hover:-translate-y-0.5 transition-all duration-300 flex-shrink-0"
             >
               Book Free Consultation
             </Link>
@@ -306,28 +328,34 @@ export default function Header() {
               )}
             </div>
 
-            {/* Mobile Menu Toggle Button */}
-            <button
-              onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="flex flex-col justify-between w-6 h-4 z-[60] focus:outline-none"
-              aria-label="Toggle navigation menu"
-            >
-              <span
-                className={`w-full h-0.5 bg-primary-dark rounded transition-all duration-300 ${
-                  isMobileOpen ? "rotate-45 translate-y-1.5" : ""
-                }`}
-              />
-              <span
-                className={`w-full h-0.5 bg-primary-dark rounded transition-all duration-300 ${
-                  isMobileOpen ? "opacity-0" : ""
-                }`}
-              />
-              <span
-                className={`w-full h-0.5 bg-primary-dark rounded transition-all duration-300 ${
-                  isMobileOpen ? "-rotate-45 -translate-y-1.5" : ""
-                }`}
-              />
-            </button>
+             {/* Mobile Menu Toggle Button */}
+             <button
+               onClick={() => setIsMobileOpen(!isMobileOpen)}
+               className="flex flex-col justify-between w-6 h-4 z-[60] focus:outline-none"
+               aria-label="Toggle navigation menu"
+             >
+               <span
+                 className={`w-full h-0.5 rounded transition-all duration-300 ${
+                   isScrolled || isMobileOpen ? "bg-primary-dark" : "bg-white"
+                 } ${
+                   isMobileOpen ? "rotate-45 translate-y-1.5" : ""
+                 }`}
+               />
+               <span
+                 className={`w-full h-0.5 rounded transition-all duration-300 ${
+                   isScrolled || isMobileOpen ? "bg-primary-dark" : "bg-white"
+                 } ${
+                   isMobileOpen ? "opacity-0" : ""
+                 }`}
+               />
+               <span
+                 className={`w-full h-0.5 rounded transition-all duration-300 ${
+                   isScrolled || isMobileOpen ? "bg-primary-dark" : "bg-white"
+                 } ${
+                   isMobileOpen ? "-rotate-45 -translate-y-1.5" : ""
+                 }`}
+               />
+             </button>
           </div>
         </div>
       </header>

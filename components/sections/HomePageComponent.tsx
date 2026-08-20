@@ -167,35 +167,35 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
   const hero = getHeroContent();
 
-  // 2. TRUST / VALUE ITEMS
+  // 2. TRUST / VALUE ITEMS (Purple themed icons)
   const VALUE_ITEMS = [
     {
-      icon: "fa-solid fa-earth-americas text-blue-600",
+      icon: "fa-solid fa-earth-americas text-[#7C3AED]",
       title: "Global Service Support",
       description: "Collaborating remotely with startups and corporate teams worldwide, backed by our efficient development base in India."
     },
     {
-      icon: "fa-solid fa-tags text-orange-500",
+      icon: "fa-solid fa-tags text-[#7C3AED]",
       title: "Transparent Flat Pricing",
       description: "Get detailed, flat-rate proposals starting from ₹15,000 ($250). Absolute clarity on hosting setup and maintainer retainers."
     },
     {
-      icon: "fa-solid fa-sliders text-emerald-500",
+      icon: "fa-solid fa-sliders text-[#7C3AED]",
       title: "Custom Engineered Solutions",
       description: "No bloated page builders. We build tailor-made Next.js and React interfaces configured to your conversion goals."
     },
     {
-      icon: "fa-solid fa-comments text-indigo-500",
+      icon: "fa-solid fa-comments text-[#7C3AED]",
       title: "Direct Specialist Sync",
       description: "No administrative filters. Communicate directly with the system developers and search specialists executing your project."
     },
     {
-      icon: "fa-solid fa-bolt text-amber-500",
+      icon: "fa-solid fa-bolt text-[#7C3AED]",
       title: "Fast Iterative Launching",
       description: "Agile delivery sprints. We launch standard multipage company profiles and lead funnels within 7 to 14 business days."
     },
     {
-      icon: "fa-solid fa-headset text-rose-500",
+      icon: "fa-solid fa-headset text-[#7C3AED]",
       title: "Long-Term Technical Care",
       description: "Post-launch maintenance covering server deployment, security configurations, index monitoring, and speed tuning."
     }
@@ -509,33 +509,33 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
       />
       <Header />
       
-      <main className="bg-[#F8FAFC] text-[#0F172A] min-h-screen overflow-hidden">
+      <main className="bg-[#FAF9FF] text-[#1F1B2D] min-h-screen overflow-hidden">
         
-        {/* 1. HERO SECTION WITH CANVAS PARTICLES */}
-        <section className="relative pt-32 lg:pt-44 pb-24 overflow-hidden bg-white border-b border-[#E2E8F0]">
+        {/* 1. HERO SECTION WITH PREMIUM DARK-PURPLE THEME (#171126) */}
+        <section className="relative pt-32 lg:pt-44 pb-24 overflow-hidden bg-[#171126] border-b border-[#2A203F]">
           {/* Lightweight particle canvas connections */}
           <DigitalNetworkBackground />
           
           <div className="absolute inset-0 bg-grid-pattern opacity-[0.015] pointer-events-none" />
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-glow rounded-full blur-[120px] pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-accent-glow rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#7C3AED]/10 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#A78BFA]/10 rounded-full blur-[100px] pointer-events-none" />
 
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
             {/* Hero text content with fade reveal */}
             <div className="lg:col-span-7 text-left flex flex-col items-start reveal-hidden reveal-visible">
-              <div className="inline-flex items-center gap-2 bg-[#2563EB]/10 border border-[#2563EB]/20 px-4 py-1.5 rounded-full mb-6 select-none">
-                <span className="w-2.5 h-2.5 bg-[#2563EB] rounded-full animate-pulse" />
-                <span className="text-xs font-bold text-[#2563EB] uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 bg-[#7C3AED]/15 border border-[#7C3AED]/35 px-4 py-1.5 rounded-full mb-6 select-none">
+                <span className="w-2.5 h-2.5 bg-[#A78BFA] rounded-full animate-pulse" />
+                <span className="text-xs font-bold text-[#A78BFA] uppercase tracking-wider">
                   {hero.badge}
                 </span>
               </div>
               
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-[#0F172A] tracking-tight mb-6 leading-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight mb-6 leading-tight">
                 {country === "" ? (
                   <>
                     <span>Build Your Digital Presence.</span>
                     <span 
-                      className={`block text-[#2563EB] transition-all duration-350 transform ${fadeState}`}
+                      className={`block text-[#A78BFA] transition-all duration-350 transform ${fadeState}`}
                       style={{ minHeight: "1.2em" }}
                     >
                       {activePhrase}
@@ -546,7 +546,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 )}
               </h1>
               
-              <p className="text-sm md:text-base text-[#64748B] mb-8 max-w-xl leading-relaxed font-medium">
+              <p className="text-sm md:text-base text-[#D8D2E6] mb-8 max-w-xl leading-relaxed font-medium">
                 {hero.subtitle}
               </p>
               
@@ -555,7 +555,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 <a
                   href="#enquiry-section"
                   onClick={() => handleCtaEvent("Get a Free Consultation")}
-                  className="w-full sm:w-auto text-center bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold text-xs px-8 py-4 rounded-xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/35 hover:scale-[1.025] transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 group"
+                  className="w-full sm:w-auto text-center bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-bold text-xs px-8 py-4 rounded-xl shadow-lg shadow-[#7C3AED]/25 hover:scale-[1.025] transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 group"
                 >
                   Get a Free Consultation
                   <i className="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform" />
@@ -564,7 +564,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 <a
                   href="#portfolio-section"
                   onClick={() => handleCtaEvent("View Our Work")}
-                  className="w-full sm:w-auto text-center bg-white border border-[#E2E8F0] hover:bg-slate-50 text-[#0F172A] font-bold text-xs px-8 py-4 rounded-xl shadow-md hover:scale-[1.025] transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 group"
+                  className="w-full sm:w-auto text-center bg-transparent border border-white hover:bg-white/10 text-white font-bold text-xs px-8 py-4 rounded-xl shadow-md hover:scale-[1.025] transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 group"
                 >
                   View Our Work
                   <i className="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform" />
@@ -583,9 +583,9 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               </div>
 
               {/* Minimal base statement */}
-              <div className="border-t border-[#E2E8F0] pt-5 w-full max-w-lg">
-                <p className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider mb-1">Base & Global Reach</p>
-                <p className="text-xs text-[#64748B] leading-relaxed font-semibold">
+              <div className="border-t border-[#2A203F] pt-5 w-full max-w-lg">
+                <p className="text-[10px] font-bold text-[#A78BFA] uppercase tracking-wider mb-1">Base & Global Reach</p>
+                <p className="text-xs text-[#D8D2E6] leading-relaxed font-semibold">
                   Based in India | Remotely serving clients across USA, UK, UAE, Australia, and India.
                 </p>
               </div>
@@ -608,17 +608,17 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           </div>
         </section>
 
-        {/* 2. TRUST / VALUE SECTION WITH SCROLL REVEALS */}
-        <section className="py-20 bg-white border-b border-[#E2E8F0] relative z-10">
+        {/* 2. TRUST / VALUE SECTION WITH SCROLL REVEALS (Soft background alternates) */}
+        <section className="py-20 bg-white border-b border-[#E9E4F2] relative z-10">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
-              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
+              <span className="text-xs font-bold text-[#7C3AED] uppercase tracking-widest block mb-3">
                 Value Proposition
               </span>
-              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+              <h2 className="text-3xl font-extrabold text-[#1F1B2D] mb-4">
                 Designed for Growing Businesses Worldwide
               </h2>
-              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+              <p className="text-xs sm:text-sm text-[#6B6478] font-semibold">
                 Transparent processes, specialized technical engineers, and conversion-first workflows. No fake claims.
               </p>
             </div>
@@ -629,13 +629,13 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 <div 
                   key={index}
                   style={{ transitionDelay: `${index * 80}ms` }}
-                  className="p-8 bg-[#F8FAFC] border border-[#E2E8F0] rounded-[24px] shadow-sm hover:shadow-md hover:border-blue-500/20 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-start text-left reveal-hidden group"
+                  className="p-8 bg-[#FAF9FF] border border-[#E9E4F2] rounded-[24px] shadow-sm hover:shadow-md hover:border-[#7C3AED]/20 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-start text-left reveal-hidden group"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-white border border-[#E2E8F0] flex items-center justify-center text-xl mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-white border border-[#E9E4F2] flex items-center justify-center text-xl mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300">
                     <i className={item.icon} />
                   </div>
-                  <h3 className="text-sm font-bold text-[#0F172A] mb-3">{item.title}</h3>
-                  <p className="text-xs text-[#64748B] leading-relaxed font-semibold">{item.description}</p>
+                  <h3 className="text-sm font-bold text-[#1F1B2D] mb-3">{item.title}</h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed font-semibold">{item.description}</p>
                 </div>
               ))}
             </div>
@@ -643,16 +643,16 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* 3. SERVICES SECTION WITH PREMIUM HOVER STATES */}
-        <section className="py-20 bg-[#F8FAFC] border-b border-[#E2E8F0]">
+        <section className="py-20 bg-white border-b border-[#E9E4F2]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
-              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
+              <span className="text-xs font-bold text-[#7C3AED] uppercase tracking-widest block mb-3">
                 Our Services
               </span>
-              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+              <h2 className="text-3xl font-extrabold text-[#1F1B2D] mb-4">
                 Modern Services Built to Generate Qualified Leads
               </h2>
-              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+              <p className="text-xs sm:text-sm text-[#6B6478] font-semibold">
                 Custom layouts designed for search engine exposure, mobile responsive compatibility, and client actions.
               </p>
             </div>
@@ -663,23 +663,23 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 <article
                   key={idx}
                   style={{ transitionDelay: `${(idx % 4) * 80}ms` }}
-                  className="bg-white border border-[#E2E8F0] rounded-[24px] p-7 shadow-sm hover:shadow-lg hover:border-blue-500/40 hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group overflow-hidden relative reveal-hidden"
+                  className="bg-[#FAF9FF] border border-[#E9E4F2] rounded-[24px] p-7 shadow-sm hover:shadow-lg hover:border-[#7C3AED]/40 hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group overflow-hidden relative reveal-hidden"
                 >
-                  <div className="absolute top-0 left-0 w-full h-1 bg-[#2563EB] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute top-0 left-0 w-full h-1 bg-[#7C3AED] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   
                   <div>
-                    <div className="w-10 h-10 rounded-xl bg-[#2563EB]/10 flex items-center justify-center text-[#2563EB] text-lg mb-5 group-hover:scale-110 group-hover:bg-[#2563EB] group-hover:text-white transition-all duration-300">
+                    <div className="w-10 h-10 rounded-xl bg-[#7C3AED]/10 flex items-center justify-center text-[#7C3AED] text-lg mb-5 group-hover:scale-110 group-hover:bg-[#7C3AED] group-hover:text-white transition-all duration-300">
                       <i className={s.icon} />
                     </div>
-                    <h3 className="text-xs font-bold text-[#0F172A] mb-3 uppercase tracking-wider group-hover:text-[#2563EB] transition-colors">
+                    <h3 className="text-xs font-bold text-[#1F1B2D] mb-3 uppercase tracking-wider group-hover:text-[#7C3AED] transition-colors">
                       {s.title}
                     </h3>
-                    <p className="text-[11px] text-[#64748B] leading-relaxed mb-6 font-semibold">
+                    <p className="text-[11px] text-[#6B6478] leading-relaxed mb-6 font-semibold">
                       {s.description}
                     </p>
                     
                     {/* Benefits list */}
-                    <ul className="flex flex-col gap-2.5 mb-6 text-[10px] text-[#64748B] font-bold border-t border-[#E2E8F0] pt-4">
+                    <ul className="flex flex-col gap-2.5 mb-6 text-[10px] text-[#6B6478] font-bold border-t border-[#E9E4F2] pt-4">
                       {s.benefits.map((b, i) => (
                         <li key={i} className="flex items-center gap-1.5">
                           <i className="fa-solid fa-circle-check text-emerald-500 text-[11px]" />
@@ -691,7 +691,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
                   <Link
                     href={s.href}
-                    className="text-xs font-bold text-[#2563EB] flex items-center gap-1.5 mt-2 transition-colors hover:text-[#3B82F6] border-t border-slate-50 pt-3"
+                    className="text-xs font-bold text-[#7C3AED] flex items-center gap-1.5 mt-2 transition-colors hover:text-[#A78BFA] border-t border-[#E9E4F2] pt-3"
                   >
                     {s.cta} <i className="fa-solid fa-chevron-right text-[9px] group-hover:translate-x-1.5 transition-transform" />
                   </Link>
@@ -702,16 +702,16 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* 4. WHO WE HELP SECTION */}
-        <section className="py-20 bg-white border-b border-[#E2E8F0]">
+        <section className="py-20 bg-[#FAF9FF] border-b border-[#E9E4F2]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-14 reveal-hidden">
-              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
+              <span className="text-xs font-bold text-[#7C3AED] uppercase tracking-widest block mb-3">
                 Target Industries
               </span>
-              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+              <h2 className="text-3xl font-extrabold text-[#1F1B2D] mb-4">
                 Who We Help Globally
               </h2>
-              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+              <p className="text-xs sm:text-sm text-[#6B6478] font-semibold">
                 We craft specialized, fast-loading interfaces for startups and small business sectors across the globe.
               </p>
             </div>
@@ -725,8 +725,8 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                     onClick={() => setSelectedIndustry(ind.name)}
                     className={`text-xs px-5 py-3.5 rounded-xl font-bold border transition-all text-left whitespace-nowrap lg:whitespace-normal cursor-pointer ${
                       selectedIndustry === ind.name
-                        ? "bg-[#2563EB] text-white border-[#2563EB] shadow-md shadow-blue-500/10"
-                        : "bg-[#F8FAFC] text-[#0F172A] border-[#E2E8F0] hover:bg-slate-100"
+                        ? "bg-[#7C3AED] text-white border-[#7C3AED] shadow-md shadow-[#7C3AED]/10"
+                        : "bg-white text-[#1F1B2D] border-[#E9E4F2] hover:bg-slate-50"
                     }`}
                   >
                     {ind.name}
@@ -735,17 +735,17 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               </div>
 
               {/* Selected industry details card */}
-              <div className="lg:col-span-8 bg-[#F8FAFC] border border-[#E2E8F0] p-8 sm:p-12 rounded-[24px] shadow-sm text-left h-full flex flex-col justify-center min-h-[300px] hover:border-blue-500/15 transition-colors">
-                <span className="text-[10px] font-extrabold text-[#2563EB] uppercase tracking-widest block mb-3">Target Industry Blueprint</span>
-                <h3 className="text-2xl font-black text-[#0F172A] mb-4">Joy Digital for {selectedIndustry}</h3>
-                <p className="text-sm text-[#64748B] leading-relaxed font-semibold max-w-xl">
+              <div className="lg:col-span-8 bg-white border border-[#E9E4F2] p-8 sm:p-12 rounded-[24px] shadow-sm text-left h-full flex flex-col justify-center min-h-[300px] hover:border-[#7C3AED]/15 transition-colors">
+                <span className="text-[10px] font-extrabold text-[#7C3AED] uppercase tracking-widest block mb-3">Target Industry Blueprint</span>
+                <h3 className="text-2xl font-black text-[#1F1B2D] mb-4">Joy Digital for {selectedIndustry}</h3>
+                <p className="text-sm text-[#6B6478] leading-relaxed font-semibold max-w-xl">
                   {INDUSTRIES.find(i => i.name === selectedIndustry)?.desc}
                 </p>
-                <div className="mt-8 border-t border-[#E2E8F0] pt-6 flex flex-wrap gap-4 items-center">
+                <div className="mt-8 border-t border-[#E9E4F2] pt-6 flex flex-wrap gap-4 items-center">
                   <a
                     href="#enquiry-section"
                     onClick={() => handleCtaEvent(`Start ${selectedIndustry} Project`)}
-                    className="bg-[#2563EB] hover:bg-[#3B82F6] hover:scale-[1.03] transition-all text-white font-bold text-xs px-6 py-3 rounded-lg shadow-sm"
+                    className="bg-[#7C3AED] hover:bg-[#6D28D9] hover:scale-[1.03] transition-all text-white font-bold text-xs px-6 py-3 rounded-lg shadow-sm"
                   >
                     Start {selectedIndustry} Project
                   </a>
@@ -765,16 +765,16 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* 5. PORTFOLIO / OUR WORK (INTERACTIVE IMAGE ZOOM & OVERLAY) */}
-        <section id="portfolio-section" className="py-20 bg-[#F8FAFC] border-b border-[#E2E8F0]">
+        <section id="portfolio-section" className="py-20 bg-white border-b border-[#E9E4F2]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
-              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
+              <span className="text-xs font-bold text-[#7C3AED] uppercase tracking-widest block mb-3">
                 Featured Work
               </span>
-              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+              <h2 className="text-3xl font-extrabold text-[#1F1B2D] mb-4">
                 Real Client Success Showcases
               </h2>
-              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+              <p className="text-xs sm:text-sm text-[#6B6478] font-semibold">
                 Genuine custom developments designed to generate inbound client actions. No fake placeholders.
               </p>
             </div>
@@ -783,11 +783,11 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               {PORTFOLIO_PROJECTS.map((proj, idx) => (
                 <div 
                   key={idx} 
-                  className="bg-white border border-[#E2E8F0] rounded-[24px] overflow-hidden shadow-sm flex flex-col justify-between hover:shadow-lg hover:border-blue-500/25 transition-all duration-350 reveal-hidden group"
+                  className="bg-white border border-[#E9E4F2] rounded-[24px] overflow-hidden shadow-sm flex flex-col justify-between hover:shadow-lg hover:border-[#7C3AED]/25 transition-all duration-355 reveal-hidden group"
                 >
                   <div>
                     {/* Next.js Image component with scale on hover */}
-                    <div className="relative w-full h-56 bg-[#F8FAFC] border-b border-[#E2E8F0] overflow-hidden">
+                    <div className="relative w-full h-56 bg-[#FAF9FF] border-b border-[#E9E4F2] overflow-hidden">
                       <Image
                         src={proj.image}
                         alt={`${proj.client} showcase preview`}
@@ -797,12 +797,12 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                         loading="lazy"
                       />
                       
-                      {/* Premium overlay visible on desktop hover */}
-                      <div className="absolute inset-0 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6 hidden lg:flex pointer-events-none">
+                      {/* Premium overlay visible on desktop hover (Deep Purple background) */}
+                      <div className="absolute inset-0 bg-[#171126]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6 hidden lg:flex pointer-events-none">
                         <div className="text-center text-white transform translate-y-3 group-hover:translate-y-0 transition-transform duration-350">
-                          <span className="text-[10px] font-extrabold text-[#F97316] uppercase tracking-wider block mb-2">{proj.industry}</span>
+                          <span className="text-[10px] font-extrabold text-[#A78BFA] uppercase tracking-wider block mb-2">{proj.industry}</span>
                           <span className="text-base font-black block mb-4">{proj.client}</span>
-                          <span className="inline-flex items-center gap-1.5 bg-[#2563EB] text-white text-xs font-bold px-4 py-2 rounded-lg shadow-md">
+                          <span className="inline-flex items-center gap-1.5 bg-[#7C3AED] text-white text-xs font-bold px-4 py-2 rounded-lg shadow-md">
                             View Case Study <i className="fa-solid fa-arrow-right" />
                           </span>
                         </div>
@@ -811,22 +811,22 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                     
                     <div className="p-8 text-left">
                       <div className="flex flex-wrap items-center justify-between gap-3 mb-4 lg:hidden">
-                        <span className="bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/25 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+                        <span className="bg-[#7C3AED]/10 text-[#7C3AED] border border-[#7C3AED]/25 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
                           {proj.industry}
                         </span>
                       </div>
                       
-                      <h3 className="text-lg font-black text-[#0F172A] mb-3 leading-snug">
+                      <h3 className="text-lg font-black text-[#1F1B2D] mb-3 leading-snug">
                         {proj.client}
                       </h3>
-                      <p className="text-xs font-bold text-[#2563EB] mb-3">{proj.service}</p>
-                      <p className="text-xs text-[#64748B] leading-relaxed font-semibold">
+                      <p className="text-xs font-bold text-[#7C3AED] mb-3">{proj.service}</p>
+                      <p className="text-xs text-[#6B6478] leading-relaxed font-semibold">
                         {proj.desc}
                       </p>
                     </div>
                   </div>
 
-                  <div className="border-t border-[#E2E8F0] bg-[#F8FAFC] px-8 py-4.5 flex items-center justify-between">
+                  <div className="border-t border-[#E9E4F2] bg-[#FAF9FF] px-8 py-4.5 flex items-center justify-between">
                     {proj.link ? (
                       <a
                         href={proj.link}
@@ -837,11 +837,11 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                         Visit Live Link <i className="fa-solid fa-arrow-up-right-from-square text-[9px] group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
                       </a>
                     ) : (
-                      <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider">Client Archive</span>
+                      <span className="text-[10px] font-bold text-[#6B6478] uppercase tracking-wider">Client Archive</span>
                     )}
                     <Link
                       href="/portfolio"
-                      className="text-xs font-bold text-[#2563EB] hover:text-[#3B82F6] flex items-center gap-1.5 transition-colors group/case"
+                      className="text-xs font-bold text-[#7C3AED] hover:text-[#A78BFA] flex items-center gap-1.5 transition-colors group/case"
                     >
                       Case Details <i className="fa-solid fa-chevron-right text-[8px] group-hover/case:translate-x-1 transition-transform" />
                     </Link>
@@ -853,7 +853,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
             <div className="text-center mt-12 reveal-hidden">
               <Link
                 href="/portfolio"
-                className="inline-flex items-center gap-2 bg-[#0F172A] hover:bg-slate-800 hover:scale-[1.025] text-white font-bold text-xs px-8 py-4 rounded-xl transition-all group"
+                className="inline-flex items-center gap-2 bg-[#171126] hover:bg-slate-800 hover:scale-[1.025] text-white font-bold text-xs px-8 py-4 rounded-xl transition-all group"
               >
                 View All Projects <i className="fa-solid fa-arrow-right-long text-xs group-hover:translate-x-1 transition-transform" />
               </Link>
@@ -862,25 +862,25 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* 6. HOW WE WORK PROCESS WITH AN ANIMATED CONNECTING LINE */}
-        <section id="process-section" className="py-20 bg-white border-b border-[#E2E8F0]">
+        <section id="process-section" className="py-20 bg-white border-b border-[#E9E4F2]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
-              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
+              <span className="text-xs font-bold text-[#7C3AED] uppercase tracking-widest block mb-3">
                 Process Workflow
               </span>
-              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+              <h2 className="text-3xl font-extrabold text-[#1F1B2D] mb-4">
                 Our Simple 5-Step Process
               </h2>
-              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+              <p className="text-xs sm:text-sm text-[#6B6478] font-semibold">
                 How we take project parameters from discovery draft into search engine launch.
               </p>
             </div>
 
             <div className="relative">
-              {/* Progressive animated horizontal connecting gradient line */}
+              {/* Progressive animated horizontal connecting gradient line (purple theme) */}
               <div className="absolute top-6 left-12 right-12 h-[2px] bg-slate-100 hidden lg:block z-0">
                 <div 
-                  className="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-orange-500 origin-left transition-transform duration-1000 ease-out"
+                  className="h-full bg-gradient-to-r from-[#7C3AED] to-[#A78BFA] origin-left transition-transform duration-1000 ease-out"
                   style={{ transform: processInView ? "scaleX(1)" : "scaleX(0)" }}
                 />
               </div>
@@ -893,14 +893,14 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                     className="flex flex-col items-start text-left group reveal-hidden"
                   >
                     <div className="relative mb-6">
-                      <span className="text-4xl font-black text-[#2563EB]/15 group-hover:text-[#2563EB] transition-colors duration-300">
+                      <span className="text-4xl font-black text-[#7C3AED]/15 group-hover:text-[#7C3AED] transition-colors duration-300">
                         {step.step}
                       </span>
                     </div>
-                    <h3 className="text-sm font-extrabold text-[#0F172A] mb-3 group-hover:text-[#2563EB] transition-colors">
+                    <h3 className="text-sm font-extrabold text-[#1F1B2D] mb-3 group-hover:text-[#7C3AED] transition-colors">
                       {step.title}
                     </h3>
-                    <p className="text-xs text-[#64748B] leading-relaxed font-semibold">
+                    <p className="text-xs text-[#6B6478] leading-relaxed font-semibold">
                       {step.desc}
                     </p>
                   </div>
@@ -910,17 +910,17 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           </div>
         </section>
 
-        {/* 7. WHY JOY DIGITAL */}
-        <section className="py-20 bg-[#F8FAFC] border-b border-[#E2E8F0]">
+        {/* 7. WHY JOY DIGITAL (Soft background alternates) */}
+        <section className="py-20 bg-[#FAF9FF] border-b border-[#E9E4F2]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
-              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
+              <span className="text-xs font-bold text-[#7C3AED] uppercase tracking-widest block mb-3">
                 Value System
               </span>
-              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+              <h2 className="text-3xl font-extrabold text-[#1F1B2D] mb-4">
                 Our Business-Focused Approach
               </h2>
-              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+              <p className="text-xs sm:text-sm text-[#6B6478] font-semibold">
                 We combine search exposure parameters with premium frameworks to optimize performance metrics.
               </p>
             </div>
@@ -937,13 +937,13 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 <div 
                   key={idx} 
                   style={{ transitionDelay: `${(idx % 3) * 80}ms` }}
-                  className="bg-white border border-[#E2E8F0] p-8 rounded-[24px] shadow-sm hover:shadow-md hover:border-blue-500/20 hover:-translate-y-1 transition-all duration-300 reveal-hidden"
+                  className="bg-white border border-[#E9E4F2] p-8 rounded-[24px] shadow-sm hover:shadow-md hover:border-[#7C3AED]/20 hover:-translate-y-1 transition-all duration-300 reveal-hidden"
                 >
-                  <h3 className="text-sm font-extrabold text-[#0F172A] mb-3 flex items-center gap-2">
-                    <span className="w-1.5 h-6 bg-[#2563EB] rounded-full shrink-0" />
+                  <h3 className="text-sm font-extrabold text-[#1F1B2D] mb-3 flex items-center gap-2">
+                    <span className="w-1.5 h-6 bg-[#7C3AED] rounded-full shrink-0" />
                     {val.title}
                   </h3>
-                  <p className="text-xs text-[#64748B] leading-relaxed font-semibold">
+                  <p className="text-xs text-[#6B6478] leading-relaxed font-semibold">
                     {val.desc}
                   </p>
                 </div>
@@ -952,18 +952,18 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           </div>
         </section>
 
-        {/* 6 (AUX). GLOBAL CONNECTIONS NETWORK WIDGET */}
-        <section className="py-20 bg-slate-950 border-b border-slate-900 text-white relative">
-          <div className="absolute inset-0 bg-grid-pattern opacity-[0.01] pointer-events-none" />
+        {/* 8. GLOBAL CONNECTIONS NETWORK WIDGET (Deep Purple background #171126) */}
+        <section className="py-20 bg-[#171126] border-b border-[#2A203F] text-white relative">
+          <div className="absolute inset-0 bg-grid-pattern opacity-[0.015] pointer-events-none" />
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
-              <span className="text-xs font-bold text-[#F97316] uppercase tracking-widest block mb-3">
+              <span className="text-xs font-bold text-[#A78BFA] uppercase tracking-widest block mb-3">
                 Global Network
               </span>
               <h2 className="text-3xl font-extrabold text-white mb-4">
                 We Partner with Startups Worldwide
               </h2>
-              <p className="text-xs sm:text-sm text-slate-400 font-semibold">
+              <p className="text-xs sm:text-sm text-[#D8D2E6] font-semibold">
                 Serving growing brands across borders from our development base in India.
               </p>
             </div>
@@ -974,17 +974,17 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           </div>
         </section>
 
-        {/* 8. CASE STUDIES WITH COUNT-UP NUMERICAL COUNTERS */}
-        <section className="py-20 bg-white border-b border-[#E2E8F0]">
+        {/* 9. CASE STUDIES WITH COUNT-UP NUMERICAL COUNTERS */}
+        <section className="py-20 bg-white border-b border-[#E9E4F2]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
-              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
+              <span className="text-xs font-bold text-[#7C3AED] uppercase tracking-widest block mb-3">
                 Verified Outcomes
               </span>
-              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+              <h2 className="text-3xl font-extrabold text-[#1F1B2D] mb-4">
                 Real Problems. Real Solutions. Real Results.
               </h2>
-              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+              <p className="text-xs sm:text-sm text-[#6B6478] font-semibold">
                 Technical diagnostics and outcomes from genuine client partnerships. No manufactured stats.
               </p>
             </div>
@@ -994,11 +994,11 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 <div 
                   key={idx}
                   style={{ transitionDelay: `${idx * 100}ms` }}
-                  className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-[24px] p-8 flex flex-col justify-between text-left hover:shadow-md hover:border-blue-500/15 transition-all duration-300 reveal-hidden group"
+                  className="bg-[#FAF9FF] border border-[#E9E4F2] rounded-[24px] p-8 flex flex-col justify-between text-left hover:shadow-md hover:border-[#7C3AED]/15 transition-all duration-300 reveal-hidden group"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-3 mb-6">
-                      <span className="text-[10px] font-extrabold text-[#2563EB] uppercase tracking-wider bg-white border border-[#2563EB]/25 px-3 py-1 rounded-full">
+                      <span className="text-[10px] font-extrabold text-[#7C3AED] uppercase tracking-wider bg-white border border-[#7C3AED]/25 px-3 py-1 rounded-full">
                         {study.category}
                       </span>
                       <span className="text-sm font-black text-emerald-600 flex items-center gap-1">
@@ -1007,16 +1007,16 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                       </span>
                     </div>
 
-                    <h3 className="text-base font-black text-[#0F172A] mb-4 leading-tight group-hover:text-[#2563EB] transition-colors">
+                    <h3 className="text-base font-black text-[#1F1B2D] mb-4 leading-tight group-hover:text-[#7C3AED] transition-colors">
                       {study.title}
                     </h3>
                     
-                    <div className="flex flex-col gap-4 text-xs font-semibold text-[#64748B]">
+                    <div className="flex flex-col gap-4 text-xs font-semibold text-[#6B6478]">
                       <p>
-                        <strong className="text-[#0F172A] block mb-1">Challenge:</strong> {study.problem}
+                        <strong className="text-[#1F1B2D] block mb-1">Challenge:</strong> {study.problem}
                       </p>
                       <p>
-                        <strong className="text-[#0F172A] block mb-1">Execution:</strong> {study.solution}
+                        <strong className="text-[#1F1B2D] block mb-1">Execution:</strong> {study.solution}
                       </p>
                       <p>
                         <strong className="text-emerald-700 block mb-1">Result:</strong> {study.result}
@@ -1024,10 +1024,10 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                     </div>
                   </div>
 
-                  <div className="mt-8 pt-4 border-t border-[#E2E8F0]">
+                  <div className="mt-8 pt-4 border-t border-[#E9E4F2]">
                     <Link
                       href={`/case-studies`}
-                      className="text-xs font-bold text-[#2563EB] hover:text-[#3B82F6] flex items-center gap-1.5 group/case"
+                      className="text-xs font-bold text-[#7C3AED] hover:text-[#A78BFA] flex items-center gap-1.5 group/case"
                     >
                       Read Case Narrative <i className="fa-solid fa-chevron-right text-[8px] group-hover/case:translate-x-1 transition-transform" />
                     </Link>
@@ -1038,17 +1038,17 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           </div>
         </section>
 
-        {/* 9. TESTIMONIALS */}
-        <section className="py-20 bg-[#F8FAFC] border-b border-[#E2E8F0]">
+        {/* 10. TESTIMONIALS */}
+        <section className="py-20 bg-white border-b border-[#E9E4F2]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
-              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
+              <span className="text-xs font-bold text-[#7C3AED] uppercase tracking-widest block mb-3">
                 Client Reviews
               </span>
-              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+              <h2 className="text-3xl font-extrabold text-[#1F1B2D] mb-4">
                 What Our Clients Say
               </h2>
-              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+              <p className="text-xs sm:text-sm text-[#6B6478] font-semibold">
                 Feedback from local financial advisors, store directors, and corporate partners.
               </p>
             </div>
@@ -1058,28 +1058,28 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 <div 
                   key={idx} 
                   style={{ transitionDelay: `${idx * 100}ms` }}
-                  className="bg-white border border-[#E2E8F0] p-8 rounded-[20px] shadow-sm flex flex-col justify-between text-left hover:shadow-md hover:border-blue-500/15 transition-all duration-300 reveal-hidden"
+                  className="bg-[#FAF9FF] border border-[#E9E4F2] p-8 rounded-[20px] shadow-sm flex flex-col justify-between text-left hover:shadow-md hover:border-[#7C3AED]/15 transition-all duration-300 reveal-hidden"
                 >
                   <div>
-                    <div className="flex gap-1 text-amber-500 mb-4 text-xs">
+                    <div className="flex gap-1 text-[#7C3AED] mb-4 text-xs">
                       <i className="fa-solid fa-star" />
                       <i className="fa-solid fa-star" />
                       <i className="fa-solid fa-star" />
                       <i className="fa-solid fa-star" />
                       <i className="fa-solid fa-star" />
                     </div>
-                    <p className="text-xs text-[#64748B] italic leading-relaxed mb-6 font-semibold">
+                    <p className="text-xs text-[#6B6478] italic leading-relaxed mb-6 font-semibold">
                       &ldquo;{t.quote}&rdquo;
                     </p>
                   </div>
                   
-                  <div className="flex items-center gap-3 border-t border-[#E2E8F0] pt-4 mt-2">
-                    <div className="w-9 h-9 rounded-full bg-[#2563EB]/10 border border-[#2563EB]/20 text-[#2563EB] flex items-center justify-center font-bold text-xs flex-shrink-0">
+                  <div className="flex items-center gap-3 border-t border-[#E9E4F2] pt-4 mt-2">
+                    <div className="w-9 h-9 rounded-full bg-[#7C3AED]/10 border border-[#7C3AED]/20 text-[#7C3AED] flex items-center justify-center font-bold text-xs flex-shrink-0">
                       {t.initials}
                     </div>
                     <div className="flex-grow">
-                      <span className="text-xs font-bold text-[#0F172A] block leading-tight">{t.name}</span>
-                      <span className="text-[10px] text-[#64748B] block mt-0.5 font-bold">{t.role} — {t.company}</span>
+                      <span className="text-xs font-bold text-[#1F1B2D] block leading-tight">{t.name}</span>
+                      <span className="text-[10px] text-[#6B6478] block mt-0.5 font-bold">{t.role} — {t.company}</span>
                     </div>
                   </div>
                 </div>
@@ -1087,14 +1087,14 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
             </div>
 
             {/* Promotion card inviting new reviews */}
-            <div className="bg-white border border-[#E2E8F0] p-8 rounded-[24px] shadow-sm max-w-xl mx-auto text-center reveal-hidden">
-              <h3 className="text-sm font-extrabold text-[#0F172A] uppercase tracking-wider mb-2">Are you our next success story?</h3>
-              <p className="text-xs text-[#64748B] font-semibold leading-relaxed mb-4">
+            <div className="bg-white border border-[#E9E4F2] p-8 rounded-[24px] shadow-sm max-w-xl mx-auto text-center reveal-hidden">
+              <h3 className="text-sm font-extrabold text-[#1F1B2D] uppercase tracking-wider mb-2">Are you our next success story?</h3>
+              <p className="text-xs text-[#6B6478] font-semibold leading-relaxed mb-4">
                 We work closely with startup founders and local operators worldwide. Start a campaign with us and share your review when we deploy!
               </p>
               <a
                 href="#enquiry-section"
-                className="text-xs font-bold text-[#2563EB] hover:text-[#3B82F6]"
+                className="text-xs font-bold text-[#7C3AED] hover:text-[#A78BFA]"
               >
                 Inquire About a Project Now &rarr;
               </a>
@@ -1102,35 +1102,35 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           </div>
         </section>
 
-        {/* 10. PRICING SECTION */}
-        <section className="py-20 bg-white border-b border-[#E2E8F0]">
+        {/* 11. PRICING SECTION */}
+        <section className="py-20 bg-white border-b border-[#E9E4F2]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
-              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
+              <span className="text-xs font-bold text-[#7C3AED] uppercase tracking-widest block mb-3">
                 Transparent Pricing
               </span>
-              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+              <h2 className="text-3xl font-extrabold text-[#1F1B2D] mb-4">
                 Startup-Friendly Pricing Packages
               </h2>
-              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+              <p className="text-xs sm:text-sm text-[#6B6478] font-semibold">
                 Sleek, transparent rates. No surprise setup fees, no complex monthly models.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
               {/* Card 1: Standard / Landing Page Website */}
-              <div className="bg-[#F8FAFC] border border-[#E2E8F0] p-8 sm:p-10 rounded-[24px] shadow-sm flex flex-col justify-between text-left hover:shadow-lg hover:border-[#2563EB]/40 transition-all duration-300 reveal-hidden group">
+              <div className="bg-[#FAF9FF] border border-[#E9E4F2] p-8 sm:p-10 rounded-[24px] shadow-sm flex flex-col justify-between text-left hover:shadow-lg hover:border-[#7C3AED]/40 transition-all duration-300 reveal-hidden group">
                 <div>
-                  <span className="inline-block bg-[#2563EB]/10 text-[#2563EB] font-extrabold text-[9px] uppercase tracking-widest px-3 py-1 rounded-full mb-4">Standard Setup</span>
-                  <h3 className="text-lg font-black text-[#0F172A] mb-2 group-hover:text-[#2563EB] transition-colors">Corporate Profile & Landing Website</h3>
-                  <p className="text-xs text-[#64748B] leading-relaxed mb-6 font-semibold">Custom layouts designed for small service providers or early-stage startups needing online credibility.</p>
+                  <span className="inline-block bg-[#7C3AED]/10 text-[#7C3AED] font-extrabold text-[9px] uppercase tracking-widest px-3 py-1 rounded-full mb-4">Standard Setup</span>
+                  <h3 className="text-lg font-black text-[#1F1B2D] mb-2 group-hover:text-[#7C3AED] transition-colors">Corporate Profile & Landing Website</h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed mb-6 font-semibold">Custom layouts designed for small service providers or early-stage startups needing online credibility.</p>
                   
                   <div className="mb-6 flex items-baseline gap-1">
-                    <span className="text-3xl font-black text-[#0F172A]">₹15,000</span>
-                    <span className="text-xs text-[#64748B] font-semibold">Starting price (approx. $250)</span>
+                    <span className="text-3xl font-black text-[#171126]">₹15,000</span>
+                    <span className="text-xs text-[#6B6478] font-semibold">Starting price (approx. $250)</span>
                   </div>
 
-                  <ul className="flex flex-col gap-3 text-xs text-[#64748B] font-semibold border-t border-[#E2E8F0] pt-6 mb-8">
+                  <ul className="flex flex-col gap-3 text-xs text-[#6B6478] font-semibold border-t border-[#E9E4F2] pt-6 mb-8">
                     <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Custom mobile responsive layout</li>
                     <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Light React/Next.js files setup</li>
                     <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Direct WhatsApp conversion widgets</li>
@@ -1140,24 +1140,27 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 <a
                   href="#enquiry-section"
                   onClick={() => handleCtaEvent("Start Standard Project")}
-                  className="w-full text-center bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold text-xs py-3.5 rounded-xl shadow-sm transition-all"
+                  className="w-full text-center bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-bold text-xs py-3.5 rounded-xl shadow-sm transition-all"
                 >
                   Start Standard Project
                 </a>
               </div>
 
-              {/* Card 2: Custom Enterprise Solutions */}
-              <div className="bg-[#F8FAFC] border border-[#E2E8F0] p-8 sm:p-10 rounded-[24px] shadow-sm flex flex-col justify-between text-left hover:shadow-lg hover:border-[#2563EB]/40 transition-all duration-300 reveal-hidden group">
+              {/* Card 2: Custom Enterprise Solutions (Recommended) */}
+              <div className="bg-[#FAF9FF] border border-[#7C3AED] p-8 sm:p-10 rounded-[24px] shadow-sm flex flex-col justify-between text-left hover:shadow-lg hover:border-[#7C3AED]/60 transition-all duration-300 reveal-hidden group relative">
+                <div className="absolute top-4 right-4">
+                  <span className="bg-[#7C3AED] text-white font-black text-[8px] uppercase tracking-wider px-2.5 py-1 rounded-md shadow-sm">Recommended</span>
+                </div>
                 <div>
-                  <span className="inline-block bg-[#2563EB]/10 text-[#2563EB] font-extrabold text-[9px] uppercase tracking-widest px-3 py-1 rounded-full mb-4">Enterprise & Customized</span>
-                  <h3 className="text-lg font-black text-[#0F172A] mb-2 group-hover:text-[#2563EB] transition-colors">E-commerce, Directories & SaaS</h3>
-                  <p className="text-xs text-[#64748B] leading-relaxed mb-6 font-semibold">Headless shopping platforms, complex database search setups, or dynamic dashboard solutions.</p>
+                  <span className="inline-block bg-[#7C3AED]/10 text-[#7C3AED] font-extrabold text-[9px] uppercase tracking-widest px-3 py-1 rounded-full mb-4">Enterprise & Customized</span>
+                  <h3 className="text-lg font-black text-[#1F1B2D] mb-2 group-hover:text-[#7C3AED] transition-colors">E-commerce, Directories & SaaS</h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed mb-6 font-semibold">Headless shopping platforms, complex database search setups, or dynamic dashboard solutions.</p>
                   
                   <div className="mb-6 flex items-baseline gap-1">
-                    <span className="text-3xl font-black text-[#0F172A]">Custom Quotation</span>
+                    <span className="text-3xl font-black text-[#171126]">Custom Quotation</span>
                   </div>
 
-                  <ul className="flex flex-col gap-3 text-xs text-[#64748B] font-semibold border-t border-[#E2E8F0] pt-6 mb-8">
+                  <ul className="flex flex-col gap-3 text-xs text-[#6B6478] font-semibold border-t border-[#E9E4F2] pt-6 mb-8">
                     <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Scalable headless shop backends</li>
                     <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Multi-category catalogs & listing search</li>
                     <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Custom API integrations & databases</li>
@@ -1167,30 +1170,30 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 <a
                   href="#enquiry-section"
                   onClick={() => handleCtaEvent("Request Custom Proposal")}
-                  className="w-full text-center bg-white border border-[#E2E8F0] hover:bg-slate-50 text-[#0F172A] font-bold text-xs py-3.5 rounded-xl transition-all"
+                  className="w-full text-center bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-bold text-xs py-3.5 rounded-xl transition-all"
                 >
                   Request Custom Proposal
                 </a>
               </div>
             </div>
             
-            <p className="text-[10px] text-[#64748B] font-bold uppercase tracking-wider text-center mt-8">
-              Need a custom layout or dedicated corporate contract? <a href="https://wa.me/919080026133" className="text-[#2563EB] underline hover:text-[#3B82F6]">Chat with our engineers</a>.
+            <p className="text-[10px] text-[#6B6478] font-bold uppercase tracking-wider text-center mt-8">
+              Need a custom layout or dedicated corporate contract? <a href="https://wa.me/919080026133" className="text-[#7C3AED] underline hover:text-[#A78BFA]">Chat with our engineers</a>.
             </p>
           </div>
         </section>
 
-        {/* 11. FAQ SECTION */}
-        <section className="py-20 bg-[#F8FAFC]">
+        {/* 12. FAQ SECTION */}
+        <section className="py-20 bg-[#FAF9FF]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
-              <span className="text-xs font-bold text-[#2563EB] uppercase tracking-widest block mb-3">
+              <span className="text-xs font-bold text-[#7C3AED] uppercase tracking-widest block mb-3">
                 FAQ
               </span>
-              <h2 className="text-3xl font-extrabold text-[#0F172A] mb-4">
+              <h2 className="text-3xl font-extrabold text-[#1F1B2D] mb-4">
                 Frequently Asked Questions
               </h2>
-              <p className="text-xs sm:text-sm text-[#64748B] font-semibold">
+              <p className="text-xs sm:text-sm text-[#6B6478] font-semibold">
                 Quick answers regarding site pricing plans, delivery timelines, maps optimizations, and global services.
               </p>
             </div>
@@ -1201,19 +1204,19 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           </div>
         </section>
 
-        {/* 12. FINAL CTA WITH MICRO INTERACTIONS */}
-        <section className="relative py-20 bg-white border-t border-[#E2E8F0] overflow-hidden text-center">
+        {/* 13. FINAL CTA WITH MICRO INTERACTIONS (Deep Purple background #171126) */}
+        <section className="relative py-20 bg-[#171126] border-t border-[#2A203F] overflow-hidden text-center">
           <div className="absolute inset-0 bg-grid-pattern opacity-[0.015] pointer-events-none" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary-glow rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#7C3AED]/10 rounded-full blur-[120px] pointer-events-none" />
           
-          <div className="max-w-4xl mx-auto px-6 relative z-10 flex flex-col items-center reveal-hidden">
-            <span className="inline-block bg-[#2563EB]/10 text-[#2563EB] font-extrabold text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full border border-[#2563EB]/20 mb-6">
+          <div className="max-w-4xl mx-auto px-6 relative z-10 max-w-3xl mx-auto flex flex-col items-center reveal-hidden">
+            <span className="inline-block bg-[#7C3AED]/10 text-[#A78BFA] font-extrabold text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full border border-[#7C3AED]/35 mb-6">
               Start Scaling Today
             </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-[#0F172A] tracking-tight mb-5 leading-tight">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-5 leading-tight">
               Ready to Build Your Digital Presence?
             </h2>
-            <p className="text-sm md:text-base text-[#64748B] max-w-xl mx-auto mb-10 leading-relaxed font-semibold">
+            <p className="text-sm md:text-base text-[#D8D2E6] max-w-xl mx-auto mb-10 leading-relaxed font-semibold">
               Tell us about your business and let’s discuss how Joy Digital can help you grow online.
             </p>
             
@@ -1221,7 +1224,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               <a
                 href="#enquiry-section"
                 onClick={() => handleCtaEvent("Start Your Project - Final")}
-                className="w-full sm:w-auto bg-[#2563EB] hover:bg-[#3B82F6] hover:scale-[1.025] hover:shadow-lg transition-all text-white font-bold text-xs px-8 py-4 rounded-xl shadow-md flex items-center justify-center gap-1.5 group"
+                className="w-full sm:w-auto bg-[#7C3AED] hover:bg-[#6D28D9] hover:scale-[1.025] hover:shadow-lg transition-all text-white font-bold text-xs px-8 py-4 rounded-xl shadow-md flex items-center justify-center gap-1.5 group"
               >
                 Start Your Project
                 <i className="fa-solid fa-arrow-right group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -1243,7 +1246,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
       </main>
 
-      {/* 13. FOOTER */}
+      {/* 14. FOOTER */}
       <Footer />
       <StickyWidgets />
     </>

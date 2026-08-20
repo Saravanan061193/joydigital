@@ -85,12 +85,12 @@ export default function BlogListingContainer({ posts }: BlogListingContainerProp
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.015] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           
-          <span className="inline-block bg-[#2563EB]/10 text-[#2563EB] font-bold text-xs uppercase tracking-widest px-4.5 py-1.5 rounded-full border border-blue-500/10 mb-5 animate-fade-in">
+          <span className="inline-block bg-primary/10 text-primary font-bold text-xs uppercase tracking-widest px-4.5 py-1.5 rounded-full border border-primary-light/20 mb-5 animate-fade-in">
             Knowledge Base
           </span>
           
           <h1 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-5 leading-tight animate-slide-up">
-            Our Digital Growth <span className="text-[#2563EB]">Blog Hub</span>
+            Our Digital Growth <span className="text-primary">Blog Hub</span>
           </h1>
           
           <p className="text-xs sm:text-sm text-[#64748B] max-w-xl mx-auto leading-relaxed font-semibold transition-opacity duration-500">
@@ -107,9 +107,9 @@ export default function BlogListingContainer({ posts }: BlogListingContainerProp
                 placeholder="Search articles..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-white border border-[#E2E8F0] focus:border-[#2563EB] focus:ring-4 focus:ring-blue-500/5 text-xs px-10 py-3.5 rounded-xl outline-none transition-all font-semibold shadow-sm"
+                className="w-full bg-white border border-[#E9E4F2] focus:border-primary focus:ring-4 focus:ring-primary-light/5 text-xs px-10 py-3.5 rounded-xl outline-none transition-all font-semibold shadow-sm"
               />
-              <i className="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within/search:text-[#2563EB] transition-colors text-xs" />
+              <i className="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within/search:text-primary transition-colors text-xs" />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
@@ -131,8 +131,8 @@ export default function BlogListingContainer({ posts }: BlogListingContainerProp
                     onClick={() => setActiveCategory(cat)}
                     className={`text-[10px] font-bold px-4 py-2 rounded-lg border whitespace-nowrap transition-all duration-200 cursor-pointer ${
                       isActive
-                        ? "bg-[#2563EB] text-white border-[#2563EB] shadow-md shadow-blue-500/10"
-                        : "bg-slate-50 text-[#64748B] border-[#E2E8F0] hover:bg-slate-100"
+                        ? "bg-primary text-white border-primary shadow-md shadow-primary-light/10"
+                        : "bg-slate-50 text-[#6B6478] border-[#E9E4F2] hover:bg-slate-100"
                     }`}
                   >
                     {cat}
@@ -180,7 +180,7 @@ export default function BlogListingContainer({ posts }: BlogListingContainerProp
                         loading="lazy"
                       />
                       <div className="absolute top-4 left-4 z-10">
-                        <span className="bg-[#2563EB] text-white font-extrabold text-[9px] uppercase tracking-wider px-3 py-1 rounded-md shadow-sm border border-blue-500/20 group-hover:bg-slate-900 group-hover:border-slate-800 transition-colors duration-300">
+                        <span className="bg-primary text-white font-extrabold text-[9px] uppercase tracking-wider px-3 py-1 rounded-md shadow-sm border border-primary-light/20 group-hover:bg-[#171126] group-hover:border-slate-800 transition-colors duration-300">
                           {post.category}
                         </span>
                       </div>
@@ -199,7 +199,7 @@ export default function BlogListingContainer({ posts }: BlogListingContainerProp
                         <ViewCounter slug={post.slug} increment={false} />
                       </div>
 
-                      <h3 className="text-base font-extrabold text-slate-900 mb-3 leading-snug group-hover:text-[#2563EB] transition-colors line-clamp-2">
+                      <h3 className="text-base font-extrabold text-slate-900 mb-3 leading-snug group-hover:text-primary transition-colors line-clamp-2">
                         <Link href={`/blog/${post.slug}`} title={post.title}>
                           {post.title}
                         </Link>
@@ -217,7 +217,7 @@ export default function BlogListingContainer({ posts }: BlogListingContainerProp
                     </span>
                     <Link
                       href={`/blog/${post.slug}`}
-                      className="text-xs font-bold text-[#2563EB] hover:text-[#3B82F6] flex items-center gap-1.5 group/link"
+                      className="text-xs font-bold text-primary hover:text-primary-light flex items-center gap-1.5 group/link"
                     >
                       Read Article <i className="fa-solid fa-arrow-right group-hover/link:translate-x-1.5 transition-transform duration-200" />
                     </Link>

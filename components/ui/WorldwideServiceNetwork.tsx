@@ -53,10 +53,10 @@ export default function WorldwideServiceNetwork() {
   }, []);
 
   return (
-    <div className="relative w-full bg-slate-900 border border-slate-800 rounded-[32px] p-6 md:p-10 overflow-hidden shadow-inner max-w-4xl mx-auto my-12 group">
-      {/* Background digital grid patterns */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:24px_24px] opacity-15 pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-blue-500/10 rounded-full blur-[80px] pointer-events-none" />
+    <div className="relative w-full bg-[#171126] border border-[#2A203F] rounded-[32px] p-6 md:p-10 overflow-hidden shadow-inner max-w-4xl mx-auto my-12 group">
+      {/* Background digital grid patterns mapped in dark purple */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#2A203F_1px,transparent_1px),linear-gradient(to_bottom,#2A203F_1px,transparent_1px)] bg-[size:24px_24px] opacity-25 pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
       
       {/* Localized Styles to prevent stylesheet pollution */}
       <style dangerouslySetInnerHTML={{ __html: `
@@ -93,13 +93,13 @@ export default function WorldwideServiceNetwork() {
 
               return (
                 <g key={`path-${idx}`}>
-                  {/* Base link line */}
+                  {/* Base link line in soft lavender/purple border */}
                   <line
                     x1={fromNode.x}
                     y1={fromNode.y}
                     x2={toNode.x}
                     y2={toNode.y}
-                    stroke={isHighlighted ? "rgba(59, 130, 246, 0.45)" : "rgba(51, 65, 85, 0.35)"}
+                    stroke={isHighlighted ? "rgba(167, 139, 250, 0.55)" : "rgba(107, 100, 120, 0.2)"}
                     strokeWidth={isHighlighted ? 0.75 : 0.45}
                     className="transition-colors duration-500"
                   />
@@ -110,7 +110,7 @@ export default function WorldwideServiceNetwork() {
                       y1={fromNode.y}
                       x2={toNode.x}
                       y2={toNode.y}
-                      stroke="url(#dataGrad)"
+                      stroke="url(#dataGradPurple)"
                       strokeWidth={1.1}
                       className="network-dash"
                     />
@@ -121,10 +121,10 @@ export default function WorldwideServiceNetwork() {
 
             {/* Gradient for flow lines */}
             <defs>
-              <linearGradient id="dataGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#2563EB" stopOpacity="0.8" />
-                <stop offset="50%" stopColor="#60A5FA" stopOpacity="0.9" />
-                <stop offset="100%" stopColor="#F97316" stopOpacity="0.8" />
+              <linearGradient id="dataGradPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#7C3AED" stopOpacity="0.8" />
+                <stop offset="50%" stopColor="#A78BFA" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.8" />
               </linearGradient>
             </defs>
           </svg>
@@ -144,17 +144,17 @@ export default function WorldwideServiceNetwork() {
                 <div className="relative w-4 h-4 flex items-center justify-center">
                   {/* Pulsing ring indicator */}
                   {isActive && !prefersReducedMotion && (
-                    <span className="absolute inset-0 bg-blue-500 rounded-full network-pulse" />
+                    <span className="absolute inset-0 bg-primary-light rounded-full network-pulse" />
                   )}
                   {node.isBase && !prefersReducedMotion && (
-                    <span className="absolute inset-0 bg-orange-500/30 rounded-full scale-125 network-pulse" />
+                    <span className="absolute inset-0 bg-primary/30 rounded-full scale-125 network-pulse" />
                   )}
                   <div className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                     isActive 
-                      ? "bg-blue-400 scale-125 shadow-md shadow-blue-400/50" 
+                      ? "bg-primary-light scale-125 shadow-md shadow-primary-light/50" 
                       : node.isBase 
-                        ? "bg-orange-500 shadow-sm shadow-orange-500/30" 
-                        : "bg-slate-700 hover:bg-slate-500"
+                        ? "bg-primary shadow-sm shadow-primary/30" 
+                        : "bg-[#2A203F] hover:bg-[#A78BFA]"
                   }`} />
                 </div>
 
@@ -167,8 +167,8 @@ export default function WorldwideServiceNetwork() {
                 }`}>
                   <span className={`text-[9px] font-black tracking-wider px-2 py-1 rounded-md border whitespace-nowrap shadow-sm transition-colors duration-300 ${
                     isActive
-                      ? "bg-blue-600 text-white border-blue-500 font-extrabold"
-                      : "bg-slate-800 text-slate-400 border-slate-700"
+                      ? "bg-primary text-white border-primary-light font-extrabold"
+                      : "bg-[#1F1B2D] text-slate-300 border-[#2A203F]"
                   }`}>
                     {node.name}
                   </span>
@@ -180,31 +180,31 @@ export default function WorldwideServiceNetwork() {
 
         {/* Global statement text */}
         <div className="w-full md:w-2/5 text-left flex flex-col justify-center select-none">
-          <div className="inline-flex items-center gap-1.5 bg-[#F97316]/10 border border-[#F97316]/20 px-3 py-1 rounded-full mb-4 w-fit">
-            <span className="w-2 h-2 bg-orange-500 rounded-full" />
-            <span className="text-[10px] font-extrabold text-[#F97316] uppercase tracking-wider">Borderless Collaboration</span>
+          <div className="inline-flex items-center gap-1.5 bg-primary/15 border border-primary-light/20 px-3 py-1 rounded-full mb-4 w-fit">
+            <span className="w-2 h-2 bg-primary-light rounded-full" />
+            <span className="text-[10px] font-extrabold text-primary-light uppercase tracking-wider">Borderless Collaboration</span>
           </div>
           
           <h3 className="text-xl md:text-2xl font-black text-white tracking-tight mb-4">
             Helping Startups & Small Businesses Worldwide
           </h3>
           
-          <p className="text-xs text-slate-400 leading-relaxed mb-6 font-semibold">
+          <p className="text-xs text-[#D8D2E6] leading-relaxed mb-6 font-semibold">
             By deploying cloud-optimized structures and utilizing dynamic communication channels, we support growing businesses without geographical boundaries.
           </p>
 
-          <div className="flex flex-col gap-3.5 border-t border-slate-800 pt-6">
+          <div className="flex flex-col gap-3.5 border-t border-[#2A203F] pt-6">
             <div className="flex items-center gap-2.5">
-              <div className="w-6 h-6 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 text-xs">
+              <div className="w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center text-primary-light text-xs">
                 <i className="fa-solid fa-cloud-arrow-up" />
               </div>
-              <span className="text-[11px] text-slate-300 font-bold">100% Remote Project Sync & Delivery</span>
+              <span className="text-[11px] text-[#D8D2E6] font-bold">100% Remote Project Sync & Delivery</span>
             </div>
             <div className="flex items-center gap-2.5">
-              <div className="w-6 h-6 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 text-xs">
+              <div className="w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center text-primary-light text-xs">
                 <i className="fa-solid fa-clock" />
               </div>
-              <span className="text-[11px] text-slate-300 font-bold">Time-Zone Aligned Development Desks</span>
+              <span className="text-[11px] text-[#D8D2E6] font-bold">Time-Zone Aligned Development Desks</span>
             </div>
           </div>
         </div>

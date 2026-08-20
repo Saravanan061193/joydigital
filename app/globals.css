@@ -3,25 +3,25 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-primary: #2563EB;
-  --color-primary-light: #3B82F6;
-  --color-primary-dark: #0F172A;
-  --color-primary-glow: rgba(37, 99, 235, 0.05);
-  --color-accent: rgb(249, 115, 22);
-  --color-accent-light: rgb(251, 146, 60);
-  --color-accent-dark: rgb(234, 88, 12);
-  --color-accent-glow: rgba(249, 115, 22, 0.1);
-  --color-secondary: rgb(2, 132, 199);
-  --color-secondary-light: rgb(14, 165, 233);
-  --color-dark: #0F172A;
-  --color-dark-slate: #1E293B;
-  --color-light-bg: #F8FAFC;
+  --color-primary: #7C3AED;
+  --color-primary-light: #A78BFA;
+  --color-primary-dark: #171126;
+  --color-primary-glow: rgba(124, 58, 237, 0.06);
+  --color-accent: #7C3AED;
+  --color-accent-light: #A78BFA;
+  --color-accent-dark: #171126;
+  --color-accent-glow: rgba(167, 139, 250, 0.15);
+  --color-secondary: #A78BFA;
+  --color-secondary-light: #F5F3FF;
+  --color-dark: #171126;
+  --color-dark-slate: #1F1B2D;
+  --color-light-bg: #FAF9FF;
   --color-light-card: #FFFFFF;
   --color-white: #FFFFFF;
-  --color-text-primary: #0F172A;
-  --color-text-secondary: #64748B;
-  --color-text-muted: #94A3B8;
-  --color-border: #E2E8F0;
+  --color-text-primary: #1F1B2D;
+  --color-text-secondary: #6B6478;
+  --color-text-muted: #BDB8C7;
+  --color-border: #E9E4F2;
   --color-whatsapp-green: #10b981;
   --color-whatsapp-glow: rgba(16, 185, 129, 0.2);
   --color-error-red: #ef4444;
@@ -190,7 +190,7 @@ body {
 .prose a {
   position: relative;
   text-decoration: none !important;
-  color: #2563EB !important;
+  color: #7C3AED !important;
   font-weight: 700;
   transition: color 0.2s ease;
 }
@@ -203,7 +203,7 @@ body {
   height: 1.5px;
   bottom: -1px;
   left: 0;
-  background-color: #2563EB;
+  background-color: #7C3AED;
   transform-origin: bottom left;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -214,9 +214,9 @@ body {
 
 /* Sidebar Table of Contents active trackers */
 .toc-item-active {
-  color: #2563EB !important;
+  color: #7C3AED !important;
   font-weight: 700;
-  border-left-color: #2563EB !important;
+  border-left-color: #7C3AED !important;
   padding-left: 14px !important;
 }
 
