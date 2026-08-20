@@ -6,8 +6,7 @@ import StickyWidgets from "@/components/ui/StickyWidgets";
 import { getPostBySlug, getAllPosts } from "@/lib/blog";
 import { notFound } from "next/navigation";
 import { marked } from "marked";
-import Link from "next/link";
-import ViewCounter from "@/components/ui/ViewCounter";
+import BlogArticleContainer from "@/components/sections/BlogArticleContainer";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -38,62 +37,34 @@ export default async function BlogPostPage({ params }: PageProps) {
     notFound();
   }
 
-  // Compile markdown content to HTML string
+  // Compile markdown content to HTML string on the server side
   const htmlContent = await marked(post.content);
+
+  // Fetch up to 3 related articles (matching category prioritized, sorted by date)
+  const allPosts = getAllPosts();
+  const relatedPosts = allPosts
+    .filter((p) => p.slug !== resolvedParams.slug)
+    .sort((a, b) => {
+      const aMatches = a.category === post.category ? 1 : 0;
+      const bMatches = b.category === post.category ? 1 : 0;
+      if (aMatches !== bMatches) return bMatches - aMatches;
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    })
+    .slice(0, 3);
 
   return (
     <>
       <Header />
-      <main className="pt-24 lg:pt-32">
-        {/* Post Title Area */}
-        <section className="py-16 bg-white relative overflow-hidden border-b border-gray-100">
-          <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
-          <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-            <div className="flex items-center justify-center flex-wrap gap-3 mb-6">
-              <span className="bg-accent-glow text-accent font-bold text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-accent/20">
-                {post.category}
-              </span>
-              <span className="text-xs text-text-muted font-bold">
-                {new Date(post.date).toLocaleDateString("en-US", {
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </span>
-              <span className="text-xs text-text-muted/40 font-bold">&bull;</span>
-              <ViewCounter slug={resolvedParams.slug} increment={true} />
-            </div>
-            
-            <h1 className="text-2xl sm:text-4xl font-extrabold text-primary-dark tracking-tight mb-6 leading-tight">
-              {post.title}
-            </h1>
-          </div>
-        </section>
+      <main className="pt-20 lg:pt-28">
+        
+        {/* Animated layout wrapper holding article details */}
+        <BlogArticleContainer 
+          post={post} 
+          htmlContent={htmlContent} 
+          relatedPosts={relatedPosts}
+          slug={resolvedParams.slug}
+        />
 
-        {/* Post Reader Content */}
-        <section className="py-16 bg-light-bg">
-          <div className="max-w-3xl mx-auto px-6">
-            <article className="bg-white border border-gray-100 rounded-3xl p-8 sm:p-12 shadow-sm text-left">
-              <div 
-                className="prose prose-blue max-w-none text-sm sm:text-base text-text-secondary leading-relaxed space-y-6 
-                           prose-headings:text-primary-dark prose-headings:font-bold prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-4 
-                           prose-h3:text-lg prose-h3:mt-6 prose-h3:mb-3 prose-p:mb-4 prose-ul:list-disc prose-ul:pl-6 prose-ul:mb-4
-                           prose-li:mb-2"
-                dangerouslySetInnerHTML={{ __html: htmlContent }}
-              />
-              
-              {/* Back to Blog */}
-              <div className="border-t border-gray-100 mt-12 pt-8 text-center">
-                <Link
-                  href="/blog"
-                  className="text-xs font-bold text-primary hover:text-accent flex items-center justify-center gap-2"
-                >
-                  <i className="fa-solid fa-arrow-left-long" /> Back to Blog Articles
-                </Link>
-              </div>
-            </article>
-          </div>
-        </section>
       </main>
       <Footer />
       <StickyWidgets />

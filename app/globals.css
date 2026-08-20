@@ -186,6 +186,60 @@ body {
   }
 }
 
+/* Blog article text links underlines */
+.prose a {
+  position: relative;
+  text-decoration: none !important;
+  color: #2563EB !important;
+  font-weight: 700;
+  transition: color 0.2s ease;
+}
+
+.prose a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1.5px;
+  bottom: -1px;
+  left: 0;
+  background-color: #2563EB;
+  transform-origin: bottom left;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.prose a:hover::after {
+  transform: scaleX(1);
+}
+
+/* Sidebar Table of Contents active trackers */
+.toc-item-active {
+  color: #2563EB !important;
+  font-weight: 700;
+  border-left-color: #2563EB !important;
+  padding-left: 14px !important;
+}
+
+/* Simple keyframe fade utilities */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+
 
 
 
