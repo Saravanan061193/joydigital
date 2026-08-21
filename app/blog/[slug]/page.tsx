@@ -8,12 +8,14 @@ import { notFound } from "next/navigation";
 import { marked } from "marked";
 import BlogArticleContainer from "@/components/sections/BlogArticleContainer";
 
+export const dynamic = "force-dynamic";
+
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  const posts = getAllPosts();
+  const posts = await getAllPosts();
   return posts.map((post) => ({
     slug: post.slug,
   }));
@@ -21,7 +23,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolvedParams = await params;
-  const post = getPostBySlug(resolvedParams.slug);
+  const post = await getPostBySlug(resolvedParams.slug);
   if (!post) return {};
   return {
     title: `${post.title} | Blog | Joy Digital`,
@@ -31,7 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function BlogPostPage({ params }: PageProps) {
   const resolvedParams = await params;
-  const post = getPostBySlug(resolvedParams.slug);
+  const post = await getPostBySlug(resolvedParams.slug);
 
   if (!post) {
     notFound();
@@ -41,7 +43,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   const htmlContent = await marked(post.content);
 
   // Fetch up to 3 related articles (matching category prioritized, sorted by date)
-  const allPosts = getAllPosts();
+  const allPosts = await getAllPosts();
   const relatedPosts = allPosts
     .filter((p) => p.slug !== resolvedParams.slug)
     .sort((a, b) => {

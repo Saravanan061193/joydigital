@@ -7,13 +7,15 @@ import { getAllPosts } from "@/lib/blog";
 import StrongCTA from "@/components/StrongCTA";
 import BlogListingContainer from "@/components/sections/BlogListingContainer";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Agency Growth Blog | Marketing & SEO Tips | Joy Digital",
   description: "Stay ahead of competitors with the latest search marketing checklists, SEO audit guidelines, conversion optimization practices, and next-gen web speed updates.",
 };
 
 export default async function BlogIndexPage() {
-  const posts = getAllPosts();
+  const posts = await getAllPosts();
 
   return (
     <>

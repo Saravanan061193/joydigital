@@ -82,9 +82,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     });
   });
-
   // 4. Fetch blog posts dynamically (unified root level)
-  const blogPosts = getAllPosts();
+  const blogPosts = await getAllPosts();
   const blogRoutes = blogPosts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: post.date || todayStr,
