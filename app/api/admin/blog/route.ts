@@ -59,13 +59,34 @@ export async function POST(req: NextRequest) {
     if (imageFile && imageFile.name && imageFile.size > 0) {
       const buffer = Buffer.from(await imageFile.arrayBuffer());
 
-      // 1. Try uploading to Cloudinary first if configured
-      if (
-        process.env.CLOUDINARY_CLOUD_NAME &&
-        process.env.CLOUDINARY_API_KEY &&
-        process.env.CLOUDINARY_API_SECRET
-      ) {
+      // 1. Retrieve Cloudinary configuration from database if available
+      let cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+      let apiKey = process.env.CLOUDINARY_API_KEY;
+      let apiSecret = process.env.CLOUDINARY_API_SECRET;
+
+      if (process.env.MONGODB_URI) {
         try {
+          const db = await getDb();
+          const dbConfig = await db.collection("settings").findOne({ _id: "cloudinary_config" as any });
+          if (dbConfig?.cloudName && dbConfig?.apiKey && dbConfig?.apiSecret) {
+            cloudName = dbConfig.cloudName;
+            apiKey = dbConfig.apiKey;
+            apiSecret = dbConfig.apiSecret;
+          }
+        } catch (dbErr) {
+          console.error("Failed to fetch Cloudinary settings from DB:", dbErr);
+        }
+      }
+
+      // 2. Try uploading to Cloudinary if credentials are configured
+      if (cloudName && apiKey && apiSecret) {
+        try {
+          cloudinary.config({
+            cloud_name: cloudName,
+            api_key: apiKey,
+            api_secret: apiSecret,
+          });
+
           const uploadResult = await new Promise<any>((resolve, reject) => {
             cloudinary.uploader.upload_stream(
               {
