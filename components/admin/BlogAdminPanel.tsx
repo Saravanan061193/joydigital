@@ -2,6 +2,60 @@
 
 import React, { useState, useEffect, useRef } from "react";
 
+const compressImage = (file: File, maxWidth = 1200, maxWeightBytes = 800000): Promise<File> => {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target?.result as string;
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext("2d");
+        ctx?.drawImage(img, 0, 0, width, height);
+
+        let quality = 0.8;
+        const checkAndResolve = () => {
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                if (blob.size > maxWeightBytes && quality > 0.3) {
+                  quality -= 0.1;
+                  checkAndResolve();
+                } else {
+                  const compressedFile = new File([blob], file.name, {
+                    type: "image/jpeg",
+                    lastModified: Date.now(),
+                  });
+                  resolve(compressedFile);
+                }
+              } else {
+                resolve(file);
+              }
+            },
+            "image/jpeg",
+            quality
+          );
+        };
+        checkAndResolve();
+      };
+      img.onerror = () => resolve(file);
+    };
+    reader.onerror = () => resolve(file);
+  });
+};
+
 interface BlogPost {
   slug: string;
   title: string;
@@ -33,6 +87,7 @@ export default function BlogAdminPanel() {
   
   // UI states
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [isCompressing, setIsCompressing] = useState(false);
   const [msg, setMsg] = useState({ text: "", type: "" });
   const [previewActive, setPreviewActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -72,12 +127,22 @@ export default function BlogAdminPanel() {
   };
 
   // Handle image choice
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files[0]) {
       const file = files[0];
-      setImageFile(file);
       setImagePreview(URL.createObjectURL(file));
+      setIsCompressing(true);
+      
+      try {
+        const compressed = await compressImage(file);
+        setImageFile(compressed);
+      } catch (err) {
+        console.error("Image compression failed, using original:", err);
+        setImageFile(file);
+      } finally {
+        setIsCompressing(false);
+      }
     }
   };
 
@@ -575,7 +640,7 @@ export default function BlogAdminPanel() {
             <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm text-left flex flex-col gap-3">
               <button
                 type="submit"
-                disabled={submitLoading}
+                disabled={submitLoading || isCompressing}
                 className="w-full bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-extrabold text-xs py-3.5 rounded-xl shadow-md cursor-pointer transition-all duration-150 flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {submitLoading ? (
