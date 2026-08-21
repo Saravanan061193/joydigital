@@ -3,6 +3,20 @@ import fs from "fs";
 import path from "path";
 import { getAllPosts } from "@/lib/blog";
 import { getDb } from "@/lib/mongodb";
+import { v2 as cloudinary } from "cloudinary";
+
+// Configure Cloudinary only if environment variables are provided
+if (
+  process.env.CLOUDINARY_CLOUD_NAME &&
+  process.env.CLOUDINARY_API_KEY &&
+  process.env.CLOUDINARY_API_SECRET
+) {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+}
 
 const BLOG_DIR = path.join(process.cwd(), "content/blog");
 
@@ -45,24 +59,52 @@ export async function POST(req: NextRequest) {
     if (imageFile && imageFile.name && imageFile.size > 0) {
       const buffer = Buffer.from(await imageFile.arrayBuffer());
 
-      try {
-        const uploadDir = path.join(process.cwd(), "public", "assets", "images", "blog");
-        if (!fs.existsSync(uploadDir)) {
-          fs.mkdirSync(uploadDir, { recursive: true });
+      // 1. Try uploading to Cloudinary first if configured
+      if (
+        process.env.CLOUDINARY_CLOUD_NAME &&
+        process.env.CLOUDINARY_API_KEY &&
+        process.env.CLOUDINARY_API_SECRET
+      ) {
+        try {
+          const uploadResult = await new Promise<any>((resolve, reject) => {
+            cloudinary.uploader.upload_stream(
+              {
+                folder: "joydigital_blog",
+                public_id: `${cleanSlug}-${Date.now()}`,
+              },
+              (error, result) => {
+                if (error) reject(error);
+                else resolve(result);
+              }
+            ).end(buffer);
+          });
+          imagePath = uploadResult.secure_url;
+        } catch (cloudinaryErr) {
+          console.error("Cloudinary upload failed, checking local write fallback:", cloudinaryErr);
         }
+      }
 
-        // Generate secure filename
-        const fileExt = path.extname(imageFile.name) || ".jpg";
-        const filename = `${cleanSlug}-${Date.now()}${fileExt}`;
-        const filePath = path.join(uploadDir, filename);
+      // 2. Fallback to local filesystem write or base64 storage if Cloudinary upload failed/not configured
+      if (!imagePath || !imagePath.startsWith("http")) {
+        try {
+          const uploadDir = path.join(process.cwd(), "public", "assets", "images", "blog");
+          if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true });
+          }
 
-        fs.writeFileSync(filePath, buffer);
-        imagePath = `/assets/images/blog/${filename}`;
-      } catch (err) {
-        console.warn("Filesystem is not writeable. Falling back to Base64 image storage:", err);
-        isWriteable = false;
-        const fileType = imageFile.type || "image/jpeg";
-        imagePath = `data:${fileType};base64,${buffer.toString("base64")}`;
+          // Generate secure filename
+          const fileExt = path.extname(imageFile.name) || ".jpg";
+          const filename = `${cleanSlug}-${Date.now()}${fileExt}`;
+          const filePath = path.join(uploadDir, filename);
+
+          fs.writeFileSync(filePath, buffer);
+          imagePath = `/assets/images/blog/${filename}`;
+        } catch (err) {
+          console.warn("Filesystem is not writeable and Cloudinary failed/not set. Falling back to Base64 image storage:", err);
+          isWriteable = false;
+          const fileType = imageFile.type || "image/jpeg";
+          imagePath = `data:${fileType};base64,${buffer.toString("base64")}`;
+        }
       }
     }
 
