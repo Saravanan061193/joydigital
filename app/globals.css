@@ -239,6 +239,36 @@ body {
   animation: slideUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Hide Google Translate top banner bar */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame,
+.goog-te-balloon-frame,
+#goog-gt-tt,
+.goog-te-menu-frame {
+  display: none !important;
+}
+
+body {
+  top: 0px !important;
+}
+
+/* Hide original Google Translate widget element */
+#google_translate_element,
+.skiptranslate iframe {
+  display: none !important;
+}
+
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+}
+
+.goog-text-highlight {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
 
 
 

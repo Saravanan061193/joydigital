@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import FontAwesomeLoader from "@/components/layout/FontAwesomeLoader";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import ClarityTracker from "@/components/ClarityTracker";
@@ -69,6 +70,27 @@ export default function RootLayout({
         <GoogleAnalytics />
         <AnalyticsTracker />
         <ClarityTracker />
+        <div id="google_translate_element" style={{ display: 'none' }} className="hidden"></div>
+        <Script
+          id="google-translate-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              function googleTranslateElementInit() {
+                new google.translate.TranslateElement({
+                  pageLanguage: 'en',
+                  includedLanguages: 'en,ta,hi,ar,es,de,fr',
+                  layout: typeof window !== 'undefined' && window.google && window.google.translate ? google.translate.TranslateElement.InlineLayout.SIMPLE : 0,
+                  autoDisplay: false
+                }, 'google_translate_element');
+              }
+            `,
+          }}
+        />
+        <Script
+          src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+          strategy="afterInteractive"
+        />
         {children}
       </body>
     </html>

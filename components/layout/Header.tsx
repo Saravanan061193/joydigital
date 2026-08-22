@@ -19,15 +19,29 @@ const REGIONS = [
   { code: "in", label: "India", flag: "🇮🇳" },
 ];
 
+const LANGUAGES = [
+  { code: "en", label: "English", flag: "🇺🇸" },
+  { code: "ta", label: "தமிழ் (Tamil)", flag: "🇮🇳" },
+  { code: "hi", label: "हिन्दी (Hindi)", flag: "🇮🇳" },
+  { code: "ar", label: "العربية (Arabic)", flag: "🇦🇪" },
+  { code: "es", label: "Español (Spanish)", flag: "🇪🇸" },
+  { code: "de", label: "Deutsch (German)", flag: "🇩🇪" },
+  { code: "fr", label: "Français (French)", flag: "🇫🇷" },
+];
+
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const [isRegionDropdownOpen, setIsRegionDropdownOpen] = useState(false);
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
+  const [currentLang, setCurrentLang] = useState("en");
   
   const pathname = usePathname();
   const router = useRouter();
   const regionRef = useRef<HTMLDivElement>(null);
+  const desktopLangRef = useRef<HTMLDivElement>(null);
+  const mobileLangRef = useRef<HTMLDivElement>(null);
 
   // Close mobile drawer on route change during render
   const [prevPathname, setPrevPathname] = useState(pathname);
@@ -56,16 +70,70 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Click outside region selector handler
+  // Detect current language cookie on mount
+  useEffect(() => {
+    const getCookie = (name: string) => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop()?.split(";").shift();
+      return null;
+    };
+    
+    const googtrans = getCookie("googtrans");
+    if (googtrans) {
+      const parts = googtrans.split("/");
+      const lang = parts[parts.length - 1];
+      if (lang) {
+        setCurrentLang(lang);
+      }
+    }
+  }, []);
+
+  // Click outside selector handler for both dropdowns
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (regionRef.current && !regionRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      if (regionRef.current && !regionRef.current.contains(target)) {
         setIsRegionDropdownOpen(false);
+      }
+      if (
+        (desktopLangRef.current && !desktopLangRef.current.contains(target)) &&
+        (mobileLangRef.current && !mobileLangRef.current.contains(target))
+      ) {
+        setIsLangDropdownOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleLangChange = (langCode: string) => {
+    const domain = window.location.hostname;
+    const cookieValue = `/en/${langCode}`;
+    
+    // Set cookie for all subdomains and paths
+    document.cookie = `googtrans=${cookieValue}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+    document.cookie = `googtrans=${cookieValue}; path=/; domain=${domain}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+    
+    if (domain.includes(".")) {
+      const baseDomain = domain.substring(domain.indexOf("."));
+      document.cookie = `googtrans=${cookieValue}; path=/; domain=${baseDomain}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+    }
+    
+    // If it's English, clear the cookie entirely as well to be safe
+    if (langCode === "en") {
+      document.cookie = "googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      document.cookie = `googtrans=; path=/; domain=${domain}; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+      if (domain.includes(".")) {
+        const baseDomain = domain.substring(domain.indexOf("."));
+        document.cookie = `googtrans=; path=/; domain=${baseDomain}; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+      }
+    }
+    
+    setCurrentLang(langCode);
+    setIsLangDropdownOpen(false);
+    window.location.reload();
+  };
 
   const isActive = (path: string) => {
     const regionalPath = getRegionalHref(path);
@@ -288,6 +356,39 @@ export default function Header() {
               </div>
             </div>
 
+            {/* Language Dropdown */}
+            <div className="relative" ref={desktopLangRef}>
+              <button
+                onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+                className="flex items-center gap-2 px-3 py-1.5 border border-[#E5E7EB] rounded-lg text-sm font-medium hover:border-accent hover:text-accent transition-colors bg-white shadow-sm"
+              >
+                <span>{LANGUAGES.find(l => l.code === currentLang)?.flag || "🇺🇸"}</span>
+                <span className="uppercase text-xs">{currentLang}</span>
+                <i className={`fa-solid fa-chevron-down text-[8px] transition-transform duration-200 ${isLangDropdownOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              <div
+                className={`absolute right-0 mt-2 w-48 bg-white border border-[#E5E7EB] rounded-lg shadow-lg py-1.5 transition-all duration-200 z-[70] ${
+                  isLangDropdownOpen
+                    ? "opacity-100 visible translate-y-0"
+                    : "opacity-0 invisible -translate-y-2 pointer-events-none"
+                }`}
+              >
+                {LANGUAGES.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => handleLangChange(lang.code)}
+                    className={`w-full flex items-center gap-3 px-4 py-2 text-left text-xs font-semibold transition-colors hover:bg-gray-50 hover:text-accent ${
+                      currentLang === lang.code ? "text-accent bg-gray-50/50" : "text-text-primary"
+                    }`}
+                  >
+                    <span className="text-sm">{lang.flag}</span>
+                    <span>{lang.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <Link
               href={getRegionalHref("/contact")}
               title="Book Free Consultation"
@@ -322,6 +423,35 @@ export default function Header() {
                     >
                       <span>{region.flag}</span>
                       <span>{region.label}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Language Switcher (Minimal) */}
+            <div className="relative" ref={mobileLangRef}>
+              <button
+                onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+                className="flex items-center justify-center w-8 h-8 border border-[#E5E7EB] rounded-lg text-sm bg-white shadow-sm"
+                aria-label="Select Language"
+              >
+                <span>{LANGUAGES.find(l => l.code === currentLang)?.flag || "🇺🇸"}</span>
+              </button>
+
+              {isLangDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-44 bg-white border border-[#E5E5E5] rounded-lg shadow-lg py-1.5 z-[60]">
+                  {LANGUAGES.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => {
+                        handleLangChange(lang.code);
+                        setIsLangDropdownOpen(false);
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-2.5 text-left text-xs font-semibold text-text-primary hover:bg-gray-50 hover:text-accent"
+                    >
+                      <span>{lang.flag}</span>
+                      <span>{lang.label}</span>
                     </button>
                   ))}
                 </div>
@@ -447,6 +577,29 @@ export default function Header() {
           >
             Contact
           </Link>
+
+          {/* Mobile Language Selector */}
+          <div className="flex flex-col gap-2">
+            <span className="font-semibold text-lg text-primary-dark border-b border-[#E5E7EB] pb-2 flex justify-between items-center">
+              Select Language
+            </span>
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              {LANGUAGES.map((lang) => (
+                <button
+                  key={lang.code}
+                  onClick={() => handleLangChange(lang.code)}
+                  className={`flex items-center gap-2 px-3 py-2 border rounded-lg text-xs font-semibold transition-colors ${
+                    currentLang === lang.code
+                      ? "border-accent text-accent bg-[#FAF9FF]"
+                      : "border-gray-200 text-text-primary hover:border-accent hover:text-accent bg-white"
+                  }`}
+                >
+                  <span>{lang.flag}</span>
+                  <span className="truncate">{lang.label.split(" ")[0]}</span>
+                </button>
+              ))}
+            </div>
+          </div>
 
           <Link
             href={getRegionalHref("/contact")}
