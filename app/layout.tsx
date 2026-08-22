@@ -79,7 +79,7 @@ export default function RootLayout({
               function googleTranslateElementInit() {
                 new google.translate.TranslateElement({
                   pageLanguage: 'en',
-                  includedLanguages: 'en,ta,hi,ar,es,de,fr',
+                  includedLanguages: 'en,ta,hi,ar,es,de,fr,te,kn,ml,bn,mr,gu,pa,it,pt,ru,zh-CN,ja,ko,tr,nl,vi,th',
                   layout: typeof window !== 'undefined' && window.google && window.google.translate ? google.translate.TranslateElement.InlineLayout.SIMPLE : 0,
                   autoDisplay: false
                 }, 'google_translate_element');

@@ -27,6 +27,23 @@ const LANGUAGES = [
   { code: "es", label: "Español (Spanish)", flag: "🇪🇸" },
   { code: "de", label: "Deutsch (German)", flag: "🇩🇪" },
   { code: "fr", label: "Français (French)", flag: "🇫🇷" },
+  { code: "te", label: "తెలుగు (Telugu)", flag: "🇮🇳" },
+  { code: "kn", label: "ಕನ್ನಡ (Kannada)", flag: "🇮🇳" },
+  { code: "ml", label: "മലയാളം (Malayalam)", flag: "🇮🇳" },
+  { code: "bn", label: "বাংলা (Bengali)", flag: "🇮🇳" },
+  { code: "mr", label: "मराठी (Marathi)", flag: "🇮🇳" },
+  { code: "gu", label: "ગુજરાતી (Gujarati)", flag: "🇮🇳" },
+  { code: "pa", label: "ਪੰਜਾਬੀ (Punjabi)", flag: "🇮🇳" },
+  { code: "it", label: "Italiano (Italian)", flag: "🇮🇹" },
+  { code: "pt", label: "Português (Portuguese)", flag: "🇵🇹" },
+  { code: "ru", label: "Русский (Russian)", flag: "🇷🇺" },
+  { code: "zh-CN", label: "简体中文 (Chinese)", flag: "🇨🇳" },
+  { code: "ja", label: "日本語 (Japanese)", flag: "🇯🇵" },
+  { code: "ko", label: "한국어 (Korean)", flag: "🇰🇷" },
+  { code: "tr", label: "Türkçe (Turkish)", flag: "🇹🇷" },
+  { code: "nl", label: "Nederlands (Dutch)", flag: "🇳🇱" },
+  { code: "vi", label: "Tiếng Việt (Vietnamese)", flag: "🇻🇳" },
+  { code: "th", label: "ไทย (Thai)", flag: "🇹🇭" },
 ];
 
 export default function Header() {
@@ -368,7 +385,7 @@ export default function Header() {
               </button>
 
               <div
-                className={`absolute right-0 mt-2 w-48 bg-white border border-[#E5E7EB] rounded-lg shadow-lg py-1.5 transition-all duration-200 z-[70] ${
+                className={`absolute right-0 mt-2 w-48 max-h-80 overflow-y-auto bg-white border border-[#E5E7EB] rounded-lg shadow-lg py-1.5 transition-all duration-200 z-[70] ${
                   isLangDropdownOpen
                     ? "opacity-100 visible translate-y-0"
                     : "opacity-0 invisible -translate-y-2 pointer-events-none"
@@ -440,7 +457,7 @@ export default function Header() {
               </button>
 
               {isLangDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-44 bg-white border border-[#E5E5E5] rounded-lg shadow-lg py-1.5 z-[60]">
+                <div className="absolute right-0 mt-2 w-44 max-h-64 overflow-y-auto bg-white border border-[#E5E5E5] rounded-lg shadow-lg py-1.5 z-[60]">
                   {LANGUAGES.map((lang) => (
                     <button
                       key={lang.code}
@@ -583,7 +600,7 @@ export default function Header() {
             <span className="font-semibold text-lg text-primary-dark border-b border-[#E5E7EB] pb-2 flex justify-between items-center">
               Select Language
             </span>
-            <div className="grid grid-cols-2 gap-2 mt-2">
+            <div className="grid grid-cols-2 gap-2 mt-2 max-h-60 overflow-y-auto pr-1">
               {LANGUAGES.map((lang) => (
                 <button
                   key={lang.code}
