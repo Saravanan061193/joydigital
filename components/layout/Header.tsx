@@ -324,6 +324,21 @@ export default function Header() {
             </Link>
 
             <Link
+              href="/free-tools"
+              title="Free Tools"
+              className={`font-semibold text-sm transition-colors nav-link-underline ${
+                isScrolled ? "hover:text-accent" : "hover:text-primary-light"
+              } ${
+                isActive("/free-tools") 
+                  ? (isScrolled ? "text-accent" : "text-primary-light") 
+                  : (isScrolled ? "text-text-primary" : "text-slate-100")
+              }`}
+            >
+              Free Tools
+            </Link>
+
+
+            <Link
               href={getRegionalHref("/contact")}
               title="Contact Us"
               className={`font-semibold text-sm transition-colors nav-link-underline ${
@@ -584,6 +599,17 @@ export default function Header() {
           >
             Blog
           </Link>
+
+          <Link
+            href="/free-tools"
+            title="Free Tools"
+            className={`font-semibold text-lg border-b border-[#E5E7EB] pb-2 ${
+              isActive("/free-tools") ? "text-accent" : "text-primary-dark"
+            }`}
+          >
+            Free Tools
+          </Link>
+
 
           <Link
             href={getRegionalHref("/contact")}

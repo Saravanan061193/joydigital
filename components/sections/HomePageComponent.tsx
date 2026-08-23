@@ -512,7 +512,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
       <main className="bg-[#FAF9FF] text-[#1F1B2D] min-h-screen overflow-hidden">
         
         {/* 1. HERO SECTION WITH PREMIUM DARK-PURPLE THEME (#171126) */}
-        <section className="relative pt-32 lg:pt-44 pb-24 overflow-hidden bg-[#171126] border-b border-[#2A203F]">
+        <section className="relative pt-24 lg:pt-32 pb-16 overflow-hidden bg-[#171126] border-b border-[#2A203F]">
           {/* Lightweight particle canvas connections */}
           <DigitalNetworkBackground />
           
