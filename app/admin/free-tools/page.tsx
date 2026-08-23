@@ -53,7 +53,7 @@ export default function AdminFreeToolsPage() {
   const [pin, setPin] = useState<string>("");
   const [loginError, setLoginError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
-  const [activeTab, setActiveTab] = useState<"overview" | "activities" | "leads">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "activities" | "leads" | "feedback">("overview");
 
   // Data states
   const [summary, setSummary] = useState<SummaryData>({
@@ -66,6 +66,7 @@ export default function AdminFreeToolsPage() {
   const [toolStats, setToolStats] = useState<ToolStat[]>([]);
   const [activities, setActivities] = useState<UserActivity[]>([]);
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [feedbacks, setFeedbacks] = useState<any[]>([]);
 
   // Filter state
   const [timeFilter, setTimeFilter] = useState<string>("all");
@@ -91,6 +92,7 @@ export default function AdminFreeToolsPage() {
         setToolStats(data.toolAnalytics);
         setActivities(data.userActivities);
         setLeads(data.leads);
+        setFeedbacks(data.feedback || []);
       }
     } catch (err) {
       console.error("Error loading dashboard data:", err);
@@ -344,7 +346,8 @@ export default function AdminFreeToolsPage() {
           {[
             { id: "overview", label: "Stats Overview", icon: "fa-solid fa-chart-simple" },
             { id: "leads", label: "Tool Captured Leads", icon: "fa-solid fa-user-tag" },
-            { id: "activities", label: "User Action Logs", icon: "fa-solid fa-clock-rotate-left" }
+            { id: "activities", label: "User Action Logs", icon: "fa-solid fa-clock-rotate-left" },
+            { id: "feedback", label: "User Feedback", icon: "fa-solid fa-comments" }
           ].map(tab => (
             <button
               key={tab.id}
@@ -539,6 +542,61 @@ export default function AdminFreeToolsPage() {
                   {filteredActivities.length === 0 && (
                     <tr>
                       <td colSpan={5} className="py-8 text-center text-slate-400 font-bold">No logs found in selected timeframe.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* Tab 4: Feedback */}
+        {activeTab === "feedback" && (
+          <div className="bg-white border border-slate-200 rounded-[24px] shadow-sm p-6 overflow-hidden">
+            <h3 className="text-sm font-black text-slate-900 border-b border-slate-50 pb-3 mb-4">User Feedbacks & Suggestions</h3>
+            
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-100 text-slate-400 font-extrabold uppercase text-[9px] tracking-wider">
+                    <th className="py-3 px-4">Date</th>
+                    <th className="py-3 px-4">Tool</th>
+                    <th className="py-3 px-4">Rating</th>
+                    <th className="py-3 px-4">Feedback Message</th>
+                    <th className="py-3 px-4">Sender Contact</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {feedbacks.map((fb) => (
+                    <tr key={fb.id} className="border-b border-slate-50 hover:bg-slate-50 font-semibold text-slate-600">
+                      <td className="py-3.5 px-4 text-[10px] text-slate-400 whitespace-nowrap">
+                        {new Date(fb.createdAt).toLocaleString()}
+                      </td>
+                      <td className="py-3.5 px-4 font-bold text-slate-900">{fb.toolName}</td>
+                      <td className="py-3.5 px-4">
+                        <div className="flex text-amber-400 gap-0.5">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <i
+                              key={star}
+                              className={`${
+                                fb.rating >= star ? "fa-solid" : "fa-regular"
+                              } fa-star text-[11px]`}
+                            />
+                          ))}
+                        </div>
+                      </td>
+                      <td className="py-3.5 px-4 text-slate-700 max-w-[320px] whitespace-normal leading-relaxed font-medium">
+                        {fb.message}
+                      </td>
+                      <td className="py-3.5 px-4 whitespace-nowrap">
+                        <div className="font-bold text-slate-900">{fb.name}</div>
+                        <div className="text-[10px] text-slate-400">{fb.email}</div>
+                      </td>
+                    </tr>
+                  ))}
+                  {feedbacks.length === 0 && (
+                    <tr>
+                      <td colSpan={5} className="py-8 text-center text-slate-400 font-bold">No feedback logs found.</td>
                     </tr>
                   )}
                 </tbody>

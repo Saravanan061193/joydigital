@@ -1,13 +1,30 @@
 import { NextResponse } from "next/server";
+import { promises as fs } from "fs";
+import path from "path";
 
 export async function GET() {
   const MONGODB_URI = process.env.MONGODB_URI;
+  
+  // Local file reading helper
+  const readLocalFeedback = async () => {
+    try {
+      const filePath = path.join(process.cwd(), "data", "tool_feedback.json");
+      const fileContent = await fs.readFile(filePath, "utf-8");
+      const feedback = JSON.parse(fileContent);
+      return feedback.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    } catch (err) {
+      return [];
+    }
+  };
+
   if (!MONGODB_URI) {
+    const feedbackList = await readLocalFeedback();
     return NextResponse.json({
       summary: { totalUsers: 0, totalUses: 0, totalLeads: 0, totalDownloads: 0, totalCtaClicks: 0 },
       toolAnalytics: [],
       userActivities: [],
-      leads: []
+      leads: [],
+      feedback: feedbackList
     });
   }
 
@@ -21,7 +38,7 @@ export async function GET() {
     // 2. Fetch Events
     const events = await db.collection("tool_events").find({}).sort({ createdAt: -1 }).limit(100).toArray();
 
-    // 3. Fetch Leads generated from tools (enquiries where source contains 'Tool' or 'Generator')
+    // 3. Fetch Leads
     const enquiries = await db.collection("enquiries")
       .find({
         $or: [
@@ -31,6 +48,19 @@ export async function GET() {
       })
       .sort({ createdAt: -1 })
       .toArray();
+
+    // 4. Fetch Feedback
+    let feedback: any[] = [];
+    try {
+      feedback = await db.collection("tool_feedback").find({}).sort({ createdAt: -1 }).toArray();
+    } catch (dbErr) {
+      console.error("MongoDB feedback fetch failed, falling back to local file:", dbErr);
+      feedback = await readLocalFeedback();
+    }
+
+    if (feedback.length === 0) {
+      feedback = await readLocalFeedback();
+    }
 
     // Calculate Summary Metrics
     let totalUses = 0;
@@ -51,7 +81,7 @@ export async function GET() {
       totalCtaClicks,
     };
 
-    // Calculate Tool Analytics (Per-tool uses, downloads, leads, cta clicks)
+    // Calculate Tool Analytics
     const toolMap: Record<string, { tool: string; uses: number; downloads: number; leads: number; ctaClicks: number }> = {
       "GST Calculator": { tool: "GST Calculator", uses: 0, downloads: 0, leads: 0, ctaClicks: 0 },
       "Quotation Generator": { tool: "Quotation Generator", uses: 0, downloads: 0, leads: 0, ctaClicks: 0 },
@@ -60,36 +90,18 @@ export async function GET() {
       "WhatsApp Link Generator": { tool: "WhatsApp Link Generator", uses: 0, downloads: 0, leads: 0, ctaClicks: 0 }
     };
 
-    // Populate usage stats from users first
-    users.forEach((u: any) => {
-      if (u.firstTool && toolMap[u.firstTool]) {
-        // Estimate per-tool distribution
-        toolMap[u.firstTool].uses += u.uses || 0;
-        toolMap[u.firstTool].downloads += u.downloads || 0;
-        toolMap[u.firstTool].ctaClicks += u.ctaClicks || 0;
-      }
-    });
-
-    // Cross-verify with event logs to get exact counts per tool
-    // Reset map counts first for exact calculations from granular logs
-    Object.keys(toolMap).forEach(k => {
-      toolMap[k].uses = 0;
-      toolMap[k].downloads = 0;
-      toolMap[k].ctaClicks = 0;
-    });
-
     // Granular aggregation from event logs
     const allEvents = await db.collection("tool_events").find({}).toArray();
     allEvents.forEach((ev: any) => {
       const tool = ev.toolName;
       if (tool && toolMap[tool]) {
-        if (ev.action === "tool_start" || ev.action === "tool_view") {
+        if (ev.action === "tool_start" || ev.action === "tool_view" || ev.action === "gst_calculator_used") {
           toolMap[tool].uses += 1;
         }
-        if (ev.action === "pdf_download" || ev.action === "qr_generate") {
+        if (ev.action === "pdf_download" || ev.action === "qr_generate" || ev.action === "copy_clicked") {
           toolMap[tool].downloads += 1;
         }
-        if (ev.action === "cta_click") {
+        if (ev.action === "cta_click" || ev.action === "cta_clicked") {
           toolMap[tool].ctaClicks += 1;
         }
       }
@@ -142,7 +154,17 @@ export async function GET() {
         city: ev.city,
         country: ev.country
       })),
-      leads
+      leads,
+      feedback: feedback.map((fb: any) => ({
+        id: fb.id || fb._id?.toString(),
+        toolName: fb.toolName,
+        rating: fb.rating,
+        message: fb.message,
+        name: fb.name,
+        email: fb.email,
+        createdAt: fb.createdAt,
+        status: fb.status || "new"
+      }))
     });
 
   } catch (error: any) {

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { trackToolUsage } from "@/lib/toolTracker";
+import ToolFeedback from "@/components/ui/ToolFeedback";
 import { getUtmParameters } from "@/lib/utmTracker";
 
 interface InvoiceItem {
@@ -835,6 +836,8 @@ export default function InvoiceGeneratorPage() {
               </div>
             </div>
           </div>
+          
+          <ToolFeedback toolName="Invoice Generator" />
         </div>
       </main>
 

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { trackToolUsage } from "@/lib/toolTracker";
+import ToolFeedback from "@/components/ui/ToolFeedback";
 import { getUtmParameters } from "@/lib/utmTracker";
 
 interface QuoteItem {
@@ -837,6 +838,8 @@ export default function QuotationGeneratorPage() {
               </div>
             </div>
           </div>
+          
+          <ToolFeedback toolName="Quotation Generator" />
         </div>
       </main>
 

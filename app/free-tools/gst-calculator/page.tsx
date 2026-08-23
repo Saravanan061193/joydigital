@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { trackToolUsage } from "@/lib/toolTracker";
+import ToolFeedback from "@/components/ui/ToolFeedback";
 
 type CalcMode = "exclusive" | "inclusive";
 type TransType = "intra" | "inter";
@@ -587,6 +588,8 @@ export default function GstCalculatorPage() {
               </div>
             </article>
           </div>
+
+          <ToolFeedback toolName="GST Calculator" />
         </div>
       </main>
 
