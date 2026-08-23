@@ -764,6 +764,229 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           </div>
         </section>
 
+        {/* FREE ONLINE BUSINESS TOOLS SECTION */}
+        <section className="py-20 bg-white border-b border-[#E9E4F2] relative z-10">
+          <div className="max-w-7xl mx-auto px-6">
+            
+            {/* Heading area */}
+            <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
+              <span className="text-xs font-bold text-[#7C3AED] uppercase tracking-widest block mb-3">
+                Free Resources
+              </span>
+              <h2 className="text-3xl font-extrabold text-[#1F1B2D] mb-4">
+                Free Online Business Tools & Calculators
+              </h2>
+              <p className="text-xs sm:text-sm text-[#6B6478] font-semibold leading-relaxed">
+                Free, fast and easy-to-use online tools for businesses, freelancers, students and professionals. Calculate GST, create invoices and quotations, generate QR codes, improve website SEO and simplify everyday business tasks — completely online.
+              </p>
+            </div>
+
+            {/* Grid layout - 3 cols desktop, 2 cols tablet, 1 col mobile */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              
+              {/* GST Calculator */}
+              <div className="p-8 bg-[#FAF9FF] border border-[#E9E4F2] rounded-[24px] shadow-sm hover:shadow-md hover:border-[#7C3AED]/20 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between text-left reveal-hidden group">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-white border border-[#E9E4F2] flex items-center justify-center text-[#7C3AED] text-xl mb-6 shadow-sm group-hover:scale-110 group-hover:bg-[#7C3AED] group-hover:text-white transition-all duration-300">
+                    <i className="fa-solid fa-calculator" />
+                  </div>
+                  <h3 className="text-base font-extrabold text-[#1F1B2D] mb-3 group-hover:text-[#7C3AED] transition-colors">
+                    GST Calculator
+                  </h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed font-semibold mb-6">
+                    Calculate GST inclusive and exclusive prices instantly with our free GST calculator.
+                  </p>
+                </div>
+                <div className="border-t border-[#E9E4F2] pt-4 mt-2 flex flex-col gap-3">
+                  <div className="flex flex-wrap gap-1">
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">GST Calculator</span>
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">GST Online</span>
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">India</span>
+                  </div>
+                  <Link href="/free-tools/gst-calculator" className="text-xs font-bold text-[#7C3AED] flex items-center gap-1.5 group-hover:text-[#A78BFA] transition-colors">
+                    Use GST Calculator &rarr;
+                  </Link>
+                </div>
+              </div>
+
+              {/* Invoice Generator */}
+              <div className="p-8 bg-[#FAF9FF] border border-[#E9E4F2] rounded-[24px] shadow-sm hover:shadow-md hover:border-[#7C3AED]/20 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between text-left reveal-hidden group">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-white border border-[#E9E4F2] flex items-center justify-center text-[#7C3AED] text-xl mb-6 shadow-sm group-hover:scale-110 group-hover:bg-[#7C3AED] group-hover:text-white transition-all duration-300">
+                    <i className="fa-solid fa-file-invoice-dollar" />
+                  </div>
+                  <h3 className="text-base font-extrabold text-[#1F1B2D] mb-3 group-hover:text-[#7C3AED] transition-colors">
+                    Invoice Generator
+                  </h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed font-semibold mb-6">
+                    Create professional invoices online quickly and easily.
+                  </p>
+                </div>
+                <div className="border-t border-[#E9E4F2] pt-4 mt-2 flex flex-col gap-3">
+                  <div className="flex flex-wrap gap-1">
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">Invoice Generator</span>
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">Free Maker</span>
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">GST Invoice</span>
+                  </div>
+                  <Link href="/free-tools/invoice-generator" className="text-xs font-bold text-[#7C3AED] flex items-center gap-1.5 group-hover:text-[#A78BFA] transition-colors">
+                    Create Invoice &rarr;
+                  </Link>
+                </div>
+              </div>
+
+              {/* Quotation Generator */}
+              <div className="p-8 bg-[#FAF9FF] border border-[#E9E4F2] rounded-[24px] shadow-sm hover:shadow-md hover:border-[#7C3AED]/20 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between text-left reveal-hidden group">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-white border border-[#E9E4F2] flex items-center justify-center text-[#7C3AED] text-xl mb-6 shadow-sm group-hover:scale-110 group-hover:bg-[#7C3AED] group-hover:text-white transition-all duration-300">
+                    <i className="fa-solid fa-file-signature" />
+                  </div>
+                  <h3 className="text-base font-extrabold text-[#1F1B2D] mb-3 group-hover:text-[#7C3AED] transition-colors">
+                    Quotation Generator
+                  </h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed font-semibold mb-6">
+                    Create professional business quotations online in minutes.
+                  </p>
+                </div>
+                <div className="border-t border-[#E9E4F2] pt-4 mt-2 flex flex-col gap-3">
+                  <div className="flex flex-wrap gap-1">
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">Quotation Generator</span>
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">Quotation Maker</span>
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">Online</span>
+                  </div>
+                  <Link href="/free-tools/quotation-generator" className="text-xs font-bold text-[#7C3AED] flex items-center gap-1.5 group-hover:text-[#A78BFA] transition-colors">
+                    Create Quotation &rarr;
+                  </Link>
+                </div>
+              </div>
+
+              {/* QR Code Generator */}
+              <div className="p-8 bg-[#FAF9FF] border border-[#E9E4F2] rounded-[24px] shadow-sm hover:shadow-md hover:border-[#7C3AED]/20 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between text-left reveal-hidden group">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-white border border-[#E9E4F2] flex items-center justify-center text-[#7C3AED] text-xl mb-6 shadow-sm group-hover:scale-110 group-hover:bg-[#7C3AED] group-hover:text-white transition-all duration-300">
+                    <i className="fa-solid fa-qrcode" />
+                  </div>
+                  <h3 className="text-base font-extrabold text-[#1F1B2D] mb-3 group-hover:text-[#7C3AED] transition-colors">
+                    QR Code Generator
+                  </h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed font-semibold mb-6">
+                    Generate free QR codes for websites, WhatsApp, contact details and business use.
+                  </p>
+                </div>
+                <div className="border-t border-[#E9E4F2] pt-4 mt-2 flex flex-col gap-3">
+                  <div className="flex flex-wrap gap-1">
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">QR Code Generator</span>
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">Free QR</span>
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">WhatsApp QR</span>
+                  </div>
+                  <Link href="/free-tools/qr-code-generator" className="text-xs font-bold text-[#7C3AED] flex items-center gap-1.5 group-hover:text-[#A78BFA] transition-colors">
+                    Generate QR Code &rarr;
+                  </Link>
+                </div>
+              </div>
+
+              {/* SEO Audit Tool */}
+              <div className="p-8 bg-[#FAF9FF] border border-[#E9E4F2] rounded-[24px] shadow-sm hover:shadow-md hover:border-[#7C3AED]/20 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between text-left reveal-hidden group">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-white border border-[#E9E4F2] flex items-center justify-center text-[#7C3AED] text-xl mb-6 shadow-sm group-hover:scale-110 group-hover:bg-[#7C3AED] group-hover:text-white transition-all duration-300">
+                    <i className="fa-solid fa-chart-line" />
+                  </div>
+                  <h3 className="text-base font-extrabold text-[#1F1B2D] mb-3 group-hover:text-[#7C3AED] transition-colors">
+                    SEO Audit Tool
+                  </h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed font-semibold mb-6">
+                    Check your website&apos;s basic SEO performance and discover opportunities to improve search visibility.
+                  </p>
+                </div>
+                <div className="border-t border-[#E9E4F2] pt-4 mt-2 flex flex-col gap-3">
+                  <div className="flex flex-wrap gap-1">
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">SEO Checker</span>
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">Free Audit</span>
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">SEO Tool</span>
+                  </div>
+                  <Link href="/free-tools" className="text-xs font-bold text-[#7C3AED] flex items-center gap-1.5 group-hover:text-[#A78BFA] transition-colors">
+                    Check SEO &rarr;
+                  </Link>
+                </div>
+              </div>
+
+              {/* Image Compressor */}
+              <div className="p-8 bg-[#FAF9FF] border border-[#E9E4F2] rounded-[24px] shadow-sm hover:shadow-md hover:border-[#7C3AED]/20 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between text-left reveal-hidden group">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-white border border-[#E9E4F2] flex items-center justify-center text-[#7C3AED] text-xl mb-6 shadow-sm group-hover:scale-110 group-hover:bg-[#7C3AED] group-hover:text-white transition-all duration-300">
+                    <i className="fa-solid fa-file-image" />
+                  </div>
+                  <h3 className="text-base font-extrabold text-[#1F1B2D] mb-3 group-hover:text-[#7C3AED] transition-colors">
+                    Image Compressor
+                  </h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed font-semibold mb-6">
+                    Compress images online and reduce file size while maintaining good image quality.
+                  </p>
+                </div>
+                <div className="border-t border-[#E9E4F2] pt-4 mt-2 flex flex-col gap-3">
+                  <div className="flex flex-wrap gap-1">
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">Compress Image</span>
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">JPG / PNG</span>
+                    <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">Compress Online</span>
+                  </div>
+                  <Link href="/free-tools" className="text-xs font-bold text-[#7C3AED] flex items-center gap-1.5 group-hover:text-[#A78BFA] transition-colors">
+                    Compress Image &rarr;
+                  </Link>
+                </div>
+              </div>
+
+            </div>
+
+            {/* View All Tools CTA Button */}
+            <div className="text-center mb-16 reveal-hidden">
+              <Link
+                href="/tools"
+                className="inline-flex items-center gap-2 bg-[#171126] hover:bg-slate-800 hover:scale-[1.025] text-white font-bold text-xs px-8 py-4 rounded-xl transition-all group"
+              >
+                Explore All Free Tools <i className="fa-solid fa-arrow-right-long text-xs group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {/* Homepage SEO Paragraph Content block */}
+            <div className="max-w-4xl mx-auto border-t border-[#E9E4F2] pt-12 pb-6 text-left reveal-hidden">
+              <h3 className="text-sm font-bold text-[#1F1B2D] uppercase tracking-wider mb-3">Free Online Tools for Businesses</h3>
+              <p className="text-xs text-[#6B6478] leading-relaxed font-semibold">
+                Joy Digital provides a growing collection of free online business tools designed to make everyday tasks faster and easier. Use our GST calculator, invoice generator, quotation generator, QR code generator, SEO audit tool and image compressor directly from your browser. These tools are designed for businesses, freelancers, professionals and individuals who want simple solutions without complicated software.
+              </p>
+            </div>
+
+            {/* Lead Gen block */}
+            <div className="bg-[#FAF9FF] border border-[#E9E4F2] p-8 sm:p-12 rounded-[24px] shadow-sm text-left flex flex-col justify-between hover:border-[#7C3AED]/15 transition-colors max-w-5xl mx-auto mt-8 reveal-hidden">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                <div className="md:col-span-8">
+                  <h3 className="text-lg sm:text-xl font-black text-[#1F1B2D] mb-3">Need a Website or Digital Solution for Your Business?</h3>
+                  <p className="text-xs sm:text-sm text-[#6B6478] leading-relaxed font-semibold">
+                    From professional websites and e-commerce solutions to SEO and digital marketing, Joy Digital helps businesses build a stronger online presence.
+                  </p>
+                </div>
+                <div className="md:col-span-4 flex flex-col gap-3 justify-end">
+                  <a
+                    href="#enquiry-section"
+                    onClick={() => handleCtaEvent("Free Tools Lead Consultation")}
+                    className="bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-center font-bold text-xs py-3.5 px-6 rounded-xl shadow-sm hover:scale-[1.01] transition-all cursor-pointer"
+                  >
+                    Get a Free Consultation
+                  </a>
+                  <a
+                    href="https://wa.me/919080026133?text=Hello%20Joy%20Digital,%20I%20saw%20your%20free%20business%20tools%20and%20I'd%20like%2520to%2520get%2520a%2520free%2520consultation%2520for%2520my%2520business."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => handleWaEvent("free_tools_cta")}
+                    className="bg-[#10b981] hover:bg-[#059669] text-white text-center font-bold text-xs py-3.5 px-6 rounded-xl shadow-sm hover:scale-[1.01] transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                  >
+                    <i className="fa-brands fa-whatsapp text-sm" /> Chat on WhatsApp
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
         {/* 5. PORTFOLIO / OUR WORK (INTERACTIVE IMAGE ZOOM & OVERLAY) */}
         <section id="portfolio-section" className="py-20 bg-white border-b border-[#E9E4F2]">
           <div className="max-w-7xl mx-auto px-6">
