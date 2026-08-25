@@ -212,7 +212,7 @@ export default function ChatbotWidget() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="w-14 h-14 bg-gradient-to-tr from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl transition-all hover:scale-105 cursor-pointer border border-blue-400/20 active:scale-95 animate-bounce-subtle"
+          className="w-14 h-14 bg-gradient-to-tr from-purple-600 to-indigo-650 hover:from-purple-700 hover:to-indigo-700 text-white rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl transition-all hover:scale-105 cursor-pointer border border-purple-400/20 active:scale-95 animate-bounce-subtle"
           title="Chat with Joy AI"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -230,15 +230,15 @@ export default function ChatbotWidget() {
         <div className="w-[360px] sm:w-[380px] h-[500px] bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-[28px] shadow-2xl flex flex-col overflow-hidden animate-fade-in transition-colors duration-200">
           
           {/* Header Panel */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-500 p-4.5 text-white flex items-center justify-between shrink-0 shadow-sm">
+          <div className="bg-gradient-to-r from-purple-600 to-indigo-650 p-4.5 text-white flex items-center justify-between shrink-0 shadow-sm">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 bg-white/10 rounded-2xl flex items-center justify-center relative shadow-inner">
                 <span className="font-extrabold text-sm tracking-tighter">JD</span>
-                <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-blue-500"></span>
+                <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-purple-500"></span>
               </div>
               <div className="text-left">
                 <h4 className="text-xs font-black tracking-wide leading-none">Joy AI Assistant</h4>
-                <span className="text-[9px] text-blue-100 font-semibold mt-1 inline-block">Online • Ready to Help</span>
+                <span className="text-[9px] text-purple-150 font-semibold mt-1 inline-block">Online • Ready to Help</span>
               </div>
             </div>
             
@@ -267,7 +267,7 @@ export default function ChatbotWidget() {
               return (
                 <div key={index} className={`flex ${isBot ? "justify-start" : "justify-end"} gap-2`}>
                   {isBot && (
-                    <div className="w-6.5 h-6.5 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 rounded-lg flex items-center justify-center font-bold text-[9px] shrink-0 self-end">
+                    <div className="w-6.5 h-6.5 bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-300 rounded-lg flex items-center justify-center font-bold text-[9px] shrink-0 self-end">
                       AI
                     </div>
                   )}
@@ -275,7 +275,7 @@ export default function ChatbotWidget() {
                   <div className={`max-w-[75%] p-3 rounded-2xl leading-relaxed whitespace-pre-wrap shadow-sm border ${
                     isBot 
                       ? "bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 border-slate-100 dark:border-slate-800 rounded-bl-xs" 
-                      : "bg-blue-600 text-white border-blue-600 rounded-br-xs font-medium"
+                      : "bg-purple-600 text-white border-purple-600 rounded-br-xs font-medium"
                   }`}>
                     {/* Render Markdown bold style markup */}
                     {msg.text.split("\n").map((line, lIdx) => {
@@ -304,7 +304,7 @@ export default function ChatbotWidget() {
             {/* AI Typing Indicator */}
             {loading && (
               <div className="flex justify-start gap-2 animate-pulse">
-                <div className="w-6.5 h-6.5 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 rounded-lg flex items-center justify-center font-bold text-[9px] shrink-0 self-end">
+                <div className="w-6.5 h-6.5 bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-300 rounded-lg flex items-center justify-center font-bold text-[9px] shrink-0 self-end">
                   AI
                 </div>
                 <div className="bg-white dark:bg-slate-800 text-slate-400 border border-slate-100 dark:border-slate-800 px-4 py-3 rounded-2xl rounded-bl-xs flex items-center gap-1">
@@ -318,7 +318,7 @@ export default function ChatbotWidget() {
             {/* Callback inline form bubble */}
             {showForm && !formSubmitted && (
               <div className="flex justify-start gap-2 animate-fade-in">
-                <div className="w-6.5 h-6.5 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 rounded-lg flex items-center justify-center font-bold text-[9px] shrink-0 self-end">
+                <div className="w-6.5 h-6.5 bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-300 rounded-lg flex items-center justify-center font-bold text-[9px] shrink-0 self-end">
                   AI
                 </div>
                 
@@ -337,7 +337,7 @@ export default function ChatbotWidget() {
                         value={formName}
                         onChange={(e) => setFormName(e.target.value)}
                         placeholder="John Doe"
-                        className="w-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-2.5 py-1.5 rounded-lg outline-none focus:border-blue-600 focus:bg-white text-slate-850 dark:text-white"
+                        className="w-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-2.5 py-1.5 rounded-lg outline-none focus:border-purple-600 focus:bg-white text-slate-850 dark:text-white"
                       />
                     </div>
                     
@@ -349,7 +349,7 @@ export default function ChatbotWidget() {
                         value={formMobile}
                         onChange={(e) => setFormMobile(e.target.value)}
                         placeholder="+91 XXXXX XXXXX"
-                        className="w-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-2.5 py-1.5 rounded-lg outline-none focus:border-blue-600 focus:bg-white text-slate-850 dark:text-white"
+                        className="w-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-2.5 py-1.5 rounded-lg outline-none focus:border-purple-600 focus:bg-white text-slate-850 dark:text-white"
                       />
                     </div>
 
@@ -360,7 +360,7 @@ export default function ChatbotWidget() {
                         value={formEmail}
                         onChange={(e) => setFormEmail(e.target.value)}
                         placeholder="john@doe.com"
-                        className="w-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-2.5 py-1.5 rounded-lg outline-none focus:border-blue-600 focus:bg-white text-slate-850 dark:text-white"
+                        className="w-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-2.5 py-1.5 rounded-lg outline-none focus:border-purple-600 focus:bg-white text-slate-850 dark:text-white"
                       />
                     </div>
 
@@ -375,7 +375,7 @@ export default function ChatbotWidget() {
                       <button
                         type="submit"
                         disabled={formSubmitting}
-                        className="px-4 py-1.5 bg-blue-650 hover:bg-blue-700 text-white rounded-md font-extrabold shadow-xs cursor-pointer disabled:opacity-40"
+                        className="px-4 py-1.5 bg-purple-600 hover:bg-purple-750 text-white rounded-md font-extrabold shadow-xs cursor-pointer disabled:opacity-40"
                       >
                         {formSubmitting ? "Submitting..." : "Get Call Back"}
                       </button>
@@ -399,7 +399,7 @@ export default function ChatbotWidget() {
               <button
                 key={idx}
                 onClick={reply.action}
-                className="text-[9.5px] font-bold bg-white dark:bg-slate-800 text-slate-655 dark:text-slate-300 hover:text-[#2563EB] dark:hover:text-blue-400 border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-800 px-2 py-1 rounded-full cursor-pointer transition-all shadow-xs"
+                className="text-[9.5px] font-bold bg-white dark:bg-slate-800 text-slate-655 dark:text-slate-300 hover:text-[#7C3AED] dark:hover:text-purple-400 border border-slate-200 dark:border-slate-700 hover:border-purple-300 dark:hover:border-purple-800 px-2 py-1 rounded-full cursor-pointer transition-all shadow-xs"
               >
                 {reply.text}
               </button>
@@ -420,12 +420,12 @@ export default function ChatbotWidget() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask anything..."
               disabled={loading || showForm}
-              className="flex-1 text-xs px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:bg-white focus:border-blue-600 text-slate-900 dark:text-white transition-colors"
+              className="flex-1 text-xs px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:bg-white focus:border-purple-600 text-slate-900 dark:text-white transition-colors"
             />
             <button
               type="submit"
               disabled={loading || showForm || !input.trim()}
-              className="w-8.5 h-8.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl flex items-center justify-center shadow-md transition-all active:scale-95 disabled:opacity-40 disabled:scale-100 cursor-pointer shrink-0"
+              className="w-8.5 h-8.5 bg-purple-650 hover:bg-purple-700 text-white rounded-xl flex items-center justify-center shadow-md transition-all active:scale-95 disabled:opacity-40 disabled:scale-100 cursor-pointer shrink-0"
               title="Send Message"
             >
               <i className="fa-solid fa-paper-plane text-xs" />
