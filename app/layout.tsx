@@ -5,6 +5,7 @@ import FontAwesomeLoader from "@/components/layout/FontAwesomeLoader";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import ClarityTracker from "@/components/ClarityTracker";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import ChatbotWidget from "@/components/ui/ChatbotWidget";
 import "./globals.css";
 
 
@@ -92,6 +93,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         {children}
+        <ChatbotWidget />
       </body>
     </html>
   );

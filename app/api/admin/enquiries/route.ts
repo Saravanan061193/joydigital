@@ -59,7 +59,8 @@ export async function GET() {
         utmParams: d.utmParams || null,
         activities: d.activities || [],
         proposals: d.proposals || [],
-        irrelevantReason: d.irrelevantReason || ""
+        irrelevantReason: d.irrelevantReason || "",
+        chatSessionId: d.chatSessionId || ""
       }));
       return NextResponse.json(mapped);
     } catch (e: any) {
@@ -88,7 +89,8 @@ export async function GET() {
       utmParams: enq.utmParams || null,
       activities: enq.activities || [],
       proposals: enq.proposals || [],
-      irrelevantReason: enq.irrelevantReason || ""
+      irrelevantReason: enq.irrelevantReason || "",
+      chatSessionId: enq.chatSessionId || ""
     }));
     return NextResponse.json(mapped);
   }
@@ -97,7 +99,7 @@ export async function GET() {
 export async function PATCH(request: Request) {
   try {
     const body = await request.json();
-    const { id, status, notes, followUpDate, pipelineStage, assignedTo, activities, proposals, irrelevantReason } = body;
+    const { id, status, notes, followUpDate, pipelineStage, assignedTo, activities, proposals, irrelevantReason, chatSessionId } = body;
     if (!id) {
       return NextResponse.json({ error: "Missing enquiry ID" }, { status: 400 });
     }
@@ -117,6 +119,7 @@ export async function PATCH(request: Request) {
         if (activities !== undefined) updateFields.activities = activities;
         if (proposals !== undefined) updateFields.proposals = proposals;
         if (irrelevantReason !== undefined) updateFields.irrelevantReason = irrelevantReason;
+        if (chatSessionId !== undefined) updateFields.chatSessionId = chatSessionId;
 
         const result = await db.collection("enquiries").updateOne(
           { id: id },
@@ -147,6 +150,7 @@ export async function PATCH(request: Request) {
             ...(activities !== undefined && { activities }),
             ...(proposals !== undefined && { proposals }),
             ...(irrelevantReason !== undefined && { irrelevantReason }),
+            ...(chatSessionId !== undefined && { chatSessionId }),
           };
         }
         return enq;

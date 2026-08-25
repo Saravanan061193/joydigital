@@ -62,6 +62,7 @@ interface Enquiry {
   activities?: Activity[];
   proposals?: Proposal[];
   irrelevantReason?: string;
+  chatSessionId?: string;
 }
 
 interface AnalyticsData {
@@ -106,8 +107,8 @@ export default function AdminPage() {
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Active Menu: "leads" | "map" | "heatmaps" | "blog" | "reports"
-  const [activeTab, setActiveTab] = useState<"leads" | "map" | "heatmaps" | "blog" | "reports">("leads");
+  // Active Menu: "leads" | "map" | "heatmaps" | "blog" | "reports" | "chats"
+  const [activeTab, setActiveTab] = useState<"leads" | "map" | "heatmaps" | "blog" | "reports" | "chats">("leads");
 
   // Irrelevant Modal state
   const [irrelevantModalOpen, setIrrelevantModalOpen] = useState(false);
@@ -117,6 +118,45 @@ export default function AdminPage() {
 
   // Reports Date range state
   const [reportDateRange, setReportDateRange] = useState<"this_month" | "last_month" | "last_30" | "last_90" | "all_time">("all_time");
+
+  // Chat Logs state
+  const [chatSessions, setChatSessions] = useState<any[]>([]);
+  const [selectedChatSessionId, setSelectedChatSessionId] = useState<string | null>(null);
+  const [selectedChatSession, setSelectedChatSession] = useState<any | null>(null);
+  const [chatsLoading, setChatsLoading] = useState(false);
+  const [chatDetailsLoading, setChatDetailsLoading] = useState(false);
+  const [chatSearch, setChatSearch] = useState("");
+
+  const fetchChatSessions = async () => {
+    setChatsLoading(true);
+    try {
+      const res = await fetch("/api/admin/chat-sessions");
+      if (res.ok) {
+        const data = await res.json();
+        setChatSessions(data);
+      }
+    } catch (e) {
+      console.error("Error fetching chat sessions:", e);
+    } finally {
+      setChatsLoading(false);
+    }
+  };
+
+  const fetchChatSessionDetails = async (id: string) => {
+    setChatDetailsLoading(true);
+    setSelectedChatSessionId(id);
+    try {
+      const res = await fetch(`/api/admin/chat-sessions?id=${id}`);
+      if (res.ok) {
+        const data = await res.json();
+        setSelectedChatSession(data);
+      }
+    } catch (e) {
+      console.error("Error fetching chat details:", e);
+    } finally {
+      setChatDetailsLoading(false);
+    }
+  };
 
   // Irrelevant category translation helper
   const getReasonLabel = (reasonVal: string) => {
@@ -917,6 +957,18 @@ export default function AdminPage() {
           subtitle: "Analyze lead acquisition volume, channels, conversion trends, and irrelevant classification",
           icon: "fa-solid fa-chart-line"
         };
+      case "chats":
+        return {
+          title: "Inbound AI Chatbot Logs",
+          subtitle: "Audit live conversation transcripts between website visitors and the AI sales assistant",
+          icon: "fa-regular fa-comments"
+        };
+      default:
+        return {
+          title: "CRM Admin Dashboard",
+          subtitle: "Overview of your marketing statistics and leads pipeline",
+          icon: "fa-solid fa-gauge"
+        };
     }
   };
 
@@ -1104,7 +1156,8 @@ export default function AdminPage() {
               {[
                 { id: "map", label: "Visitor Map", icon: "fa-regular fa-map" },
                 { id: "heatmaps", label: "Session Heatmaps", icon: "fa-regular fa-eye" },
-                { id: "reports", label: "CRM Reports", icon: "fa-solid fa-chart-line" }
+                { id: "reports", label: "CRM Reports", icon: "fa-solid fa-chart-line" },
+                { id: "chats", label: "Live Chat Logs", icon: "fa-regular fa-comments" }
               ].map((tab) => {
                 const isTabActive = activeTab === tab.id;
                 return (
@@ -1113,6 +1166,7 @@ export default function AdminPage() {
                     onClick={() => {
                       setActiveTab(tab.id as any);
                       if (tab.id === "map") fetchAnalytics();
+                      if (tab.id === "chats") fetchChatSessions();
                       setIsSidebarOpen(false);
                     }}
                     className={`w-full flex items-center gap-3.5 py-2.5 px-3 rounded-lg text-xs font-semibold transition-all duration-150 text-left cursor-pointer group ${
@@ -2382,6 +2436,206 @@ export default function AdminPage() {
                   </div>
                 </div>
               )}
+
+            </div>
+          )}
+
+          {/* TAB CONTENT: Chat Logs Audit Console */}
+          {activeTab === "chats" && (
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12 animate-fade-in text-left h-[calc(100vh-10rem)]">
+              
+              {/* LEFT SIDEBAR: Chat sessions list */}
+              <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-5 shadow-sm flex flex-col h-full overflow-hidden transition-colors duration-200 col-span-1">
+                <div className="space-y-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white flex items-center gap-1.5">
+                      <i className="fa-regular fa-comments text-blue-600" /> Chat Conversations
+                    </h3>
+                    <button 
+                      onClick={fetchChatSessions}
+                      className="w-7 h-7 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-slate-700 flex items-center justify-center transition-colors cursor-pointer"
+                      title="Reload chat list"
+                    >
+                      {chatsLoading ? (
+                        <i className="fa-solid fa-circle-notch animate-spin text-[10px]" />
+                      ) : (
+                        <i className="fa-solid fa-rotate-right text-[10px]" />
+                      )}
+                    </button>
+                  </div>
+                  
+                  {/* Search box */}
+                  <div className="relative">
+                    <i className="fa-solid fa-magnifying-glass text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 text-[10.5px]" />
+                    <input
+                      type="text"
+                      placeholder="Search name, phone, email..."
+                      value={chatSearch}
+                      onChange={(e) => setChatSearch(e.target.value)}
+                      className="w-full text-xs pl-8.5 pr-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:bg-white dark:focus:bg-slate-950 focus:border-blue-600 text-slate-855 dark:text-white transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {/* Session list items scroll area */}
+                <div className="flex-1 overflow-y-auto space-y-2 mt-4 pr-1">
+                  {chatsLoading ? (
+                    <div className="py-20 text-center flex flex-col items-center gap-3">
+                      <i className="fa-solid fa-circle-notch animate-spin text-2xl text-blue-600" />
+                      <span className="text-[10px] font-black text-slate-450 uppercase tracking-widest animate-pulse">Loading Chat Sessions...</span>
+                    </div>
+                  ) : chatSessions.filter(s => {
+                    const searchLower = chatSearch.toLowerCase();
+                    return s.name.toLowerCase().includes(searchLower) ||
+                           s.email.toLowerCase().includes(searchLower) ||
+                           s.mobile.toLowerCase().includes(searchLower) ||
+                           s.sessionId.toLowerCase().includes(searchLower);
+                  }).length > 0 ? (
+                    chatSessions
+                      .filter(s => {
+                        const searchLower = chatSearch.toLowerCase();
+                        return s.name.toLowerCase().includes(searchLower) ||
+                               s.email.toLowerCase().includes(searchLower) ||
+                               s.mobile.toLowerCase().includes(searchLower) ||
+                               s.sessionId.toLowerCase().includes(searchLower);
+                      })
+                      .map((session) => {
+                        const isSelected = selectedChatSessionId === session.sessionId;
+                        const dateLabel = new Date(session.updatedAt || session.createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false });
+                        return (
+                          <div
+                            key={session.sessionId}
+                            onClick={() => fetchChatSessionDetails(session.sessionId)}
+                            className={`p-3.5 rounded-2xl border transition-all cursor-pointer text-left space-y-2 relative group ${
+                              isSelected
+                                ? "bg-blue-50/50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-900/50"
+                                : "bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850/50 border-slate-200 dark:border-slate-800"
+                            }`}
+                          >
+                            <div className="flex justify-between items-start gap-2">
+                              <div className="space-y-0.5 min-w-0">
+                                <span className="font-bold text-slate-900 dark:text-white text-xs truncate block group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                                  {session.name}
+                                </span>
+                                <span className="text-[8.5px] font-mono text-slate-400 block font-medium">Ref: {session.sessionId.substring(0, 8)}</span>
+                              </div>
+                              <span className="text-[9px] text-slate-400 dark:text-slate-500 font-mono font-medium shrink-0">{dateLabel}</span>
+                            </div>
+                            
+                            <div className="flex justify-between items-center text-[10px] pt-1">
+                              <span className="text-slate-450 dark:text-slate-500 font-bold">
+                                {session.messageCount} messages
+                              </span>
+                              
+                              {session.leadId ? (
+                                <span className="bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 px-1.5 py-0.25 rounded text-[8.5px] font-extrabold border border-emerald-100 dark:border-emerald-900/30 flex items-center gap-1 select-none">
+                                  <i className="fa-solid fa-clipboard-check" /> Lead Generated
+                                </span>
+                              ) : (
+                                <span className="bg-slate-50 dark:bg-slate-800 text-slate-455 dark:text-slate-500 px-1.5 py-0.25 rounded text-[8.5px] font-bold border border-slate-200 dark:border-slate-700 flex items-center gap-1 select-none">
+                                  <i className="fa-regular fa-user" /> Anonymous
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })
+                  ) : (
+                    <div className="py-20 text-center flex flex-col items-center justify-center gap-2">
+                      <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-150 dark:border-slate-750 flex items-center justify-center text-slate-400 mb-2">
+                        <i className="fa-regular fa-comments text-lg" />
+                      </div>
+                      <span className="text-slate-500 text-xs font-bold">No chat sessions found</span>
+                      <span className="text-[9.5px] text-slate-400 max-w-[180px]">Visitor interactions will appear here in real-time.</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* RIGHT TRANSCRIPT DISPLAY AREA */}
+              <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-5 shadow-sm flex flex-col h-full overflow-hidden transition-colors duration-200 lg:col-span-2">
+                
+                {selectedChatSession ? (
+                  <div className="flex flex-col h-full overflow-hidden">
+                    {/* Transcript Header info */}
+                    <div className="pb-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center shrink-0">
+                      <div className="text-left space-y-1">
+                        <h4 className="font-extrabold text-slate-850 dark:text-white text-xs flex items-center gap-2">
+                          {selectedChatSession.name}
+                        </h4>
+                        
+                        <div className="text-[10px] text-slate-455 dark:text-slate-500 font-semibold space-x-2">
+                          {selectedChatSession.email && <span>Email: <strong>{selectedChatSession.email}</strong></span>}
+                          {selectedChatSession.email && selectedChatSession.mobile && <span>•</span>}
+                          {selectedChatSession.mobile && <span>Phone: <strong>{selectedChatSession.mobile}</strong></span>}
+                        </div>
+                      </div>
+
+                      {selectedChatSession.leadId && (
+                        <button
+                          onClick={() => {
+                            const leadObj = enquiries.find(e => e.id === selectedChatSession.leadId);
+                            if (leadObj) {
+                              setSelectedLead(leadObj);
+                              setIsDrawerOpen(true);
+                            } else {
+                              alert("Lead profile could not be located. It might have been deleted.");
+                            }
+                          }}
+                          className="bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/20 text-[#2563EB] dark:text-blue-400 hover:text-blue-700 font-bold text-[10.5px] px-3.5 py-1.8 border border-blue-100 dark:border-blue-900/30 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 shadow-xs shrink-0"
+                        >
+                          <i className="fa-solid fa-address-card text-xs" /> View CRM Profile
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Transcript scrolling bubbles */}
+                    <div className="flex-1 overflow-y-auto p-4 space-y-4 mt-2 bg-slate-50/50 dark:bg-slate-950/20 rounded-2xl">
+                      {chatDetailsLoading ? (
+                        <div className="py-20 text-center flex flex-col items-center gap-3">
+                          <i className="fa-solid fa-circle-notch animate-spin text-xl text-blue-600" />
+                          <span className="text-[10px] font-black text-slate-450 uppercase tracking-widest animate-pulse">Loading transcript details...</span>
+                        </div>
+                      ) : selectedChatSession.messages && selectedChatSession.messages.length > 0 ? (
+                        selectedChatSession.messages.map((msg: any, mIdx: number) => {
+                          const isBot = msg.role === "assistant";
+                          return (
+                            <div key={mIdx} className={`flex ${isBot ? "justify-start" : "justify-end"} gap-2.5`}>
+                              {isBot && (
+                                <div className="w-6.5 h-6.5 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg flex items-center justify-center font-bold text-[9px] shrink-0 self-end select-none">
+                                  AI
+                                </div>
+                              )}
+                              <div className={`max-w-[70%] p-3 rounded-2xl leading-relaxed text-xs whitespace-pre-wrap shadow-sm border ${
+                                isBot
+                                  ? "bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 border-slate-100 dark:border-slate-800 rounded-bl-xs"
+                                  : "bg-blue-600 text-white border-blue-600 rounded-br-xs font-semibold"
+                              }`}>
+                                {msg.text}
+                              </div>
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <div className="py-20 text-center text-slate-450 italic">
+                          No messages in this chat session transcript.
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex-1 flex flex-col items-center justify-center text-center p-8 border border-dashed border-slate-200 dark:border-slate-800/80 rounded-2xl bg-slate-50/10">
+                    <div className="w-14 h-14 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-150 dark:border-slate-750 flex items-center justify-center text-slate-400 mb-4 animate-bounce-subtle">
+                      <i className="fa-regular fa-comment-dots text-xl" />
+                    </div>
+                    <h4 className="font-extrabold text-sm text-slate-800 dark:text-white mb-1">Select a Conversation</h4>
+                    <p className="text-[10px] text-slate-455 dark:text-slate-500 max-w-[240px] leading-relaxed">
+                      Choose an AI Chat session from the left-hand panel to review visitor questions, lead qualification details, or user enquiries history.
+                    </p>
+                  </div>
+                )}
+                
+              </div>
 
             </div>
           )}

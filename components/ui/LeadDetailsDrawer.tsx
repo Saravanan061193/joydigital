@@ -58,6 +58,7 @@ interface Enquiry {
   activities?: Activity[];
   proposals?: Proposal[];
   irrelevantReason?: string;
+  chatSessionId?: string;
 }
 
 interface LeadDetailsDrawerProps {
@@ -161,8 +162,12 @@ export default function LeadDetailsDrawer({
   onUpdate,
   currentUserRole = "Super Admin"
 }: LeadDetailsDrawerProps) {
-  const [activeTab, setActiveTab] = useState<"profile" | "timeline" | "notes" | "proposal">("profile");
+  const [activeTab, setActiveTab] = useState<"profile" | "timeline" | "notes" | "proposal" | "chatHistory">("profile");
   const [savingField, setSavingField] = useState<string | null>(null);
+
+  // Chat History state
+  const [chatTranscript, setChatTranscript] = useState<any[]>([]);
+  const [chatLoading, setChatLoading] = useState(false);
 
   // Notes and Reminder state
   const [followUpDate, setFollowUpDate] = useState(lead.followUpDate || "");
@@ -196,6 +201,19 @@ export default function LeadDetailsDrawer({
     const isOther = (lead.irrelevantReason || "").startsWith("other:");
     setCustomTextVal(isOther ? lead.irrelevantReason!.substring(6) : "");
   }, [lead]);
+
+  useEffect(() => {
+    if (activeTab === "chatHistory" && lead.chatSessionId) {
+      setChatLoading(true);
+      fetch(`/api/admin/chat-sessions?id=${lead.chatSessionId}`)
+        .then(res => res.json())
+        .then(data => {
+          setChatTranscript(data.messages || []);
+        })
+        .catch(err => console.error("Failed to load chat history in drawer:", err))
+        .finally(() => setChatLoading(false));
+    }
+  }, [activeTab, lead.chatSessionId]);
 
   if (!isOpen) return null;
 
@@ -515,12 +533,13 @@ export default function LeadDetailsDrawer({
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex border-b border-slate-150 px-6 bg-slate-50/50">
+        <div className="flex border-b border-slate-150 px-6 bg-slate-50/50 overflow-x-auto">
           {[
             { id: "profile", label: "Lead Profile", icon: "fa-regular fa-user" },
             { id: "timeline", label: "Activity Timeline", icon: "fa-solid fa-timeline" },
             { id: "notes", label: "Notes & Reminders", icon: "fa-regular fa-bell" },
-            { id: "proposal", label: "Proposals / Quote", icon: "fa-regular fa-file-lines" }
+            { id: "proposal", label: "Proposals / Quote", icon: "fa-regular fa-file-lines" },
+            ...(lead.chatSessionId ? [{ id: "chatHistory", label: "AI Chat History", icon: "fa-regular fa-comments" }] : [])
           ].map((tab) => {
             const isTabActive = activeTab === tab.id;
             return (
@@ -1106,6 +1125,47 @@ export default function LeadDetailsDrawer({
                 </div>
               </div>
 
+            </div>
+          )}
+
+          {activeTab === "chatHistory" && (
+            <div className="space-y-4 text-left animate-fade-in">
+              <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1.5 pl-1 mb-2">
+                <i className="fa-regular fa-comments text-blue-600" /> AI Assistant Conversation History
+              </h4>
+              
+              <div className="bg-slate-50 border border-slate-150 rounded-2xl p-4.5 space-y-4 max-h-[400px] overflow-y-auto">
+                {chatLoading ? (
+                  <div className="py-12 text-center flex flex-col items-center gap-2">
+                    <i className="fa-solid fa-circle-notch animate-spin text-lg text-blue-600" />
+                    <span className="text-[9.5px] font-black text-slate-450 tracking-wider uppercase animate-pulse">Loading Chat History...</span>
+                  </div>
+                ) : chatTranscript.length > 0 ? (
+                  chatTranscript.map((msg: any, mIdx: number) => {
+                    const isBot = msg.role === "assistant";
+                    return (
+                      <div key={mIdx} className={`flex ${isBot ? "justify-start" : "justify-end"} gap-2.5 text-xs`}>
+                        {isBot && (
+                          <div className="w-6 h-6 bg-blue-100 text-blue-700 rounded-lg flex items-center justify-center font-bold text-[9px] shrink-0 self-end select-none">
+                            AI
+                          </div>
+                        )}
+                        <div className={`max-w-[75%] p-3 rounded-2xl leading-relaxed whitespace-pre-wrap border shadow-xs ${
+                          isBot
+                            ? "bg-white text-slate-850 border-slate-155 rounded-bl-xs"
+                            : "bg-blue-650 text-white border-blue-650 rounded-br-xs font-semibold"
+                        }`}>
+                          {msg.text}
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="py-12 text-center text-slate-450 italic">
+                    No transcript logs recorded for this session.
+                  </div>
+                )}
+              </div>
             </div>
           )}
 
