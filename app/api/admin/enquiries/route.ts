@@ -58,7 +58,8 @@ export async function GET() {
         assignedTo: d.assignedTo || "",
         utmParams: d.utmParams || null,
         activities: d.activities || [],
-        proposals: d.proposals || []
+        proposals: d.proposals || [],
+        irrelevantReason: d.irrelevantReason || ""
       }));
       return NextResponse.json(mapped);
     } catch (e: any) {
@@ -86,7 +87,8 @@ export async function GET() {
       assignedTo: enq.assignedTo || "",
       utmParams: enq.utmParams || null,
       activities: enq.activities || [],
-      proposals: enq.proposals || []
+      proposals: enq.proposals || [],
+      irrelevantReason: enq.irrelevantReason || ""
     }));
     return NextResponse.json(mapped);
   }
@@ -95,7 +97,7 @@ export async function GET() {
 export async function PATCH(request: Request) {
   try {
     const body = await request.json();
-    const { id, status, notes, followUpDate, pipelineStage, assignedTo, activities, proposals } = body;
+    const { id, status, notes, followUpDate, pipelineStage, assignedTo, activities, proposals, irrelevantReason } = body;
     if (!id) {
       return NextResponse.json({ error: "Missing enquiry ID" }, { status: 400 });
     }
@@ -114,6 +116,7 @@ export async function PATCH(request: Request) {
         if (assignedTo !== undefined) updateFields.assignedTo = assignedTo;
         if (activities !== undefined) updateFields.activities = activities;
         if (proposals !== undefined) updateFields.proposals = proposals;
+        if (irrelevantReason !== undefined) updateFields.irrelevantReason = irrelevantReason;
 
         const result = await db.collection("enquiries").updateOne(
           { id: id },
@@ -143,6 +146,7 @@ export async function PATCH(request: Request) {
             ...(assignedTo !== undefined && { assignedTo }),
             ...(activities !== undefined && { activities }),
             ...(proposals !== undefined && { proposals }),
+            ...(irrelevantReason !== undefined && { irrelevantReason }),
           };
         }
         return enq;

@@ -61,6 +61,7 @@ interface Enquiry {
   utmParams?: UtmData | null;
   activities?: Activity[];
   proposals?: Proposal[];
+  irrelevantReason?: string;
 }
 
 interface AnalyticsData {
@@ -94,7 +95,8 @@ const PIPELINE_STAGES = [
   { label: "Proposal Sent", value: "proposal_sent", color: "bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 border-purple-200 dark:border-purple-800" },
   { label: "Negotiation", value: "negotiation", color: "bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-400 border-pink-200 dark:border-pink-800" },
   { label: "Won", value: "won", color: "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800" },
-  { label: "Lost", value: "lost", color: "bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800" }
+  { label: "Lost", value: "lost", color: "bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800" },
+  { label: "Irrelevant Lead", value: "irrelevant", color: "bg-slate-100 dark:bg-slate-800 text-slate-705 dark:text-slate-350 border-slate-200 dark:border-slate-750" }
 ];
 
 export default function AdminPage() {
@@ -104,8 +106,171 @@ export default function AdminPage() {
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Active Menu: "leads" | "map" | "heatmaps" | "blog"
-  const [activeTab, setActiveTab] = useState<"leads" | "map" | "heatmaps" | "blog">("leads");
+  // Active Menu: "leads" | "map" | "heatmaps" | "blog" | "reports"
+  const [activeTab, setActiveTab] = useState<"leads" | "map" | "heatmaps" | "blog" | "reports">("leads");
+
+  // Irrelevant Modal state
+  const [irrelevantModalOpen, setIrrelevantModalOpen] = useState(false);
+  const [irrelevantLeadId, setIrrelevantLeadId] = useState<string | null>(null);
+  const [irrelevantReason, setIrrelevantReason] = useState("marketing_spam");
+  const [customRemark, setCustomRemark] = useState("");
+
+  // Reports Date range state
+  const [reportDateRange, setReportDateRange] = useState<"this_month" | "last_month" | "last_30" | "last_90" | "all_time">("all_time");
+
+  // Irrelevant category translation helper
+  const getReasonLabel = (reasonVal: string) => {
+    if (!reasonVal) return "Not Specified";
+    if (reasonVal.startsWith("other:")) {
+      const customText = reasonVal.substring(6).trim();
+      return customText ? `Other: ${customText}` : "Other Reason";
+    }
+    const labels: Record<string, string> = {
+      marketing_spam: "Spam / Marketing Pitch",
+      job_seeker: "Job Seeker / Internship",
+      invalid_contact: "Invalid Contact Details",
+      unrelated_service: "Unrelated Service Request",
+      low_budget: "Out of Scope / Low Budget",
+      test: "Test Submission"
+    };
+    return labels[reasonVal] || reasonVal;
+  };
+
+  const getStageStats = (filteredLeads: Enquiry[]) => {
+    const stagesMap: Record<string, number> = {
+      new: 0,
+      contacted: 0,
+      qualified: 0,
+      proposal_sent: 0,
+      negotiation: 0,
+      won: 0,
+      lost: 0,
+      irrelevant: 0
+    };
+    filteredLeads.forEach(enq => {
+      const stage = enq.pipelineStage || "new";
+      stagesMap[stage] = (stagesMap[stage] || 0) + 1;
+    });
+    
+    return PIPELINE_STAGES.map(s => ({
+      label: s.label,
+      value: s.value,
+      count: stagesMap[s.value] || 0,
+      color: s.color
+    }));
+  };
+
+  const getSourceStats = (filteredLeads: Enquiry[]) => {
+    const sourcesMap: Record<string, number> = {};
+    filteredLeads.forEach(enq => {
+      let src = enq.source || "Organic / Website Form";
+      if (src === "CRM Dashboard Manual") src = "Manual (CRM Add)";
+      sourcesMap[src] = (sourcesMap[src] || 0) + 1;
+    });
+    return Object.entries(sourcesMap)
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count);
+  };
+
+  const getIrrelevantStats = (filteredLeads: Enquiry[]) => {
+    const categories = {
+      marketing_spam: { label: "Spam / Marketing Pitch", count: 0, icon: "fa-solid fa-envelope-open-text", color: "bg-rose-500" },
+      job_seeker: { label: "Job Seeker / Internship Inquiry", count: 0, icon: "fa-solid fa-user-graduate", color: "bg-blue-500" },
+      invalid_contact: { label: "Invalid Contact Details", count: 0, icon: "fa-solid fa-phone-slash", color: "bg-amber-500" },
+      unrelated_service: { label: "Unrelated Service Request", count: 0, icon: "fa-solid fa-circle-question", color: "bg-purple-500" },
+      low_budget: { label: "Out of Scope / Low Budget", count: 0, icon: "fa-solid fa-hand-holding-dollar", color: "bg-orange-500" },
+      test: { label: "Test Submission", count: 0, icon: "fa-solid fa-vial", color: "bg-slate-500" },
+      other: { label: "Other Reasons", count: 0, icon: "fa-solid fa-comment-dots", color: "bg-indigo-500" }
+    };
+
+    let totalIrrelevant = 0;
+    filteredLeads.forEach(enq => {
+      if (enq.pipelineStage === "irrelevant") {
+        totalIrrelevant++;
+        let reasonKey = enq.irrelevantReason || "marketing_spam";
+        if (reasonKey.startsWith("other:")) {
+          reasonKey = "other";
+        }
+        if (categories[reasonKey as keyof typeof categories]) {
+          categories[reasonKey as keyof typeof categories].count++;
+        } else {
+          categories.other.count++;
+        }
+      }
+    });
+
+    return {
+      total: totalIrrelevant,
+      breakdown: Object.entries(categories).map(([key, val]) => ({
+        key,
+        ...val
+      })).sort((a, b) => b.count - a.count)
+    };
+  };
+
+  const getMonthlyStats = () => {
+    const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    const now = new Date();
+    
+    const last6Months: Array<{ monthName: string; monthIndex: number; year: number; count: number }> = [];
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      last6Months.push({
+        monthName: months[d.getMonth()],
+        monthIndex: d.getMonth(),
+        year: d.getFullYear(),
+        count: 0
+      });
+    }
+
+    enquiries.forEach(enq => {
+      if (!enq.createdAt) return;
+      const createdDate = new Date(enq.createdAt);
+      const enqMonth = createdDate.getMonth();
+      const enqYear = createdDate.getFullYear();
+      
+      const matched = last6Months.find(m => m.monthIndex === enqMonth && m.year === enqYear);
+      if (matched) {
+        matched.count++;
+      }
+    });
+
+    return last6Months;
+  };
+
+  const getFilteredLeadsForReports = () => {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth();
+
+    return enquiries.filter(enq => {
+      if (!enq.createdAt) return false;
+      const createdDate = new Date(enq.createdAt);
+      
+      switch (reportDateRange) {
+        case "this_month":
+          return createdDate.getMonth() === currentMonth && createdDate.getFullYear() === currentYear;
+        case "last_month": {
+          const prevMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+          const prevYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+          return createdDate.getMonth() === prevMonth && createdDate.getFullYear() === prevYear;
+        }
+        case "last_30": {
+          const thirtyDaysAgo = new Date();
+          thirtyDaysAgo.setDate(now.getDate() - 30);
+          return createdDate >= thirtyDaysAgo;
+        }
+        case "last_90": {
+          const ninetyDaysAgo = new Date();
+          ninetyDaysAgo.setDate(now.getDate() - 90);
+          return createdDate >= ninetyDaysAgo;
+        }
+        case "all_time":
+        default:
+          return true;
+      }
+    });
+  };
 
   // Analytics data state
   const [analytics, setAnalytics] = useState<AnalyticsData>({
@@ -285,22 +450,38 @@ export default function AdminPage() {
     setNotifications(notifs);
   };
 
-  const handleStatusChange = async (id: string, newStage: string) => {
+  const handleStatusChange = async (id: string, newStage: string, reasonValue?: string) => {
     let mainStatus = "In Progress";
     if (newStage === "new") mainStatus = "New";
     else if (newStage === "won") mainStatus = "Closed";
     else if (newStage === "lost") mainStatus = "Rejected";
+    else if (newStage === "irrelevant") {
+      mainStatus = "Rejected";
+      if (!reasonValue) {
+        setIrrelevantLeadId(id);
+        setIrrelevantReason("marketing_spam");
+        setCustomRemark("");
+        setIrrelevantModalOpen(true);
+        return;
+      }
+    }
     else if (newStage === "contacted") mainStatus = "Contacted";
 
     const targetLead = enquiries.find(e => e.id === id);
     const prevActivities = targetLead?.activities || [];
     
     // Auto-log activity on stage switch
+    const stageLabel = PIPELINE_STAGES.find(s => s.value === newStage)?.label || newStage;
+    let actMessage = `Stage changed to ${stageLabel.toUpperCase()} in pipeline view`;
+    if (newStage === "irrelevant" && reasonValue) {
+      actMessage = `Stage changed to IRRELEVANT LEAD with category: ${getReasonLabel(reasonValue)}`;
+    }
+
     const newAct = {
       id: Math.random().toString(36).substring(2, 11),
       timestamp: new Date().toISOString(),
       type: "status",
-      message: `Stage changed to ${newStage.toUpperCase()} in pipeline view`,
+      message: actMessage,
       agent: currentRole
     };
 
@@ -312,6 +493,7 @@ export default function AdminPage() {
           id, 
           pipelineStage: newStage, 
           status: mainStatus,
+          ...(newStage === "irrelevant" && { irrelevantReason: reasonValue }),
           activities: [newAct, ...prevActivities]
         }),
       });
@@ -321,11 +503,17 @@ export default function AdminPage() {
             ...enq, 
             pipelineStage: newStage, 
             status: mainStatus,
+            ...(newStage === "irrelevant" && { irrelevantReason: reasonValue }),
             activities: [newAct, ...prevActivities]
           } : enq))
         );
         // Refresh notifications
-        generateNotifications(enquiries.map((enq) => (enq.id === id ? { ...enq, pipelineStage: newStage, status: mainStatus } : enq)));
+        generateNotifications(enquiries.map((enq) => (enq.id === id ? { 
+          ...enq, 
+          pipelineStage: newStage, 
+          status: mainStatus,
+          ...(newStage === "irrelevant" && { irrelevantReason: reasonValue })
+        } : enq)));
       }
     } catch (err) {
       console.error("Error updating status:", err);
@@ -723,6 +911,12 @@ export default function AdminPage() {
           subtitle: "Draft modern technical articles, upload thumbnails, manage SEO settings, and generate static articles",
           icon: "fa-regular fa-pen-to-square"
         };
+      case "reports":
+        return {
+          title: "CRM Lead Reports & Analysis",
+          subtitle: "Analyze lead acquisition volume, channels, conversion trends, and irrelevant classification",
+          icon: "fa-solid fa-chart-line"
+        };
     }
   };
 
@@ -909,7 +1103,8 @@ export default function AdminPage() {
             <div className="space-y-1">
               {[
                 { id: "map", label: "Visitor Map", icon: "fa-regular fa-map" },
-                { id: "heatmaps", label: "Session Heatmaps", icon: "fa-regular fa-eye" }
+                { id: "heatmaps", label: "Session Heatmaps", icon: "fa-regular fa-eye" },
+                { id: "reports", label: "CRM Reports", icon: "fa-solid fa-chart-line" }
               ].map((tab) => {
                 const isTabActive = activeTab === tab.id;
                 return (
@@ -1382,6 +1577,14 @@ export default function AdminPage() {
                                         ) : (
                                           <div className="text-[10px] text-slate-400 dark:text-slate-500 italic mt-0.5">Individual Lead</div>
                                         )}
+                                        
+                                        {displayStage === "irrelevant" && enq.irrelevantReason && (
+                                          <div className="mt-1 flex items-center gap-1.5 select-none">
+                                            <span className="bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-450 border border-rose-100 dark:border-rose-900/30 px-1.5 py-0.25 rounded text-[8.5px] font-extrabold flex items-center gap-1">
+                                              <i className="fa-solid fa-ban text-[8px]" /> {getReasonLabel(enq.irrelevantReason)}
+                                            </span>
+                                          </div>
+                                        )}
                                       </div>
                                     </div>
                                   </td>
@@ -1569,7 +1772,7 @@ export default function AdminPage() {
 
               {/* VIEW 2: KANBAN PIPELINE BOARD */}
               {viewMode === "kanban" && (
-                <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-7 gap-4.5 overflow-x-auto pb-8 items-start min-h-[500px]">
+                <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-8 gap-4.5 overflow-x-auto pb-8 items-start min-h-[500px]">
                   {PIPELINE_STAGES.map((stage) => {
                     const stageLeads = filteredEnquiries.filter((enq) => (enq.pipelineStage || "new") === stage.value);
                     const totalStageValue = stageLeads.reduce((acc, curr) => acc + getLeadValue(curr), 0);
@@ -1628,6 +1831,14 @@ export default function AdminPage() {
                                   <div className="text-[10px] text-slate-450 dark:text-slate-500 truncate leading-snug font-medium">
                                     {enq.service}
                                   </div>
+                                  
+                                  {enq.pipelineStage === "irrelevant" && enq.irrelevantReason && (
+                                    <div className="pt-1 select-none">
+                                      <span className="bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-450 border border-rose-100 dark:border-rose-900/30 px-1.5 py-0.5 rounded text-[8.5px] font-extrabold flex items-center gap-1 w-max">
+                                        <i className="fa-solid fa-ban text-[8px]" /> {getReasonLabel(enq.irrelevantReason)}
+                                      </span>
+                                    </div>
+                                  )}
                                 </div>
 
                                 {/* Divider */}
@@ -1812,6 +2023,369 @@ export default function AdminPage() {
             </div>
           )}
 
+          {/* TAB CONTENT: CRM Lead Reports */}
+          {activeTab === "reports" && (
+            <div className="max-w-7xl mx-auto space-y-8 mb-12 animate-fade-in text-left">
+              
+              {/* Date Filter Bar */}
+              <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-5 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4 transition-colors duration-200">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-[#2563EB]">
+                    <i className="fa-solid fa-calendar-days text-sm" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">Reporting Timeframe</h4>
+                    <p className="text-[9px] text-slate-450 mt-0.5">Filter lead analytics by specific date ranges</p>
+                  </div>
+                </div>
+                
+                <div className="flex gap-2">
+                  {[
+                    { id: "all_time", label: "All Time" },
+                    { id: "this_month", label: "This Month" },
+                    { id: "last_month", label: "Last Month" },
+                    { id: "last_30", label: "Last 30 Days" },
+                    { id: "last_90", label: "Last 90 Days" }
+                  ].map((btn) => (
+                    <button
+                      key={btn.id}
+                      onClick={() => setReportDateRange(btn.id as any)}
+                      className={`text-[10.5px] font-bold px-3.5 py-2 rounded-xl border transition-all cursor-pointer ${
+                        reportDateRange === btn.id
+                          ? "bg-blue-600 text-white border-blue-600 shadow-sm"
+                          : "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-105"
+                      }`}
+                    >
+                      {btn.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* KPI Cards Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                {[
+                  {
+                    title: "Total Ingested Leads",
+                    value: getFilteredLeadsForReports().length,
+                    change: getFilteredLeadsForReports().length > 0 ? `100% of timeframe` : "No data",
+                    icon: "fa-solid fa-users text-blue-600 bg-blue-50 dark:bg-blue-900/20"
+                  },
+                  {
+                    title: "Active Pipeline Deals",
+                    value: getFilteredLeadsForReports().filter(e => ["contacted", "qualified", "proposal_sent", "negotiation"].includes(e.pipelineStage || "")).length,
+                    change: `${getFilteredLeadsForReports().length > 0 ? Math.round((getFilteredLeadsForReports().filter(e => ["contacted", "qualified", "proposal_sent", "negotiation"].includes(e.pipelineStage || "")).length / getFilteredLeadsForReports().length) * 100) : 0}% active rate`,
+                    icon: "fa-solid fa-arrow-trend-up text-indigo-600 bg-indigo-50 dark:bg-indigo-900/20"
+                  },
+                  {
+                    title: "Conversion Rate",
+                    value: `${getFilteredLeadsForReports().length > 0 ? Math.round((getFilteredLeadsForReports().filter(e => e.pipelineStage === "won").length / getFilteredLeadsForReports().length) * 100) : 0}%`,
+                    change: `${getFilteredLeadsForReports().filter(e => e.pipelineStage === "won").length} Won Deals`,
+                    icon: "fa-solid fa-trophy text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20"
+                  },
+                  {
+                    title: "Irrelevant Leads Rate",
+                    value: `${getFilteredLeadsForReports().length > 0 ? Math.round((getFilteredLeadsForReports().filter(e => e.pipelineStage === "irrelevant").length / getFilteredLeadsForReports().length) * 100) : 0}%`,
+                    change: `${getFilteredLeadsForReports().filter(e => e.pipelineStage === "irrelevant").length} Irrelevant Leads`,
+                    icon: "fa-solid fa-ban text-rose-600 bg-rose-50 dark:bg-rose-900/20"
+                  },
+                  {
+                    title: "Est. Pipeline Value",
+                    value: `₹${getFilteredLeadsForReports().filter(e => ["qualified", "proposal_sent", "negotiation"].includes(e.pipelineStage || "")).reduce((acc, curr) => acc + getLeadValue(curr), 0).toLocaleString()}`,
+                    change: `₹${(getFilteredLeadsForReports().filter(e => ["qualified", "proposal_sent", "negotiation"].includes(e.pipelineStage || "")).reduce((acc, curr) => acc + getLeadValue(curr), 0) + getFilteredLeadsForReports().filter(e => e.pipelineStage === "won").reduce((acc, curr) => acc + getLeadValue(curr), 0)).toLocaleString()} total value`,
+                    icon: "fa-solid fa-wallet text-amber-600 bg-amber-50 dark:bg-amber-900/20"
+                  }
+                ].map((kpi, idx) => (
+                  <div key={idx} className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col justify-between transition-colors duration-200">
+                    <div className="flex justify-between items-start">
+                      <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest leading-normal max-w-[70%]">{kpi.title}</span>
+                      <div className={`w-8.5 h-8.5 rounded-xl flex items-center justify-center shrink-0 text-sm ${kpi.icon}`}>
+                        <i className={kpi.icon.split(" ")[0] + " " + kpi.icon.split(" ")[1]} />
+                      </div>
+                    </div>
+                    <div className="mt-4 space-y-1">
+                      <h3 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white leading-none">{kpi.value}</h3>
+                      <p className="text-[10px] text-slate-450 dark:text-slate-500 font-bold">{kpi.change}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Main Analysis Chart Row */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                {/* SVG monthly trend bar chart (Takes 2 cols on Large screens) */}
+                <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col justify-between transition-colors duration-200 lg:col-span-2">
+                  <div>
+                    <h3 className="text-xs font-black uppercase tracking-[0.1em] text-slate-450 mb-6 flex items-center gap-2">
+                      <i className="fa-solid fa-chart-column text-[#2563EB]" /> Lead Volume (Last 6 Months)
+                    </h3>
+                    
+                    {/* SVG Bar Chart */}
+                    <div className="relative py-2 w-full h-52">
+                      <svg className="w-full h-full" viewBox="0 0 500 180" preserveAspectRatio="none">
+                        <defs>
+                          <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#2563EB" stopOpacity="0.9"/>
+                            <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.2"/>
+                          </linearGradient>
+                        </defs>
+                        {/* Grid lines */}
+                        <line x1="30" y1="20" x2="480" y2="20" stroke="#F1F5F9" strokeWidth="1" className="dark:stroke-slate-800" />
+                        <line x1="30" y1="65" x2="480" y2="65" stroke="#F1F5F9" strokeWidth="1" className="dark:stroke-slate-800" />
+                        <line x1="30" y1="110" x2="480" y2="110" stroke="#F1F5F9" strokeWidth="1" className="dark:stroke-slate-800" />
+                        <line x1="30" y1="140" x2="480" y2="140" stroke="#E2E8F0" strokeWidth="1.5" className="dark:stroke-slate-750" />
+
+                        {/* Rendering dynamic SVG rects */}
+                        {getMonthlyStats().map((item, index) => {
+                          const maxCount = Math.max(...getMonthlyStats().map(m => m.count), 5);
+                          const barWidth = 36;
+                          const spacing = 70;
+                          const startX = 45 + index * spacing;
+                          const barHeight = (item.count / maxCount) * 105;
+                          const startY = 140 - barHeight;
+
+                          return (
+                            <g key={index} className="group">
+                              {/* Background highlight hover effect */}
+                              <rect
+                                x={startX - 10}
+                                y={10}
+                                width={barWidth + 20}
+                                height={145}
+                                fill="transparent"
+                                className="hover:fill-slate-50/50 dark:hover:fill-slate-800/10 cursor-pointer transition-colors duration-150 rounded-lg"
+                              />
+                              {/* SVG Bar */}
+                              <rect
+                                x={startX}
+                                y={startY}
+                                width={barWidth}
+                                height={barHeight}
+                                rx={5}
+                                fill="url(#barGrad)"
+                                className="transition-all duration-300 cursor-pointer"
+                              />
+                              {/* Label Count above */}
+                              <text
+                                x={startX + barWidth / 2}
+                                y={startY - 6}
+                                textAnchor="middle"
+                                fill="#2563EB"
+                                fontSize="9.5"
+                                fontWeight="800"
+                                className="font-mono dark:fill-blue-400"
+                              >
+                                {item.count}
+                              </text>
+                              {/* Month label below */}
+                              <text
+                                x={startX + barWidth / 2}
+                                y={156}
+                                textAnchor="middle"
+                                fill="#94A3B8"
+                                fontSize="9"
+                                fontWeight="800"
+                                className="font-sans"
+                              >
+                                {item.monthName}
+                              </text>
+                            </g>
+                          );
+                        })}
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="text-[10px] text-slate-400 dark:text-slate-500 border-t border-slate-100 dark:border-slate-850 pt-4 mt-4">
+                    * Displays the rolling volume of inquiries captured over the previous 6 months.
+                  </div>
+                </div>
+
+                {/* Lead Sources Distribution */}
+                <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col justify-between transition-colors duration-200">
+                  <div>
+                    <h3 className="text-xs font-black uppercase tracking-[0.1em] text-slate-450 mb-6 flex items-center gap-2">
+                      <i className="fa-solid fa-paper-plane text-emerald-600" /> Lead Acquisition Sources
+                    </h3>
+
+                    {getSourceStats(getFilteredLeadsForReports()).length > 0 ? (
+                      <div className="space-y-4 max-h-[220px] overflow-y-auto pr-1">
+                        {getSourceStats(getFilteredLeadsForReports()).map((source, index) => {
+                          const percent = getFilteredLeadsForReports().length > 0 ? Math.round((source.count / getFilteredLeadsForReports().length) * 100) : 0;
+                          return (
+                            <div key={index} className="space-y-1.5 text-xs">
+                              <div className="flex justify-between items-center font-bold text-slate-705 dark:text-slate-350">
+                                <span className="truncate max-w-[70%]">{source.name}</span>
+                                <span className="font-extrabold text-[11px] text-slate-900 dark:text-white">{source.count} leads ({percent}%)</span>
+                              </div>
+                              <div className="w-full h-2 bg-slate-50 dark:bg-slate-800 rounded-full overflow-hidden border border-slate-100 dark:border-slate-750">
+                                <div 
+                                  className="h-full bg-emerald-500 rounded-full" 
+                                  style={{ width: `${percent}%` }}
+                                />
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <div className="py-16 text-center text-slate-450 italic text-xs">
+                        No lead sources tracked in this range.
+                      </div>
+                    )}
+                  </div>
+                  <div className="text-[10px] text-slate-450 dark:text-slate-500 border-t border-slate-100 dark:border-slate-850 pt-4 mt-4">
+                    * Dynamic distribution of website forms and manual creations.
+                  </div>
+                </div>
+              </div>
+
+              {/* Status Stages and Irrelevant categories Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                {/* Stage Breakdown */}
+                <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-sm transition-colors duration-200">
+                  <h3 className="text-xs font-black uppercase tracking-[0.1em] text-slate-450 mb-6 flex items-center gap-2">
+                    <i className="fa-solid fa-list-check text-indigo-600" /> Pipeline Stage Breakdown
+                  </h3>
+                  
+                  <div className="space-y-4 max-h-[300px] overflow-y-auto pr-1">
+                    {getStageStats(getFilteredLeadsForReports()).map((stage, index) => {
+                      const percent = getFilteredLeadsForReports().length > 0 ? Math.round((stage.count / getFilteredLeadsForReports().length) * 100) : 0;
+                      return (
+                        <div key={index} className="space-y-1.5 text-xs">
+                          <div className="flex justify-between items-center font-bold text-slate-705 dark:text-slate-350">
+                            <span className="flex items-center gap-1.5">
+                              <span className="w-2.5 h-2.5 rounded-full inline-block bg-slate-300" style={{ backgroundColor: stage.value === "irrelevant" ? "#64748b" : undefined }} />
+                              <span>{stage.label}</span>
+                            </span>
+                            <span className="font-extrabold text-[11px] text-slate-900 dark:text-white">{stage.count} leads ({percent}%)</span>
+                          </div>
+                          <div className="w-full h-2 bg-slate-50 dark:bg-slate-800 rounded-full overflow-hidden border border-slate-100 dark:border-slate-750">
+                            <div 
+                              className="h-full bg-blue-655 rounded-full" 
+                              style={{ width: `${percent}%`, backgroundColor: stage.value === "won" ? "#10b981" : stage.value === "lost" ? "#f43f5e" : stage.value === "irrelevant" ? "#64748b" : undefined }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Irrelevant Leads Classification */}
+                <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-sm transition-colors duration-200">
+                  <h3 className="text-xs font-black uppercase tracking-[0.1em] text-slate-455 mb-6 flex items-center gap-2">
+                    <i className="fa-solid fa-circle-minus text-rose-500" /> Irrelevant Leads Classification
+                  </h3>
+
+                  {getIrrelevantStats(getFilteredLeadsForReports()).total > 0 ? (
+                    <div className="space-y-4.5 max-h-[300px] overflow-y-auto pr-1">
+                      {getIrrelevantStats(getFilteredLeadsForReports()).breakdown.map((item, index) => {
+                        const percent = getIrrelevantStats(getFilteredLeadsForReports()).total > 0 ? Math.round((item.count / getIrrelevantStats(getFilteredLeadsForReports()).total) * 100) : 0;
+                        return (
+                          <div key={index} className="flex items-center justify-between gap-4 text-xs font-semibold">
+                            <div className="flex items-center gap-3 w-[45%]">
+                              <div className={`w-8 h-8 rounded-lg ${item.color} text-white flex items-center justify-center shrink-0 shadow-xs text-xs`}>
+                                <i className={item.icon} />
+                              </div>
+                              <span className="truncate text-slate-750 dark:text-slate-350">{item.label}</span>
+                            </div>
+                            
+                            <div className="flex-1 flex items-center gap-3">
+                              <div className="flex-1 bg-slate-50 dark:bg-slate-800 h-2.5 rounded-lg overflow-hidden border border-slate-100 dark:border-slate-750">
+                                <div className={`h-full ${item.color}`} style={{ width: `${percent}%` }} />
+                              </div>
+                              <span className="font-extrabold font-mono text-slate-900 dark:text-white w-14 text-right shrink-0">{item.count} leads</span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="py-20 text-center text-slate-450 italic text-xs flex flex-col items-center gap-2">
+                      <i className="fa-solid fa-clipboard-check text-slate-300 text-3xl" />
+                      <span>No irrelevant leads recorded in this range.</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Irrelevant Leads Log table */}
+              {getFilteredLeadsForReports().filter(e => e.pipelineStage === "irrelevant").length > 0 && (
+                <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-sm transition-colors duration-200">
+                  <div className="flex justify-between items-center mb-5">
+                    <div>
+                      <h3 className="text-xs font-black uppercase tracking-[0.1em] text-slate-450 flex items-center gap-2">
+                        <i className="fa-solid fa-list text-slate-500" /> Irrelevant Leads Audit Log
+                      </h3>
+                      <p className="text-[9px] text-slate-450 mt-1">Review classification remarks and sources of filtered irrelevant leads</p>
+                    </div>
+                    <span className="bg-slate-100 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 px-2.5 py-0.75 rounded-xl text-[9px] font-black text-slate-500 dark:text-slate-400">
+                      {getFilteredLeadsForReports().filter(e => e.pipelineStage === "irrelevant").length} leads
+                    </span>
+                  </div>
+
+                  <div className="overflow-x-auto max-h-[350px] border border-slate-150 dark:border-slate-800 rounded-2xl">
+                    <table className="w-full text-left border-collapse border-spacing-0 text-xs">
+                      <thead>
+                        <tr className="bg-slate-50/70 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 text-[9px] font-black uppercase tracking-wider text-slate-455 dark:text-slate-500 select-none">
+                          <th className="px-5 py-3">Date</th>
+                          <th className="px-5 py-3">Lead Name</th>
+                          <th className="px-5 py-3">Source</th>
+                          <th className="px-5 py-3">Classification</th>
+                          <th className="px-5 py-3">Custom Remarks / Notes</th>
+                          <th className="px-5 py-3 text-right">Inspect</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-150 dark:divide-slate-800/80 font-medium text-slate-750 dark:text-slate-350">
+                        {getFilteredLeadsForReports().filter(e => e.pipelineStage === "irrelevant").map((enq) => {
+                          const isOther = (enq.irrelevantReason || "").startsWith("other:");
+                          const categoryKey = isOther ? "other" : (enq.irrelevantReason || "marketing_spam");
+                          const remarkText = isOther ? enq.irrelevantReason!.substring(6) : "";
+                          
+                          return (
+                            <tr key={enq.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20">
+                              <td className="px-5 py-3 whitespace-nowrap text-slate-400 font-mono text-[10px]">
+                                {new Date(enq.createdAt).toLocaleDateString()}
+                              </td>
+                              <td className="px-5 py-3 font-bold text-slate-900 dark:text-white">
+                                {enq.name}
+                              </td>
+                              <td className="px-5 py-3 text-slate-500 max-w-[120px] truncate">
+                                {enq.source === "CRM Dashboard Manual" ? "Manual" : enq.source}
+                              </td>
+                              <td className="px-5 py-3 whitespace-nowrap">
+                                <span className="bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded text-[9px] font-bold border border-slate-200/50 dark:border-slate-700">
+                                  {getReasonLabel(categoryKey)}
+                                </span>
+                              </td>
+                              <td className="px-5 py-3 max-w-[220px] truncate italic text-slate-600 dark:text-slate-400">
+                                {remarkText || enq.message || "-"}
+                              </td>
+                              <td className="px-5 py-3 text-right">
+                                <button
+                                  onClick={() => {
+                                    setSelectedLead(enq);
+                                    setIsDrawerOpen(true);
+                                  }}
+                                  className="w-7 h-7 rounded-lg border border-slate-200 dark:border-slate-750 text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-450 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center justify-center cursor-pointer transition-colors"
+                                >
+                                  <i className="fa-regular fa-eye text-[11px]" />
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+            </div>
+          )}
+
           {/* TAB CONTENT: Geolocation Visitor Map */}
           {activeTab === "map" && (
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12 animate-fade-in">
@@ -1963,6 +2537,88 @@ export default function AdminPage() {
 
         </div>
       </main>
+
+      {/* IRRELEVANT REMARKS MODAL DIALOG */}
+      {irrelevantModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-[#0F172A]/50 backdrop-blur-sm" onClick={() => setIrrelevantModalOpen(false)} />
+          
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[24px] shadow-2xl relative z-10 w-full max-w-md p-6 md:p-8 animate-fade-in text-left">
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <h3 className="text-base font-extrabold text-slate-900 dark:text-white leading-none">Classify Irrelevant Lead</h3>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1.5 font-medium">Select a category and explain why this lead is irrelevant.</p>
+              </div>
+              <button 
+                onClick={() => setIrrelevantModalOpen(false)} 
+                className="w-8 h-8 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-700 cursor-pointer flex items-center justify-center transition-colors"
+              >
+                <i className="fa-solid fa-xmark text-sm" />
+              </button>
+            </div>
+
+            <div className="space-y-4 text-xs text-slate-750 dark:text-slate-350">
+              <div className="flex flex-col gap-1.5 font-semibold">
+                <label className="text-slate-650 dark:text-slate-400">Irrelevant Category *</label>
+                <select
+                  value={irrelevantReason}
+                  onChange={(e) => setIrrelevantReason(e.target.value)}
+                  className="border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 py-2.5 rounded-xl outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-[#2563EB] font-semibold cursor-pointer text-slate-900 dark:text-white"
+                >
+                  <option value="marketing_spam">Spam / Marketing Pitch</option>
+                  <option value="job_seeker">Job Seeker / Internship Inquiry</option>
+                  <option value="invalid_contact">Invalid Contact Details</option>
+                  <option value="unrelated_service">Unrelated Service Request</option>
+                  <option value="low_budget">Out of Scope / Low Budget</option>
+                  <option value="test">Test Submission</option>
+                  <option value="other">Other (Write Custom Remark)</option>
+                </select>
+              </div>
+
+              {irrelevantReason === "other" && (
+                <div className="flex flex-col gap-1.5 font-semibold animate-fade-in">
+                  <label className="text-slate-650 dark:text-slate-400">Custom Remark Details *</label>
+                  <input
+                    type="text"
+                    required
+                    value={customRemark}
+                    onChange={(e) => setCustomRemark(e.target.value)}
+                    className="border border-slate-200 dark:border-slate-700 bg-slate-55 dark:bg-slate-800 px-3 py-2.5 rounded-xl outline-none focus:bg-white dark:focus:bg-slate-900 focus:border-[#2563EB] font-medium text-slate-900 dark:text-white"
+                    placeholder="E.g. Customer wants a website built for free"
+                  />
+                </div>
+              )}
+
+              <div className="flex items-center justify-end gap-3 border-t border-slate-100 dark:border-slate-800/80 pt-4.5">
+                <button
+                  type="button"
+                  onClick={() => setIrrelevantModalOpen(false)}
+                  className="px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-250 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-350 font-extrabold cursor-pointer transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const finalReason = irrelevantReason === "other" ? `other:${customRemark}` : irrelevantReason;
+                    if (irrelevantReason === "other" && !customRemark.trim()) {
+                      alert("Please fill in the custom remark details.");
+                      return;
+                    }
+                    if (irrelevantLeadId) {
+                      handleStatusChange(irrelevantLeadId, "irrelevant", finalReason);
+                    }
+                    setIrrelevantModalOpen(false);
+                  }}
+                  className="px-6 py-2.5 rounded-xl bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-extrabold cursor-pointer transition-all shadow-sm"
+                >
+                  Confirm Classification
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* QUICK ADD LEAD MODAL DIALOG */}
       {isQuickAddOpen && (

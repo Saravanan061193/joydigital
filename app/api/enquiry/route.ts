@@ -39,7 +39,8 @@ export async function POST(request: Request) {
           agent: "System"
         }
       ],
-      proposals: body.proposals || []
+      proposals: body.proposals || [],
+      irrelevantReason: ""
     };
 
     let savedToDb = false;
@@ -72,7 +73,8 @@ export async function POST(request: Request) {
           assignedTo: newEnquiry.assignedTo,
           utmParams: newEnquiry.utmParams,
           activities: newEnquiry.activities,
-          proposals: newEnquiry.proposals
+          proposals: newEnquiry.proposals,
+          irrelevantReason: ""
         });
         savedToDb = true;
       } catch (dbError: any) {

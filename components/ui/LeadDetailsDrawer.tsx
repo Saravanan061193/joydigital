@@ -57,6 +57,7 @@ interface Enquiry {
   utmParams?: UtmData | null;
   activities?: Activity[];
   proposals?: Proposal[];
+  irrelevantReason?: string;
 }
 
 interface LeadDetailsDrawerProps {
@@ -82,8 +83,26 @@ const PIPELINE_STAGES = [
   { label: "Proposal Sent", value: "proposal_sent" },
   { label: "Negotiation", value: "negotiation" },
   { label: "Won", value: "won" },
-  { label: "Lost", value: "lost" }
+  { label: "Lost", value: "lost" },
+  { label: "Irrelevant Lead", value: "irrelevant" }
 ];
+
+const getReasonLabel = (reasonVal: string) => {
+  if (!reasonVal) return "Not Specified";
+  if (reasonVal.startsWith("other:")) {
+    const customText = reasonVal.substring(6).trim();
+    return customText ? `Other: ${customText}` : "Other Reason";
+  }
+  const labels: Record<string, string> = {
+    marketing_spam: "Spam / Marketing Pitch",
+    job_seeker: "Job Seeker / Internship",
+    invalid_contact: "Invalid Contact Details",
+    unrelated_service: "Unrelated Service Request",
+    low_budget: "Out of Scope / Low Budget",
+    test: "Test Submission"
+  };
+  return labels[reasonVal] || reasonVal;
+};
 
 const EMAIL_TEMPLATES = [
   {
@@ -150,6 +169,8 @@ export default function LeadDetailsDrawer({
   const [assignedTo, setAssignedTo] = useState(lead.assignedTo || "");
   const [pipelineStage, setPipelineStage] = useState(lead.pipelineStage || "new");
   const [notesText, setNotesText] = useState(lead.notes || "");
+  const [irrelevantReason, setIrrelevantReason] = useState(lead.irrelevantReason || "");
+  const [customTextVal, setCustomTextVal] = useState("");
 
   // Activity logger state
   const [newActivityMsg, setNewActivityMsg] = useState("");
@@ -171,6 +192,9 @@ export default function LeadDetailsDrawer({
     setAssignedTo(lead.assignedTo || "");
     setPipelineStage(lead.pipelineStage || "new");
     setNotesText(lead.notes || "");
+    setIrrelevantReason(lead.irrelevantReason || "");
+    const isOther = (lead.irrelevantReason || "").startsWith("other:");
+    setCustomTextVal(isOther ? lead.irrelevantReason!.substring(6) : "");
   }, [lead]);
 
   if (!isOpen) return null;
@@ -229,11 +253,21 @@ export default function LeadDetailsDrawer({
       if (value === "new") mainStatus = "New";
       else if (value === "won") mainStatus = "Closed";
       else if (value === "lost") mainStatus = "Rejected";
+      else if (value === "irrelevant") {
+        mainStatus = "Rejected";
+        if (!lead.irrelevantReason) {
+          updates.irrelevantReason = "marketing_spam";
+          setIrrelevantReason("marketing_spam");
+        }
+      }
       else if (value === "contacted") mainStatus = "Contacted";
       updates.status = mainStatus;
       
       const stageLabel = PIPELINE_STAGES.find(s => s.value === value)?.label || value;
       actMsg = `Changed pipeline stage to: ${stageLabel}`;
+    } else if (fieldName === "irrelevantReason") {
+      updates.irrelevantReason = value;
+      actMsg = `Updated irrelevant classification category to: ${getReasonLabel(value)}`;
     }
 
     const updatedActivities = logActivity(fieldName, actMsg);
@@ -570,7 +604,7 @@ export default function LeadDetailsDrawer({
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="font-bold text-slate-650">Assigned Agent</label>
+                    <label className="font-bold text-slate-655">Assigned Agent</label>
                     <select
                       value={assignedTo}
                       onChange={(e) => {
@@ -585,6 +619,55 @@ export default function LeadDetailsDrawer({
                       ))}
                     </select>
                   </div>
+
+                  {pipelineStage === "irrelevant" && (
+                    <div className="flex flex-col gap-3 md:col-span-2 bg-slate-100/50 p-4.5 border border-slate-200 rounded-2xl animate-fade-in">
+                      <div className="flex flex-col gap-1.5">
+                        <label className="font-bold text-slate-650 text-[10.5px]">Irrelevant Reason Category *</label>
+                        <select
+                          value={irrelevantReason.startsWith("other:") ? "other" : (irrelevantReason || "marketing_spam")}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            if (val === "other") {
+                              const newVal = `other:${customTextVal}`;
+                              setIrrelevantReason(newVal);
+                              handleFieldChange("irrelevantReason", newVal);
+                            } else {
+                              setIrrelevantReason(val);
+                              handleFieldChange("irrelevantReason", val);
+                            }
+                          }}
+                          disabled={savingField === "irrelevantReason"}
+                          className="border border-slate-200 bg-white px-3 py-2.5 rounded-xl outline-none font-bold text-slate-800 cursor-pointer text-xs"
+                        >
+                          <option value="marketing_spam">Spam / Marketing Pitch</option>
+                          <option value="job_seeker">Job Seeker / Internship Inquiry</option>
+                          <option value="invalid_contact">Invalid Contact Details</option>
+                          <option value="unrelated_service">Unrelated Service Request</option>
+                          <option value="low_budget">Out of Scope / Low Budget</option>
+                          <option value="test">Test Submission</option>
+                          <option value="other">Other (Write Custom Remark)</option>
+                        </select>
+                      </div>
+
+                      {(irrelevantReason.startsWith("other:") || irrelevantReason === "other") && (
+                        <div className="flex flex-col gap-1.5 animate-fade-in">
+                          <label className="font-bold text-slate-650 text-[10.5px]">Custom Remark Detail *</label>
+                          <input
+                            type="text"
+                            value={customTextVal}
+                            onChange={(e) => setCustomTextVal(e.target.value)}
+                            onBlur={() => {
+                              handleFieldChange("irrelevantReason", `other:${customTextVal}`);
+                            }}
+                            disabled={savingField === "irrelevantReason"}
+                            placeholder="Type specific details..."
+                            className="border border-slate-200 bg-white px-3 py-2.5 rounded-xl outline-none font-medium text-slate-800 text-xs focus:border-blue-600 transition-colors"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
 
