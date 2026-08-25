@@ -104,7 +104,7 @@ export async function POST(request: Request) {
     // 2. Scan conversation history for phone number to auto-capture leads in background
     const phoneRegex = /(\+?\d{1,4}[-.\s]??)?(\d{10})/g;
     const userMsgs = (messages || []).filter((m: any) => m.role === "user");
-    const allUserTexts = userMsgs.map((m: any) => m.text).join(" ");
+    const allUserTexts = userMsgs.map((m: any) => m.content || m.text || "").join(" ");
     const matches = allUserTexts.match(phoneRegex);
     
     if (matches && matches.length > 0 && !leadDetails) {
@@ -127,7 +127,7 @@ export async function POST(request: Request) {
         if (userMsgs.length >= 2) {
           // If a message is short and doesn't contain standard keywords, it might be the name
           for (let i = 0; i < Math.min(3, userMsgs.length); i++) {
-            const txt = userMsgs[i].text;
+            const txt = userMsgs[i].content || userMsgs[i].text || "";
             const textClean = txt.replace(/my name is|i am|i'm|hello|hi|hey/gi, "").trim();
             if (textClean && textClean.split(" ").length <= 3 && !textClean.match(/\d/)) {
               clientName = textClean;
@@ -248,7 +248,7 @@ export async function POST(request: Request) {
       }
     } else {
       // 4. MOCK HUMAN DECISION CONVERSATION FLOW (Offline Fallback for development review)
-      const lastUserText = userMsgs[userMsgs.length - 1]?.text || "";
+      const lastUserText = userMsgs[userMsgs.length - 1]?.content || userMsgs[userMsgs.length - 1]?.text || "";
       const lastUserTextLower = lastUserText.toLowerCase().trim();
       const assistantMsgs = (messages || []).filter((m: any) => m.role === "assistant");
       const hasPhone = phoneRegex.test(lastUserText);
@@ -262,8 +262,8 @@ export async function POST(request: Request) {
       } else if (lastUserTextLower.includes("who runs") || lastUserTextLower.includes("founder") || lastUserTextLower.includes("saravanan") || lastUserTextLower.includes("agency")) {
         botReply = "Joy Digital is founded by Saravanan L and based out of Chennai, serving global clients. We design ultra-fast Next.js websites. May I know your name and what project you are planning?";
       } else {
-        const askedName = assistantMsgs.some((m: any) => m.text.toLowerCase().includes("your name") || m.text.toLowerCase().includes("who i'm chatting"));
-        const askedPhone = assistantMsgs.some((m: any) => m.text.toLowerCase().includes("phone") || m.text.toLowerCase().includes("mobile") || m.text.toLowerCase().includes("number"));
+        const askedName = assistantMsgs.some((m: any) => (m.content || m.text || "").toLowerCase().includes("your name") || (m.content || m.text || "").toLowerCase().includes("who i'm chatting"));
+        const askedPhone = assistantMsgs.some((m: any) => (m.content || m.text || "").toLowerCase().includes("phone") || (m.content || m.text || "").toLowerCase().includes("mobile") || (m.content || m.text || "").toLowerCase().includes("number"));
         
         if (!askedName) {
           botReply = "I'd love to help you with that! Before we discuss, may I know your name first? 😊";
@@ -279,7 +279,7 @@ export async function POST(request: Request) {
     // 5. Save the chat session transcript in the database / local file
     const newChatSession = {
       sessionId,
-      name: leadDetails?.name || (userMsgs.length >= 2 ? userMsgs[1].text.replace(/my name is|i am|i'm/gi, "").trim().substring(0, 30) : "Anonymous Visitor"),
+      name: leadDetails?.name || (userMsgs.length >= 2 ? (userMsgs[1].content || userMsgs[1].text || "").replace(/my name is|i am|i'm/gi, "").trim().substring(0, 30) : "Anonymous Visitor"),
       email: leadDetails?.email || "",
       mobile: leadDetails?.mobile || (matches ? matches[0] : ""),
       messages: [
