@@ -696,16 +696,16 @@ export default function AdminPage() {
       "UTM Source", "UTM Medium", "UTM Campaign", "Pipeline Stage", "Assigned To"
     ];
     const rows = enquiries.map((enq) => [
-      new Date(enq.createdAt).toLocaleString(),
-      enq.name,
-      enq.mobile,
-      enq.email,
-      enq.companyName,
-      enq.website,
-      enq.service,
-      enq.message.replace(/\n/g, " "),
-      enq.region,
-      enq.source,
+      enq.createdAt ? new Date(enq.createdAt).toLocaleString() : "",
+      enq.name || "",
+      enq.mobile || "",
+      enq.email || "",
+      enq.companyName || "",
+      enq.website || "",
+      enq.service || "",
+      (enq.message || "").replace(/\n/g, " "),
+      enq.region || "",
+      enq.source || "",
       enq.utmParams?.source || "Organic/Direct",
       enq.utmParams?.medium || "None",
       enq.utmParams?.campaign || "None",
@@ -734,9 +734,10 @@ export default function AdminPage() {
       if (won) return won.value;
       return enq.proposals[enq.proposals.length - 1].value;
     }
-    if (enq.service.includes("E-commerce")) return 45000;
-    if (enq.service.includes("Application")) return 60000;
-    if (enq.service.includes("Corporate")) return 35000;
+    const serviceName = enq.service || "";
+    if (serviceName.includes("E-commerce")) return 45000;
+    if (serviceName.includes("Application")) return 60000;
+    if (serviceName.includes("Corporate")) return 35000;
     return 20000;
   };
 
@@ -750,17 +751,24 @@ export default function AdminPage() {
 
     // 2. UI Filters
     const searchLower = search.toLowerCase();
+    const nameVal = (enq.name || "").toLowerCase();
+    const mobileVal = (enq.mobile || "").toLowerCase();
+    const emailVal = (enq.email || "").toLowerCase();
+    const companyVal = (enq.companyName || "").toLowerCase();
+    const messageVal = (enq.message || "").toLowerCase();
+    const notesVal = (enq.notes || "").toLowerCase();
+
     const matchSearch =
-      enq.name.toLowerCase().includes(searchLower) ||
-      enq.mobile.toLowerCase().includes(searchLower) ||
-      enq.email.toLowerCase().includes(searchLower) ||
-      enq.companyName.toLowerCase().includes(searchLower) ||
-      enq.message.toLowerCase().includes(searchLower) ||
-      (enq.notes || "").toLowerCase().includes(searchLower);
+      nameVal.includes(searchLower) ||
+      mobileVal.includes(searchLower) ||
+      emailVal.includes(searchLower) ||
+      companyVal.includes(searchLower) ||
+      messageVal.includes(searchLower) ||
+      notesVal.includes(searchLower);
 
     const matchService = serviceFilter === "all" || enq.service === serviceFilter;
     const matchStage = stageFilter === "all" || (enq.pipelineStage || "new") === stageFilter;
-    const matchRegion = regionFilter === "all" || enq.region.toLowerCase() === regionFilter.toLowerCase();
+    const matchRegion = regionFilter === "all" || (enq.region || "").toLowerCase() === regionFilter.toLowerCase();
     const matchAssigned = assignedFilter === "all" || enq.assignedTo === assignedFilter;
 
     return matchSearch && matchService && matchStage && matchRegion && matchAssigned;
@@ -1586,7 +1594,7 @@ export default function AdminPage() {
                             {filteredEnquiries.map((enq) => {
                               const displayStage = enq.pipelineStage || "new";
                               const stageInfo = PIPELINE_STAGES.find(s => s.value === displayStage) || PIPELINE_STAGES[0];
-                              const cleanedMobile = enq.mobile.replace(/\D/g, "");
+                              const cleanedMobile = (enq.mobile || "").replace(/\D/g, "");
                               
                               // Check reminder due status
                               let reminderBadge = null;
@@ -1746,7 +1754,7 @@ export default function AdminPage() {
                       filteredEnquiries.map((enq) => {
                         const displayStage = enq.pipelineStage || "new";
                         const stageInfo = PIPELINE_STAGES.find(s => s.value === displayStage) || PIPELINE_STAGES[0];
-                        const cleanedMobile = enq.mobile.replace(/\D/g, "");
+                        const cleanedMobile = (enq.mobile || "").replace(/\D/g, "");
 
                         return (
                           <div key={enq.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-[0_4px_20px_rgba(15,23,42,0.03)] space-y-4">
@@ -2486,22 +2494,22 @@ export default function AdminPage() {
                     </div>
                   ) : chatSessions.filter(s => {
                     const searchLower = chatSearch.toLowerCase();
-                    return s.name.toLowerCase().includes(searchLower) ||
-                           s.email.toLowerCase().includes(searchLower) ||
-                           s.mobile.toLowerCase().includes(searchLower) ||
-                           s.sessionId.toLowerCase().includes(searchLower);
+                    return (s.name || "").toLowerCase().includes(searchLower) ||
+                           (s.email || "").toLowerCase().includes(searchLower) ||
+                           (s.mobile || "").toLowerCase().includes(searchLower) ||
+                           (s.sessionId || "").toLowerCase().includes(searchLower);
                   }).length > 0 ? (
                     chatSessions
                       .filter(s => {
                         const searchLower = chatSearch.toLowerCase();
-                        return s.name.toLowerCase().includes(searchLower) ||
-                               s.email.toLowerCase().includes(searchLower) ||
-                               s.mobile.toLowerCase().includes(searchLower) ||
-                               s.sessionId.toLowerCase().includes(searchLower);
+                        return (s.name || "").toLowerCase().includes(searchLower) ||
+                               (s.email || "").toLowerCase().includes(searchLower) ||
+                               (s.mobile || "").toLowerCase().includes(searchLower) ||
+                               (s.sessionId || "").toLowerCase().includes(searchLower);
                       })
                       .map((session) => {
                         const isSelected = selectedChatSessionId === session.sessionId;
-                        const dateLabel = new Date(session.updatedAt || session.createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false });
+                        const dateLabel = (session.updatedAt || session.createdAt) ? new Date(session.updatedAt || session.createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }) : "N/A";
                         return (
                           <div
                             key={session.sessionId}
@@ -2515,7 +2523,7 @@ export default function AdminPage() {
                             <div className="flex justify-between items-start gap-2">
                               <div className="space-y-0.5 min-w-0">
                                 <span className="font-bold text-slate-900 dark:text-white text-xs truncate block group-hover:text-blue-600 dark:group-hover:text-blue-400">
-                                  {session.name}
+                                  {session.name || "Anonymous Visitor"}
                                 </span>
                                 <span className="text-[8.5px] font-mono text-slate-400 block font-medium">Ref: {session.sessionId.substring(0, 8)}</span>
                               </div>
@@ -2561,7 +2569,7 @@ export default function AdminPage() {
                     <div className="pb-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center shrink-0">
                       <div className="text-left space-y-1">
                         <h4 className="font-extrabold text-slate-850 dark:text-white text-xs flex items-center gap-2">
-                          {selectedChatSession.name}
+                          {selectedChatSession.name || "Anonymous Visitor"}
                         </h4>
                         
                         <div className="text-[10px] text-slate-455 dark:text-slate-500 font-semibold space-x-2">
