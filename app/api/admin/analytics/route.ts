@@ -8,7 +8,10 @@ export async function GET() {
         totalPageviews: 0,
         uniqueVisitors: 0,
         topCities: [],
-        mapMarkers: []
+        mapMarkers: [],
+        dailyTrend: [],
+        weeklyTrend: [],
+        monthlyTrend: []
       });
     }
 
@@ -36,12 +39,11 @@ export async function GET() {
       count: item.count
     }));
 
-    // 3. Fetch map markers (coordinates aggregated by exact location or small grid)
+    // 3. Fetch map markers
     const mapMarkersAgg = await db.collection("pageviews").aggregate([
       {
         $group: {
           _id: { 
-            // round lat/lng to 3 decimal places to cluster coordinates close together
             lat: { $round: ["$lat", 3] }, 
             lng: { $round: ["$lng", 3] },
             city: "$city"
@@ -49,7 +51,7 @@ export async function GET() {
           count: { $sum: 1 }
         }
       },
-      { $limit: 200 } // Cap markers to prevent browser lag
+      { $limit: 200 }
     ]).toArray();
 
     const mapMarkers = mapMarkersAgg.map((item: any) => ({
@@ -59,11 +61,109 @@ export async function GET() {
       count: item.count
     }));
 
+    // 4. Fetch pageviews from the last 180 days to compute daily, weekly, and monthly trends
+    const sixMonthsAgo = new Date();
+    sixMonthsAgo.setDate(sixMonthsAgo.getDate() - 180);
+
+    const pageviews = await db.collection("pageviews").find({
+      createdAt: { $gte: sixMonthsAgo.toISOString() }
+    }, {
+      projection: { createdAt: 1, city: 1, userAgent: 1 }
+    }).toArray();
+
+    const now = new Date();
+    
+    // 4a. DAILY TREND (last 14 days)
+    const dailyMap = new Map<string, { views: number; visitors: Set<string> }>();
+    for (let i = 13; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
+      const key = d.toISOString().split("T")[0]; // YYYY-MM-DD
+      dailyMap.set(key, { views: 0, visitors: new Set() });
+    }
+
+    // 4b. WEEKLY TREND (last 8 weeks)
+    const weeklyMap = new Map<string, { views: number; visitors: Set<string> }>();
+    for (let i = 7; i >= 0; i--) {
+      const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (now.getDay() || 7) - (i * 7) + 1);
+      const key = `Wk ${startOfWeek.getDate()} ${startOfWeek.toLocaleString("en-US", { month: "short" })}`;
+      weeklyMap.set(key, { views: 0, visitors: new Set() });
+    }
+
+    // 4c. MONTHLY TREND (last 6 months)
+    const monthlyMap = new Map<string, { views: number; visitors: Set<string> }>();
+    const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const key = `${monthNames[d.getMonth()]} ${d.getFullYear().toString().substring(2)}`;
+      monthlyMap.set(key, { views: 0, visitors: new Set() });
+    }
+
+    // Distribute pageviews to trends
+    for (const pv of pageviews) {
+      if (!pv.createdAt) continue;
+      const pvDate = new Date(pv.createdAt);
+      const visitorKey = `${pv.city || "Unknown"}-${pv.userAgent || "Unknown"}`;
+
+      // Daily check
+      const dayKey = pvDate.toISOString().split("T")[0];
+      if (dailyMap.has(dayKey)) {
+        const item = dailyMap.get(dayKey)!;
+        item.views++;
+        item.visitors.add(visitorKey);
+      }
+
+      // Weekly check
+      const daysDiff = Math.floor((now.getTime() - pvDate.getTime()) / (1000 * 60 * 60 * 24));
+      const wkIndex = Math.floor(daysDiff / 7);
+      if (wkIndex >= 0 && wkIndex < 8) {
+        const wkKeys = Array.from(weeklyMap.keys());
+        const targetKey = wkKeys[7 - wkIndex];
+        if (targetKey) {
+          const wItem = weeklyMap.get(targetKey)!;
+          wItem.views++;
+          wItem.visitors.add(visitorKey);
+        }
+      }
+
+      // Monthly check
+      const monthLabel = `${monthNames[pvDate.getMonth()]} ${pvDate.getFullYear().toString().substring(2)}`;
+      if (monthlyMap.has(monthLabel)) {
+        const item = monthlyMap.get(monthLabel)!;
+        item.views++;
+        item.visitors.add(visitorKey);
+      }
+    }
+
+    const dailyTrend = Array.from(dailyMap.entries()).map(([date, item]) => {
+      const d = new Date(date);
+      const label = `${d.toLocaleString("en-US", { month: "short" })} ${d.getDate()}`;
+      return {
+        label,
+        views: item.views,
+        visitors: item.visitors.size
+      };
+    });
+
+    const weeklyTrend = Array.from(weeklyMap.entries()).map(([label, item]) => ({
+      label,
+      views: item.views,
+      visitors: item.visitors.size
+    }));
+
+    const monthlyTrend = Array.from(monthlyMap.entries()).map(([label, item]) => ({
+      label,
+      views: item.views,
+      visitors: item.visitors.size
+    }));
+
     return NextResponse.json({
       totalPageviews,
-      uniqueVisitors: topCities.reduce((acc: number, item: any) => acc + item.count, 0), // Mock unique approximation
+      uniqueVisitors: topCities.reduce((acc: number, item: any) => acc + item.count, 0),
       topCities,
-      mapMarkers
+      mapMarkers,
+      dailyTrend,
+      weeklyTrend,
+      monthlyTrend
     });
   } catch (error: any) {
     console.error("Error in admin analytics route:", error);

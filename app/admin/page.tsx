@@ -70,6 +70,9 @@ interface AnalyticsData {
   uniqueVisitors: number;
   topCities: Array<{ city: string; country: string; count: number }>;
   mapMarkers: Array<{ lat: number; lng: number; city: string; count: number }>;
+  dailyTrend?: Array<{ label: string; views: number; visitors: number }>;
+  weeklyTrend?: Array<{ label: string; views: number; visitors: number }>;
+  monthlyTrend?: Array<{ label: string; views: number; visitors: number }>;
 }
 
 interface NotificationItem {
@@ -107,8 +110,17 @@ export default function AdminPage() {
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Active Menu: "dashboard" | "leads" | "map" | "heatmaps" | "blog" | "reports" | "chats"
-  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "map" | "heatmaps" | "blog" | "reports" | "chats">("dashboard");
+  // Active Menu: "dashboard" | "leads" | "map" | "heatmaps" | "blog" | "reports" | "chats" | "settings"
+  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "map" | "heatmaps" | "blog" | "reports" | "chats" | "settings">("dashboard");
+  const [trafficTimeframe, setTrafficTimeframe] = useState<"daily" | "weekly" | "monthly">("daily");
+  const [settingsSubTab, setSettingsSubTab] = useState<"cloudinary" | "system">("cloudinary");
+
+  // Settings configurations
+  const [cloudName, setCloudName] = useState("");
+  const [apiKey, setApiKey] = useState("");
+  const [apiSecret, setApiSecret] = useState("");
+  const [settingsLoading, setSettingsLoading] = useState(false);
+  const [settingsMsg, setSettingsMsg] = useState({ text: "", type: "" });
 
   // Irrelevant Modal state
   const [irrelevantModalOpen, setIrrelevantModalOpen] = useState(false);
@@ -139,6 +151,43 @@ export default function AdminPage() {
       console.error("Error fetching chat sessions:", e);
     } finally {
       setChatsLoading(false);
+    }
+  };
+
+  const fetchSettings = async () => {
+    try {
+      const res = await fetch("/api/admin/settings");
+      if (res.ok) {
+        const data = await res.json();
+        setCloudName(data.cloudName || "");
+        setApiKey(data.apiKey || "");
+        setApiSecret(data.apiSecret || "");
+      }
+    } catch (err) {
+      console.error("Error fetching Cloudinary settings:", err);
+    }
+  };
+
+  const handleSaveSettings = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSettingsLoading(true);
+    setSettingsMsg({ text: "", type: "" });
+    try {
+      const res = await fetch("/api/admin/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cloudName, apiKey, apiSecret }),
+      });
+      if (res.ok) {
+        setSettingsMsg({ text: "Cloudinary settings updated successfully!", type: "success" });
+      } else {
+        const err = await res.json();
+        setSettingsMsg({ text: err.error || "Failed to save configuration.", type: "error" });
+      }
+    } catch (error) {
+      setSettingsMsg({ text: "Error saving configuration.", type: "error" });
+    } finally {
+      setSettingsLoading(false);
     }
   };
 
@@ -317,7 +366,10 @@ export default function AdminPage() {
     totalPageviews: 0,
     uniqueVisitors: 0,
     topCities: [],
-    mapMarkers: []
+    mapMarkers: [],
+    dailyTrend: [],
+    weeklyTrend: [],
+    monthlyTrend: []
   });
 
   // UI Modes
@@ -388,6 +440,7 @@ export default function AdminPage() {
       fetchEnquiries();
       fetchAnalytics();
       fetchChatSessions();
+      fetchSettings();
     } else {
       setLoading(false);
     }
@@ -598,6 +651,7 @@ export default function AdminPage() {
       fetchEnquiries();
       fetchAnalytics();
       fetchChatSessions();
+      fetchSettings();
     } else {
       setLoginError("Incorrect access credentials. Please try again.");
     }
@@ -796,6 +850,94 @@ export default function AdminPage() {
   const wonCount = enquiries.filter(e => e.pipelineStage === "won").length;
   const conversionRate = totalCount > 0 ? Math.round((wonCount / totalCount) * 100) : 0;
 
+  // Timeframes list
+  const TIMEFRAMES = ["daily", "weekly", "monthly"] as const;
+
+  // Get monthly trends dynamically
+  const getMonthlyTrendData = () => {
+    const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    const now = new Date();
+    
+    // We want the last 6 months (including the current month)
+    const trends = [];
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const monthLabel = monthNames[d.getMonth()];
+      const year = d.getFullYear();
+      
+      // Count leads created in this month and year
+      const count = enquiries.filter(enq => {
+        if (!enq.createdAt) return false;
+        const createdDate = new Date(enq.createdAt);
+        return createdDate.getMonth() === d.getMonth() && createdDate.getFullYear() === year;
+      }).length;
+      
+      trends.push({ label: monthLabel, count, year });
+    }
+    
+    return trends;
+  };
+
+  const monthlyTrends = getMonthlyTrendData();
+  const maxTrendCount = Math.max(...monthlyTrends.map(t => t.count), 1);
+  const trendPoints = monthlyTrends.map((t, idx) => {
+    const x = 50 + idx * 80;
+    const y = 130 - (t.count / maxTrendCount) * 90; // y between 40 and 130
+    return { x, y, count: t.count, label: t.label };
+  });
+
+  // Construct SVG paths for Lead volume monthly trend
+  const linePathD = `M ${trendPoints[0].x} ${trendPoints[0].y} ` + 
+    trendPoints.slice(1).map(p => `L ${p.x} ${p.y}`).join(" ");
+    
+  const areaPathD = `${linePathD} L ${trendPoints[5].x} 130 L ${trendPoints[0].x} 130 Z`;
+
+  // Get active traffic trend (daily, weekly, monthly)
+  const getTrafficTrendPoints = () => {
+    const trendData = 
+      trafficTimeframe === "daily" ? (analytics.dailyTrend || []) :
+      trafficTimeframe === "weekly" ? (analytics.weeklyTrend || []) :
+      (analytics.monthlyTrend || []);
+
+    if (trendData.length === 0) return { points: [], maxVal: 1, labels: [] };
+
+    const maxVal = Math.max(...trendData.map(d => Math.max(d.views, d.visitors)), 1);
+    const len = trendData.length;
+    
+    const points = trendData.map((d, idx) => {
+      const x = 40 + (idx / (len - 1 || 1)) * 420;
+      const yViews = 125 - (d.views / maxVal) * 90;
+      const yVisitors = 125 - (d.visitors / maxVal) * 90;
+      return {
+        x,
+        yViews,
+        yVisitors,
+        views: d.views,
+        visitors: d.visitors,
+        label: d.label
+      };
+    });
+
+    return { points, maxVal, labels: trendData.map(d => d.label) };
+  };
+
+  const { points: trafficPoints, maxVal: trafficMaxVal } = getTrafficTrendPoints();
+  
+  // Construct paths for Traffic Trends
+  const viewsLineD = trafficPoints.length > 0
+    ? `M ${trafficPoints[0].x} ${trafficPoints[0].yViews} ` + trafficPoints.slice(1).map(p => `L ${p.x} ${p.yViews}`).join(" ")
+    : "";
+  const viewsAreaD = trafficPoints.length > 0
+    ? `${viewsLineD} L ${trafficPoints[trafficPoints.length - 1].x} 125 L ${trafficPoints[0].x} 125 Z`
+    : "";
+
+  const visitorsLineD = trafficPoints.length > 0
+    ? `M ${trafficPoints[0].x} ${trafficPoints[0].yVisitors} ` + trafficPoints.slice(1).map(p => `L ${p.x} ${p.yVisitors}`).join(" ")
+    : "";
+  const visitorsAreaD = trafficPoints.length > 0
+    ? `${visitorsLineD} L ${trafficPoints[trafficPoints.length - 1].x} 125 L ${trafficPoints[0].x} 125 Z`
+    : "";
+
   // HTML5 Drag and Drop Handlers for Kanban
   const handleDragStart = (e: React.DragEvent, leadId: string) => {
     e.dataTransfer.setData("text/plain", leadId);
@@ -942,6 +1084,12 @@ export default function AdminPage() {
           title: "CRM Admin Dashboard Hub",
           subtitle: "Overview of your marketing statistics, visitor metrics, and leads pipeline",
           icon: "fa-solid fa-gauge"
+        };
+      case "settings":
+        return {
+          title: "System Settings & Integrations",
+          subtitle: "Configure third-party services, Cloudinary image upload, and verify server parameters",
+          icon: "fa-solid fa-gear"
         };
       case "leads":
         return {
@@ -1203,6 +1351,31 @@ export default function AdminPage() {
                   </button>
                 );
               })}
+            </div>
+          </div>
+
+          {/* SETTINGS HUB SECTION */}
+          <div className="pt-4 border-t border-slate-800">
+            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-3 block mb-2 md:hidden lg:block select-none">
+              System Configuration
+            </span>
+            <div className="space-y-1">
+              <button
+                onClick={() => {
+                  setActiveTab("settings");
+                  fetchSettings();
+                  setIsSidebarOpen(false);
+                }}
+                className={`w-full flex items-center gap-3.5 py-2.5 px-3 rounded-lg text-xs font-semibold transition-all duration-150 text-left cursor-pointer group ${
+                  activeTab === "settings"
+                    ? "bg-[#2563EB] text-white shadow-sm"
+                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/40"
+                }`}
+                title="System Settings"
+              >
+                <i className="fa-solid fa-gear text-sm shrink-0 w-5 text-center" />
+                <span className="md:hidden lg:inline">Settings Hub</span>
+              </button>
             </div>
           </div>
         </nav>
@@ -1467,6 +1640,118 @@ export default function AdminPage() {
                 {/* LEFT COLUMN (8 cols): Recent Leads & Visitor Map Preview */}
                 <div className="lg:col-span-8 space-y-8">
                   
+                  {/* Traffic Performance Trends Card */}
+                  <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col justify-between transition-colors duration-200 text-left">
+                    <div>
+                      <div className="flex justify-between items-center mb-6 flex-wrap gap-3">
+                        <div>
+                          <h3 className="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                            <i className="fa-solid fa-chart-line text-[#2563EB]" /> Traffic Performance Trends
+                          </h3>
+                          <p className="text-[10px] text-slate-500 mt-0.5">Page views and unique visitors tracking metrics</p>
+                        </div>
+                        {/* Timeframe selector toggles */}
+                        <div className="flex bg-slate-50 dark:bg-slate-850 p-1 border border-slate-200/60 dark:border-slate-800 rounded-xl shadow-xs">
+                          {TIMEFRAMES.map((t) => (
+                            <button
+                              key={t}
+                              type="button"
+                              onClick={() => setTrafficTimeframe(t)}
+                              className={`px-3 py-1 rounded-lg text-[9.5px] font-black uppercase tracking-wider transition-all cursor-pointer ${
+                                trafficTimeframe === t
+                                  ? "bg-[#2563EB] text-white shadow-xs"
+                                  : "text-slate-500 dark:text-slate-400 hover:text-slate-855 dark:hover:text-white"
+                              }`}
+                            >
+                              {t}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Line Chart */}
+                      <div className="relative py-2 w-full h-48">
+                        {trafficPoints.length === 0 ? (
+                          <div className="absolute inset-0 flex items-center justify-center text-xs text-slate-455 italic">
+                            No traffic data populated yet.
+                          </div>
+                        ) : (
+                          <svg className="w-full h-full" viewBox="0 0 500 150">
+                            <defs>
+                              <linearGradient id="viewsGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stopColor="#2563EB" stopOpacity="0.12" />
+                                <stop offset="100%" stopColor="#2563EB" stopOpacity="0" />
+                              </linearGradient>
+                              <linearGradient id="visitorsGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stopColor="#9333EA" stopOpacity="0.12" />
+                                <stop offset="100%" stopColor="#9333EA" stopOpacity="0" />
+                              </linearGradient>
+                            </defs>
+
+                            {/* Horizontal Grid lines */}
+                            <line x1="40" y1="35" x2="460" y2="35" stroke="#F1F5F9" strokeWidth="1" className="dark:stroke-slate-800" />
+                            <line x1="40" y1="80" x2="460" y2="80" stroke="#F1F5F9" strokeWidth="1" className="dark:stroke-slate-800" />
+                            <line x1="40" y1="125" x2="460" y2="125" stroke="#E2E8F0" strokeWidth="1.5" className="dark:stroke-slate-800" />
+
+                            {/* Fills */}
+                            <path d={viewsAreaD} fill="url(#viewsGrad)" />
+                            <path d={visitorsAreaD} fill="url(#visitorsGrad)" />
+
+                            {/* Paths */}
+                            <path d={viewsLineD} fill="none" stroke="#2563EB" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d={visitorsLineD} fill="none" stroke="#9333EA" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+
+                            {/* X Labels */}
+                            {trafficPoints.map((p, idx) => {
+                              const skipLabel = trafficTimeframe === "daily" && idx % 2 !== 0;
+                              if (skipLabel) return null;
+                              return (
+                                <text
+                                  key={idx}
+                                  x={p.x}
+                                  y="142"
+                                  fill="#94A3B8"
+                                  fontSize="8"
+                                  fontWeight="800"
+                                  textAnchor="middle"
+                                >
+                                  {p.label}
+                                </text>
+                              );
+                            })}
+
+                            {/* Dots for Views */}
+                            {trafficPoints.map((p, idx) => (
+                              <g key={`v-${idx}`} className="group/v cursor-pointer">
+                                <circle cx={p.x} cy={p.yViews} r="3.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1" />
+                                <circle cx={p.x} cy={p.yViews} r="7" fill="#2563EB" opacity="0" className="hover:opacity-20 transition-opacity" />
+                                <title>{p.views} Page Views in {p.label}</title>
+                              </g>
+                            ))}
+
+                            {/* Dots for Visitors */}
+                            {trafficPoints.map((p, idx) => (
+                              <g key={`u-${idx}`} className="group/u cursor-pointer">
+                                <circle cx={p.x} cy={p.yVisitors} r="3.5" fill="#9333EA" stroke="#FFFFFF" strokeWidth="1" />
+                                <circle cx={p.x} cy={p.yVisitors} r="7" fill="#9333EA" opacity="0" className="hover:opacity-20 transition-opacity" />
+                                <title>{p.visitors} Unique Visitors in {p.label}</title>
+                              </g>
+                            ))}
+                          </svg>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4.5 mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-[10px] font-black uppercase tracking-wider shrink-0 select-none">
+                      <span className="flex items-center gap-1.5 text-blue-650 dark:text-blue-400">
+                        <span className="w-2.5 h-2.5 bg-blue-600 dark:bg-blue-400 rounded-full inline-block" /> Page Views
+                      </span>
+                      <span className="flex items-center gap-1.5 text-purple-605 dark:text-purple-400">
+                        <span className="w-2.5 h-2.5 bg-purple-600 dark:bg-purple-400 rounded-full inline-block" /> Unique Visitors
+                      </span>
+                    </div>
+                  </div>
+
                   {/* Recent Inbound Leads Card */}
                   <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
                     <div className="flex justify-between items-center mb-5 pb-3 border-b border-slate-100 dark:border-slate-800/80">
@@ -2276,36 +2561,54 @@ export default function AdminPage() {
                         {/* Interactive Line Chart */}
                         <div className="relative py-4 w-full h-44">
                           <svg className="w-full h-full" viewBox="0 0 500 150">
+                            <defs>
+                              <linearGradient id="leadTrendGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stopColor="#EA580C" stopOpacity="0.12" />
+                                <stop offset="100%" stopColor="#EA580C" stopOpacity="0" />
+                              </linearGradient>
+                            </defs>
                             {/* Grid Lines */}
                             <line x1="50" y1="20" x2="450" y2="20" stroke="#F1F5F9" strokeWidth="1" className="dark:stroke-slate-800" />
                             <line x1="50" y1="60" x2="450" y2="60" stroke="#F1F5F9" strokeWidth="1" className="dark:stroke-slate-800" />
                             <line x1="50" y1="100" x2="450" y2="100" stroke="#F1F5F9" strokeWidth="1" className="dark:stroke-slate-800" />
                             <line x1="50" y1="130" x2="450" y2="130" stroke="#E2E8F0" strokeWidth="2" className="dark:stroke-slate-850" />
 
+                            {/* Area Gradient Fill */}
+                            <path d={areaPathD} fill="url(#leadTrendGrad)" />
+
                             {/* X-axis Labels */}
-                            <text x="50" y="145" fill="#94A3B8" fontSize="9" fontWeight="800" textAnchor="middle">MAR</text>
-                            <text x="130" y="145" fill="#94A3B8" fontSize="9" fontWeight="800" textAnchor="middle">APR</text>
-                            <text x="210" y="145" fill="#94A3B8" fontSize="9" fontWeight="800" textAnchor="middle">MAY</text>
-                            <text x="290" y="145" fill="#94A3B8" fontSize="9" fontWeight="800" textAnchor="middle">JUN</text>
-                            <text x="370" y="145" fill="#94A3B8" fontSize="9" fontWeight="800" textAnchor="middle">JUL</text>
-                            <text x="450" y="145" fill="#94A3B8" fontSize="9" fontWeight="800" textAnchor="middle">AUG</text>
+                            {trendPoints.map((p, idx) => (
+                              <text 
+                                key={idx}
+                                x={p.x} 
+                                y="145" 
+                                fill="#94A3B8" 
+                                fontSize="9" 
+                                fontWeight="800" 
+                                textAnchor="middle"
+                              >
+                                {p.label}
+                              </text>
+                            ))}
 
                             {/* Trend Line Path */}
                             <path 
-                              d="M 50 120 C 90 90, 90 80, 130 95 C 170 110, 170 50, 210 65 C 250 80, 250 40, 290 35 C 330 30, 330 70, 370 50 C 410 30, 410 20, 450 15" 
+                              d={linePathD} 
                               fill="none" 
-                              stroke="#2563EB" 
+                              stroke="#EA580C" 
                               strokeWidth="3.5" 
                               strokeLinecap="round"
+                              strokeLinejoin="round"
                             />
 
                             {/* Coordinate Dots */}
-                            <circle cx="50" cy="120" r="4.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1.5" />
-                            <circle cx="130" cy="95" r="4.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1.5" />
-                            <circle cx="210" cy="65" r="4.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1.5" />
-                            <circle cx="290" cy="35" r="4.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1.5" />
-                            <circle cx="370" cy="50" r="4.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1.5" />
-                            <circle cx="450" cy="15" r="4.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1.5" />
+                            {trendPoints.map((p, idx) => (
+                              <g key={idx} className="group/dot cursor-pointer">
+                                <circle cx={p.x} cy={p.y} r="4.5" fill="#EA580C" stroke="#FFFFFF" strokeWidth="1.5" />
+                                <circle cx={p.x} cy={p.y} r="8" fill="#EA580C" opacity="0" className="hover:opacity-20 transition-opacity" />
+                                <title>{p.count} leads in {p.label}</title>
+                              </g>
+                            ))}
                           </svg>
                         </div>
                       </div>
@@ -3088,6 +3391,145 @@ export default function AdminPage() {
           {activeTab === "blog" && (
             <div className="w-full animate-fade-in">
               <BlogAdminPanel />
+            </div>
+          )}
+
+          {activeTab === "settings" && (
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12 animate-fade-in text-left">
+              {/* Left Settings Navigation (3 cols) */}
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm space-y-1">
+                {[{ id: "cloudinary", label: "Cloudinary Config", icon: "fa-solid fa-cloud-arrow-up" },
+                  { id: "system", label: "System Diagnostic", icon: "fa-solid fa-sliders" }
+                ].map((s) => {
+                  const isSubActive = settingsSubTab === s.id;
+                  return (
+                    <button
+                      key={s.id}
+                      onClick={() => setSettingsSubTab(s.id as any)}
+                      className={`w-full flex items-center gap-3.5 py-2.5 px-3 rounded-lg text-xs font-semibold transition-all text-left cursor-pointer ${
+                        isSubActive
+                          ? "bg-blue-50 dark:bg-blue-950/20 text-[#2563EB] dark:text-blue-400 border border-blue-105 dark:border-blue-900/30"
+                          : "text-slate-500 hover:text-slate-850 hover:bg-slate-50 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800/40"
+                      }`}
+                    >
+                      <i className={`${s.icon} text-sm shrink-0 w-5 text-center`} />
+                      <span>{s.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Right Settings Configuration Panel (9 cols) */}
+              <div className="lg:col-span-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+                {settingsSubTab === "cloudinary" && (
+                  <div>
+                    <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider mb-2 flex items-center gap-2">
+                      <i className="fa-solid fa-cloud-arrow-up text-[#2563EB]" /> Cloudinary Asset Integration
+                    </h3>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold mb-6">
+                      Configure your Cloudinary credentials dynamically. Cover images uploaded via the Blog Editor Desk will route directly to this repository workspace in production.
+                    </p>
+
+                    {settingsMsg.text && (
+                      <div className={`p-4 rounded-xl text-xs font-bold border flex items-center justify-between mb-5 ${
+                        settingsMsg.type === "success" 
+                          ? "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-400 border-emerald-250 dark:border-emerald-900/30"
+                          : "bg-rose-50 dark:bg-rose-950/20 text-rose-700 dark:text-rose-400 border-rose-250 dark:border-rose-900/30"
+                      }`}>
+                        <span>{settingsMsg.text}</span>
+                        <button type="button" onClick={() => setSettingsMsg({ text: "", type: "" })} className="text-[10px] cursor-pointer hover:opacity-75">✕</button>
+                      </div>
+                    )}
+
+                    <form onSubmit={handleSaveSettings} className="space-y-5">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div className="flex flex-col gap-1.5">
+                          <label className="text-[9px] font-black text-slate-550 dark:text-slate-455 uppercase tracking-widest pl-0.5">Cloud Name</label>
+                          <input
+                            type="text"
+                            required
+                            value={cloudName}
+                            onChange={(e) => setCloudName(e.target.value)}
+                            placeholder="e.g. hkfw0tt7"
+                            className="px-3.5 py-3 bg-slate-50 border border-slate-200 text-slate-955 dark:bg-slate-800 dark:border-slate-700 dark:text-white rounded-xl outline-none focus:bg-white focus:border-[#2563EB] text-xs font-semibold"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                          <label className="text-[9px] font-black text-slate-550 dark:text-slate-455 uppercase tracking-widest pl-0.5">API Key</label>
+                          <input
+                            type="text"
+                            required
+                            value={apiKey}
+                            onChange={(e) => setApiKey(e.target.value)}
+                            placeholder="e.g. 621912895596784"
+                            className="px-3.5 py-3 bg-slate-50 border border-slate-200 text-slate-955 dark:bg-slate-800 dark:border-slate-700 dark:text-white rounded-xl outline-none focus:bg-white focus:border-[#2563EB] text-xs font-semibold"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-[9px] font-black text-slate-550 dark:text-slate-455 uppercase tracking-widest pl-0.5">API Secret</label>
+                        <input
+                          type="password"
+                          required
+                          value={apiSecret}
+                          onChange={(e) => setApiSecret(e.target.value)}
+                          placeholder="••••••••••••••••••••••••••••••••"
+                          className="px-3.5 py-3 bg-slate-50 border border-slate-200 text-slate-955 dark:bg-slate-800 dark:border-slate-700 dark:text-white rounded-xl outline-none focus:bg-white focus:border-[#2563EB] text-xs font-semibold"
+                        />
+                      </div>
+
+                      <div className="flex justify-end pt-3">
+                        <button
+                          type="submit"
+                          disabled={settingsLoading}
+                          className="bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-extrabold text-xs px-6 py-3 rounded-xl shadow-md transition-all cursor-pointer disabled:opacity-50"
+                        >
+                          {settingsLoading ? "Saving Configurations..." : "Save Credentials"}
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                )}
+
+                {settingsSubTab === "system" && (
+                  <div>
+                    <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider mb-2 flex items-center gap-2">
+                      <i className="fa-solid fa-sliders text-[#2563EB]" /> System Diagnostic Parameters
+                    </h3>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold mb-6">
+                      Overview of the application environment parameters, diagnostic status, and operational health metrics.
+                    </p>
+
+                    <div className="space-y-4 text-xs font-semibold text-slate-700 dark:text-slate-350">
+                      <div className="flex justify-between items-center py-2.5 border-b border-slate-100 dark:border-slate-800/80">
+                        <span>Application Environment</span>
+                        <span className="bg-emerald-50 dark:bg-emerald-950/20 text-emerald-605 dark:text-emerald-450 px-2 py-0.5 rounded text-[10px] font-extrabold border border-emerald-100 dark:border-emerald-900/30 uppercase">
+                          production
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center py-2.5 border-b border-slate-100 dark:border-slate-800/80">
+                        <span>MongoDB Database Link</span>
+                        <span className="flex items-center gap-1.5 text-emerald-650 dark:text-emerald-400 font-bold">
+                          <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse" /> Active DB Connection
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center py-2.5 border-b border-slate-100 dark:border-slate-800/80">
+                        <span>Clarity Agent Tracking Code</span>
+                        <span className="text-slate-500 dark:text-slate-450 font-mono text-[10px]">y1a7vgc8a7 (Active)</span>
+                      </div>
+                      <div className="flex justify-between items-center py-2.5 border-b border-slate-100 dark:border-slate-800/80">
+                        <span>Inbound Lead Webhook</span>
+                        <span className="text-[#2563EB] dark:text-blue-455 font-mono text-[10px]">/api/enquiry (Ready)</span>
+                      </div>
+                      <div className="flex justify-between items-center py-2.5">
+                        <span>Server Timezone Offset</span>
+                        <span>IST (UTC+05:30)</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           )}
 

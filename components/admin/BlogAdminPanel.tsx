@@ -92,58 +92,14 @@ export default function BlogAdminPanel() {
   const [previewActive, setPreviewActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Dynamic Cloudinary configurations in DB state
-  const [cloudName, setCloudName] = useState("");
-  const [apiKey, setApiKey] = useState("");
-  const [apiSecret, setApiSecret] = useState("");
-  const [settingsLoading, setSettingsLoading] = useState(false);
-  const [settingsMsg, setSettingsMsg] = useState({ text: "", type: "" });
-  const [showSettings, setShowSettings] = useState(false);
 
-  // Fetch posts & settings on mount
+
+  // Fetch posts on mount
   useEffect(() => {
     fetchPosts();
-    fetchSettings();
   }, []);
 
-  const fetchSettings = async () => {
-    try {
-      const res = await fetch("/api/admin/settings");
-      if (res.ok) {
-        const data = await res.json();
-        setCloudName(data.cloudName || "");
-        setApiKey(data.apiKey || "");
-        setApiSecret(data.apiSecret || "");
-      }
-    } catch (err) {
-      console.error("Error fetching Cloudinary settings:", err);
-    }
-  };
 
-  const handleSaveSettings = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSettingsLoading(true);
-    setSettingsMsg({ text: "", type: "" });
-
-    try {
-      const res = await fetch("/api/admin/settings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cloudName, apiKey, apiSecret }),
-      });
-
-      if (res.ok) {
-        setSettingsMsg({ text: "Cloudinary settings saved successfully!", type: "success" });
-      } else {
-        const err = await res.json();
-        setSettingsMsg({ text: err.error || "Failed to save settings.", type: "error" });
-      }
-    } catch (error) {
-      setSettingsMsg({ text: "Error saving settings.", type: "error" });
-    } finally {
-      setSettingsLoading(false);
-    }
-  };
 
   const fetchPosts = async () => {
     setLoading(true);
@@ -368,14 +324,6 @@ export default function BlogAdminPanel() {
             
             <div className="flex gap-2">
               <button
-                type="button"
-                onClick={() => setShowSettings(!showSettings)}
-                className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-[10px] uppercase tracking-wider px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
-              >
-                <i className="fa-solid fa-gear" /> {showSettings ? "Close Settings" : "Cloudinary Settings"}
-              </button>
-
-              <button
                 onClick={handleCreateClick}
                 className="bg-primary hover:bg-primary-light text-white font-extrabold text-[10px] uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-sm hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-1.5"
               >
@@ -384,70 +332,7 @@ export default function BlogAdminPanel() {
             </div>
           </div>
 
-          {showSettings && (
-            <div className="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-[20px] text-left">
-              <h4 className="text-xs font-black text-slate-900 uppercase tracking-wider mb-2">Cloudinary Configurations</h4>
-              <p className="text-[10px] text-slate-500 font-semibold mb-5">
-                Configure your Cloudinary credentials dynamically. Cover images will be uploaded directly to this account in production.
-              </p>
 
-              {settingsMsg.text && (
-                <div className={`p-3 rounded-lg text-[10px] font-bold border flex items-center justify-between mb-4 ${
-                  settingsMsg.type === "success" 
-                    ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                    : "bg-rose-50 text-rose-700 border-rose-200"
-                }`}>
-                  <span>{settingsMsg.text}</span>
-                  <button type="button" onClick={() => setSettingsMsg({ text: "", type: "" })} className="text-[8px] cursor-pointer hover:opacity-75">✕</button>
-                </div>
-              )}
-
-              <form onSubmit={handleSaveSettings} className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest pl-0.5">Cloud Name</label>
-                  <input
-                    type="text"
-                    required
-                    value={cloudName}
-                    onChange={(e) => setCloudName(e.target.value)}
-                    placeholder="e.g. hkfw0tt7"
-                    className="px-3 py-2 bg-white border border-slate-200 text-slate-955 rounded-xl outline-none focus:border-primary text-xs font-semibold"
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest pl-0.5">API Key</label>
-                  <input
-                    type="text"
-                    required
-                    value={apiKey}
-                    onChange={(e) => setApiKey(e.target.value)}
-                    placeholder="e.g. 621912895596784"
-                    className="px-3 py-2 bg-white border border-slate-200 text-slate-955 rounded-xl outline-none focus:border-primary text-xs font-semibold"
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest pl-0.5">API Secret</label>
-                  <input
-                    type="password"
-                    required
-                    value={apiSecret}
-                    onChange={(e) => setApiSecret(e.target.value)}
-                    placeholder="••••••••••••••••"
-                    className="px-3 py-2 bg-white border border-slate-200 text-slate-955 rounded-xl outline-none focus:border-primary text-xs font-semibold"
-                  />
-                </div>
-                <div className="md:col-span-3 flex justify-end gap-2 mt-2">
-                  <button
-                    type="submit"
-                    disabled={settingsLoading}
-                    className="bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-extrabold text-[10px] uppercase tracking-wider px-5 py-2.5 rounded-xl shadow-sm transition-all cursor-pointer"
-                  >
-                    {settingsLoading ? "Saving..." : "Save Settings"}
-                  </button>
-                </div>
-              </form>
-            </div>
-          )}
 
           {loading ? (
             <div className="py-12 flex flex-col items-center justify-center gap-3">
