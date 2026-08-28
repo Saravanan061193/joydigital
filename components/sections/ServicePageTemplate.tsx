@@ -58,6 +58,7 @@ interface ServicePageTemplateProps {
   schemaMarkup: Record<string, unknown>;
   crossLinks: { href: string; label: string }[];
   canonicalUrl?: string;
+  heroCtaText?: string;
 }
 
 export default function ServicePageTemplate({
@@ -80,6 +81,7 @@ export default function ServicePageTemplate({
   schemaMarkup,
   crossLinks,
   canonicalUrl = "https://joydigital.in",
+  heroCtaText,
 }: ServicePageTemplateProps) {
   const STANDARD_FAQS = [
     {
@@ -246,7 +248,7 @@ export default function ServicePageTemplate({
                 layout="vertical"
                 title="Claim Free Consultation"
                 subtitle="Fill in the fields below, and our local experts will reach out to you."
-                ctaText="Get Free Quote"
+                ctaText={heroCtaText || "Get Free Quote"}
                 source={leadSource}
               />
             </div>

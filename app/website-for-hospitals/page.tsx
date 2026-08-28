@@ -47,6 +47,7 @@ export default function HospitalWebPage() {
       heroTitle="Custom Web Design & Scheduling Systems for Hospitals & Clinics"
       heroSubtitle="Build patient trust, showcase doctor profiles, and streamline appointment scheduling with a fast, secure, and mobile-responsive website."
       leadSource="Website for Hospitals Landing Page"
+      heroCtaText="Get Hospital Website Quote"
       overviewTitle="Patient-Centric Website Solutions for Modern Healthcare"
       overviewContent={
         <div className="space-y-6">

@@ -37,22 +37,32 @@ export default function StickyWidgets() {
   return (
     <>
       {/* Sticky Mobile Banner (Bottom-pinned for conversions, hidden on desktop) */}
-      <div className="lg:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-100 shadow-lg px-6 py-3 z-40 flex items-center justify-between gap-4">
-        <div className="flex flex-col">
-          <span className="text-xs font-semibold text-accent uppercase tracking-wider">Limited Offer</span>
-          <span className="text-[13px] font-bold text-primary-dark">Free SEO & Design Audit</span>
-        </div>
-        <Link
-          href="/#audit-section"
+      <div className="lg:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-100 shadow-xl p-2.5 z-40 grid grid-cols-2 gap-2.5">
+        <a
+          href="https://wa.me/919080026133?text=Hi%20Joy%20Digital,%20I'd%20like%20to%20get%20a%20free%20consultation%20and%20pricing%20quote%20for%20a%20project."
+          target="_blank"
+          rel="noopener noreferrer"
           onClick={() => {
             const tracker = (window as any).trackJoyDigitalEvent;
             if (typeof tracker === "function") {
-              tracker("cta_click", { button_text: "Claim Audit", location: "sticky mobile banner" });
+              tracker("whatsapp_click", { location: "mobile sticky bar" });
             }
           }}
-          className="bg-accent text-white font-bold text-xs px-4 py-2.5 rounded-md shadow-sm hover:bg-accent-dark transition-all duration-300"
+          className="bg-[#10b981] hover:bg-[#059669] text-white font-extrabold text-xs py-3 rounded-xl flex items-center justify-center gap-1.5 shadow-sm active:scale-[0.98] transition-all cursor-pointer"
         >
-          Claim Audit
+          <i className="fa-brands fa-whatsapp text-sm" /> Chat WhatsApp
+        </a>
+        <Link
+          href="/free-website-audit"
+          onClick={() => {
+            const tracker = (window as any).trackJoyDigitalEvent;
+            if (typeof tracker === "function") {
+              tracker("cta_click", { button_text: "Get Quote", location: "mobile sticky bar" });
+            }
+          }}
+          className="bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-extrabold text-xs py-3 rounded-xl flex items-center justify-center gap-1.5 shadow-sm active:scale-[0.98] transition-all cursor-pointer"
+        >
+          <i className="fa-solid fa-file-invoice text-xs" /> Get Quote
         </Link>
       </div>
 

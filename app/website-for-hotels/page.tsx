@@ -47,6 +47,7 @@ export default function HotelWebPage() {
       heroTitle="Custom Website Design & Booking Engines for Hotels & Resorts"
       heroSubtitle="Stop paying 15-20% commission on room bookings. Drive direct reservations, showcase premium room galleries, and list amenities on an ultra-fast page."
       leadSource="Website for Hotels Landing Page"
+      heroCtaText="Get Hotel Website Quote"
       overviewTitle="Increase Direct Reservations & Cut OTA Commissions"
       overviewContent={
         <div className="space-y-6">

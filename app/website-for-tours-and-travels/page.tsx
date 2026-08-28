@@ -47,6 +47,7 @@ export default function ToursTravelsWebPage() {
       heroTitle="Custom Travel Agency & Tour Operator Website Design"
       heroSubtitle="Stop relying strictly on third-party aggregators. Showcase your tour itineraries, structure clear package details, and capture trip inquiries directly on WhatsApp."
       leadSource="Website for Tours and Travels Landing Page"
+      heroCtaText="Get Travel Website Quote"
       overviewTitle="Itinerary Showcases & Direct Trip Bookings Online"
       overviewContent={
         <div className="space-y-6">

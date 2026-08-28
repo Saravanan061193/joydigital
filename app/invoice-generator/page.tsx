@@ -72,10 +72,10 @@ export default function InvoiceGeneratorPage() {
   const [leadSuccess, setLeadSuccess] = useState<boolean>(false);
 
   // Lead Form State
-  const [leadName, setLeadName] = useState<string>("");
-  const [leadBizName, setLeadBizName] = useState<string>("");
-  const [leadEmail, setLeadEmail] = useState<string>("");
-  const [leadPhone, setLeadPhone] = useState<string>("");
+  const [leadName, setLeadName] = useState<string>(" ");
+  const [leadBizName, setLeadBizName] = useState<string>(" ");
+  const [leadEmail, setLeadEmail] = useState<string>(" ");
+  const [leadPhone, setLeadPhone] = useState<string>(" ");
   const [leadService, setLeadService] = useState<string>("Website Development");
 
   // Track page view
@@ -179,16 +179,14 @@ export default function InvoiceGeneratorPage() {
     trackToolUsage({ toolName: "Invoice Generator", action: "tool_reset" });
   };
 
-  // Triggers PDF download
   const triggerPdfDownload = async () => {
     try {
       const jsPDF = (await import("jspdf")).default;
       const doc = new jsPDF();
 
-      // Title & Document Type
       doc.setFont("helvetica", "bold");
       doc.setFontSize(22);
-      doc.setTextColor(31, 27, 45); // Deep Purple
+      doc.setTextColor(31, 27, 45);
       doc.text("TAX INVOICE", 140, 20);
 
       let y = 30;
@@ -207,7 +205,6 @@ export default function InvoiceGeneratorPage() {
         }
       }
 
-      // Business Info
       doc.setFont("helvetica", "bold");
       doc.setFontSize(12);
       doc.setTextColor(31, 27, 45);
@@ -235,7 +232,6 @@ export default function InvoiceGeneratorPage() {
         y += 5;
       }
 
-      // Invoice details
       doc.setFont("helvetica", "bold");
       doc.setFontSize(10);
       doc.setTextColor(31, 27, 45);
@@ -244,12 +240,10 @@ export default function InvoiceGeneratorPage() {
       doc.text(`Date: ${invoiceDate}`, 140, 35);
       doc.text(`Due Date: ${dueDate}`, 140, 40);
 
-      // Divider line
       doc.setDrawColor(230, 230, 230);
       doc.line(20, y + 5, 190, y + 5);
       y += 12;
 
-      // Customer Info
       doc.setFont("helvetica", "bold");
       doc.setFontSize(11);
       doc.setTextColor(31, 27, 45);
@@ -274,7 +268,6 @@ export default function InvoiceGeneratorPage() {
         y += 5;
       }
 
-      // Draw Items Table Header
       doc.setFillColor(31, 27, 45);
       doc.rect(20, y, 170, 8, "F");
       doc.setFont("helvetica", "bold");
@@ -287,12 +280,10 @@ export default function InvoiceGeneratorPage() {
       doc.text("Total (INR)", 172, y + 5);
       y += 8;
 
-      // Render Rows
       doc.setFont("helvetica", "normal");
       doc.setTextColor(50, 50, 50);
 
       items.forEach((item, index) => {
-        // Draw Zebra rows background
         if (index % 2 === 1) {
           doc.setFillColor(250, 249, 255);
           doc.rect(20, y, 170, 8, "F");
@@ -314,7 +305,6 @@ export default function InvoiceGeneratorPage() {
 
       y += 10;
 
-      // Totals
       doc.setFont("helvetica", "normal");
       doc.setFontSize(10);
       doc.text("Subtotal:", 135, y);
@@ -331,7 +321,6 @@ export default function InvoiceGeneratorPage() {
       doc.text("Grand Total:", 135, y);
       doc.text(`INR ${grandTotal.toFixed(2)}`, 165, y);
 
-      // Notes & Terms
       y += 15;
       if (notes) {
         doc.setFont("helvetica", "bold");
@@ -350,7 +339,6 @@ export default function InvoiceGeneratorPage() {
         y += 15;
       }
 
-      // Branding Footer
       doc.setDrawColor(240, 240, 240);
       doc.line(20, 275, 190, 275);
       doc.setFont("helvetica", "normal");
@@ -367,26 +355,25 @@ export default function InvoiceGeneratorPage() {
   };
 
   const handleDownloadClick = () => {
-    // Show optional lead capture modal before downloading
     setShowLeadModal(true);
     trackToolUsage({ toolName: "Invoice Generator", action: "lead_form_open" });
   };
 
   const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!leadName || !leadPhone) return;
+    if (!leadName.trim() || !leadPhone.trim()) return;
 
     setLeadFormSubmitting(true);
     try {
       const utm = getUtmParameters();
       const payload = {
-        Name: leadName,
-        CompanyName: leadBizName || "N/A",
-        Email: leadEmail || "N/A",
-        Mobile: leadPhone,
-        Service: leadService,
-        Message: `Lead collected via Invoice Generator PDF download. Invoice value: INR ${grandTotal.toFixed(2)}`,
-        Source: "Invoice Generator Lead",
+        name: leadName.trim(),
+        companyName: leadBizName.trim() || "N/A",
+        email: leadEmail.trim() || "N/A",
+        mobile: leadPhone.trim(),
+        service: leadService,
+        message: `Lead collected via Invoice Generator PDF download. Invoice value: INR ${grandTotal.toFixed(2)}`,
+        source: "Invoice Generator Lead",
         utmParams: utm || undefined,
         _subject: "🔥 Tool Lead [Invoice Generator] - Joy Digital",
         _captcha: "false"
@@ -404,7 +391,7 @@ export default function InvoiceGeneratorPage() {
         setTimeout(() => {
           setShowLeadModal(false);
           setLeadSuccess(false);
-          triggerPdfDownload(); // proceed to download
+          triggerPdfDownload();
         }, 1500);
       } else {
         throw new Error();
@@ -431,8 +418,6 @@ export default function InvoiceGeneratorPage() {
           {/* Breadcrumbs */}
           <nav className="text-xs text-[#6B6478] font-bold mb-6 flex items-center gap-1.5">
             <a href="/" className="hover:text-[#7C3AED]">Home</a>
-            <i className="fa-solid fa-chevron-right text-[8px]" />
-            <a href="/free-tools" className="hover:text-[#7C3AED]">Free Tools</a>
             <i className="fa-solid fa-chevron-right text-[8px]" />
             <span className="text-[#1F1B2D]">Invoice Generator</span>
           </nav>
@@ -735,10 +720,9 @@ export default function InvoiceGeneratorPage() {
                   </button>
                 </div>
 
-                {/* Quotation Sheet Visual */}
+                {/* Invoice Visual Sheet */}
                 <div className="border border-[#E9E4F2] rounded-xl p-5 bg-[#FAF9FF] text-[10px] flex flex-col justify-between min-h-[400px]">
                   
-                  {/* Top bar */}
                   <div className="flex justify-between items-start mb-6">
                     <div>
                       {bizLogoUrl ? (
@@ -757,7 +741,6 @@ export default function InvoiceGeneratorPage() {
                     </div>
                   </div>
 
-                  {/* Quoted to info */}
                   <div className="mb-6">
                     <span className="text-[7px] font-extrabold text-[#7C3AED] uppercase block mb-1">Bill To:</span>
                     <div className="font-bold text-[#1F1B2D]">{custName || "Customer Name"}</div>
@@ -765,7 +748,6 @@ export default function InvoiceGeneratorPage() {
                     {custAddress && <div className="text-[#6B6478] leading-normal">{custAddress}</div>}
                   </div>
 
-                  {/* Table rows preview */}
                   <div className="flex-grow">
                     <div className="grid grid-cols-12 bg-[#1F1B2D] text-white py-1 px-2 font-bold mb-1.5 rounded">
                       <span className="col-span-6">Item Description</span>
@@ -775,7 +757,7 @@ export default function InvoiceGeneratorPage() {
                     </div>
 
                     <div className="flex flex-col gap-1">
-                      {items.map((item, idx) => (
+                      {items.map((item) => (
                         <div key={item.id} className="grid grid-cols-12 border-b border-slate-50 py-1 px-2 text-[#6B6478] font-semibold">
                           <span className="col-span-6 truncate text-[#1F1B2D]">{item.name || "Untitled Item"}</span>
                           <span className="col-span-2 text-center">{item.quantity}</span>
@@ -788,7 +770,6 @@ export default function InvoiceGeneratorPage() {
                     </div>
                   </div>
 
-                  {/* Totals Visual */}
                   <div className="border-t border-[#E9E4F2] pt-4 mt-4 flex flex-col items-end gap-1.5">
                     <div className="flex justify-between w-full max-w-[150px] font-bold text-[#6B6478]">
                       <span>Subtotal:</span>
@@ -810,7 +791,6 @@ export default function InvoiceGeneratorPage() {
                     </div>
                   </div>
 
-                  {/* Notes Footer */}
                   <div className="text-[7px] text-[#A7A2B2] border-t border-slate-50 pt-2.5 mt-4 flex justify-between">
                     <span>GST-ready Invoice | JoyDigital.in</span>
                     <span>Due: {dueDate}</span>
@@ -818,20 +798,21 @@ export default function InvoiceGeneratorPage() {
                 </div>
               </div>
 
-              {/* Consultation Pitch Banner */}
-              <div className="bg-[#FAF9FF] border border-[#E9E4F2] p-5 rounded-2xl mt-6 relative overflow-hidden">
+              {/* Consultation Pitch Banner: INVOICING CUSTOM SOFTWARE PITCH */}
+              <div className="bg-[#FAF9FF] border border-[#E9E4F2] p-5 rounded-2xl mt-6 relative overflow-hidden text-left">
                 <div className="absolute top-0 left-0 h-full w-1 bg-[#7C3AED]" />
-                <h3 className="text-xs font-bold text-[#1F1B2D] mb-1">Need a complete business website?</h3>
+                <h3 className="text-xs font-bold text-[#1F1B2D] mb-1">Need Custom Automated Invoicing?</h3>
                 <p className="text-[10px] text-[#6B6478] font-semibold leading-relaxed mb-4">
-                  Boost your professional image with custom web platforms, digital checkouts, and maps integrations.
+                  Stop creating invoices manually! We engineer tailored billing software, CRM links, and customer payment hubs to run your business operations automatically.
                 </p>
                 <a
-                  href="/contact"
+                  href="https://wa.me/919080026133?text=Hi%20Joy%20Digital,%20I%20am%20interested%20in%20building%20custom%20automated%20invoicing/billing%20software%20for%20my%20business."
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={handleCtaClick}
                   className="inline-flex items-center gap-1.5 bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-extrabold text-[10px] py-2.5 px-4 rounded-lg shadow-sm hover:scale-[1.01] transition-all cursor-pointer"
                 >
-                  Talk to Joy Digital
-                  <i className="fa-solid fa-arrow-right text-[8px]" />
+                  <i className="fa-brands fa-whatsapp text-xs animate-pulse" /> Talk to a Developer
                 </a>
               </div>
             </div>
@@ -932,7 +913,7 @@ export default function InvoiceGeneratorPage() {
                   type="button"
                   onClick={() => {
                     setShowLeadModal(false);
-                    triggerPdfDownload(); // proceed without submitting
+                    triggerPdfDownload();
                     trackToolUsage({ toolName: "Invoice Generator", action: "lead_bypass" });
                   }}
                   className="w-full bg-transparent hover:bg-slate-50 text-[#6B6478] hover:text-[#1F1B2D] font-bold text-xs py-3 rounded-xl transition-all cursor-pointer"
@@ -940,10 +921,6 @@ export default function InvoiceGeneratorPage() {
                   Continue without contacting
                 </button>
               </div>
-
-              <span className="text-[7px] text-[#A7A2B2] text-center block mt-2">
-                Your details are used only to contact you regarding your enquiry.
-              </span>
             </form>
           </div>
         </div>

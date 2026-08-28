@@ -90,10 +90,8 @@ export default function GstCalculatorPage() {
   };
 
   const handleAmountChange = (val: string) => {
-    // Remove characters that aren't numbers or dots
     let clean = val.replace(/[^0-9.]/g, "");
     
-    // Prevent multiple decimals
     const parts = clean.split(".");
     if (parts.length > 2) {
       clean = parts[0] + "." + parts.slice(1).join("");
@@ -121,14 +119,12 @@ export default function GstCalculatorPage() {
 
   const handleFocus = () => {
     setIsFocused(true);
-    // Show raw float string on edit, or empty if zero
     setInputValue(amount > 0 ? amount.toString() : "");
   };
 
   const handleBlur = () => {
     setIsFocused(false);
     if (amount > 0) {
-      // Format display value with commas on blur
       setInputValue(new Intl.NumberFormat("en-IN", { maximumFractionDigits: 2 }).format(amount));
     } else {
       setInputValue("");
@@ -222,7 +218,6 @@ export default function GstCalculatorPage() {
         console.log("Sharing cancelled", err);
       }
     } else {
-      // Fallback to Copy
       navigator.clipboard.writeText(shareText);
       setShareSuccess(true);
       setTimeout(() => setShareSuccess(false), 2000);
@@ -234,7 +229,6 @@ export default function GstCalculatorPage() {
     trackToolUsage({ toolName: "GST Calculator", action: "cta_clicked" });
   };
 
-  // Structured Schemas
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -262,22 +256,6 @@ export default function GstCalculatorPage() {
           "@type": "Answer",
           "text": "CGST (Central GST) and SGST (State GST) apply to trade within a single state (Intra-State). IGST (Integrated GST) applies to supply chains between different states (Inter-State)."
         }
-      },
-      {
-        "@type": "Question",
-        "name": "How do I calculate GST inclusive price?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Formula: GST Amount = Value - (Value / (1 + GST%/100)). Subtracted from the initial amount, it determines the base rate."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How do I calculate GST exclusive price?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Formula: Tax Amount = Value * (GST% / 100). The total price equals the base amount plus the calculated tax."
-        }
       }
     ]
   };
@@ -287,8 +265,7 @@ export default function GstCalculatorPage() {
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://joydigital.in" },
-      { "@type": "ListItem", "position": 2, "name": "Free Tools", "item": "https://joydigital.in/free-tools" },
-      { "@type": "ListItem", "position": 3, "name": "GST Calculator", "item": "https://joydigital.in/free-tools/gst-calculator" }
+      { "@type": "ListItem", "position": 2, "name": "GST Calculator", "item": "https://joydigital.in/gst-calculator" }
     ]
   };
 
@@ -312,8 +289,6 @@ export default function GstCalculatorPage() {
           <nav className="text-xs text-[#6B6478] font-bold mb-6 flex items-center gap-1.5" aria-label="Breadcrumb">
             <a href="/" className="hover:text-[#7C3AED]">Home</a>
             <i className="fa-solid fa-chevron-right text-[8px]" aria-hidden="true" />
-            <a href="/free-tools" className="hover:text-[#7C3AED]">Free Tools</a>
-            <i className="fa-solid fa-chevron-right text-[8px]" aria-hidden="true" />
             <span className="text-[#1F1B2D]" aria-current="page">GST Calculator</span>
           </nav>
 
@@ -321,7 +296,7 @@ export default function GstCalculatorPage() {
           <div className="mb-10 text-center max-w-2xl mx-auto">
             <h1 className="text-3xl font-black text-[#1F1B2D] mb-3">GST Calculator</h1>
             <p className="text-xs sm:text-sm text-[#6B6478] font-semibold leading-relaxed">
-              Calculate GST instantly with our free GST Calculator. Choose GST rates, calculate CGST, SGST or IGST, and get the final amount instantly.
+              Calculate Goods and Services Tax (GST) instantly with our free tool. Easily estimate CGST, SGST, or IGST breakdowns for 5%, 12%, 18%, and 28% tax slabs.
             </p>
           </div>
 
@@ -348,7 +323,7 @@ export default function GstCalculatorPage() {
                     onBlur={handleBlur}
                     onChange={(e) => handleAmountChange(e.target.value)}
                     placeholder="Enter amount"
-                    className="w-full text-sm outline-none border-none bg-transparent font-bold text-[#1F1B2D] placeholder:text-[#A7A2B2]"
+                    className="w-full text-xs outline-none border-none bg-transparent font-bold text-[#1F1B2D] placeholder:text-[#A7A2B2]"
                   />
                 </div>
                 {errorMsg && <p className="text-[10px] font-bold text-rose-500 mt-1">{errorMsg}</p>}
@@ -381,11 +356,6 @@ export default function GstCalculatorPage() {
                     GST Inclusive (Tax Included)
                   </button>
                 </div>
-                <p className="text-[10px] text-slate-450 font-bold italic mt-1 text-left px-1">
-                  {calculationMode === "exclusive"
-                    ? "GST will be added to the entered amount"
-                    : "GST is already included in the entered amount"}
-                </p>
               </div>
 
               {/* 3. GST Rate Selection */}
@@ -527,66 +497,24 @@ export default function GstCalculatorPage() {
                 </div>
               </div>
 
-              {/* Pitch CTA Card */}
+              {/* Pitch CTA Card: AUTOMATED BILLING SOFTWARE PITCH */}
               <div className="bg-[#FAF9FF] border border-[#E9E4F2] p-5 rounded-2xl mt-6 relative overflow-hidden text-left">
                 <div className="absolute top-0 left-0 h-full w-1 bg-[#7C3AED]" />
-                <h3 className="text-xs font-black text-[#1F1B2D] mb-1">Need a Professional Website for Your Business?</h3>
+                <h3 className="text-xs font-black text-[#1F1B2D] mb-1">Automate Your Invoicing & Billing!</h3>
                 <p className="text-[10px] text-[#6B6478] font-bold leading-relaxed mb-4">
-                  Get a modern website, business tools and digital solutions designed for your business.
+                  We design custom quotation engines, automated GST invoicing portals, and lead systems to save you 10+ hours per week.
                 </p>
                 <a
-                  href="/contact"
+                  href="https://wa.me/919080026133?text=Hi%20Joy%20Digital,%20I%20am%20interested%20in%20building%20custom%20billing/invoicing%20software%20for%20my%20business."
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={handleCtaClick}
                   className="inline-flex items-center gap-1.5 bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-extrabold text-[10px] py-2.5 px-4.5 rounded-lg shadow-sm hover:scale-[1.01] transition-all cursor-pointer"
                 >
-                  Get Free Consultation
-                  <i className="fa-solid fa-arrow-right text-[8px]" />
+                  <i className="fa-brands fa-whatsapp text-xs" /> Talk to an Automation Expert
                 </a>
-                <span className="block text-[8px] font-black uppercase text-slate-400 tracking-wider mt-3">
-                  Website Design &bull; Web Development &bull; SEO &bull; Digital Marketing
-                </span>
               </div>
             </div>
-          </div>
-
-          {/* Educational Content Below */}
-          <div className="max-w-4xl mx-auto border-t border-[#E9E4F2] pt-16">
-            <article className="prose max-w-none text-xs sm:text-sm text-[#6B6478] leading-relaxed font-medium">
-              <h2 className="text-xl font-black text-[#1F1B2D] mb-4">GST Calculator FAQs</h2>
-              
-              <div className="flex flex-col gap-6">
-                <div>
-                  <h3 className="font-extrabold text-[#1F1B2D] mb-1.5">What is a GST Calculator?</h3>
-                  <p>
-                    A GST Calculator is an online tool built to let businesses, suppliers, and buyers determine tax percentages instantly. It simplifies tax billing by calculating central tax (CGST), state tax (SGST), and integrated tax (IGST) breakdowns automatically without any manual math.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="font-extrabold text-[#1F1B2D] mb-1.5">How is GST calculated?</h3>
-                  <p>
-                    GST calculations apply to exclusive or inclusive amounts. Exclusive means adding tax to a base amount: <code>Value + (Value * Rate/100)</code>. Inclusive means calculating base price by extracting tax from the total: <code>Value - (Value / (1 + Rate/100))</code>.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="font-extrabold text-[#1F1B2D] mb-1.5">What is the difference between CGST, SGST and IGST?</h3>
-                  <p>
-                    CGST (Central Goods and Services Tax) and SGST (State Goods and Services Tax) are applied to transactions within the same state boundaries (Intra-state). IGST (Integrated Goods and Services Tax) is applied to interstate deliveries (inter-state) or transactions with international clients.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="font-extrabold text-[#1F1B2D] mb-1.5">How do I calculate GST inclusive price?</h3>
-                  <p>
-                    GST Inclusive calculations separate base amounts from integrated tax. Use this formula to get tax amount: <code>Total Amount * [Rate / (100 + Rate)]</code>. Subtracting it leaves the base billing amount.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="font-extrabold text-[#1F1B2D] mb-1.5">How do I calculate GST exclusive price?</h3>
-                  <p>
-                    GST Exclusive calculations require you to add tax onto the primary amount. Formula: <code>Base Amount * [Rate / 100]</code>. The sum of tax and base amount determines the customer invoice value.
-                  </p>
-                </div>
-              </div>
-            </article>
           </div>
 
           <ToolFeedback toolName="GST Calculator" />

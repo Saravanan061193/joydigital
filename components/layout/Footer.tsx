@@ -201,7 +201,7 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/free-audit" className="font-bold text-accent hover:text-accent-dark hover:pl-1 transition-all">
+              <Link href="/free-website-audit" className="font-bold text-accent hover:text-accent-dark hover:pl-1 transition-all">
                 Claim Free Website Audit
               </Link>
             </li>

@@ -105,7 +105,6 @@ export default function QrCodeGeneratorPage() {
       }
     };
     
-    // Set a debounce or let it run
     renderQr();
   }, [qrValue]);
 
@@ -168,8 +167,7 @@ export default function QrCodeGeneratorPage() {
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://joydigital.in" },
-      { "@type": "ListItem", "position": 2, "name": "Free Tools", "item": "https://joydigital.in/free-tools" },
-      { "@type": "ListItem", "position": 3, "name": "QR Code Generator", "item": "https://joydigital.in/free-tools/qr-code-generator" }
+      { "@type": "ListItem", "position": 2, "name": "QR Code Generator", "item": "https://joydigital.in/qr-code-generator" }
     ]
   };
 
@@ -188,9 +186,7 @@ export default function QrCodeGeneratorPage() {
           <nav className="text-xs text-[#6B6478] font-bold mb-6 flex items-center gap-1.5">
             <a href="/" className="hover:text-[#7C3AED]">Home</a>
             <i className="fa-solid fa-chevron-right text-[8px]" />
-            <a href="/free-tools" className="hover:text-[#7C3AED]">Free Tools</a>
-            <i className="fa-solid fa-chevron-right text-[8px]" />
-            <span className="text-[#1F1B2D]">QR Code Generator</span>
+            <span className="text-[#1F1B2D]" aria-current="page">QR Code Generator</span>
           </nav>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-16">
@@ -199,7 +195,7 @@ export default function QrCodeGeneratorPage() {
             <div className="lg:col-span-7 bg-white border border-[#E9E4F2] p-8 rounded-[24px] shadow-sm relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1.5 bg-[#F97316]" />
               
-              <div className="mb-8">
+              <div className="mb-8 text-left">
                 <h1 className="text-2xl font-black text-[#1F1B2D] mb-2">QR Code Generator</h1>
                 <p className="text-xs text-[#6B6478] font-semibold leading-relaxed">
                   Generate professional QR codes for links, emails, WiFi, maps, and UPI payments instantly.
@@ -236,9 +232,8 @@ export default function QrCodeGeneratorPage() {
 
               <form onSubmit={handleGenerate} className="flex flex-col gap-5">
                 
-                {/* Dynamic input sections */}
                 {type === "url" && (
-                  <div className="flex flex-col gap-1.5">
+                  <div className="flex flex-col gap-1.5 text-left">
                     <label htmlFor="url" className="text-[10px] font-extrabold text-[#6B6478] uppercase tracking-wider block">URL / Link Address</label>
                     <div className="flex items-center gap-2 bg-[#FAF9FF] border border-[#E9E4F2] rounded-xl px-4 py-3.5 focus-within:bg-white focus-within:border-[#F97316] focus-within:ring-4 focus-within:ring-[#F97316]/10 transition-all">
                       <span className="text-sm font-bold text-[#6B6478]"><i className="fa-solid fa-globe" /></span>
@@ -256,7 +251,7 @@ export default function QrCodeGeneratorPage() {
                 )}
 
                 {type === "whatsapp" && (
-                  <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-4 text-left">
                     <div className="flex flex-col gap-1.5">
                       <label htmlFor="waPhone" className="text-[10px] font-extrabold text-[#6B6478] uppercase tracking-wider block">WhatsApp Number (with country code)</label>
                       <div className="flex items-center gap-2 bg-[#FAF9FF] border border-[#E9E4F2] rounded-xl px-4 py-3.5 focus-within:bg-white focus-within:border-[#F97316] focus-within:ring-4 focus-within:ring-[#F97316]/10 transition-all">
@@ -289,7 +284,7 @@ export default function QrCodeGeneratorPage() {
                 )}
 
                 {type === "phone" && (
-                  <div className="flex flex-col gap-1.5">
+                  <div className="flex flex-col gap-1.5 text-left">
                     <label htmlFor="phone" className="text-[10px] font-extrabold text-[#6B6478] uppercase tracking-wider block">Phone Contact Number</label>
                     <div className="flex items-center gap-2 bg-[#FAF9FF] border border-[#E9E4F2] rounded-xl px-4 py-3.5 focus-within:bg-white focus-within:border-[#F97316] focus-within:ring-4 focus-within:ring-[#F97316]/10 transition-all">
                       <span className="text-sm font-bold text-[#6B6478]"><i className="fa-solid fa-phone" /></span>
@@ -307,7 +302,7 @@ export default function QrCodeGeneratorPage() {
                 )}
 
                 {type === "email" && (
-                  <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-4 text-left">
                     <div className="flex flex-col gap-1.5">
                       <label htmlFor="emailTo" className="text-[10px] font-extrabold text-[#6B6478] uppercase tracking-wider block">Email Recipient Address</label>
                       <div className="flex items-center gap-2 bg-[#FAF9FF] border border-[#E9E4F2] rounded-xl px-4 py-3.5 focus-within:bg-white focus-within:border-[#F97316] focus-within:ring-4 focus-within:ring-[#F97316]/10 transition-all">
@@ -349,7 +344,7 @@ export default function QrCodeGeneratorPage() {
                 )}
 
                 {type === "text" && (
-                  <div className="flex flex-col gap-1.5">
+                  <div className="flex flex-col gap-1.5 text-left">
                     <label htmlFor="plainText" className="text-[10px] font-extrabold text-[#6B6478] uppercase tracking-wider block">Plain Text Value</label>
                     <textarea
                       id="plainText"
@@ -364,7 +359,7 @@ export default function QrCodeGeneratorPage() {
                 )}
 
                 {type === "maps" && (
-                  <div className="flex flex-col gap-1.5">
+                  <div className="flex flex-col gap-1.5 text-left">
                     <label htmlFor="mapUrl" className="text-[10px] font-extrabold text-[#6B6478] uppercase tracking-wider block">Google Maps Link</label>
                     <div className="flex items-center gap-2 bg-[#FAF9FF] border border-[#E9E4F2] rounded-xl px-4 py-3.5 focus-within:bg-white focus-within:border-[#F97316] focus-within:ring-4 focus-within:ring-[#F97316]/10 transition-all">
                       <span className="text-sm font-bold text-[#6B6478]"><i className="fa-solid fa-map-pin" /></span>
@@ -382,7 +377,7 @@ export default function QrCodeGeneratorPage() {
                 )}
 
                 {type === "upi" && (
-                  <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-4 text-left">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div className="flex flex-col gap-1.5">
                         <label htmlFor="upiId" className="text-[10px] font-extrabold text-[#6B6478] uppercase tracking-wider block">UPI VPA ID *</label>
@@ -437,7 +432,7 @@ export default function QrCodeGeneratorPage() {
                 )}
 
                 {type === "wifi" && (
-                  <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-4 text-left">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div className="flex flex-col gap-1.5">
                         <label htmlFor="wifiSsid" className="text-[10px] font-extrabold text-[#6B6478] uppercase tracking-wider block">WiFi Network Name (SSID) *</label>
@@ -504,11 +499,12 @@ export default function QrCodeGeneratorPage() {
             {/* Results Display */}
             <div className="lg:col-span-5 bg-white border border-[#E9E4F2] p-8 rounded-[24px] shadow-sm flex flex-col justify-between h-full min-h-[400px]">
               <div>
-                <h2 className="text-lg font-black text-[#1F1B2D] mb-6 border-b border-[#E9E4F2] pb-3">QR Preview</h2>
+                <h2 className="text-lg font-black text-[#1F1B2D] mb-6 border-b border-[#E9E4F2] pb-3" id="qr-result-title">
+                  QR Preview
+                </h2>
                 
                 {qrValue ? (
-                  <div className="flex flex-col items-center gap-6">
-                    {/* QR Canvas */}
+                  <div className="flex flex-col items-center gap-6" aria-labelledby="qr-result-title">
                     <div className="bg-[#FAF9FF] border border-[#E9E4F2] p-6 rounded-2xl flex items-center justify-center shadow-inner relative">
                       <canvas ref={canvasRef} style={{ display: qrLoaded ? "block" : "none" }} />
                       {!qrLoaded && (
@@ -518,7 +514,6 @@ export default function QrCodeGeneratorPage() {
                       )}
                     </div>
 
-                    {/* Meta info info */}
                     <div className="w-full text-center">
                       <span className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-widest block mb-2">QR Code Data String</span>
                       <div className="bg-[#FAF9FF] border border-[#E9E4F2] rounded-xl px-4 py-3 flex justify-between items-center text-left">
@@ -532,7 +527,6 @@ export default function QrCodeGeneratorPage() {
                       </div>
                     </div>
 
-                    {/* Download button */}
                     <button
                       onClick={handleDownloadQR}
                       disabled={!qrLoaded}
@@ -554,20 +548,21 @@ export default function QrCodeGeneratorPage() {
                 )}
               </div>
 
-              {/* Pitch CTA Card */}
-              <div className="bg-[#FAF9FF] border border-[#E9E4F2] p-5 rounded-2xl mt-6 relative overflow-hidden">
+              {/* Marketing UX CTA Card: CONVERSION UX & SCAN MARKETING */}
+              <div className="bg-[#FAF9FF] border border-[#E9E4F2] p-5 rounded-2xl mt-6 relative overflow-hidden text-left">
                 <div className="absolute top-0 left-0 h-full w-1 bg-[#F97316]" />
-                <h3 className="text-xs font-bold text-[#1F1B2D] mb-1">Create a business website for your brand?</h3>
-                <p className="text-[10px] text-[#6B6478] font-semibold leading-relaxed mb-4">
-                  Boost your professional image with custom web platforms, digital checkouts, and maps integrations.
+                <h3 className="text-xs font-black text-[#1F1B2D] mb-1">Increase QR Scan Conversions!</h3>
+                <p className="text-[10px] text-[#6B6478] font-bold leading-relaxed mb-4">
+                  Need a custom client-facing mobile web page or dashboard optimized for quick QR code scans? We build beautiful, conversion-focused mobile interfaces under 1.5s load time.
                 </p>
                 <a
-                  href="/contact"
+                  href="https://wa.me/919080026133?text=Hi%20Joy%20Digital,%20I%20am%20interested%20in%20building%20a%20custom%20mobile-responsive%20landing%20page%20for%20our%20QR%20marketing%20campaign."
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={handleCtaClick}
-                  className="inline-flex items-center gap-1.5 bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-extrabold text-[10px] py-2.5 px-4 rounded-lg shadow-sm hover:scale-[1.01] transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-extrabold text-[10px] py-2.5 px-4.5 rounded-lg shadow-sm hover:scale-[1.01] transition-all cursor-pointer"
                 >
-                  Create a Website
-                  <i className="fa-solid fa-arrow-right text-[8px]" />
+                  <i className="fa-brands fa-whatsapp text-xs animate-pulse" /> Talk to a UX Architect
                 </a>
               </div>
             </div>

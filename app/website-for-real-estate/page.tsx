@@ -47,6 +47,7 @@ export default function RealEstateWebPage() {
       heroTitle="Custom Website Design & Lead Systems for Real Estate Brands"
       heroSubtitle="Stop relying strictly on expensive listing portals. Showcase your properties, display premium layouts, and capture high-intent buyer inquiries directly on WhatsApp."
       leadSource="Website for Real Estate Landing Page"
+      heroCtaText="Get Real Estate Site Quote"
       overviewTitle="Personal Branding & Direct Lead Capture for Property Consultants"
       overviewContent={
         <div className="space-y-6">

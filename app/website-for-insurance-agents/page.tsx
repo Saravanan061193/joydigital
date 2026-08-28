@@ -47,6 +47,7 @@ export default function InsuranceAgentWebPage() {
       heroTitle="Custom Lead-Generation Websites for Insurance Agents & LIC Advisors"
       heroSubtitle="Stop relying strictly on cold calling. Build authority, present policy calculators, and capture high-intent insurance inquiries directly on your own branded web layout."
       leadSource="Website for Insurance Agents Landing Page"
+      heroCtaText="Get Insurance Website Quote"
       overviewTitle="Personal Branding & Direct Lead Capture for Financial Advisors"
       overviewContent={
         <div className="space-y-6">

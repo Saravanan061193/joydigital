@@ -17,6 +17,36 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/free-audit",
+        destination: "/free-website-audit",
+        permanent: true,
+      },
+      {
+        source: "/free-tools/gst-calculator",
+        destination: "/gst-calculator",
+        permanent: true,
+      },
+      {
+        source: "/free-tools/invoice-generator",
+        destination: "/invoice-generator",
+        permanent: true,
+      },
+      {
+        source: "/free-tools/quotation-generator",
+        destination: "/quotation-generator",
+        permanent: true,
+      },
+      {
+        source: "/free-tools/qr-code-generator",
+        destination: "/qr-code-generator",
+        permanent: true,
+      },
+      {
+        source: "/free-tools/whatsapp-link-generator",
+        destination: "/whatsapp-link-generator",
+        permanent: true,
+      },
+      {
         source: "/seo-services-usa",
         destination: "/seo-services",
         permanent: true,

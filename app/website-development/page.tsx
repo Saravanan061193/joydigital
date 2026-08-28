@@ -35,9 +35,10 @@ export default function WebDevPage() {
   return (
     <ServicePageTemplate
       serviceName="Website Development"
-      heroTitle="High-Performance Custom Web Development Services"
-      heroSubtitle="Transform your online presence with responsive business websites engineered using clean code, optimized metadata structures, and next-generation frameworks. We help your business rank at the top of Google and turn organic traffic into recurring customers globally."
+      heroTitle="Custom Website Development That Helps Your Business Grow"
+      heroSubtitle="Business Websites Starting from ₹15,000. Build a custom, high-speed website designed to rank on search engines, load under 1.5s, and turn visitors into qualified leads."
       leadSource="Website Development Landing Page"
+      heroCtaText="Get My Website Quote"
       overviewTitle="Engineered for Conversions, PageRank & Modern Web Performance"
       overviewContent={
         <div className="space-y-6">
@@ -64,34 +65,49 @@ export default function WebDevPage() {
       benefitsSubtitle="We don't just build sites; we construct high-converting lead pipelines that combine beautiful visuals with fast-loading frameworks."
       benefits={[
         {
+          icon: "fa-solid fa-palette",
+          title: "Custom UX Design (No Templates)",
+          description: "We design tailored interfaces specifically for your brand identity and audience, avoiding generic and bloated templates.",
+        },
+        {
           icon: "fa-solid fa-bolt",
-          title: "Under 1.5s Load Speeds",
-          description: "Optimized server bundle chunks and compressed media files ensure your site loads instantly on mobile networks, reducing bounce rates and keeping users engaged on the page.",
+          title: "Fast Performance (Under 1.5s)",
+          description: "Engineered using clean Next.js/React code structure to load under 1.5 seconds, satisfying Core Web Vitals.",
+        },
+        {
+          icon: "fa-solid fa-funnel-dollar",
+          title: "Conversion-Focused Structure",
+          description: "Layouts organized strategically to capture attention, build brand trust, and guide visitors towards inquiry.",
         },
         {
           icon: "fa-solid fa-mobile-screen",
-          title: "Mobile-First Responsive Layouts",
-          description: "Over 65% of search inquiries happen on smartphones. We construct responsive layouts that fit perfectly on all screens, tablets, and mobile browser viewports.",
+          title: "Mobile-Responsive Layout",
+          description: "A seamless viewport adaptation that works perfectly on smartphones, tablets, and desktops alike.",
         },
         {
-          icon: "fa-solid fa-shield-halved",
-          title: "Advanced Security & SSL Setup",
-          description: "We implement SSL certificates, secure payment gateways, sanitization scripts, and firewalls to protect user data from vulnerability hacks and maintain compliance.",
-        },
-        {
-          icon: "fa-solid fa-magnifying-glass",
-          title: "SEO-Ready Configurations",
-          description: "Built-in dynamic sitemaps, semantic tag hierarchies, open graph properties, and meta indexing code make it easy for Google to crawl, index, and rank your services.",
-        },
-        {
-          icon: "fa-solid fa-chart-pie",
-          title: "Built-in CRO Mechanics",
-          description: "Strategic CTA buttons, inline forms, user-friendly layouts, and floating widgets are positioned to convert simple visitors into active sales leads automatically.",
+          icon: "fa-brands fa-whatsapp",
+          title: "WhatsApp Lead Integration",
+          description: "Contextual, pre-filled WhatsApp click-to-chat features that make contacting you instant and simple.",
         },
         {
           icon: "fa-solid fa-gears",
-          title: "Dedicated Technical Support",
-          description: "We provide hosting setups, monthly database backups, core framework updates, and technical troubleshooting to keep your website running smoothly without downtime.",
+          title: "Admin Panel / CMS Option",
+          description: "Clean content management systems allowing you to update your blog, change services, and manage leads.",
+        },
+        {
+          icon: "fa-solid fa-magnifying-glass",
+          title: "GSC & Sitemap Integration",
+          description: "Full configuration of Google Search Console, tracking scripts, and auto-updating sitemaps for SEO indexing.",
+        },
+        {
+          icon: "fa-solid fa-shield-halved",
+          title: "Standard Security & SSL",
+          description: "Fully configured HTTPS/SSL certificates, vulnerability scanning, and secure API form handshakes.",
+        },
+        {
+          icon: "fa-solid fa-server",
+          title: "1-Year Hosting Setup Support",
+          description: "We set up, configure, and monitor your cloud hosting (e.g. Vercel or CDN servers) free for 1 year.",
         },
       ]}
       processTitle="Our Growth-Focused Development Workflow"
@@ -126,47 +142,57 @@ export default function WebDevPage() {
       pricingSubtitle="Select a package designed to scale your business profile. Zero hidden costs, transparent milestones."
       pricingTiers={[
         {
-          name: "Startup Package",
+          name: "Starter Website",
           price: "₹15,000",
           description: "Perfect for new local service businesses wanting to establish professional authority online.",
           features: [
-            "Up to 5 Pages Responsive Layout",
-            "Custom Logo & Branding Style",
-            "Basic On-Page SEO Setup",
-            "Lead Contact Form Integration",
-            "Floating WhatsApp Support Button",
-            "1 Year Free Hosting Setup Support",
+            "Custom responsive website",
+            "Mobile optimization",
+            "WhatsApp integration",
+            "Lead Contact form",
+            "Basic SEO setup",
+            "Google Search Console sync",
+            "XML Sitemap generated",
+            "Google Analytics integration",
           ],
-          ctaText: "Choose Startup Plan",
+          ctaText: "Get Started",
         },
         {
-          name: "Business Growth Package",
+          name: "Business Growth Website",
           price: "₹35,000",
-          description: "Recommended for growing companies targeting local search rankings and regular lead generation.",
+          description: "Recommended for growing companies targeting local search rankings and active online client acquisition.",
           isPopular: true,
           features: [
-            "Up to 10 Pages Structured Layout",
-            "Advanced On-Page SEO Integration",
-            "Google Business Profile Linkage",
-            "Interactive Blog Setup (MDX ready)",
-            "Dynamic FAQ Accordions + Schema",
-            "Free Speed Optimization Guarantee",
+            "Custom website layout",
+            "Conversion-focused UI/UX",
+            "SEO-ready architecture",
+            "Advanced contact forms",
+            "WhatsApp leads sync",
+            "Search Console configuration",
+            "Google Analytics event tracking",
+            "Core Web Vitals speed tuning",
+            "Basic content copywriting check",
+            "Admin panel / CMS option",
           ],
-          ctaText: "Choose Growth Plan",
+          ctaText: "Request a Quote",
         },
         {
-          name: "Enterprise Solutions",
-          price: "₹75,000+",
-          description: "Custom software applications, e-commerce stores, and high-performance agency platforms.",
+          name: "Website + SEO Growth",
+          price: "Custom Quote",
+          description: "Perfect for companies seeking persistent ranking growth, organic pipelines, and local lead dominance.",
           features: [
-            "Unlimited Custom Framework Pages",
-            "Full Payment Gateway Integration",
-            "Tailored Operations Admin Panel",
-            "Premium Security & Firewalls",
-            "Schema Structured Snippets",
-            "Bi-weekly Technical Support Checks",
+            "Custom website layout",
+            "Technical SEO code audits",
+            "Advanced On-page SEO setup",
+            "High-intent keyword research",
+            "Local SEO & maps optimizations",
+            "Google Business Profile setups",
+            "Comprehensive content strategy",
+            "Monthly SEO retainer campaigns",
+            "Index monitoring & audit fixes",
+            "Google Search Console reporting",
           ],
-          ctaText: "Contact for Proposal",
+          ctaText: "Talk to an SEO Expert",
         },
       ]}
       faqs={[

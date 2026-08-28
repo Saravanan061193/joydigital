@@ -39,11 +39,11 @@ export default function ThankYouPage() {
           </span>
 
           <h1 className="text-3xl md:text-5xl font-black text-[#0F172A] tracking-tight mb-4 leading-tight">
-            Thank You for Reaching Out!
+            Thank you!
           </h1>
           
-          <p className="text-sm md:text-base text-[#64748B] max-w-xl mx-auto mb-10 leading-relaxed font-medium">
-            We have received your requirements. Our strategy and optimization team will review your submission and contact you within <span className="text-[#0F172A] font-bold">24 hours</span> to discuss your project.
+          <p className="text-sm md:text-base text-[#64748B] max-w-xl mx-auto mb-10 leading-relaxed font-semibold">
+            Our team will review your website and contact you shortly.
           </p>
 
           {/* Interactive expectation card / timeline layout */}
@@ -94,7 +94,7 @@ export default function ThankYouPage() {
               className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-8 py-4 rounded-xl shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2"
             >
               <i className="fa-brands fa-whatsapp text-lg" />
-              Chat on WhatsApp Now
+              Chat With Us on WhatsApp
             </a>
 
             <Link

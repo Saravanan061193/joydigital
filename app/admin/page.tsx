@@ -97,7 +97,7 @@ const PIPELINE_STAGES = [
   { label: "Contacted", value: "contacted", color: "bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800" },
   { label: "Qualified", value: "qualified", color: "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800" },
   { label: "Proposal Sent", value: "proposal_sent", color: "bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 border-purple-200 dark:border-purple-800" },
-  { label: "Negotiation", value: "negotiation", color: "bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-400 border-pink-200 dark:border-pink-800" },
+  { label: "Follow-up", value: "follow_up", color: "bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-400 border-pink-200 dark:border-pink-800" },
   { label: "Won", value: "won", color: "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800" },
   { label: "Lost", value: "lost", color: "bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800" },
   { label: "Irrelevant Lead", value: "irrelevant", color: "bg-slate-100 dark:bg-slate-800 text-slate-705 dark:text-slate-350 border-slate-200 dark:border-slate-750" }
@@ -231,7 +231,7 @@ export default function AdminPage() {
       contacted: 0,
       qualified: 0,
       proposal_sent: 0,
-      negotiation: 0,
+      follow_up: 0,
       won: 0,
       lost: 0,
       irrelevant: 0
@@ -833,12 +833,12 @@ export default function AdminPage() {
   // Calculate Metrics
   const totalCount = enquiries.length;
   const newCount = enquiries.filter((e) => (e.pipelineStage || "new") === "new").length;
-  const inProgressCount = enquiries.filter((e) => ["contacted", "qualified", "proposal_sent", "negotiation"].includes(e.pipelineStage || "")).length;
+  const inProgressCount = enquiries.filter((e) => ["contacted", "qualified", "proposal_sent", "follow_up"].includes(e.pipelineStage || "")).length;
   const contactedCount = enquiries.filter((e) => (e.pipelineStage || "new") === "contacted").length;
   
   // Pipeline Value (Sum of proposals for open deals)
   const pipelineValue = enquiries
-    .filter(e => ["qualified", "proposal_sent", "negotiation"].includes(e.pipelineStage || ""))
+    .filter(e => ["qualified", "proposal_sent", "follow_up"].includes(e.pipelineStage || ""))
     .reduce((acc, curr) => acc + getLeadValue(curr), 0);
 
   // Closed Revenue (Sum of proposals of won deals)
@@ -2528,9 +2528,9 @@ export default function AdminPage() {
                         <div className="flex flex-col gap-3 py-4 max-w-md mx-auto">
                           {[
                             { stage: "Total Leads", count: totalCount, width: "w-full", bg: "bg-blue-600 dark:bg-blue-500", percent: 100 },
-                            { stage: "Contacted", count: enquiries.filter(e => ["contacted", "qualified", "proposal_sent", "negotiation", "won"].includes(e.pipelineStage || "")).length, width: "w-[85%]", bg: "bg-indigo-600 dark:bg-indigo-500", percent: totalCount > 0 ? Math.round((enquiries.filter(e => ["contacted", "qualified", "proposal_sent", "negotiation", "won"].includes(e.pipelineStage || "")).length / totalCount) * 100) : 0 },
-                            { stage: "Qualified", count: enquiries.filter(e => ["qualified", "proposal_sent", "negotiation", "won"].includes(e.pipelineStage || "")).length, width: "w-[65%]", bg: "bg-amber-600 dark:bg-amber-500", percent: totalCount > 0 ? Math.round((enquiries.filter(e => ["qualified", "proposal_sent", "negotiation", "won"].includes(e.pipelineStage || "")).length / totalCount) * 100) : 0 },
-                            { stage: "Proposals", count: enquiries.filter(e => ["proposal_sent", "negotiation", "won"].includes(e.pipelineStage || "")).length, width: "w-[45%]", bg: "bg-purple-600 dark:bg-purple-500", percent: totalCount > 0 ? Math.round((enquiries.filter(e => ["proposal_sent", "negotiation", "won"].includes(e.pipelineStage || "")).length / totalCount) * 100) : 0 },
+                            { stage: "Contacted", count: enquiries.filter(e => ["contacted", "qualified", "proposal_sent", "follow_up", "won"].includes(e.pipelineStage || "")).length, width: "w-[85%]", bg: "bg-indigo-600 dark:bg-indigo-500", percent: totalCount > 0 ? Math.round((enquiries.filter(e => ["contacted", "qualified", "proposal_sent", "follow_up", "won"].includes(e.pipelineStage || "")).length / totalCount) * 100) : 0 },
+                            { stage: "Qualified", count: enquiries.filter(e => ["qualified", "proposal_sent", "follow_up", "won"].includes(e.pipelineStage || "")).length, width: "w-[65%]", bg: "bg-amber-600 dark:bg-amber-500", percent: totalCount > 0 ? Math.round((enquiries.filter(e => ["qualified", "proposal_sent", "follow_up", "won"].includes(e.pipelineStage || "")).length / totalCount) * 100) : 0 },
+                            { stage: "Proposals", count: enquiries.filter(e => ["proposal_sent", "follow_up", "won"].includes(e.pipelineStage || "")).length, width: "w-[45%]", bg: "bg-purple-600 dark:bg-purple-500", percent: totalCount > 0 ? Math.round((enquiries.filter(e => ["proposal_sent", "follow_up", "won"].includes(e.pipelineStage || "")).length / totalCount) * 100) : 0 },
                             { stage: "Won Deals", count: wonCount, width: "w-[25%]", bg: "bg-emerald-600 dark:bg-emerald-500", percent: totalCount > 0 ? Math.round((wonCount / totalCount) * 100) : 0 }
                           ].map((item, idx) => (
                             <div key={idx} className="flex items-center gap-4 text-xs font-semibold">
@@ -2732,8 +2732,8 @@ export default function AdminPage() {
                   },
                   {
                     title: "Active Pipeline Deals",
-                    value: getFilteredLeadsForReports().filter(e => ["contacted", "qualified", "proposal_sent", "negotiation"].includes(e.pipelineStage || "")).length,
-                    change: `${getFilteredLeadsForReports().length > 0 ? Math.round((getFilteredLeadsForReports().filter(e => ["contacted", "qualified", "proposal_sent", "negotiation"].includes(e.pipelineStage || "")).length / getFilteredLeadsForReports().length) * 100) : 0}% active rate`,
+                    value: getFilteredLeadsForReports().filter(e => ["contacted", "qualified", "proposal_sent", "follow_up"].includes(e.pipelineStage || "")).length,
+                    change: `${getFilteredLeadsForReports().length > 0 ? Math.round((getFilteredLeadsForReports().filter(e => ["contacted", "qualified", "proposal_sent", "follow_up"].includes(e.pipelineStage || "")).length / getFilteredLeadsForReports().length) * 100) : 0}% active rate`,
                     icon: "fa-solid fa-arrow-trend-up text-indigo-600 bg-indigo-50 dark:bg-indigo-900/20"
                   },
                   {
@@ -2750,8 +2750,8 @@ export default function AdminPage() {
                   },
                   {
                     title: "Est. Pipeline Value",
-                    value: `₹${getFilteredLeadsForReports().filter(e => ["qualified", "proposal_sent", "negotiation"].includes(e.pipelineStage || "")).reduce((acc, curr) => acc + getLeadValue(curr), 0).toLocaleString()}`,
-                    change: `₹${(getFilteredLeadsForReports().filter(e => ["qualified", "proposal_sent", "negotiation"].includes(e.pipelineStage || "")).reduce((acc, curr) => acc + getLeadValue(curr), 0) + getFilteredLeadsForReports().filter(e => e.pipelineStage === "won").reduce((acc, curr) => acc + getLeadValue(curr), 0)).toLocaleString()} total value`,
+                    value: `₹${getFilteredLeadsForReports().filter(e => ["qualified", "proposal_sent", "follow_up"].includes(e.pipelineStage || "")).reduce((acc, curr) => acc + getLeadValue(curr), 0).toLocaleString()}`,
+                    change: `₹${(getFilteredLeadsForReports().filter(e => ["qualified", "proposal_sent", "follow_up"].includes(e.pipelineStage || "")).reduce((acc, curr) => acc + getLeadValue(curr), 0) + getFilteredLeadsForReports().filter(e => e.pipelineStage === "won").reduce((acc, curr) => acc + getLeadValue(curr), 0)).toLocaleString()} total value`,
                     icon: "fa-solid fa-wallet text-amber-600 bg-amber-50 dark:bg-amber-900/20"
                   }
                 ].map((kpi, idx) => (

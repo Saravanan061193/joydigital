@@ -529,56 +529,45 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   {hero.badge}
                 </span>
               </div>
-              
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight mb-6 leading-tight">
-                {country === "" ? (
-                  <>
-                    <span>Build Your Digital Presence.</span>
-                    <span 
-                      className={`block text-[#A78BFA] transition-all duration-350 transform ${fadeState}`}
-                      style={{ minHeight: "1.2em" }}
-                    >
-                      {activePhrase}
-                    </span>
-                  </>
-                ) : (
-                  hero.h1
-                )}
+                         <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight mb-6 leading-tight">
+                Get a Website That <span className="text-[#A78BFA]">Brings You More Customers</span>
               </h1>
               
-              <p className="text-sm md:text-base text-[#D8D2E6] mb-8 max-w-xl leading-relaxed font-medium">
-                {hero.subtitle}
+              <p className="text-sm md:text-base text-[#D8D2E6] mb-6 max-w-xl leading-relaxed font-medium">
+                Custom Websites, SEO & Digital Marketing solutions designed to increase your online visibility, generate enquiries, and grow your business.
               </p>
+
+              {/* Small trust statement below CTA */}
+              <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[10px] sm:text-xs text-[#A78BFA] font-bold uppercase tracking-wider mb-8">
+                <span>Custom-built</span>
+                <span className="text-[#2A203F] select-none">•</span>
+                <span>SEO-ready</span>
+                <span className="text-[#2A203F] select-none">•</span>
+                <span>Mobile-friendly</span>
+                <span className="text-[#2A203F] select-none">•</span>
+                <span>Lead-focused</span>
+              </div>
               
               {/* CTAs with hover scale microinteractions */}
               <div className="flex flex-wrap items-center gap-4 w-full mb-8">
-                <a
-                  href="#enquiry-section"
-                  onClick={() => handleCtaEvent("Get a Free Consultation")}
+                <Link
+                  href="/free-website-audit"
+                  onClick={() => handleCtaEvent("Get Free Website Audit")}
                   className="w-full sm:w-auto text-center bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-bold text-xs px-8 py-4 rounded-xl shadow-lg shadow-[#7C3AED]/25 hover:scale-[1.025] transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 group"
                 >
-                  Get a Free Consultation
+                  Get Free Website Audit
                   <i className="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform" />
-                </a>
+                </Link>
                 
                 <a
-                  href="#portfolio-section"
-                  onClick={() => handleCtaEvent("View Our Work")}
-                  className="w-full sm:w-auto text-center bg-transparent border border-white hover:bg-white/10 text-white font-bold text-xs px-8 py-4 rounded-xl shadow-md hover:scale-[1.025] transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 group"
-                >
-                  View Our Work
-                  <i className="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform" />
-                </a>
-                
-                <a
-                  href="https://wa.me/919080026133?text=Hello%20Joy%20Digital,%20I'd%20like%20to%20get%20a%20free%20consultation%20for%20my%20business."
+                  href="https://wa.me/919080026133?text=Hi%20Joy%20Digital,%20I%20need%20a%20website%20for%20my%20business.%20I%20would%20like%20to%20know%20the%20pricing%20and%20process."
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => handleWaEvent("hero_section")}
                   className="w-full sm:w-auto bg-[#10b981] hover:bg-[#059669] text-white font-bold text-xs px-8 py-4 rounded-xl shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/25 hover:scale-[1.025] transition-all flex items-center justify-center gap-2 duration-200 cursor-pointer"
                 >
                   <i className="fa-brands fa-whatsapp text-lg animate-pulse" />
-                  WhatsApp Support
+                  Chat on WhatsApp
                 </a>
               </div>
 
@@ -642,7 +631,102 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           </div>
         </section>
 
-        {/* 3. SERVICES SECTION WITH PREMIUM HOVER STATES */}
+        {/* 3. BUSINESS PROBLEMS SECTION */}
+        <section className="py-20 bg-[#FAF9FF] border-b border-[#E9E4F2] relative z-10">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
+              <span className="text-xs font-bold text-rose-500 uppercase tracking-widest block mb-3">
+                Common Bottlenecks
+              </span>
+              <h2 className="text-3xl font-extrabold text-[#1F1B2D] mb-4">
+                Is Your Website Actually Generating Leads?
+              </h2>
+              <p className="text-xs sm:text-sm text-[#6B6478] font-semibold">
+                Most websites look decent but fail to achieve actual business results. Here are the core problems holding your online visibility back.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Problem 1 */}
+              <div className="p-8 bg-white border border-[#E9E4F2] rounded-[24px] shadow-sm hover:shadow-md hover:border-rose-200 transition-all duration-300 flex gap-5 items-start text-left reveal-hidden group">
+                <div className="w-12 h-12 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-xl shadow-sm flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <i className="fa-solid fa-eye-slash" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-[#1F1B2D] mb-2">Low Google Visibility</h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed font-semibold">Your site is buried on Page 2 or 3 of Google search results for key buying keywords, causing you to lose traffic to local competitors.</p>
+                </div>
+              </div>
+
+              {/* Problem 2 */}
+              <div className="p-8 bg-white border border-[#E9E4F2] rounded-[24px] shadow-sm hover:shadow-md hover:border-rose-200 transition-all duration-300 flex gap-5 items-start text-left reveal-hidden group">
+                <div className="w-12 h-12 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-xl shadow-sm flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <i className="fa-solid fa-palette" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-[#1F1B2D] mb-2">Poor Website Design</h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed font-semibold">Outdated layouts or generic agency templates that look unprofessional and fail to establish trust within the first 3 seconds.</p>
+                </div>
+              </div>
+
+              {/* Problem 3 */}
+              <div className="p-8 bg-white border border-[#E9E4F2] rounded-[24px] shadow-sm hover:shadow-md hover:border-rose-200 transition-all duration-300 flex gap-5 items-start text-left reveal-hidden group">
+                <div className="w-12 h-12 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-xl shadow-sm flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <i className="fa-solid fa-circle-question" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-[#1F1B2D] mb-2">Low Enquiries</h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed font-semibold">Visitors click onto your site, browse around, but leave without filling out forms, sending emails, or making phone calls.</p>
+                </div>
+              </div>
+
+              {/* Problem 4 */}
+              <div className="p-8 bg-white border border-[#E9E4F2] rounded-[24px] shadow-sm hover:shadow-md hover:border-rose-200 transition-all duration-300 flex gap-5 items-start text-left reveal-hidden group">
+                <div className="w-12 h-12 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-xl shadow-sm flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <i className="fa-brands fa-whatsapp" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-[#1F1B2D] mb-2">No WhatsApp Conversion</h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed font-semibold">Absence of direct WhatsApp click-to-chat widgets makes it difficult for mobile users to quickly ask about your pricing and services.</p>
+                </div>
+              </div>
+
+              {/* Problem 5 */}
+              <div className="p-8 bg-white border border-[#E9E4F2] rounded-[24px] shadow-sm hover:shadow-md hover:border-rose-200 transition-all duration-300 flex gap-5 items-start text-left reveal-hidden group">
+                <div className="w-12 h-12 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-xl shadow-sm flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <i className="fa-solid fa-gauge-simple" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-[#1F1B2D] mb-2">Slow Website</h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed font-semibold">Bloated page builders take 5+ seconds to load, triggering high bounce rates and causing search engines to devalue your page rank.</p>
+                </div>
+              </div>
+
+              {/* Problem 6 */}
+              <div className="p-8 bg-white border border-[#E9E4F2] rounded-[24px] shadow-sm hover:shadow-md hover:border-rose-200 transition-all duration-300 flex gap-5 items-start text-left reveal-hidden group">
+                <div className="w-12 h-12 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-xl shadow-sm flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <i className="fa-solid fa-mobile-screen-button" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-[#1F1B2D] mb-2">Poor Mobile Experience</h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed font-semibold">Cluttered mobile layouts, microscopic buttons, and poorly aligned input fields block smartphone users from converting.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-center mt-12">
+              <Link 
+                href="/free-website-audit"
+                className="inline-flex items-center gap-2 bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-bold text-xs px-8 py-4 rounded-xl shadow-md transition-all duration-200 hover:-translate-y-0.5"
+              >
+                Find Out Your Website Bottlenecks Now
+                <i className="fa-solid fa-arrow-right" />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* 4. SERVICES SECTION WITH PREMIUM HOVER STATES */}
         <section className="py-20 bg-white border-b border-[#E9E4F2]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
@@ -1340,62 +1424,122 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
-              {/* Card 1: Standard / Landing Page Website */}
-              <div className="bg-[#FAF9FF] border border-[#E9E4F2] p-8 sm:p-10 rounded-[24px] shadow-sm flex flex-col justify-between text-left hover:shadow-lg hover:border-[#7C3AED]/40 transition-all duration-300 reveal-hidden group">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
+              {/* Card 1: Starter Website */}
+              <div className="bg-[#FAF9FF] border border-[#E9E4F2] p-8 rounded-[24px] shadow-sm flex flex-col justify-between text-left hover:shadow-lg hover:border-[#7C3AED]/40 transition-all duration-300 reveal-hidden group">
                 <div>
                   <span className="inline-block bg-[#7C3AED]/10 text-[#7C3AED] font-extrabold text-[9px] uppercase tracking-widest px-3 py-1 rounded-full mb-4">Standard Setup</span>
-                  <h3 className="text-lg font-black text-[#1F1B2D] mb-2 group-hover:text-[#7C3AED] transition-colors">Corporate Profile & Landing Website</h3>
-                  <p className="text-xs text-[#6B6478] leading-relaxed mb-6 font-semibold">Custom layouts designed for small service providers or early-stage startups needing online credibility.</p>
+                  <h3 className="text-lg font-black text-[#1F1B2D] mb-2 group-hover:text-[#7C3AED] transition-colors">Starter Website</h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed mb-6 font-semibold">Perfect for new local service businesses wanting to establish professional authority online.</p>
                   
                   <div className="mb-6 flex items-baseline gap-1">
                     <span className="text-3xl font-black text-[#171126]">₹15,000</span>
-                    <span className="text-xs text-[#6B6478] font-semibold">Starting price (approx. $250)</span>
+                    <span className="text-xs text-[#6B6478] font-semibold">One-time (approx. $200)</span>
                   </div>
 
                   <ul className="flex flex-col gap-3 text-xs text-[#6B6478] font-semibold border-t border-[#E9E4F2] pt-6 mb-8">
-                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Custom mobile responsive layout</li>
-                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Light React/Next.js files setup</li>
-                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Direct WhatsApp conversion widgets</li>
-                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Basic schemas & canon metadata setup</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Custom responsive website</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Mobile optimization</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> WhatsApp integration</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Lead Contact form</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Basic SEO setup</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Google Search Console sync</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> XML Sitemap generated</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Google Analytics integration</li>
                   </ul>
                 </div>
                 <a
-                  href="#enquiry-section"
-                  onClick={() => handleCtaEvent("Start Standard Project")}
+                  href="https://wa.me/919080026133?text=Hi%20Joy%20Digital,%20I%2520am%2520interested%2520in%2520the%2520Starter%2520Website%2520package.%2520Please%2520share%2520the%2520details."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => {
+                    handleWaEvent("pricing_starter");
+                    handleCtaEvent("Get Started - Starter");
+                  }}
                   className="w-full text-center bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-bold text-xs py-3.5 rounded-xl shadow-sm transition-all"
                 >
-                  Start Standard Project
+                  Get Started
                 </a>
               </div>
 
-              {/* Card 2: Custom Enterprise Solutions (Recommended) */}
-              <div className="bg-[#FAF9FF] border border-[#7C3AED] p-8 sm:p-10 rounded-[24px] shadow-sm flex flex-col justify-between text-left hover:shadow-lg hover:border-[#7C3AED]/60 transition-all duration-300 reveal-hidden group relative">
+              {/* Card 2: Business Growth Website (Recommended) */}
+              <div className="bg-[#FAF9FF] border border-[#7C3AED] p-8 rounded-[24px] shadow-sm flex flex-col justify-between text-left hover:shadow-lg hover:border-[#7C3AED]/60 transition-all duration-300 reveal-hidden group relative">
                 <div className="absolute top-4 right-4">
                   <span className="bg-[#7C3AED] text-white font-black text-[8px] uppercase tracking-wider px-2.5 py-1 rounded-md shadow-sm">Recommended</span>
                 </div>
                 <div>
-                  <span className="inline-block bg-[#7C3AED]/10 text-[#7C3AED] font-extrabold text-[9px] uppercase tracking-widest px-3 py-1 rounded-full mb-4">Enterprise & Customized</span>
-                  <h3 className="text-lg font-black text-[#1F1B2D] mb-2 group-hover:text-[#7C3AED] transition-colors">E-commerce, Directories & SaaS</h3>
-                  <p className="text-xs text-[#6B6478] leading-relaxed mb-6 font-semibold">Headless shopping platforms, complex database search setups, or dynamic dashboard solutions.</p>
+                  <span className="inline-block bg-[#7C3AED]/10 text-[#7C3AED] font-extrabold text-[9px] uppercase tracking-widest px-3 py-1 rounded-full mb-4">Enterprise & Growth</span>
+                  <h3 className="text-lg font-black text-[#1F1B2D] mb-2 group-hover:text-[#7C3AED] transition-colors">Business Growth Website</h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed mb-6 font-semibold">Recommended for companies targeting local search rankings and active online client acquisition.</p>
                   
                   <div className="mb-6 flex items-baseline gap-1">
-                    <span className="text-3xl font-black text-[#171126]">Custom Quotation</span>
+                    <span className="text-3xl font-black text-[#171126]">₹35,000</span>
+                    <span className="text-xs text-[#6B6478] font-semibold">Starting rate (approx. $450)</span>
                   </div>
 
                   <ul className="flex flex-col gap-3 text-xs text-[#6B6478] font-semibold border-t border-[#E9E4F2] pt-6 mb-8">
-                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Scalable headless shop backends</li>
-                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Multi-category catalogs & listing search</li>
-                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Custom API integrations & databases</li>
-                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Advanced sitemaps & dynamic scripts</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Custom website layout</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Conversion-focused UI/UX</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> SEO-ready architecture</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Advanced contact forms</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> WhatsApp leads sync</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Search Console configuration</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Google Analytics event tracking</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Core Web Vitals speed tuning</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Basic content copywriting check</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Admin panel / CMS option</li>
                   </ul>
                 </div>
                 <a
-                  href="#enquiry-section"
-                  onClick={() => handleCtaEvent("Request Custom Proposal")}
-                  className="w-full text-center bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-bold text-xs py-3.5 rounded-xl transition-all"
+                  href="https://wa.me/919080026133?text=Hi%20Joy%20Digital,%20I%2520need%2520a%2520quote%252520for%252520the%252520Business%252520Growth%252520Website%252520package.%252520Please%252520share%252520details."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => {
+                    handleWaEvent("pricing_growth");
+                    handleCtaEvent("Request a Quote - Business");
+                  }}
+                  className="w-full text-center bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-bold text-xs py-3.5 rounded-xl shadow-sm transition-all"
                 >
-                  Request Custom Proposal
+                  Request a Quote
+                </a>
+              </div>
+
+              {/* Card 3: Website + SEO Growth */}
+              <div className="bg-[#FAF9FF] border border-[#E9E4F2] p-8 rounded-[24px] shadow-sm flex flex-col justify-between text-left hover:shadow-lg hover:border-[#7C3AED]/40 transition-all duration-300 reveal-hidden group">
+                <div>
+                  <span className="inline-block bg-[#7C3AED]/10 text-[#7C3AED] font-extrabold text-[9px] uppercase tracking-widest px-3 py-1 rounded-full mb-4">Complete SEO Solution</span>
+                  <h3 className="text-lg font-black text-[#1F1B2D] mb-2 group-hover:text-[#7C3AED] transition-colors">Website + SEO Growth</h3>
+                  <p className="text-xs text-[#6B6478] leading-relaxed mb-6 font-semibold">Perfect for companies seeking persistent ranking growth, organic pipelines, and local lead dominance.</p>
+                  
+                  <div className="mb-6 flex items-baseline gap-1">
+                    <span className="text-3xl font-black text-[#171126]">Custom Quote</span>
+                    <span className="text-xs text-[#6B6478] font-semibold">Monthly SEO retainer campaigns</span>
+                  </div>
+
+                  <ul className="flex flex-col gap-3 text-xs text-[#6B6478] font-semibold border-t border-[#E9E4F2] pt-6 mb-8">
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Custom website layout</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Technical SEO code audits</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Advanced On-page SEO setup</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> High-intent keyword research</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Local SEO & maps optimizations</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Google Business Profile setups</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Comprehensive content strategy</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Monthly SEO retainer campaigns</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Index monitoring & audit fixes</li>
+                    <li className="flex items-center gap-2"><i className="fa-solid fa-check text-emerald-500" /> Google Search Console reporting</li>
+                  </ul>
+                </div>
+                <a
+                  href="https://wa.me/919080026133?text=Hi%20Joy%20Digital,%20I%2520am%2520interested%2520in%2520the%2520Website%2520%2B%2520SEO%2520Growth%2520package.%2520Please%2520connect%2520me%2520with%2520an%2520SEO%2520expert."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => {
+                    handleWaEvent("pricing_seo");
+                    handleCtaEvent("Talk to an SEO Expert");
+                  }}
+                  className="w-full text-center bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-bold text-xs py-3.5 rounded-xl shadow-sm transition-all"
+                >
+                  Talk to an SEO Expert
                 </a>
               </div>
             </div>
@@ -1437,31 +1581,31 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               Start Scaling Today
             </span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-5 leading-tight">
-              Ready to Build Your Digital Presence?
+              Ready to Grow Your Business Online?
             </h2>
             <p className="text-sm md:text-base text-[#D8D2E6] max-w-xl mx-auto mb-10 leading-relaxed font-semibold">
-              Tell us about your business and let’s discuss how Joy Digital can help you grow online.
+              Let&apos;s build a website and digital strategy designed around your business goals.
             </p>
             
             <div className="flex flex-wrap items-center justify-center gap-4 w-full sm:w-auto">
-              <a
-                href="#enquiry-section"
-                onClick={() => handleCtaEvent("Start Your Project - Final")}
+              <Link
+                href="/free-website-audit"
+                onClick={() => handleCtaEvent("Get Free Website Audit - Final")}
                 className="w-full sm:w-auto bg-[#7C3AED] hover:bg-[#6D28D9] hover:scale-[1.025] hover:shadow-lg transition-all text-white font-bold text-xs px-8 py-4 rounded-xl shadow-md flex items-center justify-center gap-1.5 group"
               >
-                Start Your Project
+                Get Free Website Audit
                 <i className="fa-solid fa-arrow-right group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </a>
+              </Link>
               
               <a
-                href="https://wa.me/919080026133?text=Hello%20Joy%20Digital,%20I'd%20like%20to%20discuss%20our%20project."
+                href="https://wa.me/919080026133?text=Hi%20Joy%20Digital,%20I%20need%20a%20website%20for%20my%20business.%20I%20would%20like%20to%20know%20the%20pricing%20and%20process."
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => handleWaEvent("final_cta")}
                 className="w-full sm:w-auto bg-[#10b981] hover:bg-[#059669] hover:scale-[1.025] hover:shadow-lg transition-all text-white font-bold text-xs px-8 py-4 rounded-xl shadow-md flex items-center justify-center gap-2 cursor-pointer"
               >
                 <i className="fa-brands fa-whatsapp text-lg animate-pulse" />
-                WhatsApp Message
+                Chat on WhatsApp
               </a>
             </div>
           </div>

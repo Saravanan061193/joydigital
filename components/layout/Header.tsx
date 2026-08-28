@@ -645,7 +645,7 @@ export default function Header() {
           </div>
 
           <Link
-            href={getRegionalHref("/contact")}
+            href="/free-website-audit"
             title="Free Website Audit"
             className="bg-[#2563EB] hover:bg-[#3B82F6] text-white text-center font-bold px-6 py-3.5 rounded-full shadow-md mt-4"
           >
