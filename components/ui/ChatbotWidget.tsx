@@ -12,6 +12,7 @@ interface Message {
 
 export default function ChatbotWidget() {
   const pathname = usePathname();
+  const [shouldRender, setShouldRender] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -28,10 +29,13 @@ export default function ChatbotWidget() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Exclude rendering widget on admin dashboard pages
-  if (pathname?.startsWith("/admin")) {
-    return null;
-  }
+  // Defer rendering of the chatbot to improve PageSpeed (FCP/LCP/TBT)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShouldRender(true);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Load chat session on mount
   useEffect(() => {
@@ -204,6 +208,11 @@ export default function ChatbotWidget() {
       setShowForm(false);
     }
   };
+
+  // Exclude rendering widget on admin pages or before delay threshold is reached
+  if (pathname?.startsWith("/admin") || !shouldRender) {
+    return null;
+  }
 
   return (
     <div className="fixed bottom-20 lg:bottom-6 left-6 z-40 font-sans select-none">

@@ -6,9 +6,9 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Header from "@/components/layout/Header";
 import DigitalNetworkBackground from "@/components/ui/DigitalNetworkBackground";
-import WorldwideServiceNetwork from "@/components/ui/WorldwideServiceNetwork";
 
 // Dynamic imports for performance and code-splitting
+const WorldwideServiceNetwork = dynamic(() => import("@/components/ui/WorldwideServiceNetwork"), { ssr: false });
 const Footer = dynamic(() => import("@/components/layout/Footer"));
 const StickyWidgets = dynamic(() => import("@/components/ui/StickyWidgets"), { ssr: false });
 const LeadForm = dynamic(() => import("@/components/ui/LeadForm"));

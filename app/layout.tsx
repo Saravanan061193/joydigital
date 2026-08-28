@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
+import dynamic from "next/dynamic";
 import FontAwesomeLoader from "@/components/layout/FontAwesomeLoader";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import ClarityTracker from "@/components/ClarityTracker";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
-import ChatbotWidget from "@/components/ui/ChatbotWidget";
+
+const ChatbotWidget = dynamic(() => import("@/components/ui/ChatbotWidget"));
 import "./globals.css";
 
 
@@ -74,7 +76,7 @@ export default function RootLayout({
         <div id="google_translate_element" style={{ display: 'none' }} className="hidden"></div>
         <Script
           id="google-translate-init"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               function googleTranslateElementInit() {
@@ -90,7 +92,7 @@ export default function RootLayout({
         />
         <Script
           src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
         {children}
         <ChatbotWidget />

@@ -6,11 +6,24 @@ export default function DigitalNetworkBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isIntersecting, setIsIntersecting] = useState(true);
 
   useEffect(() => {
     // Determine user reduced motion preference
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setPrefersReducedMotion(mediaQuery.matches);
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsIntersecting(entry.isIntersecting);
+    }, { threshold: 0 });
+
+    observer.observe(canvas);
+    return () => observer.disconnect();
   }, []);
 
   // 1. Mouse Interaction (Lerp-smoothed offset, Desktop only, 5-10px max range)
@@ -74,6 +87,10 @@ export default function DigitalNetworkBackground() {
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+
+    if (!isIntersecting) {
+      return;
+    }
 
     let animationFrameId: number;
     let particles: Array<{
@@ -287,7 +304,7 @@ export default function DigitalNetworkBackground() {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("resize", resizeCanvas);
     };
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, isIntersecting]);
 
   return (
     <div 
@@ -314,14 +331,16 @@ export default function DigitalNetworkBackground() {
           0%, 100% { opacity: 0.55; }
           50% { opacity: 1.0; }
         }
-        .animate-aurora-1 {
-          animation: auroraBlob1 32s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-        }
-        .animate-aurora-2 {
-          animation: auroraBlob2 28s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-        }
-        .animate-aurora-3 {
-          animation: auroraBlob3 36s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        @media (min-width: 768px) {
+          .animate-aurora-1 {
+            animation: auroraBlob1 32s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+          }
+          .animate-aurora-2 {
+            animation: auroraBlob2 28s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+          }
+          .animate-aurora-3 {
+            animation: auroraBlob3 36s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+          }
         }
         .animate-heading-breathe {
           animation: headingGlowBreathe 10s ease-in-out infinite;
