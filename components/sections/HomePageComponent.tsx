@@ -507,7 +507,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <Header />
+      <Header transparent={true} />
       
       <main className="bg-[#FAF9FF] text-[#1F1B2D] min-h-screen overflow-hidden">
         

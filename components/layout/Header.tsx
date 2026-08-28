@@ -46,8 +46,9 @@ const LANGUAGES = [
   { code: "th", label: "ไทย (Thai)", flag: "🇹🇭" },
 ];
 
-export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
+export default function Header({ transparent = false }: { transparent?: boolean }) {
+  const [isScrolledRaw, setIsScrolledRaw] = useState(false);
+  const isScrolled = !transparent || isScrolledRaw;
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const [isRegionDropdownOpen, setIsRegionDropdownOpen] = useState(false);
@@ -76,7 +77,7 @@ export default function Header() {
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 20);
+          setIsScrolledRaw(window.scrollY > 20);
           ticking = false;
         });
         ticking = true;
