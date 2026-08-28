@@ -122,7 +122,7 @@ export default function WhatsappLinkGeneratorPage() {
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://joydigital.in" },
       { "@type": "ListItem", "position": 2, "name": "Free Tools", "item": "https://joydigital.in/free-tools" },
-      { "@type": "ListItem", "position": 3, "name": "WhatsApp Link Generator", "item": "https://joydigital.in/free-tools/whatsapp-link-generator" }
+      { "@type": "ListItem", "position": 3, "name": "WhatsApp Link Generator", "item": "https://joydigital.in/whatsapp-link-generator" }
     ]
   };
 

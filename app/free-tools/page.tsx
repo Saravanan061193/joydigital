@@ -24,35 +24,35 @@ const TOOLS = [
     name: "GST Calculator",
     description: "Calculate GST Inclusive and Exclusive rates instantly with CGST, SGST, and IGST breakdowns.",
     icon: "fa-solid fa-calculator text-blue-500",
-    href: "/free-tools/gst-calculator",
+    href: "/gst-calculator",
     cta: "Use Free Tool"
   },
   {
     name: "Quotation Generator",
     description: "Create professional business quotations with custom logos, items, discounts, and tax rates in minutes.",
     icon: "fa-solid fa-file-invoice-dollar text-[#7C3AED]",
-    href: "/free-tools/quotation-generator",
+    href: "/quotation-generator",
     cta: "Create Quotation"
   },
   {
     name: "Invoice Generator",
     description: "Create and download GST-ready professional invoices for your clients and customers instantly.",
     icon: "fa-solid fa-file-invoice text-emerald-500",
-    href: "/free-tools/invoice-generator",
+    href: "/invoice-generator",
     cta: "Generate Invoice"
   },
   {
     name: "QR Code Generator",
     description: "Create QR codes for website URLs, WhatsApp numbers, phone calls, Google Maps location, UPI, and WiFi networks.",
     icon: "fa-solid fa-qrcode text-[#F97316]",
-    href: "/free-tools/qr-code-generator",
+    href: "/qr-code-generator",
     cta: "Generate QR Code"
   },
   {
     name: "WhatsApp Link Generator",
     description: "Create click-to-chat WhatsApp links with pre-filled messages and matching QR codes.",
     icon: "fa-brands fa-whatsapp text-emerald-600",
-    href: "/free-tools/whatsapp-link-generator",
+    href: "/whatsapp-link-generator",
     cta: "Generate Link"
   }
 ];

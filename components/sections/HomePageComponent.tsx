@@ -887,7 +887,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                     <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">GST Online</span>
                     <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">India</span>
                   </div>
-                  <Link href="/free-tools/gst-calculator" className="text-xs font-bold text-[#7C3AED] flex items-center gap-1.5 group-hover:text-[#A78BFA] transition-colors">
+                  <Link href="/gst-calculator" className="text-xs font-bold text-[#7C3AED] flex items-center gap-1.5 group-hover:text-[#A78BFA] transition-colors">
                     Use GST Calculator &rarr;
                   </Link>
                 </div>
@@ -912,7 +912,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                     <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">Free Maker</span>
                     <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">GST Invoice</span>
                   </div>
-                  <Link href="/free-tools/invoice-generator" className="text-xs font-bold text-[#7C3AED] flex items-center gap-1.5 group-hover:text-[#A78BFA] transition-colors">
+                  <Link href="/invoice-generator" className="text-xs font-bold text-[#7C3AED] flex items-center gap-1.5 group-hover:text-[#A78BFA] transition-colors">
                     Create Invoice &rarr;
                   </Link>
                 </div>
@@ -937,7 +937,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                     <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">Quotation Maker</span>
                     <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">Online</span>
                   </div>
-                  <Link href="/free-tools/quotation-generator" className="text-xs font-bold text-[#7C3AED] flex items-center gap-1.5 group-hover:text-[#A78BFA] transition-colors">
+                  <Link href="/quotation-generator" className="text-xs font-bold text-[#7C3AED] flex items-center gap-1.5 group-hover:text-[#A78BFA] transition-colors">
                     Create Quotation &rarr;
                   </Link>
                 </div>
@@ -962,7 +962,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                     <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">Free QR</span>
                     <span className="text-[9px] font-bold text-slate-400 bg-white border border-slate-100 px-2 py-0.5 rounded">WhatsApp QR</span>
                   </div>
-                  <Link href="/free-tools/qr-code-generator" className="text-xs font-bold text-[#7C3AED] flex items-center gap-1.5 group-hover:text-[#A78BFA] transition-colors">
+                  <Link href="/qr-code-generator" className="text-xs font-bold text-[#7C3AED] flex items-center gap-1.5 group-hover:text-[#A78BFA] transition-colors">
                     Generate QR Code &rarr;
                   </Link>
                 </div>
