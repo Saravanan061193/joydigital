@@ -75,6 +75,10 @@ export default function BlogAdminPanel() {
   const [editorMode, setEditorMode] = useState<"create" | "edit">("create");
   const [searchTerm, setSearchTerm] = useState("");
 
+  // Analytics chart state
+  const [analytics, setAnalytics] = useState<any>(null);
+  const [chartTimeframe, setChartTimeframe] = useState<"daily" | "weekly" | "monthly" | "yearly">("daily");
+
   // Form state
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
@@ -94,9 +98,10 @@ export default function BlogAdminPanel() {
   const [previewActive, setPreviewActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Fetch posts on mount
+  // Fetch posts and analytics on mount
   useEffect(() => {
     fetchPosts();
+    fetchAnalytics();
   }, []);
 
   const fetchPosts = async () => {
@@ -114,16 +119,28 @@ export default function BlogAdminPanel() {
     }
   };
 
+  const fetchAnalytics = async () => {
+    try {
+      const res = await fetch("/api/admin/analytics");
+      if (res.ok) {
+        const data = await res.json();
+        setAnalytics(data);
+      }
+    } catch (err) {
+      console.error("Error fetching blog analytics:", err);
+    }
+  };
+
   // Sync slug from title
   const handleTitleChange = (val: string) => {
     setTitle(val);
     if (editorMode === "create") {
       const suggestedSlug = val
         .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, "") // remove special chars
-        .replace(/\s+/g, "-") // replace spaces with dashes
-        .replace(/-+/g, "-") // collapse consecutive dashes
-        .substring(0, 50); // limit length
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-")
+        .substring(0, 50);
       setSlug(suggestedSlug);
     }
   };
@@ -148,7 +165,6 @@ export default function BlogAdminPanel() {
     }
   };
 
-  // Trigger file click
   const triggerFileSelect = () => {
     fileInputRef.current?.click();
   };
@@ -267,6 +283,44 @@ export default function BlogAdminPanel() {
       p.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Compute Blog Chart Points
+  const getBlogChartPoints = () => {
+    if (!analytics) return { points: [] };
+    const trendData =
+      chartTimeframe === "daily" ? (analytics.blogDailyTrend || []) :
+      chartTimeframe === "weekly" ? (analytics.blogWeeklyTrend || []) :
+      chartTimeframe === "monthly" ? (analytics.blogMonthlyTrend || []) :
+      (analytics.blogYearlyTrend || []);
+
+    if (trendData.length === 0) return { points: [] };
+
+    const maxVal = Math.max(...trendData.map((d: any) => Math.max(d.views, d.visitors)), 1);
+    const len = trendData.length;
+
+    const points = trendData.map((d: any, idx: number) => {
+      const x = 40 + (idx / (len - 1 || 1)) * 420;
+      const yViews = 125 - (d.views / maxVal) * 90;
+      const yVisitors = 125 - (d.visitors / maxVal) * 90;
+      return { x, yViews, yVisitors, views: d.views, visitors: d.visitors, label: d.label };
+    });
+
+    return { points };
+  };
+
+  const { points: blogChartPoints } = getBlogChartPoints();
+  const viewsLineD = blogChartPoints.length > 0
+    ? `M ${blogChartPoints[0].x} ${blogChartPoints[0].yViews} ` + blogChartPoints.slice(1).map((p: any) => `L ${p.x} ${p.yViews}`).join(" ")
+    : "";
+  const viewsAreaD = blogChartPoints.length > 0
+    ? `${viewsLineD} L ${blogChartPoints[blogChartPoints.length - 1].x} 125 L ${blogChartPoints[0].x} 125 Z`
+    : "";
+  const visitorsLineD = blogChartPoints.length > 0
+    ? `M ${blogChartPoints[0].x} ${blogChartPoints[0].yVisitors} ` + blogChartPoints.slice(1).map((p: any) => `L ${p.x} ${p.yVisitors}`).join(" ")
+    : "";
+  const visitorsAreaD = blogChartPoints.length > 0
+    ? `${visitorsLineD} L ${blogChartPoints[blogChartPoints.length - 1].x} 125 L ${blogChartPoints[0].x} 125 Z`
+    : "";
+
   // Convert simple markdown to HTML elements for preview
   const renderMarkdownPreview = (text: string) => {
     if (!text) return <p className="text-slate-450 italic">No content written yet.</p>;
@@ -357,6 +411,118 @@ export default function BlogAdminPanel() {
             </div>
           </div>
 
+          {/* DEDICATED BLOG TRAFFIC TRENDS CHART CARD */}
+          <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm flex flex-col justify-between text-left">
+            <div className="flex justify-between items-center mb-4 flex-wrap gap-3">
+              <div>
+                <h3 className="font-black text-sm text-slate-900 flex items-center gap-2">
+                  <i className="fa-solid fa-chart-line text-[#2563EB]" /> Blog Visitors & Pageviews Analytics
+                </h3>
+                <p className="text-[10px] text-slate-500 font-semibold mt-0.5">
+                  Track article reader metrics across Daily, Weekly, Monthly, and Yearly timeframes
+                </p>
+              </div>
+
+              {/* Timeframe Selector Toggles */}
+              <div className="flex bg-slate-100 p-1 border border-slate-200/80 rounded-xl">
+                {(["daily", "weekly", "monthly", "yearly"] as const).map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => setChartTimeframe(t)}
+                    className={`px-3 py-1 rounded-lg text-[9.5px] font-black uppercase tracking-wider transition-all cursor-pointer ${
+                      chartTimeframe === t
+                        ? "bg-[#2563EB] text-white shadow-xs"
+                        : "text-slate-500 hover:text-slate-900"
+                    }`}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Line Chart */}
+            <div className="relative py-2 w-full h-44">
+              {blogChartPoints.length === 0 ? (
+                <div className="absolute inset-0 flex items-center justify-center text-xs text-slate-400 italic">
+                  Syncing blog traffic data...
+                </div>
+              ) : (
+                <svg className="w-full h-full" viewBox="0 0 500 150">
+                  <defs>
+                    <linearGradient id="blogViewsGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#2563EB" stopOpacity="0.15" />
+                      <stop offset="100%" stopColor="#2563EB" stopOpacity="0" />
+                    </linearGradient>
+                    <linearGradient id="blogVisitorsGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#9333EA" stopOpacity="0.15" />
+                      <stop offset="100%" stopColor="#9333EA" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Horizontal Grid lines */}
+                  <line x1="40" y1="35" x2="460" y2="35" stroke="#F1F5F9" strokeWidth="1" />
+                  <line x1="40" y1="80" x2="460" y2="80" stroke="#F1F5F9" strokeWidth="1" />
+                  <line x1="40" y1="125" x2="460" y2="125" stroke="#E2E8F0" strokeWidth="1.5" />
+
+                  {/* Fills */}
+                  <path d={viewsAreaD} fill="url(#blogViewsGrad)" />
+                  <path d={visitorsAreaD} fill="url(#blogVisitorsGrad)" />
+
+                  {/* Paths */}
+                  <path d={viewsLineD} fill="none" stroke="#2563EB" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d={visitorsLineD} fill="none" stroke="#9333EA" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+
+                  {/* X Labels */}
+                  {blogChartPoints.map((p: any, idx: number) => {
+                    const skipLabel = chartTimeframe === "daily" && idx % 2 !== 0;
+                    if (skipLabel) return null;
+                    return (
+                      <text
+                        key={idx}
+                        x={p.x}
+                        y="142"
+                        fill="#94A3B8"
+                        fontSize="8"
+                        fontWeight="800"
+                        textAnchor="middle"
+                      >
+                        {p.label}
+                      </text>
+                    );
+                  })}
+
+                  {/* Dots for Views */}
+                  {blogChartPoints.map((p: any, idx: number) => (
+                    <g key={`bv-${idx}`} className="group/bv cursor-pointer">
+                      <circle cx={p.x} cy={p.yViews} r="3.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1" />
+                      <title>{p.views} Blog Views ({p.label})</title>
+                    </g>
+                  ))}
+
+                  {/* Dots for Visitors */}
+                  {blogChartPoints.map((p: any, idx: number) => (
+                    <g key={`bu-${idx}`} className="group/bu cursor-pointer">
+                      <circle cx={p.x} cy={p.yVisitors} r="3.5" fill="#9333EA" stroke="#FFFFFF" strokeWidth="1" />
+                      <title>{p.visitors} Unique Blog Readers ({p.label})</title>
+                    </g>
+                  ))}
+                </svg>
+              )}
+            </div>
+
+            <div className="flex gap-5 mt-3 pt-3 border-t border-slate-100 text-[10px] font-black uppercase tracking-wider">
+              <span className="flex items-center gap-1.5 text-blue-600">
+                <span className="w-2.5 h-2.5 bg-blue-600 rounded-full inline-block" /> Blog Pageviews
+              </span>
+              <span className="flex items-center gap-1.5 text-purple-600">
+                <span className="w-2.5 h-2.5 bg-purple-600 rounded-full inline-block" /> Unique Readers
+              </span>
+            </div>
+          </div>
+
+          {/* TABLE CONTAINER */}
           <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
               <div>

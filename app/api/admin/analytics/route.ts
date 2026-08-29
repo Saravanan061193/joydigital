@@ -7,11 +7,18 @@ export async function GET() {
       return NextResponse.json({
         totalPageviews: 0,
         uniqueVisitors: 0,
+        totalBlogPageviews: 0,
+        uniqueBlogVisitors: 0,
         topCities: [],
         mapMarkers: [],
         dailyTrend: [],
         weeklyTrend: [],
-        monthlyTrend: []
+        monthlyTrend: [],
+        yearlyTrend: [],
+        blogDailyTrend: [],
+        blogWeeklyTrend: [],
+        blogMonthlyTrend: [],
+        blogYearlyTrend: []
       });
     }
 
@@ -61,18 +68,20 @@ export async function GET() {
       count: item.count
     }));
 
-    // 4. Fetch pageviews from the last 180 days to compute daily, weekly, and monthly trends
-    const sixMonthsAgo = new Date();
-    sixMonthsAgo.setDate(sixMonthsAgo.getDate() - 180);
+    // 4. Fetch pageviews from the last 3 years to compute trends
+    const threeYearsAgo = new Date();
+    threeYearsAgo.setFullYear(threeYearsAgo.getFullYear() - 3);
 
     const pageviews = await db.collection("pageviews").find({
-      createdAt: { $gte: sixMonthsAgo.toISOString() }
+      createdAt: { $gte: threeYearsAgo.toISOString() }
     }, {
-      projection: { createdAt: 1, city: 1, userAgent: 1 }
+      projection: { createdAt: 1, city: 1, userAgent: 1, path: 1 }
     }).toArray();
 
     const now = new Date();
-    
+    const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    const currentYr = now.getFullYear();
+
     // 4a. DAILY TREND (last 14 days)
     const dailyMap = new Map<string, { views: number; visitors: Set<string> }>();
     for (let i = 13; i >= 0; i--) {
@@ -91,20 +100,58 @@ export async function GET() {
 
     // 4c. MONTHLY TREND (last 6 months)
     const monthlyMap = new Map<string, { views: number; visitors: Set<string> }>();
-    const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
     for (let i = 5; i >= 0; i--) {
       const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
       const key = `${monthNames[d.getMonth()]} ${d.getFullYear().toString().substring(2)}`;
       monthlyMap.set(key, { views: 0, visitors: new Set() });
     }
 
+    // 4d. YEARLY TREND (last 3 years)
+    const yearlyMap = new Map<string, { views: number; visitors: Set<string> }>();
+    for (let i = 2; i >= 0; i--) {
+      const yrKey = `${currentYr - i}`;
+      yearlyMap.set(yrKey, { views: 0, visitors: new Set() });
+    }
+
+    // BLOG SPECIFIC TRENDS
+    const blogDailyMap = new Map<string, { views: number; visitors: Set<string> }>();
+    for (let i = 13; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
+      const key = d.toISOString().split("T")[0];
+      blogDailyMap.set(key, { views: 0, visitors: new Set() });
+    }
+
+    const blogWeeklyMap = new Map<string, { views: number; visitors: Set<string> }>();
+    for (let i = 7; i >= 0; i--) {
+      const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (now.getDay() || 7) - (i * 7) + 1);
+      const key = `Wk ${startOfWeek.getDate()} ${startOfWeek.toLocaleString("en-US", { month: "short" })}`;
+      blogWeeklyMap.set(key, { views: 0, visitors: new Set() });
+    }
+
+    const blogMonthlyMap = new Map<string, { views: number; visitors: Set<string> }>();
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const key = `${monthNames[d.getMonth()]} ${d.getFullYear().toString().substring(2)}`;
+      blogMonthlyMap.set(key, { views: 0, visitors: new Set() });
+    }
+
+    const blogYearlyMap = new Map<string, { views: number; visitors: Set<string> }>();
+    for (let i = 2; i >= 0; i--) {
+      const yrKey = `${currentYr - i}`;
+      blogYearlyMap.set(yrKey, { views: 0, visitors: new Set() });
+    }
+
+    let totalBlogPageviews = 0;
+    const blogVisitorsSet = new Set<string>();
+
     // Distribute pageviews to trends
     for (const pv of pageviews) {
       if (!pv.createdAt) continue;
       const pvDate = new Date(pv.createdAt);
       const visitorKey = `${pv.city || "Unknown"}-${pv.userAgent || "Unknown"}`;
+      const yrStr = `${pvDate.getFullYear()}`;
 
-      // Daily check
+      // Overall Daily check
       const dayKey = pvDate.toISOString().split("T")[0];
       if (dailyMap.has(dayKey)) {
         const item = dailyMap.get(dayKey)!;
@@ -112,7 +159,7 @@ export async function GET() {
         item.visitors.add(visitorKey);
       }
 
-      // Weekly check
+      // Overall Weekly check
       const daysDiff = Math.floor((now.getTime() - pvDate.getTime()) / (1000 * 60 * 60 * 24));
       const wkIndex = Math.floor(daysDiff / 7);
       if (wkIndex >= 0 && wkIndex < 8) {
@@ -125,12 +172,54 @@ export async function GET() {
         }
       }
 
-      // Monthly check
+      // Overall Monthly check
       const monthLabel = `${monthNames[pvDate.getMonth()]} ${pvDate.getFullYear().toString().substring(2)}`;
       if (monthlyMap.has(monthLabel)) {
         const item = monthlyMap.get(monthLabel)!;
         item.views++;
         item.visitors.add(visitorKey);
+      }
+
+      // Overall Yearly check
+      if (yearlyMap.has(yrStr)) {
+        const item = yearlyMap.get(yrStr)!;
+        item.views++;
+        item.visitors.add(visitorKey);
+      }
+
+      // Blog check
+      const isBlog = pv.path && pv.path.startsWith("/blog");
+      if (isBlog) {
+        totalBlogPageviews++;
+        blogVisitorsSet.add(visitorKey);
+
+        if (blogDailyMap.has(dayKey)) {
+          const item = blogDailyMap.get(dayKey)!;
+          item.views++;
+          item.visitors.add(visitorKey);
+        }
+
+        if (wkIndex >= 0 && wkIndex < 8) {
+          const wkKeys = Array.from(blogWeeklyMap.keys());
+          const targetKey = wkKeys[7 - wkIndex];
+          if (targetKey) {
+            const wItem = blogWeeklyMap.get(targetKey)!;
+            wItem.views++;
+            wItem.visitors.add(visitorKey);
+          }
+        }
+
+        if (blogMonthlyMap.has(monthLabel)) {
+          const item = blogMonthlyMap.get(monthLabel)!;
+          item.views++;
+          item.visitors.add(visitorKey);
+        }
+
+        if (blogYearlyMap.has(yrStr)) {
+          const item = blogYearlyMap.get(yrStr)!;
+          item.views++;
+          item.visitors.add(visitorKey);
+        }
       }
     }
 
@@ -156,14 +245,55 @@ export async function GET() {
       visitors: item.visitors.size
     }));
 
+    const yearlyTrend = Array.from(yearlyMap.entries()).map(([label, item]) => ({
+      label,
+      views: item.views,
+      visitors: item.visitors.size
+    }));
+
+    const blogDailyTrend = Array.from(blogDailyMap.entries()).map(([date, item]) => {
+      const d = new Date(date);
+      const label = `${d.toLocaleString("en-US", { month: "short" })} ${d.getDate()}`;
+      return {
+        label,
+        views: item.views,
+        visitors: item.visitors.size
+      };
+    });
+
+    const blogWeeklyTrend = Array.from(blogWeeklyMap.entries()).map(([label, item]) => ({
+      label,
+      views: item.views,
+      visitors: item.visitors.size
+    }));
+
+    const blogMonthlyTrend = Array.from(blogMonthlyMap.entries()).map(([label, item]) => ({
+      label,
+      views: item.views,
+      visitors: item.visitors.size
+    }));
+
+    const blogYearlyTrend = Array.from(blogYearlyMap.entries()).map(([label, item]) => ({
+      label,
+      views: item.views,
+      visitors: item.visitors.size
+    }));
+
     return NextResponse.json({
       totalPageviews,
       uniqueVisitors: topCities.reduce((acc: number, item: any) => acc + item.count, 0),
+      totalBlogPageviews,
+      uniqueBlogVisitors: blogVisitorsSet.size,
       topCities,
       mapMarkers,
       dailyTrend,
       weeklyTrend,
-      monthlyTrend
+      monthlyTrend,
+      yearlyTrend,
+      blogDailyTrend,
+      blogWeeklyTrend,
+      blogMonthlyTrend,
+      blogYearlyTrend
     });
   } catch (error: any) {
     console.error("Error in admin analytics route:", error);

@@ -68,11 +68,18 @@ interface Enquiry {
 interface AnalyticsData {
   totalPageviews: number;
   uniqueVisitors: number;
+  totalBlogPageviews?: number;
+  uniqueBlogVisitors?: number;
   topCities: Array<{ city: string; country: string; count: number }>;
   mapMarkers: Array<{ lat: number; lng: number; city: string; count: number }>;
   dailyTrend?: Array<{ label: string; views: number; visitors: number }>;
   weeklyTrend?: Array<{ label: string; views: number; visitors: number }>;
   monthlyTrend?: Array<{ label: string; views: number; visitors: number }>;
+  yearlyTrend?: Array<{ label: string; views: number; visitors: number }>;
+  blogDailyTrend?: Array<{ label: string; views: number; visitors: number }>;
+  blogWeeklyTrend?: Array<{ label: string; views: number; visitors: number }>;
+  blogMonthlyTrend?: Array<{ label: string; views: number; visitors: number }>;
+  blogYearlyTrend?: Array<{ label: string; views: number; visitors: number }>;
 }
 
 interface NotificationItem {
@@ -112,7 +119,8 @@ export default function AdminPage() {
 
   // Active Menu: "dashboard" | "leads" | "map" | "heatmaps" | "blog" | "reports" | "chats" | "settings"
   const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "map" | "heatmaps" | "blog" | "reports" | "chats" | "settings">("dashboard");
-  const [trafficTimeframe, setTrafficTimeframe] = useState<"daily" | "weekly" | "monthly">("daily");
+  const [trafficTimeframe, setTrafficTimeframe] = useState<"daily" | "weekly" | "monthly" | "yearly">("daily");
+  const [trafficScope, setTrafficScope] = useState<"all" | "blog">("all");
   const [settingsSubTab, setSettingsSubTab] = useState<"cloudinary" | "system">("cloudinary");
 
   // Settings configurations
@@ -851,7 +859,7 @@ export default function AdminPage() {
   const conversionRate = totalCount > 0 ? Math.round((wonCount / totalCount) * 100) : 0;
 
   // Timeframes list
-  const TIMEFRAMES = ["daily", "weekly", "monthly"] as const;
+  const TIMEFRAMES = ["daily", "weekly", "monthly", "yearly"] as const;
 
   // Get monthly trends dynamically
   const getMonthlyTrendData = () => {
@@ -892,12 +900,23 @@ export default function AdminPage() {
     
   const areaPathD = `${linePathD} L ${trendPoints[5].x} 130 L ${trendPoints[0].x} 130 Z`;
 
-  // Get active traffic trend (daily, weekly, monthly)
+  // Get active traffic trend (daily, weekly, monthly, yearly)
   const getTrafficTrendPoints = () => {
-    const trendData = 
-      trafficTimeframe === "daily" ? (analytics.dailyTrend || []) :
-      trafficTimeframe === "weekly" ? (analytics.weeklyTrend || []) :
-      (analytics.monthlyTrend || []);
+    let trendData: Array<{ label: string; views: number; visitors: number }> = [];
+
+    if (trafficScope === "blog") {
+      trendData = 
+        trafficTimeframe === "daily" ? (analytics.blogDailyTrend || []) :
+        trafficTimeframe === "weekly" ? (analytics.blogWeeklyTrend || []) :
+        trafficTimeframe === "monthly" ? (analytics.blogMonthlyTrend || []) :
+        (analytics.blogYearlyTrend || []);
+    } else {
+      trendData = 
+        trafficTimeframe === "daily" ? (analytics.dailyTrend || []) :
+        trafficTimeframe === "weekly" ? (analytics.weeklyTrend || []) :
+        trafficTimeframe === "monthly" ? (analytics.monthlyTrend || []) :
+        (analytics.yearlyTrend || []);
+    }
 
     if (trendData.length === 0) return { points: [], maxVal: 1, labels: [] };
 
@@ -1646,26 +1665,50 @@ export default function AdminPage() {
                       <div className="flex justify-between items-center mb-6 flex-wrap gap-3">
                         <div>
                           <h3 className="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
-                            <i className="fa-solid fa-chart-line text-[#2563EB]" /> Traffic Performance Trends
+                            <i className="fa-solid fa-chart-line text-[#2563EB]" />
+                            {trafficScope === "blog" ? "Blog Articles Traffic Trends" : "Traffic Performance Trends"}
                           </h3>
-                          <p className="text-[10px] text-slate-500 mt-0.5">Page views and unique visitors tracking metrics</p>
+                          <p className="text-[10px] text-slate-500 mt-0.5">
+                            {trafficScope === "blog" ? "Blog articles pageviews and unique readers metrics" : "Page views and unique visitors tracking metrics"}
+                          </p>
                         </div>
-                        {/* Timeframe selector toggles */}
-                        <div className="flex bg-slate-50 dark:bg-slate-850 p-1 border border-slate-200/60 dark:border-slate-800 rounded-xl shadow-xs">
-                          {TIMEFRAMES.map((t) => (
+
+                        <div className="flex items-center gap-2 flex-wrap">
+                          {/* Scope Selector */}
+                          <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl text-[9.5px] font-black uppercase">
                             <button
-                              key={t}
                               type="button"
-                              onClick={() => setTrafficTimeframe(t)}
-                              className={`px-3 py-1 rounded-lg text-[9.5px] font-black uppercase tracking-wider transition-all cursor-pointer ${
-                                trafficTimeframe === t
-                                  ? "bg-[#2563EB] text-white shadow-xs"
-                                  : "text-slate-500 dark:text-slate-400 hover:text-slate-855 dark:hover:text-white"
-                              }`}
+                              onClick={() => setTrafficScope("all")}
+                              className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${trafficScope === "all" ? "bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-bold" : "text-slate-500"}`}
                             >
-                              {t}
+                              All Site
                             </button>
-                          ))}
+                            <button
+                              type="button"
+                              onClick={() => setTrafficScope("blog")}
+                              className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${trafficScope === "blog" ? "bg-[#2563EB] text-white shadow-xs font-bold" : "text-slate-500"}`}
+                            >
+                              Blog Only
+                            </button>
+                          </div>
+
+                          {/* Timeframe selector toggles */}
+                          <div className="flex bg-slate-50 dark:bg-slate-850 p-1 border border-slate-200/60 dark:border-slate-800 rounded-xl shadow-xs">
+                            {TIMEFRAMES.map((t) => (
+                              <button
+                                key={t}
+                                type="button"
+                                onClick={() => setTrafficTimeframe(t)}
+                                className={`px-3 py-1 rounded-lg text-[9.5px] font-black uppercase tracking-wider transition-all cursor-pointer ${
+                                  trafficTimeframe === t
+                                    ? "bg-[#2563EB] text-white shadow-xs"
+                                    : "text-slate-500 dark:text-slate-400 hover:text-slate-855 dark:hover:text-white"
+                                }`}
+                              >
+                                {t}
+                              </button>
+                            ))}
+                          </div>
                         </div>
                       </div>
 
