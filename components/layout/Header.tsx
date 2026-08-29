@@ -525,18 +525,44 @@ export default function Header({ transparent = false }: { transparent?: boolean 
 
       {/* Mobile Drawer Menu */}
       <div
-        className={`fixed inset-0 z-[55] bg-black/40 backdrop-blur-sm lg:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm lg:hidden transition-opacity duration-300 ${
           isMobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsMobileOpen(false)}
       />
 
       <aside
-        className={`fixed top-0 right-0 w-4/5 max-w-sm h-full bg-white z-[55] shadow-2xl flex flex-col p-8 pt-24 transition-transform duration-300 lg:hidden ${
+        className={`fixed top-0 right-0 w-4/5 max-w-sm h-full bg-white z-[65] shadow-2xl flex flex-col p-6 transition-transform duration-300 lg:hidden ${
           isMobileOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <nav className="flex flex-col gap-6 overflow-y-auto pb-12">
+        {/* Mobile Drawer Header with Logo & Close Button */}
+        <div className="flex items-center justify-between pb-5 mb-4 border-b border-[#E5E7EB] shrink-0">
+          <div className="flex items-center gap-2.5">
+            <Image
+              src="/assets/images/logo.webp"
+              alt="Joy Digital Logo"
+              width={34}
+              height={34}
+              className="object-contain"
+            />
+            <span className="font-extrabold text-lg text-primary-dark tracking-tight">
+              Joy<span className="text-accent">Digital</span>
+            </span>
+          </div>
+
+          {/* Prominent Close (X) Button */}
+          <button
+            onClick={() => setIsMobileOpen(false)}
+            className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold flex items-center justify-center transition-colors cursor-pointer active:scale-95"
+            aria-label="Close menu"
+            title="Close menu"
+          >
+            <i className="fa-solid fa-xmark text-lg" />
+          </button>
+        </div>
+
+        <nav className="flex flex-col gap-5 overflow-y-auto pb-12 pr-1">
           <Link
             href={getRegionalHref("/")}
             title="Home"
