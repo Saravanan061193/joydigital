@@ -260,8 +260,14 @@ export default function LeadForm({
       });
       setErrors({});
       
-      // Redirect to thank you page
-      router.push("/thank-you");
+      // Redirect to thank you page with personalized query params
+      const queryParams = new URLSearchParams({
+        name: formData.name.trim(),
+        service: formData.service || "Web Services",
+        mobile: formData.mobile.trim()
+      }).toString();
+
+      router.push(`/thank-you?${queryParams}`);
     } catch (err) {
       console.error(err);
       alert("Enquiry delivery failed. Please email us at saravanan061193@gmail.com directly.");

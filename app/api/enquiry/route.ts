@@ -106,16 +106,33 @@ export async function POST(request: Request) {
       }
     }
     
-    // 3. Forward to FormSubmit.co server-side so owner still receives email
+    // 3. Forward to FormSubmit.co server-side so owner receives immediate detailed email alert
     const recipientEmail = process.env.CONTACT_EMAIL || "saravanan061193@gmail.com";
     try {
+      const formattedPayload = {
+        _subject: `🚨 NEW LEAD INBOUND [${newEnquiry.region}] - ${newEnquiry.name} (${newEnquiry.service})`,
+        "Lead Name": newEnquiry.name,
+        "Mobile / WhatsApp": newEnquiry.mobile,
+        "Email Address": newEnquiry.email,
+        "Required Service": newEnquiry.service,
+        "Company Name": newEnquiry.companyName,
+        "Target Website": newEnquiry.website,
+        "Budget Range": newEnquiry.budget,
+        "Project Timeline": newEnquiry.timeline,
+        "Requirement Details": newEnquiry.message,
+        "Direct WhatsApp Link": `https://wa.me/${newEnquiry.mobile.replace(/\D/g, "")}`,
+        "Submitted At": newEnquiry.createdAt,
+        _captcha: "false",
+        _template: "table"
+      };
+
       const emailRes = await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
           "Accept": "application/json"
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify(formattedPayload),
       });
       if (!emailRes.ok) {
         const errorText = await emailRes.text();
