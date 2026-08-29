@@ -429,115 +429,174 @@ export default function BlogAdminPanel() {
             </div>
           </div>
 
-          {/* DEDICATED BLOG TRAFFIC TRENDS CHART CARD */}
-          <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm flex flex-col justify-between text-left">
-            <div className="flex justify-between items-center mb-4 flex-wrap gap-3">
-              <div>
-                <h3 className="font-black text-sm text-slate-900 flex items-center gap-2">
-                  <i className="fa-solid fa-chart-line text-[#2563EB]" /> Blog Visitors & Pageviews Analytics
-                </h3>
-                <p className="text-[10px] text-slate-500 font-semibold mt-0.5">
-                  Track article reader metrics across Daily, Weekly, Monthly, and Yearly timeframes
-                </p>
-              </div>
-
-              {/* Timeframe Selector Toggles */}
-              <div className="flex bg-slate-100 p-1 border border-slate-200/80 rounded-xl">
-                {(["daily", "weekly", "monthly", "yearly"] as const).map((t) => (
-                  <button
-                    key={t}
-                    type="button"
-                    onClick={() => setChartTimeframe(t)}
-                    className={`px-3 py-1 rounded-lg text-[9.5px] font-black uppercase tracking-wider transition-all cursor-pointer ${
-                      chartTimeframe === t
-                        ? "bg-[#2563EB] text-white shadow-xs"
-                        : "text-slate-500 hover:text-slate-900"
-                    }`}
-                  >
-                    {t}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Line Chart */}
-            <div className="relative py-2 w-full h-44">
-              {blogChartPoints.length === 0 ? (
-                <div className="absolute inset-0 flex items-center justify-center text-xs text-slate-400 italic">
-                  Syncing blog traffic data...
+          {/* GRID CONTAINER FOR CHART & REAL-TIME ACTIVITY STREAM */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 text-left">
+            
+            {/* LEFT (2 Cols): DEDICATED BLOG TRAFFIC TRENDS CHART CARD */}
+            <div className="lg:col-span-2 bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm flex flex-col justify-between">
+              <div className="flex justify-between items-center mb-4 flex-wrap gap-3">
+                <div>
+                  <h3 className="font-black text-sm text-slate-900 flex items-center gap-2">
+                    <i className="fa-solid fa-chart-line text-[#2563EB]" /> Blog Visitors & Pageviews Analytics
+                  </h3>
+                  <p className="text-[10px] text-slate-500 font-semibold mt-0.5">
+                    Track article reader metrics across Daily, Weekly, Monthly, and Yearly timeframes
+                  </p>
                 </div>
-              ) : (
-                <svg className="w-full h-full" viewBox="0 0 500 150">
-                  <defs>
-                    <linearGradient id="blogViewsGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#2563EB" stopOpacity="0.15" />
-                      <stop offset="100%" stopColor="#2563EB" stopOpacity="0" />
-                    </linearGradient>
-                    <linearGradient id="blogVisitorsGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#9333EA" stopOpacity="0.15" />
-                      <stop offset="100%" stopColor="#9333EA" stopOpacity="0" />
-                    </linearGradient>
-                  </defs>
 
-                  {/* Horizontal Grid lines */}
-                  <line x1="40" y1="35" x2="460" y2="35" stroke="#F1F5F9" strokeWidth="1" />
-                  <line x1="40" y1="80" x2="460" y2="80" stroke="#F1F5F9" strokeWidth="1" />
-                  <line x1="40" y1="125" x2="460" y2="125" stroke="#E2E8F0" strokeWidth="1.5" />
-
-                  {/* Fills */}
-                  <path d={viewsAreaD} fill="url(#blogViewsGrad)" />
-                  <path d={visitorsAreaD} fill="url(#blogVisitorsGrad)" />
-
-                  {/* Paths */}
-                  <path d={viewsLineD} fill="none" stroke="#2563EB" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d={visitorsLineD} fill="none" stroke="#9333EA" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-
-                  {/* X Labels */}
-                  {blogChartPoints.map((p: any, idx: number) => {
-                    const skipLabel = chartTimeframe === "daily" && idx % 2 !== 0;
-                    if (skipLabel) return null;
-                    return (
-                      <text
-                        key={idx}
-                        x={p.x}
-                        y="142"
-                        fill="#94A3B8"
-                        fontSize="8"
-                        fontWeight="800"
-                        textAnchor="middle"
-                      >
-                        {p.label}
-                      </text>
-                    );
-                  })}
-
-                  {/* Dots for Views */}
-                  {blogChartPoints.map((p: any, idx: number) => (
-                    <g key={`bv-${idx}`} className="group/bv cursor-pointer">
-                      <circle cx={p.x} cy={p.yViews} r="3.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1" />
-                      <title>{p.views} Blog Views ({p.label})</title>
-                    </g>
+                {/* Timeframe Selector Toggles */}
+                <div className="flex bg-slate-100 p-1 border border-slate-200/80 rounded-xl">
+                  {(["daily", "weekly", "monthly", "yearly"] as const).map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      onClick={() => setChartTimeframe(t)}
+                      className={`px-3 py-1 rounded-lg text-[9.5px] font-black uppercase tracking-wider transition-all cursor-pointer ${
+                        chartTimeframe === t
+                          ? "bg-[#2563EB] text-white shadow-xs"
+                          : "text-slate-500 hover:text-slate-900"
+                      }`}
+                    >
+                      {t}
+                    </button>
                   ))}
+                </div>
+              </div>
 
-                  {/* Dots for Visitors */}
-                  {blogChartPoints.map((p: any, idx: number) => (
-                    <g key={`bu-${idx}`} className="group/bu cursor-pointer">
-                      <circle cx={p.x} cy={p.yVisitors} r="3.5" fill="#9333EA" stroke="#FFFFFF" strokeWidth="1" />
-                      <title>{p.visitors} Unique Blog Readers ({p.label})</title>
-                    </g>
-                  ))}
-                </svg>
-              )}
+              {/* Line Chart */}
+              <div className="relative py-2 w-full h-44">
+                {blogChartPoints.length === 0 ? (
+                  <div className="absolute inset-0 flex items-center justify-center text-xs text-slate-400 italic">
+                    Syncing blog traffic data...
+                  </div>
+                ) : (
+                  <svg className="w-full h-full" viewBox="0 0 500 150">
+                    <defs>
+                      <linearGradient id="blogViewsGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#2563EB" stopOpacity="0.15" />
+                        <stop offset="100%" stopColor="#2563EB" stopOpacity="0" />
+                      </linearGradient>
+                      <linearGradient id="blogVisitorsGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#9333EA" stopOpacity="0.15" />
+                        <stop offset="100%" stopColor="#9333EA" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Horizontal Grid lines */}
+                    <line x1="40" y1="35" x2="460" y2="35" stroke="#F1F5F9" strokeWidth="1" />
+                    <line x1="40" y1="80" x2="460" y2="80" stroke="#F1F5F9" strokeWidth="1" />
+                    <line x1="40" y1="125" x2="460" y2="125" stroke="#E2E8F0" strokeWidth="1.5" />
+
+                    {/* Fills */}
+                    <path d={viewsAreaD} fill="url(#blogViewsGrad)" />
+                    <path d={visitorsAreaD} fill="url(#blogVisitorsGrad)" />
+
+                    {/* Paths */}
+                    <path d={viewsLineD} fill="none" stroke="#2563EB" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d={visitorsLineD} fill="none" stroke="#9333EA" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+
+                    {/* X Labels */}
+                    {blogChartPoints.map((p: any, idx: number) => {
+                      const skipLabel = chartTimeframe === "daily" && idx % 2 !== 0;
+                      if (skipLabel) return null;
+                      return (
+                        <text
+                          key={idx}
+                          x={p.x}
+                          y="142"
+                          fill="#94A3B8"
+                          fontSize="8"
+                          fontWeight="800"
+                          textAnchor="middle"
+                        >
+                          {p.label}
+                        </text>
+                      );
+                    })}
+
+                    {/* Dots for Views */}
+                    {blogChartPoints.map((p: any, idx: number) => (
+                      <g key={`bv-${idx}`} className="group/bv cursor-pointer">
+                        <circle cx={p.x} cy={p.yViews} r="3.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1" />
+                        <title>{p.views} Blog Views ({p.label})</title>
+                      </g>
+                    ))}
+
+                    {/* Dots for Visitors */}
+                    {blogChartPoints.map((p: any, idx: number) => (
+                      <g key={`bu-${idx}`} className="group/bu cursor-pointer">
+                        <circle cx={p.x} cy={p.yVisitors} r="3.5" fill="#9333EA" stroke="#FFFFFF" strokeWidth="1" />
+                        <title>{p.visitors} Unique Blog Readers ({p.label})</title>
+                      </g>
+                    ))}
+                  </svg>
+                )}
+              </div>
+
+              <div className="flex gap-5 mt-3 pt-3 border-t border-slate-100 text-[10px] font-black uppercase tracking-wider">
+                <span className="flex items-center gap-1.5 text-blue-600">
+                  <span className="w-2.5 h-2.5 bg-blue-600 rounded-full inline-block" /> Blog Pageviews
+                </span>
+                <span className="flex items-center gap-1.5 text-purple-600">
+                  <span className="w-2.5 h-2.5 bg-purple-600 rounded-full inline-block" /> Unique Readers
+                </span>
+              </div>
             </div>
 
-            <div className="flex gap-5 mt-3 pt-3 border-t border-slate-100 text-[10px] font-black uppercase tracking-wider">
-              <span className="flex items-center gap-1.5 text-blue-600">
-                <span className="w-2.5 h-2.5 bg-blue-600 rounded-full inline-block" /> Blog Pageviews
-              </span>
-              <span className="flex items-center gap-1.5 text-purple-600">
-                <span className="w-2.5 h-2.5 bg-purple-600 rounded-full inline-block" /> Unique Readers
-              </span>
+            {/* RIGHT (1 Col): REAL-TIME BLOG READER ACTIVITY STREAM */}
+            <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm flex flex-col justify-between">
+              <div>
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="font-black text-xs uppercase tracking-wider text-slate-900 flex items-center gap-2">
+                    <i className="fa-solid fa-bolt text-amber-500 animate-pulse" /> Live Reader Activity Stream
+                  </h3>
+                  <span className="bg-emerald-50 text-emerald-600 border border-emerald-200/80 text-[8.5px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full flex items-center gap-1 select-none">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> Live Feed
+                  </span>
+                </div>
+                <p className="text-[10px] text-slate-450 font-semibold mb-4">Real-time log of visitors reading articles on your site</p>
+
+                {/* Activity List Scroll Container */}
+                <div className="space-y-2.5 max-h-[220px] overflow-y-auto pr-1">
+                  {analytics?.recentBlogActivities && analytics.recentBlogActivities.length > 0 ? (
+                    analytics.recentBlogActivities.map((act: any, idx: number) => {
+                      const articleTitle = posts.find(p => p.slug === act.slug)?.title || act.slug;
+                      const timeLabel = act.timestamp ? new Date(act.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "Just now";
+
+                      return (
+                        <div key={act.id || idx} className="p-2.5 bg-slate-50/80 hover:bg-slate-100/70 border border-slate-150 rounded-xl transition-all text-xs space-y-1">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="font-extrabold text-slate-900 truncate block max-w-[70%]" title={articleTitle}>
+                              {articleTitle}
+                            </span>
+                            <span className="text-[9px] font-mono font-extrabold text-slate-400 shrink-0">{timeLabel}</span>
+                          </div>
+                          <div className="flex items-center justify-between text-[9.5px] text-slate-500 font-semibold">
+                            <span className="flex items-center gap-1">
+                              <i className="fa-solid fa-location-dot text-rose-500 text-[9px]" /> {act.city} ({act.country})
+                            </span>
+                            <span className="bg-blue-50 text-[#2563EB] font-bold px-1.5 py-0.25 rounded text-[8.5px] border border-blue-100">
+                              {act.slug === "blog-hub" ? "Main Listing" : "Article Read"}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className="py-12 text-center flex flex-col items-center gap-2 text-slate-400">
+                      <i className="fa-regular fa-clock text-xl text-slate-300" />
+                      <span className="text-xs font-bold">No recent blog reads logged</span>
+                      <span className="text-[9.5px]">Visitor reads will update automatically in real-time.</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="text-[9.5px] text-slate-400 border-t border-slate-100 pt-3 mt-4">
+                * Tracks exact article reads, timestamp, and geotarget reader city.
+              </div>
             </div>
+
           </div>
 
           {/* TABLE CONTAINER */}

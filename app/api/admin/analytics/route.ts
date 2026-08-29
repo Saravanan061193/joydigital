@@ -279,6 +279,30 @@ export async function GET() {
       visitors: item.visitors.size
     }));
 
+    // 5. Fetch Recent Blog Reader Activity Stream (last 20 blog reads)
+    let recentBlogActivities: any[] = [];
+    try {
+      const recentBlogLogsRaw = await db.collection("pageviews").find({
+        path: { $regex: "^/blog" }
+      }).sort({ createdAt: -1 }).limit(20).toArray();
+
+      recentBlogActivities = recentBlogLogsRaw.map((log: any) => {
+        const pathClean = (log.path || "/blog").split("?")[0].replace(/\/$/, "");
+        const slug = pathClean.replace(/^\/blog\/?/, "") || "blog-hub";
+        return {
+          id: log._id?.toString() || Math.random().toString(),
+          path: log.path,
+          slug: slug === "" ? "blog-hub" : slug,
+          city: log.city || "Chennai",
+          country: log.country || "IN",
+          timestamp: log.createdAt || new Date().toISOString(),
+          referrer: log.referrer || "Google / Direct"
+        };
+      });
+    } catch (e) {
+      console.warn("Could not fetch recent blog logs:", e);
+    }
+
     return NextResponse.json({
       totalPageviews,
       uniqueVisitors: topCities.reduce((acc: number, item: any) => acc + item.count, 0),
@@ -293,7 +317,8 @@ export async function GET() {
       blogDailyTrend,
       blogWeeklyTrend,
       blogMonthlyTrend,
-      blogYearlyTrend
+      blogYearlyTrend,
+      recentBlogActivities
     });
   } catch (error: any) {
     console.error("Error in admin analytics route:", error);
