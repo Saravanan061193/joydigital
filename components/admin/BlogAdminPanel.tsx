@@ -74,6 +74,12 @@ export default function BlogAdminPanel() {
   const [isEditing, setIsEditing] = useState(false);
   const [editorMode, setEditorMode] = useState<"create" | "edit">("create");
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
 
   // Analytics chart state
   const [analytics, setAnalytics] = useState<any>(null);
@@ -574,72 +580,123 @@ export default function BlogAdminPanel() {
                 <p className="text-xs font-bold text-slate-500">No blog files discovered</p>
                 <p className="text-[10px] text-slate-400 mt-1">Create your first post to display it in the listing.</p>
               </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs border-collapse">
-                  <thead>
-                    <tr className="border-b border-slate-200 text-slate-500 font-black text-[9px] uppercase tracking-wider">
-                      <th className="py-3 px-4">Title / Slug</th>
-                      <th className="py-3 px-4">Category</th>
-                      <th className="py-3 px-4">Views / Traffic</th>
-                      <th className="py-3 px-4">Date</th>
-                      <th className="py-3 px-4">Author</th>
-                      <th className="py-3 px-4 text-right">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredPosts.map((post) => (
-                      <tr key={post.slug} className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
-                        <td className="py-4 px-4 max-w-sm">
-                          <div className="font-bold text-slate-900 truncate">{post.title}</div>
-                          <div className="text-[10px] text-slate-450 font-semibold mt-0.5 select-all font-mono">
-                            {post.slug}
-                          </div>
-                        </td>
-                        <td className="py-4 px-4">
-                          <span className="bg-primary/10 text-primary border border-primary/20 text-[9px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                            {post.category}
-                          </span>
-                        </td>
-                        <td className="py-4 px-4 whitespace-nowrap">
-                          <span className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200/80 px-3 py-1 rounded-full text-[10px] font-extrabold shadow-2xs">
-                            <i className="fa-regular fa-eye text-emerald-500" />
-                            <span>{(post.views || 0).toLocaleString()} Views</span>
-                          </span>
-                        </td>
-                        <td className="py-4 px-4 text-slate-500 font-semibold whitespace-nowrap">{post.date}</td>
-                        <td className="py-4 px-4 text-slate-550 font-semibold whitespace-nowrap">{post.author}</td>
-                        <td className="py-4 px-4 text-right whitespace-nowrap">
-                          <div className="inline-flex gap-2">
-                            <a
-                              href={`/blog/${post.slug}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="bg-slate-100 hover:bg-slate-200/80 text-slate-700 hover:text-slate-900 border border-slate-200 text-[10px] font-extrabold px-2.5 py-1.5 rounded-lg cursor-pointer transition-all flex items-center gap-1"
-                              title="View Article Live"
-                            >
-                              <i className="fa-solid fa-arrow-up-right-from-square" />
-                            </a>
+            ) : (() => {
+              const totalPages = Math.ceil(filteredPosts.length / itemsPerPage);
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const paginatedPosts = filteredPosts.slice(startIndex, startIndex + itemsPerPage);
+
+                return (
+                  <div>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-xs border-collapse">
+                        <thead>
+                          <tr className="border-b border-slate-200 text-slate-500 font-black text-[9px] uppercase tracking-wider">
+                            <th className="py-3 px-4">Title / Slug</th>
+                            <th className="py-3 px-4">Category</th>
+                            <th className="py-3 px-4">Views / Traffic</th>
+                            <th className="py-3 px-4">Date</th>
+                            <th className="py-3 px-4">Author</th>
+                            <th className="py-3 px-4 text-right">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {paginatedPosts.map((post) => (
+                            <tr key={post.slug} className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
+                              <td className="py-4 px-4 max-w-sm">
+                                <div className="font-bold text-slate-900 truncate">{post.title}</div>
+                                <div className="text-[10px] text-slate-450 font-semibold mt-0.5 select-all font-mono">
+                                  {post.slug}
+                                </div>
+                              </td>
+                              <td className="py-4 px-4">
+                                <span className="bg-primary/10 text-primary border border-primary/20 text-[9px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                                  {post.category}
+                                </span>
+                              </td>
+                              <td className="py-4 px-4 whitespace-nowrap">
+                                <span className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200/80 px-3 py-1 rounded-full text-[10px] font-extrabold shadow-2xs">
+                                  <i className="fa-regular fa-eye text-emerald-500" />
+                                  <span>{(post.views || 0).toLocaleString()} Views</span>
+                                </span>
+                              </td>
+                              <td className="py-4 px-4 text-slate-500 font-semibold whitespace-nowrap">{post.date}</td>
+                              <td className="py-4 px-4 text-slate-550 font-semibold whitespace-nowrap">{post.author}</td>
+                              <td className="py-4 px-4 text-right whitespace-nowrap">
+                                <div className="inline-flex gap-2">
+                                  <a
+                                    href={`/blog/${post.slug}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="bg-slate-100 hover:bg-slate-200/80 text-slate-700 hover:text-slate-900 border border-slate-200 text-[10px] font-extrabold px-2.5 py-1.5 rounded-lg cursor-pointer transition-all flex items-center gap-1"
+                                    title="View Article Live"
+                                  >
+                                    <i className="fa-solid fa-arrow-up-right-from-square" />
+                                  </a>
+                                  <button
+                                    onClick={() => handleEditClick(post)}
+                                    className="bg-slate-100 hover:bg-slate-200/80 text-slate-700 hover:text-slate-900 border border-slate-200 text-[10px] font-extrabold px-3 py-1.5 rounded-lg cursor-pointer transition-all"
+                                  >
+                                    <i className="fa-solid fa-pen-to-square mr-1" /> Edit
+                                  </button>
+                                  <button
+                                    onClick={() => handleDeleteClick(post.slug)}
+                                    className="bg-rose-50 hover:bg-rose-100 text-rose-700 hover:text-rose-800 border border-rose-150 text-[10px] font-extrabold px-3 py-1.5 rounded-lg cursor-pointer transition-all"
+                                  >
+                                    <i className="fa-solid fa-trash-can mr-1" /> Delete
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {/* Pagination Controls */}
+                    {totalPages > 1 && (
+                      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 pt-4 border-t border-slate-100 text-xs font-bold text-slate-500">
+                        <div>
+                          Showing <span className="text-slate-900 font-extrabold">{startIndex + 1}</span> to{" "}
+                          <span className="text-slate-900 font-extrabold">{Math.min(startIndex + itemsPerPage, filteredPosts.length)}</span> of{" "}
+                          <span className="text-slate-900 font-extrabold">{filteredPosts.length}</span> articles
+                        </div>
+
+                        <div className="flex items-center gap-1.5 select-none">
+                          <button
+                            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                            className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-extrabold disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer flex items-center gap-1"
+                          >
+                            <i className="fa-solid fa-chevron-left text-[10px]" /> Prev
+                          </button>
+
+                          {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
                             <button
-                              onClick={() => handleEditClick(post)}
-                              className="bg-slate-100 hover:bg-slate-200/80 text-slate-700 hover:text-slate-900 border border-slate-200 text-[10px] font-extrabold px-3 py-1.5 rounded-lg cursor-pointer transition-all"
+                              key={pageNum}
+                              onClick={() => setCurrentPage(pageNum)}
+                              className={`w-8 h-8 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${
+                                currentPage === pageNum
+                                  ? "bg-primary text-white shadow-xs"
+                                  : "bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200"
+                              }`}
                             >
-                              <i className="fa-solid fa-pen-to-square mr-1" /> Edit
+                              {pageNum}
                             </button>
-                            <button
-                              onClick={() => handleDeleteClick(post.slug)}
-                              className="bg-rose-50 hover:bg-rose-100 text-rose-700 hover:text-rose-800 border border-rose-150 text-[10px] font-extrabold px-3 py-1.5 rounded-lg cursor-pointer transition-all"
-                            >
-                              <i className="fa-solid fa-trash-can mr-1" /> Delete
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+                          ))}
+
+                          <button
+                            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                            className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-extrabold disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer flex items-center gap-1"
+                          >
+                            Next <i className="fa-solid fa-chevron-right text-[10px]" />
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
           </div>
         </div>
       )}

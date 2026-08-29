@@ -838,6 +838,13 @@ export default function AdminPage() {
     return matchSearch && matchService && matchStage && matchRegion && matchAssigned;
   });
 
+  const [leadsCurrentPage, setLeadsCurrentPage] = useState(1);
+  const leadsPerPage = 10;
+
+  useEffect(() => {
+    setLeadsCurrentPage(1);
+  }, [search, serviceFilter, stageFilter, regionFilter, assignedFilter]);
+
   // Calculate Metrics
   const totalCount = enquiries.length;
   const newCount = enquiries.filter((e) => (e.pipelineStage || "new") === "new").length;
@@ -2210,166 +2217,219 @@ export default function AdminPage() {
                   {/* TABLE VIEW (Hidden on Mobile screens, visible on Tablet/Desktop) */}
                   <div className="hidden md:block bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-[0_4px_20px_rgba(15,23,42,0.04)] overflow-hidden mb-12 relative transition-colors duration-200">
                     {filteredEnquiries.length > 0 ? (
-                      <div className="overflow-x-auto">
-                        <table className="w-full text-left border-collapse border-spacing-0">
-                          <thead>
-                            <tr className="bg-slate-50/70 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 select-none sticky top-0 z-10 backdrop-blur-sm">
-                              <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Lead Name</th>
-                              <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Contact Detail</th>
-                              <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Reminders</th>
-                              <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Assignment</th>
-                              <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Target Service</th>
-                              <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Stage</th>
-                              <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"} text-right`}>Actions</th>
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-slate-150 dark:divide-slate-800/80 text-xs">
-                            {filteredEnquiries.map((enq) => {
-                              const displayStage = enq.pipelineStage || "new";
-                              const stageInfo = PIPELINE_STAGES.find(s => s.value === displayStage) || PIPELINE_STAGES[0];
-                              const cleanedMobile = (enq.mobile || "").replace(/\D/g, "");
-                              
-                              // Check reminder due status
-                              let reminderBadge = null;
-                              if (enq.followUpDate) {
-                                const followDate = new Date(enq.followUpDate);
-                                const isOverdue = followDate < new Date();
-                                const isToday = followDate.toDateString() === new Date().toDateString();
-                                
-                                if (isOverdue) {
-                                  reminderBadge = (
-                                    <span className="bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-450 border border-rose-100 dark:border-rose-900/30 px-2 py-0.5 rounded text-[8.5px] font-extrabold flex items-center gap-1 w-max">
-                                      <i className="fa-solid fa-circle-exclamation" /> Overdue
-                                    </span>
-                                  );
-                                } else if (isToday) {
-                                  reminderBadge = (
-                                    <span className="bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-450 border border-amber-100 dark:border-amber-900/30 px-2 py-0.5 rounded text-[8.5px] font-extrabold flex items-center gap-1 w-max">
-                                      <i className="fa-solid fa-clock-three animate-pulse" /> Today
-                                    </span>
-                                  );
-                                } else {
-                                  reminderBadge = (
-                                    <span className="bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-450 border border-blue-100 dark:border-blue-900/30 px-2 py-0.5 rounded text-[8.5px] font-bold flex items-center gap-1 w-max">
-                                      <i className="fa-solid fa-calendar-day" /> {followDate.toLocaleDateString(undefined, { month: "short", day: "numeric" })}
-                                    </span>
-                                  );
-                                }
-                              }
+                      (() => {
+                        const totalPages = Math.ceil(filteredEnquiries.length / leadsPerPage);
+                        const startIndex = (leadsCurrentPage - 1) * leadsPerPage;
+                        const paginatedEnquiries = filteredEnquiries.slice(startIndex, startIndex + leadsPerPage);
 
-                              return (
-                                <tr key={enq.id} className={`${isCompact ? "h-[54px]" : "h-[72px]"} hover:bg-slate-50/40 dark:hover:bg-slate-800/10 transition-all duration-150`}>
-                                  <td className="px-6 py-2 whitespace-nowrap">
-                                    <div className="flex items-center gap-3">
-                                      {/* Initials Avatar */}
-                                      <div className={`w-8.5 h-8.5 rounded-full flex items-center justify-center font-bold text-xs shrink-0 select-none ${getAvatarBg(enq.name)}`}>
-                                        {getAvatarInitials(enq.name)}
-                                      </div>
-                                      <div>
-                                        <div className="font-bold text-slate-900 dark:text-white text-[13px]">{enq.name}</div>
-                                        {enq.companyName !== "N/A" ? (
-                                          <div className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold mt-0.5">{enq.companyName}</div>
-                                        ) : (
-                                          <div className="text-[10px] text-slate-400 dark:text-slate-500 italic mt-0.5">Individual Lead</div>
-                                        )}
-                                        
-                                        {displayStage === "irrelevant" && enq.irrelevantReason && (
-                                          <div className="mt-1 flex items-center gap-1.5 select-none">
-                                            <span className="bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-450 border border-rose-100 dark:border-rose-900/30 px-1.5 py-0.25 rounded text-[8.5px] font-extrabold flex items-center gap-1">
-                                              <i className="fa-solid fa-ban text-[8px]" /> {getReasonLabel(enq.irrelevantReason)}
-                                            </span>
+                        return (
+                          <div>
+                            <div className="overflow-x-auto">
+                              <table className="w-full text-left border-collapse border-spacing-0">
+                                <thead>
+                                  <tr className="bg-slate-50/70 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 select-none sticky top-0 z-10 backdrop-blur-sm">
+                                    <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Lead Name</th>
+                                    <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Contact Detail</th>
+                                    <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Reminders</th>
+                                    <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Assignment</th>
+                                    <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Target Service</th>
+                                    <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"}`}>Stage</th>
+                                    <th className={`px-6 ${isCompact ? "py-3" : "py-4.5"} text-right`}>Actions</th>
+                                  </tr>
+                                </thead>
+                                <tbody className="divide-y divide-slate-150 dark:divide-slate-800/80 text-xs">
+                                  {paginatedEnquiries.map((enq) => {
+                                    const displayStage = enq.pipelineStage || "new";
+                                    const stageInfo = PIPELINE_STAGES.find(s => s.value === displayStage) || PIPELINE_STAGES[0];
+                                    const cleanedMobile = (enq.mobile || "").replace(/\D/g, "");
+                                    
+                                    // Check reminder due status
+                                    let reminderBadge = null;
+                                    if (enq.followUpDate) {
+                                      const followDate = new Date(enq.followUpDate);
+                                      const isOverdue = followDate < new Date();
+                                      const isToday = followDate.toDateString() === new Date().toDateString();
+                                      
+                                      if (isOverdue) {
+                                        reminderBadge = (
+                                          <span className="bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-450 border border-rose-100 dark:border-rose-900/30 px-2 py-0.5 rounded text-[8.5px] font-extrabold flex items-center gap-1 w-max">
+                                            <i className="fa-solid fa-circle-exclamation" /> Overdue
+                                          </span>
+                                        );
+                                      } else if (isToday) {
+                                        reminderBadge = (
+                                          <span className="bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-450 border border-amber-100 dark:border-amber-900/30 px-2 py-0.5 rounded text-[8.5px] font-extrabold flex items-center gap-1 w-max">
+                                            <i className="fa-solid fa-clock-three animate-pulse" /> Today
+                                          </span>
+                                        );
+                                      } else {
+                                        reminderBadge = (
+                                          <span className="bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-450 border border-blue-100 dark:border-blue-900/30 px-2 py-0.5 rounded text-[8.5px] font-bold flex items-center gap-1 w-max">
+                                            <i className="fa-solid fa-calendar-day" /> {followDate.toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                                          </span>
+                                        );
+                                      }
+                                    }
+
+                                    return (
+                                      <tr key={enq.id} className={`${isCompact ? "h-[54px]" : "h-[72px]"} hover:bg-slate-50/40 dark:hover:bg-slate-800/10 transition-all duration-150`}>
+                                        <td className="px-6 py-2 whitespace-nowrap">
+                                          <div className="flex items-center gap-3">
+                                            {/* Initials Avatar */}
+                                            <div className={`w-8.5 h-8.5 rounded-full flex items-center justify-center font-bold text-xs shrink-0 select-none ${getAvatarBg(enq.name)}`}>
+                                              {getAvatarInitials(enq.name)}
+                                            </div>
+                                            <div>
+                                              <div className="font-bold text-slate-900 dark:text-white text-[13px]">{enq.name}</div>
+                                              {enq.companyName !== "N/A" ? (
+                                                <div className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold mt-0.5">{enq.companyName}</div>
+                                              ) : (
+                                                <div className="text-[10px] text-slate-400 dark:text-slate-500 italic mt-0.5">Individual Lead</div>
+                                              )}
+                                              
+                                              {displayStage === "irrelevant" && enq.irrelevantReason && (
+                                                <div className="mt-1 flex items-center gap-1.5 select-none">
+                                                  <span className="bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-450 border border-rose-100 dark:border-rose-900/30 px-1.5 py-0.25 rounded text-[8.5px] font-extrabold flex items-center gap-1">
+                                                    <i className="fa-solid fa-ban text-[8px]" /> {getReasonLabel(enq.irrelevantReason)}
+                                                  </span>
+                                                </div>
+                                              )}
+                                            </div>
                                           </div>
-                                        )}
-                                      </div>
-                                    </div>
-                                  </td>
-                                  
-                                  {/* Contact and WhatsApp shortcut */}
-                                  <td className="px-6 py-2">
-                                    <div className="flex flex-col gap-0.5 justify-center">
-                                      <div className="flex items-center gap-1.5 font-semibold text-slate-700 dark:text-slate-350">
-                                        <a href={`tel:${enq.mobile}`} className="hover:text-[#2563EB] hover:underline flex items-center gap-1">
-                                          <i className="fa-solid fa-phone text-slate-400 text-[10px]" /> {enq.mobile}
-                                        </a>
+                                        </td>
                                         
-                                        {/* Click to WhatsApp icon link */}
-                                        <a 
-                                          href={`https://wa.me/${cleanedMobile}?text=${encodeURIComponent(`Hi ${enq.name}, thank you for contacting Joy Digital. I am checking on your requirement.`)}`}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="text-emerald-600 hover:text-emerald-500 text-[12px] pl-0.5"
-                                          title="Quick WhatsApp Chat"
-                                        >
-                                          <i className="fa-brands fa-whatsapp" />
-                                        </a>
-                                      </div>
-                                      <a href={`mailto:${enq.email}`} className="text-[10.5px] text-slate-400 dark:text-slate-500 hover:text-[#2563EB] hover:underline transition-colors flex items-center gap-1.5">
-                                        <i className="fa-regular fa-envelope text-[11px]" /> {enq.email}
-                                      </a>
-                                    </div>
-                                  </td>
+                                        {/* Contact and WhatsApp shortcut */}
+                                        <td className="px-6 py-2">
+                                          <div className="flex flex-col gap-0.5 justify-center">
+                                            <div className="flex items-center gap-1.5 font-semibold text-slate-700 dark:text-slate-350">
+                                              <a href={`tel:${enq.mobile}`} className="hover:text-[#2563EB] hover:underline flex items-center gap-1">
+                                                <i className="fa-solid fa-phone text-slate-400 text-[10px]" /> {enq.mobile}
+                                              </a>
+                                              
+                                              {/* Click to WhatsApp icon link */}
+                                              <a 
+                                                href={`https://wa.me/${cleanedMobile}?text=${encodeURIComponent(`Hi ${enq.name}, thank you for contacting Joy Digital. I am checking on your requirement.`)}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-emerald-600 hover:text-emerald-500 text-[12px] pl-0.5"
+                                                title="Quick WhatsApp Chat"
+                                              >
+                                                <i className="fa-brands fa-whatsapp" />
+                                              </a>
+                                            </div>
+                                            <a href={`mailto:${enq.email}`} className="text-[10.5px] text-slate-400 dark:text-slate-500 hover:text-[#2563EB] hover:underline transition-colors flex items-center gap-1.5">
+                                              <i className="fa-regular fa-envelope text-[11px]" /> {enq.email}
+                                            </a>
+                                          </div>
+                                        </td>
 
-                                  {/* Reminders Column */}
-                                  <td className="px-6 py-2 whitespace-nowrap">
-                                    {reminderBadge || <span className="text-slate-400 dark:text-slate-600 italic text-[10px]">-</span>}
-                                  </td>
+                                        {/* Reminders Column */}
+                                        <td className="px-6 py-2 whitespace-nowrap">
+                                          {reminderBadge || <span className="text-slate-400 dark:text-slate-600 italic text-[10px]">-</span>}
+                                        </td>
 
-                                  {/* Executive Assigned */}
-                                  <td className="px-6 py-2 text-slate-655 dark:text-slate-405 font-bold whitespace-nowrap">
-                                    {enq.assignedTo ? (
-                                      <span className="flex items-center gap-1.5">
-                                        <span className="w-2.5 h-2.5 bg-blue-500 rounded-full inline-block" />
-                                        <span>{enq.assignedTo.split(" ")[0]}</span>
-                                      </span>
-                                    ) : (
-                                      <span className="text-slate-400 dark:text-slate-600 italic font-medium">Unassigned</span>
-                                    )}
-                                  </td>
+                                        {/* Executive Assigned */}
+                                        <td className="px-6 py-2 text-slate-655 dark:text-slate-405 font-bold whitespace-nowrap">
+                                          {enq.assignedTo ? (
+                                            <span className="flex items-center gap-1.5">
+                                              <span className="w-2.5 h-2.5 bg-blue-500 rounded-full inline-block" />
+                                              <span>{enq.assignedTo.split(" ")[0]}</span>
+                                            </span>
+                                          ) : (
+                                            <span className="text-slate-400 dark:text-slate-600 italic font-medium">Unassigned</span>
+                                          )}
+                                        </td>
 
-                                  <td className="px-6 py-2 font-semibold text-slate-800 dark:text-slate-300 max-w-[200px] truncate">
-                                    {enq.service}
-                                  </td>
+                                        <td className="px-6 py-2 font-semibold text-slate-800 dark:text-slate-300 max-w-[200px] truncate">
+                                          {enq.service}
+                                        </td>
 
-                                  <td className="px-6 py-2 whitespace-nowrap">
-                                    <select
-                                      value={displayStage}
-                                      onChange={(e) => handleStatusChange(enq.id, e.target.value)}
-                                      className={`text-[9.5px] font-black px-2.5 py-1 rounded-full border outline-none cursor-pointer shadow-sm transition-all focus:ring-4 focus:ring-blue-150/10 ${stageInfo.color}`}
+                                        <td className="px-6 py-2 whitespace-nowrap">
+                                          <select
+                                            value={displayStage}
+                                            onChange={(e) => handleStatusChange(enq.id, e.target.value)}
+                                            className={`text-[9.5px] font-black px-2.5 py-1 rounded-full border outline-none cursor-pointer shadow-sm transition-all focus:ring-4 focus:ring-blue-150/10 ${stageInfo.color}`}
+                                          >
+                                            {PIPELINE_STAGES.map((s) => (
+                                              <option key={s.value} value={s.value}>{s.label}</option>
+                                            ))}
+                                          </select>
+                                        </td>
+
+                                        {/* Actions */}
+                                        <td className="px-6 py-2 text-right">
+                                          <div className="flex items-center justify-end gap-2">
+                                            <button
+                                              onClick={() => {
+                                                setSelectedLead(enq);
+                                                setIsDrawerOpen(true);
+                                              }}
+                                              className="w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                                              title="Open Lead Profile Drawer"
+                                            >
+                                              <i className="fa-regular fa-eye" />
+                                            </button>
+                                            <button
+                                              onClick={() => handleDelete(enq.id)}
+                                              className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/30 text-rose-600 dark:text-rose-450 hover:bg-rose-100 dark:hover:bg-rose-900/40 flex items-center justify-center transition-all cursor-pointer animate-fade-in"
+                                              title="Delete Lead"
+                                            >
+                                              <i className="fa-regular fa-trash-can" />
+                                            </button>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    );
+                                  })}
+                                </tbody>
+                              </table>
+                            </div>
+
+                            {/* CRM Pagination Controls */}
+                            {totalPages > 1 && (
+                              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 border-t border-slate-100 dark:border-slate-800 text-xs font-bold text-slate-500 dark:text-slate-400 select-none">
+                                <div>
+                                  Showing <span className="text-slate-900 dark:text-white font-extrabold">{startIndex + 1}</span> to{" "}
+                                  <span className="text-slate-900 dark:text-white font-extrabold">{Math.min(startIndex + leadsPerPage, filteredEnquiries.length)}</span> of{" "}
+                                  <span className="text-slate-900 dark:text-white font-extrabold">{filteredEnquiries.length}</span> leads
+                                </div>
+
+                                <div className="flex items-center gap-1.5">
+                                  <button
+                                    onClick={() => setLeadsCurrentPage((prev) => Math.max(prev - 1, 1))}
+                                    disabled={leadsCurrentPage === 1}
+                                    className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-extrabold disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer flex items-center gap-1"
+                                  >
+                                    <i className="fa-solid fa-chevron-left text-[10px]" /> Prev
+                                  </button>
+
+                                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                                    <button
+                                      key={pageNum}
+                                      onClick={() => setLeadsCurrentPage(pageNum)}
+                                      className={`w-8 h-8 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${
+                                        leadsCurrentPage === pageNum
+                                          ? "bg-[#2563EB] text-white shadow-xs"
+                                          : "bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
+                                      }`}
                                     >
-                                      {PIPELINE_STAGES.map((s) => (
-                                        <option key={s.value} value={s.value}>{s.label}</option>
-                                      ))}
-                                    </select>
-                                  </td>
+                                      {pageNum}
+                                    </button>
+                                  ))}
 
-                                  {/* Actions */}
-                                  <td className="px-6 py-2 text-right">
-                                    <div className="flex items-center justify-end gap-2">
-                                      <button
-                                        onClick={() => {
-                                          setSelectedLead(enq);
-                                          setIsDrawerOpen(true);
-                                        }}
-                                        className="w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
-                                        title="Open Lead Profile Drawer"
-                                      >
-                                        <i className="fa-regular fa-eye" />
-                                      </button>
-                                      <button
-                                        onClick={() => handleDelete(enq.id)}
-                                        className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/30 text-rose-600 dark:text-rose-450 hover:bg-rose-100 dark:hover:bg-rose-900/40 flex items-center justify-center transition-all cursor-pointer animate-fade-in"
-                                        title="Delete Lead"
-                                      >
-                                        <i className="fa-regular fa-trash-can" />
-                                      </button>
-                                    </div>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
-                      </div>
+                                  <button
+                                    onClick={() => setLeadsCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                                    disabled={leadsCurrentPage === totalPages}
+                                    className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-extrabold disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer flex items-center gap-1"
+                                  >
+                                    Next <i className="fa-solid fa-chevron-right text-[10px]" />
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })()
                     ) : (
                       <div className="p-16 text-center flex flex-col items-center">
                         <div className="w-14 h-14 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-750 flex items-center justify-center text-slate-400 dark:text-slate-550 mb-4 font-bold">

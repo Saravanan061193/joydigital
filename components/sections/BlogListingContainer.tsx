@@ -32,6 +32,13 @@ export default function BlogListingContainer({ posts }: BlogListingContainerProp
     setPrefersReducedMotion(mediaQuery.matches);
   }, []);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 9;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCategory, searchQuery]);
+
   // Filter posts based on category and search text
   const filteredPosts = posts.filter((post) => {
     const matchesCategory = activeCategory === "All" || post.category === activeCategory;
@@ -158,74 +165,135 @@ export default function BlogListingContainer({ posts }: BlogListingContainerProp
               <p className="text-xs text-[#64748B] font-semibold">Try modifying your search text or active filters.</p>
             </div>
           ) : (
-            // Re-render grid elements on filter modifications to trigger staggers
-            <div 
-              key={`${activeCategory}-${searchQuery}`}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            >
-              {filteredPosts.map((post, idx) => (
-                <article
-                  key={post.slug}
-                  style={{ transitionDelay: prefersReducedMotion ? "0ms" : `${(idx % 3) * 90}ms` }}
-                  className="bg-white border border-[#E2E8F0] rounded-[24px] overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between reveal-hidden blog-card-reveal group"
-                >
-                  <div>
-                    {/* Thumbnail representation */}
-                    <div className="relative w-full h-48 bg-slate-50 overflow-hidden border-b border-[#E2E8F0]">
-                      <Image
-                        src={post.image || getThumbnail(post.category)}
-                        alt={`${post.title} preview`}
-                        fill
-                        sizes="(max-w-768px) 100vw, 33vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                        loading="lazy"
-                      />
-                      <div className="absolute top-4 left-4 z-10">
-                        <span className="bg-primary text-white font-extrabold text-[9px] uppercase tracking-wider px-3 py-1 rounded-md shadow-sm border border-primary-light/20 group-hover:bg-[#171126] group-hover:border-slate-800 transition-colors duration-300">
-                          {post.category}
-                        </span>
-                      </div>
-                    </div>
+            (() => {
+              const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+              const startIndex = (currentPage - 1) * postsPerPage;
+              const paginatedPosts = filteredPosts.slice(startIndex, startIndex + postsPerPage);
 
-                    <div className="p-7 text-left">
-                      <div className="flex items-center gap-2 mb-3">
-                        <span className="text-[10px] text-[#64748B] font-semibold">
-                          {new Date(post.date).toLocaleDateString("en-US", {
-                            month: "short",
-                            day: "numeric",
-                            year: "numeric",
-                          })}
-                        </span>
-                        <span className="text-[10px] text-slate-300">&bull;</span>
-                        <ViewCounter slug={post.slug} increment={false} />
-                      </div>
+              return (
+                <div className="flex flex-col gap-12">
+                  <div 
+                    key={`${activeCategory}-${searchQuery}-${currentPage}`}
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                  >
+                    {paginatedPosts.map((post, idx) => (
+                      <article
+                        key={post.slug}
+                        style={{ transitionDelay: prefersReducedMotion ? "0ms" : `${(idx % 3) * 90}ms` }}
+                        className="bg-white border border-[#E2E8F0] rounded-[24px] overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between reveal-hidden blog-card-reveal group"
+                      >
+                        <div>
+                          {/* Thumbnail representation */}
+                          <div className="relative w-full h-48 bg-slate-50 overflow-hidden border-b border-[#E2E8F0]">
+                            <Image
+                              src={post.image || getThumbnail(post.category)}
+                              alt={`${post.title} preview`}
+                              fill
+                              sizes="(max-w-768px) 100vw, 33vw"
+                              className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                              loading="lazy"
+                            />
+                            <div className="absolute top-4 left-4 z-10">
+                              <span className="bg-primary text-white font-extrabold text-[9px] uppercase tracking-wider px-3 py-1 rounded-md shadow-sm border border-primary-light/20 group-hover:bg-[#171126] group-hover:border-slate-800 transition-colors duration-300">
+                                {post.category}
+                              </span>
+                            </div>
+                          </div>
 
-                      <h3 className="text-base font-extrabold text-slate-900 mb-3 leading-snug group-hover:text-primary transition-colors line-clamp-2">
-                        <Link href={`/blog/${post.slug}`} title={post.title}>
-                          {post.title}
-                        </Link>
-                      </h3>
+                          <div className="p-7 text-left">
+                            <div className="flex items-center gap-2 mb-3">
+                              <span className="text-[10px] text-[#64748B] font-semibold">
+                                {new Date(post.date).toLocaleDateString("en-US", {
+                                  month: "short",
+                                  day: "numeric",
+                                  year: "numeric",
+                                })}
+                              </span>
+                              <span className="text-[10px] text-slate-300">&bull;</span>
+                              <ViewCounter slug={post.slug} increment={false} />
+                            </div>
 
-                      <p className="text-[11px] text-[#64748B] leading-relaxed line-clamp-3 font-semibold">
-                        {post.description}
-                      </p>
-                    </div>
+                            <h3 className="text-base font-extrabold text-slate-900 mb-3 leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                              <Link href={`/blog/${post.slug}`} title={post.title}>
+                                {post.title}
+                              </Link>
+                            </h3>
+
+                            <p className="text-[11px] text-[#64748B] leading-relaxed line-clamp-3 font-semibold">
+                              {post.description}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="px-7 py-4.5 border-t border-[#E2E8F0] bg-slate-50/50 flex items-center justify-between">
+                          <span className="text-[10px] text-[#64748B] font-bold">
+                            By {post.author}
+                          </span>
+                          <Link
+                            href={`/blog/${post.slug}`}
+                            className="text-xs font-bold text-primary hover:text-primary-light flex items-center gap-1.5 group/link"
+                          >
+                            Read Article <i className="fa-solid fa-arrow-right group-hover/link:translate-x-1.5 transition-transform duration-200" />
+                          </Link>
+                        </div>
+                      </article>
+                    ))}
                   </div>
 
-                  <div className="px-7 py-4.5 border-t border-[#E2E8F0] bg-slate-50/50 flex items-center justify-between">
-                    <span className="text-[10px] text-[#64748B] font-bold">
-                      By {post.author}
-                    </span>
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="text-xs font-bold text-primary hover:text-primary-light flex items-center gap-1.5 group/link"
-                    >
-                      Read Article <i className="fa-solid fa-arrow-right group-hover/link:translate-x-1.5 transition-transform duration-200" />
-                    </Link>
-                  </div>
-                </article>
-              ))}
-            </div>
+                  {/* Public Blog Pagination Bar */}
+                  {totalPages > 1 && (
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-slate-200 text-xs font-bold text-[#64748B] select-none">
+                      <div>
+                        Showing <span className="text-slate-900 font-extrabold">{startIndex + 1}</span> to{" "}
+                        <span className="text-slate-900 font-extrabold">{Math.min(startIndex + postsPerPage, filteredPosts.length)}</span> of{" "}
+                        <span className="text-slate-900 font-extrabold">{filteredPosts.length}</span> growth articles
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => {
+                            setCurrentPage((prev) => Math.max(prev - 1, 1));
+                            window.scrollTo({ top: 400, behavior: "smooth" });
+                          }}
+                          disabled={currentPage === 1}
+                          className="px-4 py-2 bg-white hover:bg-slate-100 text-slate-800 border border-slate-200 rounded-xl text-xs font-extrabold disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs"
+                        >
+                          <i className="fa-solid fa-chevron-left text-[10px]" /> Previous
+                        </button>
+
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                          <button
+                            key={pageNum}
+                            onClick={() => {
+                              setCurrentPage(pageNum);
+                              window.scrollTo({ top: 400, behavior: "smooth" });
+                            }}
+                            className={`w-9 h-9 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
+                              currentPage === pageNum
+                                ? "bg-primary text-white shadow-md shadow-primary-light/20"
+                                : "bg-white hover:bg-slate-100 text-slate-700 border border-slate-200"
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        ))}
+
+                        <button
+                          onClick={() => {
+                            setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+                            window.scrollTo({ top: 400, behavior: "smooth" });
+                          }}
+                          disabled={currentPage === totalPages}
+                          className="px-4 py-2 bg-white hover:bg-slate-100 text-slate-800 border border-slate-200 rounded-xl text-xs font-extrabold disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs"
+                        >
+                          Next <i className="fa-solid fa-chevron-right text-[10px]" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })()
           )}
         </div>
       </section>
