@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import { sendWhatsAppLeadAlert } from "@/lib/whatsappAlert";
 
 const DATA_DIR = path.join(process.cwd(), "data");
 const DATA_FILE = path.join(DATA_DIR, "enquiries.json");
@@ -142,6 +143,13 @@ export async function POST(request: Request) {
       console.error("Error forwarding submission to FormSubmit.co:", formSubmitError);
     }
     
+    // 4. Trigger automated WhatsApp lead alert
+    try {
+      await sendWhatsAppLeadAlert(newEnquiry);
+    } catch (waErr) {
+      console.error("Error sending automated WhatsApp lead alert:", waErr);
+    }
+
     return NextResponse.json({ success: true, id: newEnquiry.id });
   } catch (error: any) {
     console.error("Error in enquiry submission API:", error);
