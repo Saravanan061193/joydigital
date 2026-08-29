@@ -6,6 +6,7 @@ import FontAwesomeLoader from "@/components/layout/FontAwesomeLoader";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import ClarityTracker from "@/components/ClarityTracker";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import NavigationLoadingBar from "@/components/ui/NavigationLoadingBar";
 
 const ChatbotWidget = dynamic(() => import("@/components/ui/ChatbotWidget"));
 import "./globals.css";
@@ -91,6 +92,7 @@ export default function RootLayout({
         <FontAwesomeLoader />
       </head>
       <body className="min-h-full flex flex-col bg-light-bg text-text-primary">
+        <NavigationLoadingBar />
         <GoogleAnalytics />
         <AnalyticsTracker />
         <ClarityTracker />
