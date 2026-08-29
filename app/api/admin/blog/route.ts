@@ -20,11 +20,41 @@ if (
 
 const BLOG_DIR = path.join(process.cwd(), "content/blog");
 
-// GET: List all blog posts (merges local & DB, sorted by date)
+// GET: List all blog posts (merges local & DB, sorted by date) with pageviews aggregated
 export async function GET(req: NextRequest) {
   try {
     const posts = await getAllPosts();
-    return NextResponse.json(posts);
+
+    let viewCounts: Record<string, number> = {};
+    if (process.env.MONGODB_URI) {
+      try {
+        const db = await getDb();
+        const pageviewsCol = db.collection("pageviews");
+        
+        const viewsAggregation = await pageviewsCol.aggregate([
+          { $match: { path: { $regex: "^/blog/" } } },
+          { $group: { _id: "$path", count: { $sum: 1 } } }
+        ]).toArray();
+
+        viewsAggregation.forEach((item: any) => {
+          const cleanPath = (item._id || "").replace(/\/$/, "");
+          const parts = cleanPath.split("/blog/");
+          if (parts.length > 1 && parts[1]) {
+            const slug = parts[1];
+            viewCounts[slug] = (viewCounts[slug] || 0) + item.count;
+          }
+        });
+      } catch (dbErr) {
+        console.error("Failed to aggregate blog views from MongoDB:", dbErr);
+      }
+    }
+
+    const postsWithViews = posts.map((p) => ({
+      ...p,
+      views: viewCounts[p.slug] || p.views || 0,
+    }));
+
+    return NextResponse.json(postsWithViews);
   } catch (error: any) {
     console.error("Error retrieving blog list:", error);
     return NextResponse.json({ error: "Failed to read blog posts." }, { status: 500 });

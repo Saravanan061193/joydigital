@@ -65,6 +65,7 @@ interface BlogPost {
   author: string;
   image?: string;
   content: string;
+  views?: number;
 }
 
 export default function BlogAdminPanel() {
@@ -72,7 +73,8 @@ export default function BlogAdminPanel() {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editorMode, setEditorMode] = useState<"create" | "edit">("create");
-  
+  const [searchTerm, setSearchTerm] = useState("");
+
   // Form state
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
@@ -92,14 +94,10 @@ export default function BlogAdminPanel() {
   const [previewActive, setPreviewActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-
-
   // Fetch posts on mount
   useEffect(() => {
     fetchPosts();
   }, []);
-
-
 
   const fetchPosts = async () => {
     setLoading(true);
@@ -261,13 +259,20 @@ export default function BlogAdminPanel() {
     }
   };
 
+  // Filter posts based on search term
+  const filteredPosts = posts.filter(
+    (p) =>
+      p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.slug.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   // Convert simple markdown to HTML elements for preview
   const renderMarkdownPreview = (text: string) => {
     if (!text) return <p className="text-slate-450 italic">No content written yet.</p>;
 
     const lines = text.split("\n");
     return lines.map((line, idx) => {
-      // Headers
       if (line.startsWith("## ")) {
         return <h2 key={idx} className="text-lg font-bold text-slate-800 dark:text-white mt-5 mb-2.5 border-b border-slate-100 pb-1">{line.substring(3)}</h2>;
       }
@@ -277,11 +282,9 @@ export default function BlogAdminPanel() {
       if (line.startsWith("# ")) {
         return <h1 key={idx} className="text-xl font-black text-slate-900 dark:text-white mt-6 mb-3">{line.substring(2)}</h1>;
       }
-      // Bullet list
       if (line.startsWith("- ") || line.startsWith("* ")) {
         return <li key={idx} className="text-xs text-slate-650 dark:text-slate-350 ml-4 list-disc mb-1">{line.substring(2)}</li>;
       }
-      // Blockquote
       if (line.startsWith("> ")) {
         return (
           <blockquote key={idx} className="border-l-4 border-primary/40 bg-slate-50 dark:bg-slate-800/40 px-4 py-2 my-3 text-xs italic text-slate-600 dark:text-slate-450">
@@ -289,11 +292,9 @@ export default function BlogAdminPanel() {
           </blockquote>
         );
       }
-      // Empty line
       if (line.trim() === "") {
         return <div key={idx} className="h-2" />;
       }
-      // Standard paragraph
       return <p key={idx} className="text-xs text-slate-650 dark:text-slate-350 leading-relaxed mb-2.5">{line}</p>;
     });
   };
@@ -315,86 +316,153 @@ export default function BlogAdminPanel() {
 
       {/* A. CMS DIRECTORY VIEW */}
       {!isEditing && (
-        <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
-          <div className="flex items-center justify-between gap-4 mb-6">
-            <div>
-              <h3 className="text-sm font-black text-slate-900">Published Blog Articles</h3>
-              <p className="text-[10px] text-slate-500 font-semibold mt-0.5">Manage existing files in content/blog directory</p>
+        <div className="flex flex-col gap-6">
+
+          {/* Quick Analytics Summary Bar */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-white border border-slate-200/80 rounded-[20px] p-5 shadow-sm flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-xl font-bold">
+                <i className="fa-solid fa-newspaper" />
+              </div>
+              <div>
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Total Published Posts</span>
+                <span className="text-xl font-black text-slate-900">{posts.length} Articles</span>
+              </div>
             </div>
-            
-            <div className="flex gap-2">
-              <button
-                onClick={handleCreateClick}
-                className="bg-primary hover:bg-primary-light text-white font-extrabold text-[10px] uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-sm hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-1.5"
-              >
-                <i className="fa-solid fa-plus" /> Draft New Post
-              </button>
+
+            <div className="bg-white border border-slate-200/80 rounded-[20px] p-5 shadow-sm flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-xl font-bold">
+                <i className="fa-solid fa-eye" />
+              </div>
+              <div>
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Total Blog Views</span>
+                <span className="text-xl font-black text-slate-900">
+                  {posts.reduce((acc, p) => acc + (p.views || 0), 0).toLocaleString()} Views
+                </span>
+              </div>
+            </div>
+
+            <div className="bg-white border border-slate-200/80 rounded-[20px] p-5 shadow-sm flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-600 flex items-center justify-center text-xl font-bold">
+                <i className="fa-solid fa-fire" />
+              </div>
+              <div className="truncate max-w-[200px]">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Top Viewed Article</span>
+                <span className="text-xs font-extrabold text-slate-900 truncate block">
+                  {posts.length > 0
+                    ? [...posts].sort((a, b) => (b.views || 0) - (a.views || 0))[0]?.title || "N/A"
+                    : "None"}
+                </span>
+              </div>
             </div>
           </div>
 
+          <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+              <div>
+                <h3 className="text-sm font-black text-slate-900">Published Blog Articles</h3>
+                <p className="text-[10px] text-slate-500 font-semibold mt-0.5">Manage existing files in content/blog directory and track performance</p>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <i className="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs" />
+                  <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Search title, slug..."
+                    className="pl-8 pr-3 py-2 bg-slate-50 border border-slate-200 text-slate-900 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-medium w-52"
+                  />
+                </div>
 
+                <button
+                  onClick={handleCreateClick}
+                  className="bg-primary hover:bg-primary-light text-white font-extrabold text-[10px] uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-sm hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap"
+                >
+                  <i className="fa-solid fa-plus" /> Draft New Post
+                </button>
+              </div>
+            </div>
 
-          {loading ? (
-            <div className="py-12 flex flex-col items-center justify-center gap-3">
-              <div className="w-6 h-6 border-2 border-slate-200 border-t-primary rounded-full animate-spin" />
-              <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Syncing articles...</span>
-            </div>
-          ) : posts.length === 0 ? (
-            <div className="py-16 text-center border-2 border-dashed border-slate-200 rounded-2xl">
-              <i className="fa-regular fa-folder-open text-2xl text-slate-300 mb-3 block" />
-              <p className="text-xs font-bold text-slate-500">No blog files discovered in content/blog/</p>
-              <p className="text-[10px] text-slate-400 mt-1">Create your first post to display it in the listing.</p>
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs border-collapse">
-                <thead>
-                  <tr className="border-b border-slate-200 text-slate-500 font-black text-[9px] uppercase tracking-wider">
-                    <th className="py-3 px-4">Title / Slug</th>
-                    <th className="py-3 px-4">Category</th>
-                    <th className="py-3 px-4">Date</th>
-                    <th className="py-3 px-4">Author</th>
-                    <th className="py-3 px-4 text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {posts.map((post) => (
-                    <tr key={post.slug} className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
-                      <td className="py-4 px-4 max-w-sm">
-                        <div className="font-bold text-slate-900 truncate">{post.title}</div>
-                        <div className="text-[10px] text-slate-450 font-semibold mt-0.5 select-all font-mono">
-                          {post.slug}
-                        </div>
-                      </td>
-                      <td className="py-4 px-4">
-                        <span className="bg-primary/10 text-primary border border-primary/20 text-[9px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                          {post.category}
-                        </span>
-                      </td>
-                      <td className="py-4 px-4 text-slate-500 font-semibold">{post.date}</td>
-                      <td className="py-4 px-4 text-slate-550 font-semibold">{post.author}</td>
-                      <td className="py-4 px-4 text-right">
-                        <div className="inline-flex gap-2">
-                          <button
-                            onClick={() => handleEditClick(post)}
-                            className="bg-slate-100 hover:bg-slate-200/80 text-slate-700 hover:text-slate-900 border border-slate-200 text-[10px] font-extrabold px-3 py-1.5 rounded-lg cursor-pointer transition-all"
-                          >
-                            <i className="fa-solid fa-pen-to-square mr-1" /> Edit
-                          </button>
-                          <button
-                            onClick={() => handleDeleteClick(post.slug)}
-                            className="bg-rose-50 hover:bg-rose-100 text-rose-700 hover:text-rose-800 border border-rose-150 text-[10px] font-extrabold px-3 py-1.5 rounded-lg cursor-pointer transition-all"
-                          >
-                            <i className="fa-solid fa-trash-can mr-1" /> Delete
-                          </button>
-                        </div>
-                      </td>
+            {loading ? (
+              <div className="py-12 flex flex-col items-center justify-center gap-3">
+                <div className="w-6 h-6 border-2 border-slate-200 border-t-primary rounded-full animate-spin" />
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Syncing articles & views...</span>
+              </div>
+            ) : filteredPosts.length === 0 ? (
+              <div className="py-16 text-center border-2 border-dashed border-slate-200 rounded-2xl">
+                <i className="fa-regular fa-folder-open text-2xl text-slate-300 mb-3 block" />
+                <p className="text-xs font-bold text-slate-500">No blog files discovered</p>
+                <p className="text-[10px] text-slate-400 mt-1">Create your first post to display it in the listing.</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr className="border-b border-slate-200 text-slate-500 font-black text-[9px] uppercase tracking-wider">
+                      <th className="py-3 px-4">Title / Slug</th>
+                      <th className="py-3 px-4">Category</th>
+                      <th className="py-3 px-4">Views / Traffic</th>
+                      <th className="py-3 px-4">Date</th>
+                      <th className="py-3 px-4">Author</th>
+                      <th className="py-3 px-4 text-right">Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                  </thead>
+                  <tbody>
+                    {filteredPosts.map((post) => (
+                      <tr key={post.slug} className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
+                        <td className="py-4 px-4 max-w-sm">
+                          <div className="font-bold text-slate-900 truncate">{post.title}</div>
+                          <div className="text-[10px] text-slate-450 font-semibold mt-0.5 select-all font-mono">
+                            {post.slug}
+                          </div>
+                        </td>
+                        <td className="py-4 px-4">
+                          <span className="bg-primary/10 text-primary border border-primary/20 text-[9px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                            {post.category}
+                          </span>
+                        </td>
+                        <td className="py-4 px-4 whitespace-nowrap">
+                          <span className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200/80 px-3 py-1 rounded-full text-[10px] font-extrabold shadow-2xs">
+                            <i className="fa-regular fa-eye text-emerald-500" />
+                            <span>{(post.views || 0).toLocaleString()} Views</span>
+                          </span>
+                        </td>
+                        <td className="py-4 px-4 text-slate-500 font-semibold whitespace-nowrap">{post.date}</td>
+                        <td className="py-4 px-4 text-slate-550 font-semibold whitespace-nowrap">{post.author}</td>
+                        <td className="py-4 px-4 text-right whitespace-nowrap">
+                          <div className="inline-flex gap-2">
+                            <a
+                              href={`/blog/${post.slug}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="bg-slate-100 hover:bg-slate-200/80 text-slate-700 hover:text-slate-900 border border-slate-200 text-[10px] font-extrabold px-2.5 py-1.5 rounded-lg cursor-pointer transition-all flex items-center gap-1"
+                              title="View Article Live"
+                            >
+                              <i className="fa-solid fa-arrow-up-right-from-square" />
+                            </a>
+                            <button
+                              onClick={() => handleEditClick(post)}
+                              className="bg-slate-100 hover:bg-slate-200/80 text-slate-700 hover:text-slate-900 border border-slate-200 text-[10px] font-extrabold px-3 py-1.5 rounded-lg cursor-pointer transition-all"
+                            >
+                              <i className="fa-solid fa-pen-to-square mr-1" /> Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteClick(post.slug)}
+                              className="bg-rose-50 hover:bg-rose-100 text-rose-700 hover:text-rose-800 border border-rose-150 text-[10px] font-extrabold px-3 py-1.5 rounded-lg cursor-pointer transition-all"
+                            >
+                              <i className="fa-solid fa-trash-can mr-1" /> Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
         </div>
       )}
 

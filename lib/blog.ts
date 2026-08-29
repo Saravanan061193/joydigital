@@ -14,6 +14,7 @@ export interface BlogPost {
   author: string;
   image?: string;
   content: string;
+  views?: number;
 }
 
 // Helper to fetch local posts synchronously
