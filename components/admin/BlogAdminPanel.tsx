@@ -391,7 +391,7 @@ export default function BlogAdminPanel() {
               <div>
                 <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Total Blog Views</span>
                 <span className="text-xl font-black text-slate-900">
-                  {posts.reduce((acc, p) => acc + (p.views || 0), 0).toLocaleString()} Views
+                  {(analytics?.totalBlogPageviews ?? posts.reduce((acc, p) => acc + (p.views || 0), 0)).toLocaleString()} Views
                 </span>
               </div>
             </div>

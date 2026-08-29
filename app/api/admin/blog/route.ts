@@ -32,12 +32,13 @@ export async function GET(req: NextRequest) {
         const pageviewsCol = db.collection("pageviews");
         
         const viewsAggregation = await pageviewsCol.aggregate([
-          { $match: { path: { $regex: "^/blog/" } } },
+          { $match: { path: { $regex: "^/blog" } } },
           { $group: { _id: "$path", count: { $sum: 1 } } }
         ]).toArray();
 
         viewsAggregation.forEach((item: any) => {
-          const cleanPath = (item._id || "").replace(/\/$/, "");
+          const rawPath = item._id || "";
+          const cleanPath = rawPath.split("?")[0].replace(/\/$/, "");
           const parts = cleanPath.split("/blog/");
           if (parts.length > 1 && parts[1]) {
             const slug = parts[1];
