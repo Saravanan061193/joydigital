@@ -561,7 +561,14 @@ export default function BlogAdminPanel() {
                   {analytics?.recentBlogActivities && analytics.recentBlogActivities.length > 0 ? (
                     analytics.recentBlogActivities.map((act: any, idx: number) => {
                       const articleTitle = posts.find(p => p.slug === act.slug)?.title || act.slug;
-                      const timeLabel = act.timestamp ? new Date(act.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "Just now";
+                      const timeLabel = act.timestamp
+                        ? (() => {
+                            const d = new Date(act.timestamp);
+                            const datePart = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+                            const timePart = d.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+                            return `${datePart}, ${timePart}`;
+                          })()
+                        : "Just now";
 
                       return (
                         <div key={act.id || idx} className="p-2.5 bg-slate-50/80 hover:bg-slate-100/70 border border-slate-150 rounded-xl transition-all text-xs space-y-1">
