@@ -7,6 +7,17 @@ import StickyWidgets from "@/components/ui/StickyWidgets";
 export const metadata: Metadata = {
   title: "Terms & Conditions | Joy Digital",
   description: "Read the Terms & Conditions of Joy Digital to understand the agreement and rules for using our services.",
+  alternates: {
+    canonical: "https://joydigital.in/terms-and-conditions",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://joydigital.in/terms-and-conditions",
+    siteName: "Joy Digital Agency",
+    title: "Terms & Conditions | Joy Digital",
+    description: "Read the Terms & Conditions of Joy Digital to understand the agreement and rules for using our services.",
+    images: [{ url: "https://joydigital.in/assets/images/hero-banner.webp", width: 1200, height: 630, alt: "Joy Digital Terms and Conditions" }],
+  },
 };
 
 export default function TermsAndConditionsPage() {

@@ -7,6 +7,17 @@ import StickyWidgets from "@/components/ui/StickyWidgets";
 export const metadata: Metadata = {
   title: "Disclaimer | Joy Digital",
   description: "Read the website disclaimer and limitation of liability policy for Joy Digital.",
+  alternates: {
+    canonical: "https://joydigital.in/disclaimer",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://joydigital.in/disclaimer",
+    siteName: "Joy Digital Agency",
+    title: "Disclaimer | Joy Digital",
+    description: "Read the website disclaimer and limitation of liability policy for Joy Digital.",
+    images: [{ url: "https://joydigital.in/assets/images/hero-banner.webp", width: 1200, height: 630, alt: "Joy Digital Disclaimer" }],
+  },
 };
 
 export default function DisclaimerPage() {

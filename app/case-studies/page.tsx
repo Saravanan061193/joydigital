@@ -8,6 +8,17 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Client Case Studies & Marketing Results | Joy Digital",
   description: "Explore real success stories from Joy Digital. Read how our web design, SEO, and local maps campaigns drove appointments, sales, and ranking growth.",
+  alternates: {
+    canonical: "https://joydigital.in/case-studies",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://joydigital.in/case-studies",
+    siteName: "Joy Digital Agency",
+    title: "Client Case Studies & Marketing Results | Joy Digital",
+    description: "Explore real success stories from Joy Digital. Read how our web design, SEO, and local maps campaigns drove appointments, sales, and ranking growth.",
+    images: [{ url: "https://joydigital.in/assets/images/hero-banner.webp", width: 1200, height: 630, alt: "Joy Digital Case Studies" }],
+  },
 };
 
 const CASE_STUDIES = [

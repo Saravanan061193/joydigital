@@ -9,6 +9,17 @@ import StrongCTA from "@/components/StrongCTA";
 export const metadata: Metadata = {
   title: "About Our Digital Marketing Agency | Joy Digital",
   description: "Learn about Joy Digital's mission, values, and how our digital marketing agency helps businesses grow through web design, SEO, and local maps marketing.",
+  alternates: {
+    canonical: "https://joydigital.in/about",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://joydigital.in/about",
+    siteName: "Joy Digital Agency",
+    title: "About Our Digital Marketing Agency | Joy Digital",
+    description: "Learn about Joy Digital's mission, values, and how our digital marketing agency helps businesses grow through web design, SEO, and local maps marketing.",
+    images: [{ url: "https://joydigital.in/assets/images/hero-banner.webp", width: 1200, height: 630, alt: "About Joy Digital Agency" }],
+  },
 };
 
 export default function AboutPage() {

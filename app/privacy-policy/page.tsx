@@ -7,6 +7,17 @@ import StickyWidgets from "@/components/ui/StickyWidgets";
 export const metadata: Metadata = {
   title: "Privacy Policy & Data Protection Terms | Joy Digital",
   description: "Read the Privacy Policy of Joy Digital to understand how we collect, use, and protect your personal information.",
+  alternates: {
+    canonical: "https://joydigital.in/privacy-policy",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://joydigital.in/privacy-policy",
+    siteName: "Joy Digital Agency",
+    title: "Privacy Policy & Data Protection Terms | Joy Digital",
+    description: "Read the Privacy Policy of Joy Digital to understand how we collect, use, and protect your personal information.",
+    images: [{ url: "https://joydigital.in/assets/images/hero-banner.webp", width: 1200, height: 630, alt: "Joy Digital Privacy Policy" }],
+  },
 };
 
 export default function PrivacyPolicyPage() {

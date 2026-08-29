@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Free Business Tools & Generators | Joy Digital",
   description: "Boost your productivity with our free business tools. Calculate GST, generate professional PDF invoices & quotations, build QR codes, and create WhatsApp chat links instantly.",
   alternates: {
-    canonical: "/free-tools",
+    canonical: "https://joydigital.in/free-tools",
   },
   openGraph: {
     type: "website",

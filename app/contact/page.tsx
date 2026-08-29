@@ -8,6 +8,17 @@ import LeadForm from "@/components/ui/LeadForm";
 export const metadata: Metadata = {
   title: "Contact Us | Request a Free Consultation | Joy Digital",
   description: "Get in touch with our digital specialists. Request a free SEO audit, custom website quotes, or logo design consulting from our office.",
+  alternates: {
+    canonical: "https://joydigital.in/contact",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://joydigital.in/contact",
+    siteName: "Joy Digital Agency",
+    title: "Contact Us | Request a Free Consultation | Joy Digital",
+    description: "Get in touch with our digital specialists. Request a free SEO audit, custom website quotes, or logo design consulting from our office.",
+    images: [{ url: "https://joydigital.in/assets/images/hero-banner.webp", width: 1200, height: 630, alt: "Contact Joy Digital Agency" }],
+  },
 };
 
 export default function ContactPage() {

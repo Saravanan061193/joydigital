@@ -151,6 +151,11 @@ export default function Footer() {
                 Headless E-commerce Web Dev
               </Link>
             </li>
+            <li>
+              <Link href="/custom-software-development" className="hover:text-accent hover:pl-1 transition-all">
+                Custom Software Development
+              </Link>
+            </li>
             <li className="border-t border-[#E5E7EB] pt-2 mt-1">
               <Link href="/website-for-insurance-agents" className="hover:text-accent hover:pl-1 transition-all">
                 Website for Insurance Agents
@@ -176,6 +181,21 @@ export default function Footer() {
                 Website for Tours & Travels
               </Link>
             </li>
+            <li>
+              <Link href="/website-for-schools" className="hover:text-accent hover:pl-1 transition-all">
+                Website for Schools
+              </Link>
+            </li>
+            <li>
+              <Link href="/website-for-small-business" className="hover:text-accent hover:pl-1 transition-all">
+                Website for Small Business
+              </Link>
+            </li>
+            <li>
+              <Link href="/website-for-ecommerce" className="hover:text-accent hover:pl-1 transition-all">
+                Website for E-commerce Stores
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -198,6 +218,31 @@ export default function Footer() {
             <li>
               <Link href="/terms-and-conditions" className="hover:text-accent hover:pl-1 transition-all">
                 Terms & Conditions
+              </Link>
+            </li>
+            <li>
+              <Link href="/disclaimer" className="hover:text-accent hover:pl-1 transition-all">
+                Disclaimer
+              </Link>
+            </li>
+            <li>
+              <Link href="/refund-policy" className="hover:text-accent hover:pl-1 transition-all">
+                Refund Policy
+              </Link>
+            </li>
+            <li>
+              <Link href="/cookie-policy" className="hover:text-accent hover:pl-1 transition-all">
+                Cookie Policy
+              </Link>
+            </li>
+            <li className="border-t border-[#E5E7EB] pt-2 mt-1">
+              <Link href="/seo-audit-tool" className="hover:text-accent hover:pl-1 transition-all">
+                Free SEO Audit Tool
+              </Link>
+            </li>
+            <li>
+              <Link href="/image-compressor" className="hover:text-accent hover:pl-1 transition-all">
+                Free Image Compressor
               </Link>
             </li>
             <li>
