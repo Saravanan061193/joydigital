@@ -373,35 +373,47 @@ export default function BlogAdminPanel() {
         <div className="flex flex-col gap-6">
 
           {/* Quick Analytics Summary Bar */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white border border-slate-200/80 rounded-[20px] p-5 shadow-sm flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-xl font-bold">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 select-none">
+            <div className="bg-white border border-slate-200/80 rounded-[20px] p-4.5 shadow-sm flex items-center gap-3.5">
+              <div className="w-11 h-11 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-lg font-bold shrink-0">
                 <i className="fa-solid fa-newspaper" />
               </div>
-              <div>
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Total Published Posts</span>
-                <span className="text-xl font-black text-slate-900">{posts.length} Articles</span>
+              <div className="min-w-0">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Published Posts</span>
+                <span className="text-lg font-black text-slate-900 truncate block">{posts.length} Articles</span>
               </div>
             </div>
 
-            <div className="bg-white border border-slate-200/80 rounded-[20px] p-5 shadow-sm flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-xl font-bold">
-                <i className="fa-solid fa-eye" />
+            <div className="bg-white border border-slate-200/80 rounded-[20px] p-4.5 shadow-sm flex items-center gap-3.5">
+              <div className="w-11 h-11 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-lg font-bold shrink-0">
+                <i className="fa-solid fa-chart-line" />
               </div>
-              <div>
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Total Blog Views</span>
-                <span className="text-xl font-black text-slate-900">
-                  {(analytics?.totalBlogPageviews ?? posts.reduce((acc, p) => acc + (p.views || 0), 0)).toLocaleString()} Views
+              <div className="min-w-0">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Total Blog Traffic</span>
+                <span className="text-lg font-black text-slate-900 truncate block">
+                  {(analytics?.totalBlogPageviews ?? 0).toLocaleString()} Pageviews
                 </span>
               </div>
             </div>
 
-            <div className="bg-white border border-slate-200/80 rounded-[20px] p-5 shadow-sm flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-600 flex items-center justify-center text-xl font-bold">
+            <div className="bg-white border border-slate-200/80 rounded-[20px] p-4.5 shadow-sm flex items-center gap-3.5">
+              <div className="w-11 h-11 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center text-lg font-bold shrink-0">
+                <i className="fa-solid fa-book-open" />
+              </div>
+              <div className="min-w-0">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Direct Article Reads</span>
+                <span className="text-lg font-black text-slate-900 truncate block">
+                  {posts.reduce((acc, p) => acc + (p.views || 0), 0).toLocaleString()} Reads
+                </span>
+              </div>
+            </div>
+
+            <div className="bg-white border border-slate-200/80 rounded-[20px] p-4.5 shadow-sm flex items-center gap-3.5">
+              <div className="w-11 h-11 rounded-2xl bg-purple-500/10 text-purple-600 flex items-center justify-center text-lg font-bold shrink-0">
                 <i className="fa-solid fa-fire" />
               </div>
-              <div className="truncate max-w-[200px]">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Top Viewed Article</span>
+              <div className="min-w-0">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Top Article</span>
                 <span className="text-xs font-extrabold text-slate-900 truncate block">
                   {posts.length > 0
                     ? [...posts].sort((a, b) => (b.views || 0) - (a.views || 0))[0]?.title || "N/A"
