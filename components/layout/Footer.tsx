@@ -259,7 +259,28 @@ export default function Footer() {
               <Link href="/website-for-solar-companies" className="hover:text-accent hover:pl-1 transition-all">Website for Solar Companies</Link>
             </li>
             <li>
-              <Link href="/website-for-textile-manufacturers" className="hover:text-accent hover:pl-1 transition-all font-semibold text-accent">Website for Textile Manufacturers</Link>
+              <Link href="/website-for-textile-manufacturers" className="hover:text-accent hover:pl-1 transition-all">Website for Textile Manufacturers</Link>
+            </li>
+            <li>
+              <Link href="/website-for-manufacturing-companies" className="hover:text-accent hover:pl-1 transition-all">Website for Manufacturing</Link>
+            </li>
+            <li>
+              <Link href="/website-for-law-firms" className="hover:text-accent hover:pl-1 transition-all">Website for Law Firms</Link>
+            </li>
+            <li>
+              <Link href="/website-for-consulting-companies" className="hover:text-accent hover:pl-1 transition-all">Website for Consulting</Link>
+            </li>
+            <li>
+              <Link href="/website-for-logistics-and-shipping" className="hover:text-accent hover:pl-1 transition-all">Website for Logistics & Shipping</Link>
+            </li>
+            <li>
+              <Link href="/website-for-export-and-import" className="hover:text-accent hover:pl-1 transition-all">Website for Export & Import</Link>
+            </li>
+            <li>
+              <Link href="/website-for-marketing-agencies" className="hover:text-accent hover:pl-1 transition-all">Website for Marketing Agencies</Link>
+            </li>
+            <li>
+              <Link href="/website-for-luxury-brands" className="hover:text-accent hover:pl-1 transition-all font-semibold text-accent">Website for Luxury Brands</Link>
             </li>
           </ul>
         </div>
