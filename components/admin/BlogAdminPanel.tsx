@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { BlogPost, InternalLinkItem, FaqItem } from "@/lib/blog";
 
 const compressImage = (file: File, maxWidth = 1200, maxWeightBytes = 800000): Promise<File> => {
   return new Promise((resolve) => {
@@ -56,17 +57,15 @@ const compressImage = (file: File, maxWidth = 1200, maxWeightBytes = 800000): Pr
   });
 };
 
-interface BlogPost {
-  slug: string;
-  title: string;
-  description: string;
-  date: string;
-  category: string;
-  author: string;
-  image?: string;
-  content: string;
-  views?: number;
-}
+const SERVICE_LINK_PRESETS = [
+  { label: "Website Design", url: "/web-design-services" },
+  { label: "Web Development", url: "/website-development" },
+  { label: "SEO Services", url: "/seo-services" },
+  { label: "Local SEO", url: "/local-seo-services" },
+  { label: "Digital Marketing", url: "/social-media-marketing" },
+  { label: "Google Business Profile", url: "/google-business-profile-optimization" },
+  { label: "Custom Software", url: "/custom-software-development" },
+];
 
 export default function BlogAdminPanel() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -77,38 +76,113 @@ export default function BlogAdminPanel() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm]);
-
-  // Analytics chart state
+  // Analytics state
   const [analytics, setAnalytics] = useState<any>(null);
   const [chartTimeframe, setChartTimeframe] = useState<"daily" | "weekly" | "monthly" | "yearly">("daily");
 
-  // Form state
+  // Section Collapse State (All 12 Sections)
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
+    basic: true,
+    content: true,
+    media: true,
+    seo: true,
+    serp: true,
+    checklist: true,
+    internalLinks: false,
+    related: false,
+    author: false,
+    faq: false,
+    social: false,
+    publishing: true,
+  });
+
+  const toggleSection = (key: string) => {
+    setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  // Preview Tabs State
+  const [serpTab, setSerpTab] = useState<"desktop" | "mobile">("desktop");
+  const [socialTab, setSocialTab] = useState<"facebook" | "linkedin" | "twitter">("facebook");
+
+  // Basic Information State
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("SEO");
+  const [tags, setTags] = useState("");
   const [author, setAuthor] = useState("Saravanan L");
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [lastUpdatedDate, setLastUpdatedDate] = useState(new Date().toISOString().split("T")[0]);
+
+  // Content & Toggles State
   const [content, setContent] = useState("");
+  const [showTableOfContents, setShowTableOfContents] = useState(true);
+  const [showAuthorInfo, setShowAuthorInfo] = useState(true);
+  const [showFeaturedImage, setShowFeaturedImage] = useState(true);
+
+  // Media State
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState("");
   const [existingImage, setExistingImage] = useState("");
-  
-  // UI states
+  const [imageAlt, setImageAlt] = useState("");
+  const [imageCaption, setImageCaption] = useState("");
+
+  // SEO Settings State
+  const [seoTitle, setSeoTitle] = useState("");
+  const [metaDescription, setMetaDescription] = useState("");
+  const [focusKeyword, setFocusKeyword] = useState("");
+  const [secondaryKeywords, setSecondaryKeywords] = useState("");
+  const [canonicalUrl, setCanonicalUrl] = useState("");
+  const [robots, setRobots] = useState("Index, Follow");
+
+  // Internal Links State
+  const [internalLinks, setInternalLinks] = useState<InternalLinkItem[]>([]);
+  const [newAnchor, setNewAnchor] = useState("");
+  const [newTarget, setNewTarget] = useState("/website-development");
+
+  // Related Posts State
+  const [autoSuggestRelated, setAutoSuggestRelated] = useState(true);
+  const [manualRelatedSlugs, setManualRelatedSlugs] = useState<string[]>([]);
+
+  // Author E-E-A-T State
+  const [authorName, setAuthorName] = useState("Saravanan L");
+  const [authorRole, setAuthorRole] = useState("Technical Web & SEO Specialist");
+  const [authorBio, setAuthorBio] = useState("Digital marketing strategist and Next.js web developer focusing on search optimization and conversion rate growth.");
+  const [authorImage, setAuthorImage] = useState("/assets/images/logo.webp");
+  const [authorProfileUrl, setAuthorProfileUrl] = useState("https://joydigital.in/about");
+
+  // FAQ Builder State
+  const [faqs, setFaqs] = useState<FaqItem[]>([]);
+  const [newFaqQuestion, setNewFaqQuestion] = useState("");
+  const [newFaqAnswer, setNewFaqAnswer] = useState("");
+
+  // Social Sharing State
+  const [ogTitle, setOgTitle] = useState("");
+  const [ogDescription, setOgDescription] = useState("");
+  const [ogImage, setOgImage] = useState("");
+  const [twitterTitle, setTwitterTitle] = useState("");
+  const [twitterDescription, setTwitterDescription] = useState("");
+  const [twitterImage, setTwitterImage] = useState("");
+
+  // Status & Publishing State
+  const [status, setStatus] = useState<"Published" | "Draft" | "Scheduled" | "Archived">("Published");
+  const [scheduledPublishDate, setScheduledPublishDate] = useState("");
+
+  // UI States
   const [submitLoading, setSubmitLoading] = useState(false);
   const [isCompressing, setIsCompressing] = useState(false);
   const [msg, setMsg] = useState({ text: "", type: "" });
   const [previewActive, setPreviewActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Fetch posts and analytics on mount
   useEffect(() => {
     fetchPosts();
     fetchAnalytics();
   }, []);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
 
   const fetchPosts = async () => {
     setLoading(true);
@@ -137,7 +211,7 @@ export default function BlogAdminPanel() {
     }
   };
 
-  // Sync slug from title
+  // Sync title with auto-slug and default SEO title
   const handleTitleChange = (val: string) => {
     setTitle(val);
     if (editorMode === "create") {
@@ -146,19 +220,21 @@ export default function BlogAdminPanel() {
         .replace(/[^a-z0-9\s-]/g, "")
         .replace(/\s+/g, "-")
         .replace(/-+/g, "-")
-        .substring(0, 50);
+        .substring(0, 60);
       setSlug(suggestedSlug);
+      if (!seoTitle) setSeoTitle(val);
+      if (!canonicalUrl) setCanonicalUrl(`https://joydigital.in/blog/${suggestedSlug}`);
     }
   };
 
-  // Handle image choice
+  // Handle image upload with auto compression
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files[0]) {
       const file = files[0];
       setImagePreview(URL.createObjectURL(file));
       setIsCompressing(true);
-      
+
       try {
         const compressed = await compressImage(file);
         setImageFile(compressed);
@@ -181,12 +257,51 @@ export default function BlogAdminPanel() {
     setSlug(post.slug);
     setDescription(post.description);
     setCategory(post.category);
-    setAuthor(post.author);
+    setTags(Array.isArray(post.tags) ? post.tags.join(", ") : "");
+    setAuthor(post.author || post.authorName || "Saravanan L");
     setDate(post.date);
+    setLastUpdatedDate(post.lastUpdatedDate || post.date || new Date().toISOString().split("T")[0]);
     setContent(post.content);
+
+    setShowTableOfContents(post.showTableOfContents !== false);
+    setShowAuthorInfo(post.showAuthorInfo !== false);
+    setShowFeaturedImage(post.showFeaturedImage !== false);
+
     setExistingImage(post.image || "");
     setImagePreview(post.image || "");
     setImageFile(null);
+    setImageAlt(post.imageAlt || post.title || "");
+    setImageCaption(post.imageCaption || "");
+
+    setSeoTitle(post.seoTitle || post.title || "");
+    setMetaDescription(post.metaDescription || post.description || "");
+    setFocusKeyword(post.focusKeyword || "");
+    setSecondaryKeywords(post.secondaryKeywords || "");
+    setCanonicalUrl(post.canonicalUrl || `https://joydigital.in/blog/${post.slug}`);
+    setRobots(post.robots || "Index, Follow");
+
+    setInternalLinks(post.internalLinks || []);
+    setAutoSuggestRelated(post.autoSuggestRelated !== false);
+    setManualRelatedSlugs(post.manualRelatedSlugs || []);
+
+    setAuthorName(post.authorName || post.author || "Saravanan L");
+    setAuthorRole(post.authorRole || "Technical Web & SEO Specialist");
+    setAuthorBio(post.authorBio || "Digital marketing strategist and Next.js web developer focusing on search optimization and conversion rate growth.");
+    setAuthorImage(post.authorImage || "/assets/images/logo.webp");
+    setAuthorProfileUrl(post.authorProfileUrl || "https://joydigital.in/about");
+
+    setFaqs(post.faqs || []);
+
+    setOgTitle(post.ogTitle || post.seoTitle || post.title || "");
+    setOgDescription(post.ogDescription || post.metaDescription || post.description || "");
+    setOgImage(post.ogImage || post.image || "");
+    setTwitterTitle(post.twitterTitle || post.ogTitle || post.seoTitle || post.title || "");
+    setTwitterDescription(post.twitterDescription || post.ogDescription || post.metaDescription || post.description || "");
+    setTwitterImage(post.twitterImage || post.ogImage || post.image || "");
+
+    setStatus(post.status || "Published");
+    setScheduledPublishDate(post.scheduledPublishDate || "");
+
     setIsEditing(true);
     setPreviewActive(false);
     setMsg({ text: "", type: "" });
@@ -194,16 +309,56 @@ export default function BlogAdminPanel() {
 
   const handleCreateClick = () => {
     setEditorMode("create");
+    const today = new Date().toISOString().split("T")[0];
     setTitle("");
     setSlug("");
     setDescription("");
     setCategory("SEO");
+    setTags("SEO, Next.js, Web Development");
     setAuthor("Saravanan L");
-    setDate(new Date().toISOString().split("T")[0]);
+    setDate(today);
+    setLastUpdatedDate(today);
     setContent("");
+
+    setShowTableOfContents(true);
+    setShowAuthorInfo(true);
+    setShowFeaturedImage(true);
+
     setExistingImage("");
     setImagePreview("");
     setImageFile(null);
+    setImageAlt("");
+    setImageCaption("");
+
+    setSeoTitle("");
+    setMetaDescription("");
+    setFocusKeyword("");
+    setSecondaryKeywords("");
+    setCanonicalUrl("");
+    setRobots("Index, Follow");
+
+    setInternalLinks([]);
+    setAutoSuggestRelated(true);
+    setManualRelatedSlugs([]);
+
+    setAuthorName("Saravanan L");
+    setAuthorRole("Technical Web & SEO Specialist");
+    setAuthorBio("Digital marketing strategist and Next.js web developer focusing on search optimization and conversion rate growth.");
+    setAuthorImage("/assets/images/logo.webp");
+    setAuthorProfileUrl("https://joydigital.in/about");
+
+    setFaqs([]);
+
+    setOgTitle("");
+    setOgDescription("");
+    setOgImage("");
+    setTwitterTitle("");
+    setTwitterDescription("");
+    setTwitterImage("");
+
+    setStatus("Published");
+    setScheduledPublishDate("");
+
     setIsEditing(true);
     setPreviewActive(false);
     setMsg({ text: "", type: "" });
@@ -230,6 +385,106 @@ export default function BlogAdminPanel() {
     }
   };
 
+  // Internal Links Handler
+  const handleAddInternalLink = () => {
+    if (!newAnchor || !newTarget) return;
+    setInternalLinks([...internalLinks, { anchorText: newAnchor, targetUrl: newTarget }]);
+    setNewAnchor("");
+  };
+
+  const handleRemoveInternalLink = (index: number) => {
+    setInternalLinks(internalLinks.filter((_, i) => i !== index));
+  };
+
+  // FAQ Builder Handlers
+  const handleAddFaq = () => {
+    if (!newFaqQuestion || !newFaqAnswer) return;
+    setFaqs([...faqs, { question: newFaqQuestion, answer: newFaqAnswer }]);
+    setNewFaqQuestion("");
+    setNewFaqAnswer("");
+  };
+
+  const handleRemoveFaq = (index: number) => {
+    setFaqs(faqs.filter((_, i) => i !== index));
+  };
+
+  const handleMoveFaq = (index: number, direction: "up" | "down") => {
+    const newFaqs = [...faqs];
+    const targetIdx = direction === "up" ? index - 1 : index + 1;
+    if (targetIdx < 0 || targetIdx >= newFaqs.length) return;
+    const temp = newFaqs[index];
+    newFaqs[index] = newFaqs[targetIdx];
+    newFaqs[targetIdx] = temp;
+    setFaqs(newFaqs);
+  };
+
+  // Calculate live word count & reading time
+  const cleanContentText = content.replace(/<[^>]+>/g, " ").replace(/[#*`_>-\[\]()]/g, " ").trim();
+  const wordCount = cleanContentText ? cleanContentText.split(/\s+/).filter(Boolean).length : 0;
+  const readingTime = Math.max(1, Math.ceil(wordCount / 200));
+
+  // Detect Headings
+  const headingsList = (content.match(/^(#{1,3})\s+(.+)$/gm) || []).map((h) => {
+    const level = h.startsWith("###") ? 3 : h.startsWith("##") ? 2 : 1;
+    const text = h.replace(/^#{1,3}\s+/, "").trim();
+    return { level, text };
+  });
+
+  // Calculate Live SEO Content Score (0 - 100) & Checklist Items
+  const computeSeoChecklist = () => {
+    const effectiveSeoTitle = seoTitle || title;
+    const effectiveMetaDesc = metaDescription || description;
+    const effectiveImage = imagePreview || existingImage || imageFile;
+    const effectiveAlt = imageAlt || title;
+    const kw = (focusKeyword || "").toLowerCase().trim();
+    const introText = cleanContentText.substring(0, 1000).toLowerCase();
+
+    const hasTitle = Boolean(effectiveSeoTitle);
+    const titleLenOk = effectiveSeoTitle.length >= 35 && effectiveSeoTitle.length <= 60;
+    const hasDesc = Boolean(effectiveMetaDesc);
+    const descLenOk = effectiveMetaDesc.length >= 110 && effectiveMetaDesc.length <= 160;
+    const hasFocusKw = Boolean(kw);
+    const kwInTitle = hasFocusKw && effectiveSeoTitle.toLowerCase().includes(kw);
+    const kwInIntro = hasFocusKw && introText.includes(kw);
+    const hasHeadings = headingsList.some((h) => h.level === 2 || h.level === 3);
+    const hasImage = Boolean(effectiveImage);
+    const hasAlt = Boolean(effectiveAlt);
+    const hasInternalLinks = internalLinks.length > 0;
+    const hasExternalLinks = /https?:\/\/(?!joydigital\.in)/i.test(content);
+    const depthOk = wordCount >= 600;
+    const cleanSlugOk = Boolean(slug) && /^[a-z0-9-]+$/.test(slug);
+    const hasCanonical = Boolean(canonicalUrl);
+    const hasAuthor = Boolean(authorName || author);
+    const hasUpdatedDate = Boolean(lastUpdatedDate);
+
+    const checks = [
+      { label: "SEO Title exists", passed: hasTitle, weight: 6, rec: "Add an SEO Title" },
+      { label: "SEO Title length (35–60 chars)", passed: titleLenOk, weight: 6, rec: `Current length: ${effectiveSeoTitle.length} chars (Recommended: 35-60)` },
+      { label: "Meta Description exists", passed: hasDesc, weight: 6, rec: "Add a Meta Description" },
+      { label: "Meta Description length (110–160 chars)", passed: descLenOk, weight: 6, rec: `Current length: ${effectiveMetaDesc.length} chars (Recommended: 110-160)` },
+      { label: "Focus Keyword specified", passed: hasFocusKw, weight: 5, rec: "Specify a primary Focus Keyword for checklist scoring" },
+      { label: "Focus Keyword in Title", passed: kwInTitle, weight: 6, rec: "Include Focus Keyword in your SEO Title" },
+      { label: "Focus Keyword in introduction", passed: kwInIntro, weight: 6, rec: "Include Focus Keyword in the first 200 words" },
+      { label: "H2/H3 Heading structure present", passed: hasHeadings, weight: 6, rec: "Use ## (H2) and ### (H3) headers to break up content" },
+      { label: "Featured Image provided", passed: hasImage, weight: 6, rec: "Upload a Featured Image" },
+      { label: "Image Alt Text provided", passed: hasAlt, weight: 6, rec: "Add descriptive Alt Text for the Featured Image" },
+      { label: "Internal links configured", passed: hasInternalLinks, weight: 6, rec: "Add at least 1 internal link to related services or pages" },
+      { label: "External links present", passed: hasExternalLinks, weight: 5, rec: "Include authoritative external references in markdown" },
+      { label: "Sufficient content depth (>= 600 words)", passed: depthOk, weight: 7, rec: `Current word count: ${wordCount} words (Recommended: 600+ words)` },
+      { label: "Clean URL slug", passed: cleanSlugOk, weight: 5, rec: "Ensure URL slug contains only lowercase letters, numbers, and hyphens" },
+      { label: "Canonical URL defined", passed: hasCanonical, weight: 4, rec: "Set a self-referencing Canonical URL" },
+      { label: "Author information complete", passed: hasAuthor, weight: 5, rec: "Provide Author Name and E-E-A-T bio" },
+      { label: "Last updated date set", passed: hasUpdatedDate, weight: 5, rec: "Specify a Last Updated Date" },
+    ];
+
+    const score = checks.reduce((acc, c) => (c.passed ? acc + c.weight : acc), 0);
+
+    return { checks, score };
+  };
+
+  const { checks: seoChecks, score: seoScore } = computeSeoChecklist();
+
+  // Form Submit Handler
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !slug || !content) {
@@ -248,14 +503,50 @@ export default function BlogAdminPanel() {
       formData.append("category", category);
       formData.append("author", author);
       formData.append("date", date);
+      formData.append("lastUpdatedDate", lastUpdatedDate);
       formData.append("content", content);
-      
-      if (imageFile) {
-        formData.append("image", imageFile);
-      }
-      if (existingImage) {
-        formData.append("existingImage", existingImage);
-      }
+
+      if (imageFile) formData.append("image", imageFile);
+      if (existingImage) formData.append("existingImage", existingImage);
+      formData.append("imageAlt", imageAlt || title);
+      formData.append("imageCaption", imageCaption);
+
+      const parsedTags = tags.split(",").map((t) => t.trim()).filter(Boolean);
+      formData.append("tags", JSON.stringify(parsedTags));
+
+      formData.append("showTableOfContents", String(showTableOfContents));
+      formData.append("showAuthorInfo", String(showAuthorInfo));
+      formData.append("showFeaturedImage", String(showFeaturedImage));
+
+      formData.append("seoTitle", seoTitle || title);
+      formData.append("metaDescription", metaDescription || description);
+      formData.append("focusKeyword", focusKeyword);
+      formData.append("secondaryKeywords", secondaryKeywords);
+      formData.append("canonicalUrl", canonicalUrl || `https://joydigital.in/blog/${slug}`);
+      formData.append("robots", robots);
+
+      formData.append("internalLinks", JSON.stringify(internalLinks));
+      formData.append("autoSuggestRelated", String(autoSuggestRelated));
+      formData.append("manualRelatedSlugs", JSON.stringify(manualRelatedSlugs));
+
+      formData.append("authorName", authorName || author);
+      formData.append("authorRole", authorRole);
+      formData.append("authorBio", authorBio);
+      formData.append("authorImage", authorImage);
+      formData.append("authorProfileUrl", authorProfileUrl);
+
+      formData.append("faqs", JSON.stringify(faqs));
+
+      formData.append("ogTitle", ogTitle || seoTitle || title);
+      formData.append("ogDescription", ogDescription || metaDescription || description);
+      formData.append("ogImage", ogImage || imagePreview || existingImage);
+      formData.append("twitterTitle", twitterTitle || ogTitle || seoTitle || title);
+      formData.append("twitterDescription", twitterDescription || ogDescription || metaDescription || description);
+      formData.append("twitterImage", twitterImage || ogImage || imagePreview || existingImage);
+
+      formData.append("status", status);
+      formData.append("scheduledPublishDate", scheduledPublishDate);
+      formData.append("seoScore", String(seoScore));
 
       const res = await fetch("/api/admin/blog", {
         method: "POST",
@@ -263,9 +554,9 @@ export default function BlogAdminPanel() {
       });
 
       if (res.ok) {
-        setMsg({ 
-          text: editorMode === "create" ? "Blog article published successfully!" : "Blog article updated successfully!", 
-          type: "success" 
+        setMsg({
+          text: editorMode === "create" ? "Blog article published successfully!" : "Blog article updated successfully!",
+          type: "success",
         });
         setIsEditing(false);
         fetchPosts();
@@ -289,7 +580,7 @@ export default function BlogAdminPanel() {
       p.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Compute Blog Chart Points
+  // Compute Blog Analytics Points
   const getBlogChartPoints = () => {
     if (!analytics) return { points: [] };
     const trendData =
@@ -320,54 +611,16 @@ export default function BlogAdminPanel() {
   const viewsAreaD = blogChartPoints.length > 0
     ? `${viewsLineD} L ${blogChartPoints[blogChartPoints.length - 1].x} 125 L ${blogChartPoints[0].x} 125 Z`
     : "";
-  const visitorsLineD = blogChartPoints.length > 0
-    ? `M ${blogChartPoints[0].x} ${blogChartPoints[0].yVisitors} ` + blogChartPoints.slice(1).map((p: any) => `L ${p.x} ${p.yVisitors}`).join(" ")
-    : "";
-  const visitorsAreaD = blogChartPoints.length > 0
-    ? `${visitorsLineD} L ${blogChartPoints[blogChartPoints.length - 1].x} 125 L ${blogChartPoints[0].x} 125 Z`
-    : "";
-
-  // Convert simple markdown to HTML elements for preview
-  const renderMarkdownPreview = (text: string) => {
-    if (!text) return <p className="text-slate-450 italic">No content written yet.</p>;
-
-    const lines = text.split("\n");
-    return lines.map((line, idx) => {
-      if (line.startsWith("## ")) {
-        return <h2 key={idx} className="text-lg font-bold text-slate-800 dark:text-white mt-5 mb-2.5 border-b border-slate-100 pb-1">{line.substring(3)}</h2>;
-      }
-      if (line.startsWith("### ")) {
-        return <h3 key={idx} className="text-base font-semibold text-slate-800 dark:text-white mt-4 mb-2">{line.substring(4)}</h3>;
-      }
-      if (line.startsWith("# ")) {
-        return <h1 key={idx} className="text-xl font-black text-slate-900 dark:text-white mt-6 mb-3">{line.substring(2)}</h1>;
-      }
-      if (line.startsWith("- ") || line.startsWith("* ")) {
-        return <li key={idx} className="text-xs text-slate-650 dark:text-slate-350 ml-4 list-disc mb-1">{line.substring(2)}</li>;
-      }
-      if (line.startsWith("> ")) {
-        return (
-          <blockquote key={idx} className="border-l-4 border-primary/40 bg-slate-50 dark:bg-slate-800/40 px-4 py-2 my-3 text-xs italic text-slate-600 dark:text-slate-450">
-            {line.substring(2)}
-          </blockquote>
-        );
-      }
-      if (line.trim() === "") {
-        return <div key={idx} className="h-2" />;
-      }
-      return <p key={idx} className="text-xs text-slate-650 dark:text-slate-350 leading-relaxed mb-2.5">{line}</p>;
-    });
-  };
 
   return (
-    <div className="flex flex-col gap-6 w-full text-slate-900">
+    <div className="flex flex-col gap-6 w-full text-slate-900 select-text">
       
       {/* Alert Banner */}
       {msg.text && (
         <div className={`p-4 rounded-xl text-xs font-bold border flex items-center justify-between ${
-          msg.type === "success" 
-            ? "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-400 border-emerald-250 dark:border-emerald-900/30"
-            : "bg-rose-50 dark:bg-rose-950/20 text-rose-700 dark:text-rose-400 border-rose-250 dark:border-rose-900/30"
+          msg.type === "success"
+            ? "bg-emerald-50 text-emerald-700 border-emerald-250"
+            : "bg-rose-50 text-rose-700 border-rose-250"
         }`}>
           <span>{msg.text}</span>
           <button onClick={() => setMsg({ text: "", type: "" })} className="text-[10px] cursor-pointer hover:opacity-75">✕</button>
@@ -416,204 +669,27 @@ export default function BlogAdminPanel() {
 
             <div className="bg-white border border-slate-200/80 rounded-[20px] p-4.5 shadow-sm flex items-center gap-3.5">
               <div className="w-11 h-11 rounded-2xl bg-purple-500/10 text-purple-600 flex items-center justify-center text-lg font-bold shrink-0">
-                <i className="fa-solid fa-fire" />
+                <i className="fa-solid fa-circle-check" />
               </div>
               <div className="min-w-0">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Top Article</span>
-                <span className="text-xs font-extrabold text-slate-900 truncate block">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Avg. SEO Score</span>
+                <span className="text-lg font-black text-slate-900 truncate block">
                   {posts.length > 0
-                    ? [...posts].sort((a, b) => (b.views || 0) - (a.views || 0))[0]?.title || "N/A"
-                    : "None"}
+                    ? Math.round(posts.reduce((acc, p) => acc + (p.seoScore || 85), 0) / posts.length)
+                    : 100} / 100
                 </span>
               </div>
             </div>
-          </div>
-
-          {/* GRID CONTAINER FOR CHART & REAL-TIME ACTIVITY STREAM */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 text-left">
-            
-            {/* LEFT (2 Cols): DEDICATED BLOG TRAFFIC TRENDS CHART CARD */}
-            <div className="lg:col-span-2 bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm flex flex-col justify-between">
-              <div className="flex justify-between items-center mb-4 flex-wrap gap-3">
-                <div>
-                  <h3 className="font-black text-sm text-slate-900 flex items-center gap-2">
-                    <i className="fa-solid fa-chart-line text-[#2563EB]" /> Blog Visitors & Pageviews Analytics
-                  </h3>
-                  <p className="text-[10px] text-slate-500 font-semibold mt-0.5">
-                    Track article reader metrics across Daily, Weekly, Monthly, and Yearly timeframes
-                  </p>
-                </div>
-
-                {/* Timeframe Selector Toggles */}
-                <div className="flex bg-slate-100 p-1 border border-slate-200/80 rounded-xl">
-                  {(["daily", "weekly", "monthly", "yearly"] as const).map((t) => (
-                    <button
-                      key={t}
-                      type="button"
-                      onClick={() => setChartTimeframe(t)}
-                      className={`px-3 py-1 rounded-lg text-[9.5px] font-black uppercase tracking-wider transition-all cursor-pointer ${
-                        chartTimeframe === t
-                          ? "bg-[#2563EB] text-white shadow-xs"
-                          : "text-slate-500 hover:text-slate-900"
-                      }`}
-                    >
-                      {t}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Line Chart */}
-              <div className="relative py-2 w-full h-44">
-                {blogChartPoints.length === 0 ? (
-                  <div className="absolute inset-0 flex items-center justify-center text-xs text-slate-400 italic">
-                    Syncing blog traffic data...
-                  </div>
-                ) : (
-                  <svg className="w-full h-full" viewBox="0 0 500 150">
-                    <defs>
-                      <linearGradient id="blogViewsGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#2563EB" stopOpacity="0.15" />
-                        <stop offset="100%" stopColor="#2563EB" stopOpacity="0" />
-                      </linearGradient>
-                      <linearGradient id="blogVisitorsGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#9333EA" stopOpacity="0.15" />
-                        <stop offset="100%" stopColor="#9333EA" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-
-                    {/* Horizontal Grid lines */}
-                    <line x1="40" y1="35" x2="460" y2="35" stroke="#F1F5F9" strokeWidth="1" />
-                    <line x1="40" y1="80" x2="460" y2="80" stroke="#F1F5F9" strokeWidth="1" />
-                    <line x1="40" y1="125" x2="460" y2="125" stroke="#E2E8F0" strokeWidth="1.5" />
-
-                    {/* Fills */}
-                    <path d={viewsAreaD} fill="url(#blogViewsGrad)" />
-                    <path d={visitorsAreaD} fill="url(#blogVisitorsGrad)" />
-
-                    {/* Paths */}
-                    <path d={viewsLineD} fill="none" stroke="#2563EB" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d={visitorsLineD} fill="none" stroke="#9333EA" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-
-                    {/* X Labels */}
-                    {blogChartPoints.map((p: any, idx: number) => {
-                      const skipLabel = chartTimeframe === "daily" && idx % 2 !== 0;
-                      if (skipLabel) return null;
-                      return (
-                        <text
-                          key={idx}
-                          x={p.x}
-                          y="142"
-                          fill="#94A3B8"
-                          fontSize="8"
-                          fontWeight="800"
-                          textAnchor="middle"
-                        >
-                          {p.label}
-                        </text>
-                      );
-                    })}
-
-                    {/* Dots for Views */}
-                    {blogChartPoints.map((p: any, idx: number) => (
-                      <g key={`bv-${idx}`} className="group/bv cursor-pointer">
-                        <circle cx={p.x} cy={p.yViews} r="3.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1" />
-                        <title>{p.views} Blog Views ({p.label})</title>
-                      </g>
-                    ))}
-
-                    {/* Dots for Visitors */}
-                    {blogChartPoints.map((p: any, idx: number) => (
-                      <g key={`bu-${idx}`} className="group/bu cursor-pointer">
-                        <circle cx={p.x} cy={p.yVisitors} r="3.5" fill="#9333EA" stroke="#FFFFFF" strokeWidth="1" />
-                        <title>{p.visitors} Unique Blog Readers ({p.label})</title>
-                      </g>
-                    ))}
-                  </svg>
-                )}
-              </div>
-
-              <div className="flex gap-5 mt-3 pt-3 border-t border-slate-100 text-[10px] font-black uppercase tracking-wider">
-                <span className="flex items-center gap-1.5 text-blue-600">
-                  <span className="w-2.5 h-2.5 bg-blue-600 rounded-full inline-block" /> Blog Pageviews
-                </span>
-                <span className="flex items-center gap-1.5 text-purple-600">
-                  <span className="w-2.5 h-2.5 bg-purple-600 rounded-full inline-block" /> Unique Readers
-                </span>
-              </div>
-            </div>
-
-            {/* RIGHT (1 Col): REAL-TIME BLOG READER ACTIVITY STREAM */}
-            <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm flex flex-col justify-between">
-              <div>
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="font-black text-xs uppercase tracking-wider text-slate-900 flex items-center gap-2">
-                    <i className="fa-solid fa-bolt text-amber-500 animate-pulse" /> Live Reader Activity Stream
-                  </h3>
-                  <span className="bg-emerald-50 text-emerald-600 border border-emerald-200/80 text-[8.5px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full flex items-center gap-1 select-none">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> Live Feed
-                  </span>
-                </div>
-                <p className="text-[10px] text-slate-450 font-semibold mb-4">Real-time log of visitors reading articles on your site</p>
-
-                {/* Activity List Scroll Container */}
-                <div className="space-y-2.5 max-h-[220px] overflow-y-auto pr-1">
-                  {analytics?.recentBlogActivities && analytics.recentBlogActivities.length > 0 ? (
-                    analytics.recentBlogActivities.map((act: any, idx: number) => {
-                      const articleTitle = posts.find(p => p.slug === act.slug)?.title || act.slug;
-                      const timeLabel = act.timestamp
-                        ? (() => {
-                            const d = new Date(act.timestamp);
-                            const datePart = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-                            const timePart = d.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
-                            return `${datePart}, ${timePart}`;
-                          })()
-                        : "Just now";
-
-                      return (
-                        <div key={act.id || idx} className="p-2.5 bg-slate-50/80 hover:bg-slate-100/70 border border-slate-150 rounded-xl transition-all text-xs space-y-1">
-                          <div className="flex items-center justify-between gap-2">
-                            <span className="font-extrabold text-slate-900 truncate block max-w-[70%]" title={articleTitle}>
-                              {articleTitle}
-                            </span>
-                            <span className="text-[9px] font-mono font-extrabold text-slate-400 shrink-0">{timeLabel}</span>
-                          </div>
-                          <div className="flex items-center justify-between text-[9.5px] text-slate-500 font-semibold">
-                            <span className="flex items-center gap-1">
-                              <i className="fa-solid fa-location-dot text-rose-500 text-[9px]" /> {act.city} ({act.country})
-                            </span>
-                            <span className="bg-blue-50 text-[#2563EB] font-bold px-1.5 py-0.25 rounded text-[8.5px] border border-blue-100">
-                              {act.slug === "blog-hub" ? "Main Listing" : "Article Read"}
-                            </span>
-                          </div>
-                        </div>
-                      );
-                    })
-                  ) : (
-                    <div className="py-12 text-center flex flex-col items-center gap-2 text-slate-400">
-                      <i className="fa-regular fa-clock text-xl text-slate-300" />
-                      <span className="text-xs font-bold">No recent blog reads logged</span>
-                      <span className="text-[9.5px]">Visitor reads will update automatically in real-time.</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="text-[9.5px] text-slate-400 border-t border-slate-100 pt-3 mt-4">
-                * Tracks exact article reads, timestamp, and geotarget reader city.
-              </div>
-            </div>
-
           </div>
 
           {/* TABLE CONTAINER */}
           <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
               <div>
-                <h3 className="text-sm font-black text-slate-900">Published Blog Articles</h3>
-                <p className="text-[10px] text-slate-500 font-semibold mt-0.5">Manage existing files in content/blog directory and track performance</p>
+                <h3 className="text-sm font-black text-slate-900">SEO-Optimized Blog Articles</h3>
+                <p className="text-[10px] text-slate-500 font-semibold mt-0.5">Manage articles, publish status, SEO scores, and indexability</p>
               </div>
-              
+
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <i className="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs" />
@@ -638,7 +714,7 @@ export default function BlogAdminPanel() {
             {loading ? (
               <div className="py-12 flex flex-col items-center justify-center gap-3">
                 <div className="w-6 h-6 border-2 border-slate-200 border-t-primary rounded-full animate-spin" />
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Syncing articles & views...</span>
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Loading articles...</span>
               </div>
             ) : filteredPosts.length === 0 ? (
               <div className="py-16 text-center border-2 border-dashed border-slate-200 rounded-2xl">
@@ -648,377 +724,205 @@ export default function BlogAdminPanel() {
               </div>
             ) : (() => {
               const totalPages = Math.ceil(filteredPosts.length / itemsPerPage);
-                const startIndex = (currentPage - 1) * itemsPerPage;
-                const paginatedPosts = filteredPosts.slice(startIndex, startIndex + itemsPerPage);
+              const startIndex = (currentPage - 1) * itemsPerPage;
+              const paginatedPosts = filteredPosts.slice(startIndex, startIndex + itemsPerPage);
 
-                return (
-                  <div>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-left text-xs border-collapse">
-                        <thead>
-                          <tr className="border-b border-slate-200 text-slate-500 font-black text-[9px] uppercase tracking-wider">
-                            <th className="py-3 px-4">Title / Slug</th>
-                            <th className="py-3 px-4">Category</th>
-                            <th className="py-3 px-4">Views / Traffic</th>
-                            <th className="py-3 px-4">Date</th>
-                            <th className="py-3 px-4">Author</th>
-                            <th className="py-3 px-4 text-right">Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {paginatedPosts.map((post) => (
+              return (
+                <div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs border-collapse">
+                      <thead>
+                        <tr className="border-b border-slate-200 text-slate-500 font-black text-[9px] uppercase tracking-wider">
+                          <th className="py-3 px-4">Title / Slug</th>
+                          <th className="py-3 px-4">Category</th>
+                          <th className="py-3 px-4">Author</th>
+                          <th className="py-3 px-4">Status</th>
+                          <th className="py-3 px-4">Dates</th>
+                          <th className="py-3 px-4">SEO Content Score</th>
+                          <th className="py-3 px-4">Indexing</th>
+                          <th className="py-3 px-4 text-right">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {paginatedPosts.map((post) => {
+                          const pStatus = post.status || "Published";
+                          const isNoindex = post.robots?.toLowerCase().includes("noindex");
+                          const score = post.seoScore ?? 85;
+
+                          return (
                             <tr key={post.slug} className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
-                              <td className="py-4 px-4 max-w-sm">
-                                <div className="font-bold text-slate-900 truncate">{post.title}</div>
-                                <div className="text-[10px] text-slate-450 font-semibold mt-0.5 select-all font-mono">
-                                  {post.slug}
+                              <td className="py-4 px-4 max-w-xs">
+                                <div className="font-bold text-slate-900 truncate" title={post.title}>{post.title}</div>
+                                <div className="text-[10px] text-slate-450 font-semibold mt-0.5 select-all font-mono truncate max-w-[200px]">
+                                  /blog/{post.slug}
                                 </div>
                               </td>
-                              <td className="py-4 px-4">
+
+                              <td className="py-4 px-4 whitespace-nowrap">
                                 <span className="bg-primary/10 text-primary border border-primary/20 text-[9px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                                   {post.category}
                                 </span>
                               </td>
+
+                              <td className="py-4 px-4 text-slate-650 font-semibold whitespace-nowrap">
+                                {post.authorName || post.author}
+                              </td>
+
                               <td className="py-4 px-4 whitespace-nowrap">
-                                <span className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200/80 px-3 py-1 rounded-full text-[10px] font-extrabold shadow-2xs">
-                                  <i className="fa-regular fa-eye text-emerald-500" />
-                                  <span>{(post.views || 0).toLocaleString()} Views</span>
+                                <span className={`text-[9.5px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider border ${
+                                  pStatus === "Published" ? "bg-emerald-50 text-emerald-700 border-emerald-200" :
+                                  pStatus === "Draft" ? "bg-amber-50 text-amber-700 border-amber-200" :
+                                  pStatus === "Scheduled" ? "bg-blue-50 text-blue-700 border-blue-200" :
+                                  "bg-slate-100 text-slate-600 border-slate-200"
+                                }`}>
+                                  {pStatus}
                                 </span>
                               </td>
-                              <td className="py-4 px-4 text-slate-500 font-semibold whitespace-nowrap">{post.date}</td>
-                              <td className="py-4 px-4 text-slate-550 font-semibold whitespace-nowrap">{post.author}</td>
+
+                              <td className="py-4 px-4 text-[10px] text-slate-500 font-semibold whitespace-nowrap">
+                                <div>Pub: {post.date}</div>
+                                {post.lastUpdatedDate && post.lastUpdatedDate !== post.date && (
+                                  <div className="text-[9px] text-slate-400">Upd: {post.lastUpdatedDate}</div>
+                                )}
+                              </td>
+
+                              <td className="py-4 px-4 whitespace-nowrap">
+                                <span className={`inline-flex items-center gap-1 text-[10px] font-black px-2.5 py-0.5 rounded-full border ${
+                                  score >= 80 ? "bg-emerald-50 text-emerald-700 border-emerald-200" :
+                                  score >= 60 ? "bg-amber-50 text-amber-700 border-amber-200" :
+                                  "bg-rose-50 text-rose-700 border-rose-200"
+                                }`}>
+                                  <i className="fa-solid fa-chart-pie text-[9px]" /> {score}/100
+                                </span>
+                              </td>
+
+                              <td className="py-4 px-4 whitespace-nowrap">
+                                <span className={`text-[9.5px] font-bold px-2 py-0.5 rounded-md ${
+                                  !isNoindex && pStatus === "Published" ? "bg-emerald-50 text-emerald-600" : "bg-rose-50 text-rose-600"
+                                }`}>
+                                  {!isNoindex && pStatus === "Published" ? "Indexable: Yes" : "Indexable: No"}
+                                </span>
+                              </td>
+
                               <td className="py-4 px-4 text-right whitespace-nowrap">
                                 <div className="inline-flex gap-2">
                                   <a
                                     href={`/blog/${post.slug}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="bg-slate-100 hover:bg-slate-200/80 text-slate-700 hover:text-slate-900 border border-slate-200 text-[10px] font-extrabold px-2.5 py-1.5 rounded-lg cursor-pointer transition-all flex items-center gap-1"
+                                    className="bg-slate-100 hover:bg-slate-200/80 text-slate-700 border border-slate-200 text-[10px] font-extrabold px-2.5 py-1.5 rounded-lg cursor-pointer transition-all"
                                     title="View Article Live"
                                   >
                                     <i className="fa-solid fa-arrow-up-right-from-square" />
                                   </a>
                                   <button
                                     onClick={() => handleEditClick(post)}
-                                    className="bg-slate-100 hover:bg-slate-200/80 text-slate-700 hover:text-slate-900 border border-slate-200 text-[10px] font-extrabold px-3 py-1.5 rounded-lg cursor-pointer transition-all"
+                                    className="bg-slate-100 hover:bg-slate-200/80 text-slate-700 border border-slate-200 text-[10px] font-extrabold px-3 py-1.5 rounded-lg cursor-pointer transition-all"
                                   >
                                     <i className="fa-solid fa-pen-to-square mr-1" /> Edit
                                   </button>
                                   <button
                                     onClick={() => handleDeleteClick(post.slug)}
-                                    className="bg-rose-50 hover:bg-rose-100 text-rose-700 hover:text-rose-800 border border-rose-150 text-[10px] font-extrabold px-3 py-1.5 rounded-lg cursor-pointer transition-all"
+                                    className="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-150 text-[10px] font-extrabold px-3 py-1.5 rounded-lg cursor-pointer transition-all"
                                   >
                                     <i className="fa-solid fa-trash-can mr-1" /> Delete
                                   </button>
                                 </div>
                               </td>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-
-                    {/* Pagination Controls */}
-                    {totalPages > 1 && (
-                      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 pt-4 border-t border-slate-100 text-xs font-bold text-slate-500">
-                        <div>
-                          Showing <span className="text-slate-900 font-extrabold">{startIndex + 1}</span> to{" "}
-                          <span className="text-slate-900 font-extrabold">{Math.min(startIndex + itemsPerPage, filteredPosts.length)}</span> of{" "}
-                          <span className="text-slate-900 font-extrabold">{filteredPosts.length}</span> articles
-                        </div>
-
-                        <div className="flex items-center gap-1.5 select-none">
-                          <button
-                            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                            disabled={currentPage === 1}
-                            className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-extrabold disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer flex items-center gap-1"
-                          >
-                            <i className="fa-solid fa-chevron-left text-[10px]" /> Prev
-                          </button>
-
-                          {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                            <button
-                              key={pageNum}
-                              onClick={() => setCurrentPage(pageNum)}
-                              className={`w-8 h-8 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${
-                                currentPage === pageNum
-                                  ? "bg-primary text-white shadow-xs"
-                                  : "bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200"
-                              }`}
-                            >
-                              {pageNum}
-                            </button>
-                          ))}
-
-                          <button
-                            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                            disabled={currentPage === totalPages}
-                            className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-extrabold disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer flex items-center gap-1"
-                          >
-                            Next <i className="fa-solid fa-chevron-right text-[10px]" />
-                          </button>
-                        </div>
-                      </div>
-                    )}
+                          );
+                        })}
+                      </tbody>
+                    </table>
                   </div>
-                );
-              })()}
+
+                  {/* Pagination Controls */}
+                  {totalPages > 1 && (
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 pt-4 border-t border-slate-100 text-xs font-bold text-slate-500">
+                      <div>
+                        Showing <span className="text-slate-900 font-extrabold">{startIndex + 1}</span> to{" "}
+                        <span className="text-slate-900 font-extrabold">{Math.min(startIndex + itemsPerPage, filteredPosts.length)}</span> of{" "}
+                        <span className="text-slate-900 font-extrabold">{filteredPosts.length}</span> articles
+                      </div>
+
+                      <div className="flex items-center gap-1.5 select-none">
+                        <button
+                          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                          disabled={currentPage === 1}
+                          className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-extrabold disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+                        >
+                          <i className="fa-solid fa-chevron-left text-[10px]" /> Prev
+                        </button>
+
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                          <button
+                            key={pageNum}
+                            onClick={() => setCurrentPage(pageNum)}
+                            className={`w-8 h-8 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${
+                              currentPage === pageNum
+                                ? "bg-primary text-white shadow-xs"
+                                : "bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200"
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        ))}
+
+                        <button
+                          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                          disabled={currentPage === totalPages}
+                          className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-extrabold disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+                        >
+                          Next <i className="fa-solid fa-chevron-right text-[10px]" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
           </div>
         </div>
       )}
 
       {/* B. BLOG EDITOR WINDOW */}
       {isEditing && (
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          
-          {/* Main Edit Form Panel (Left) */}
-          <div className="lg:col-span-8 bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm flex flex-col gap-5">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-              <div>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+
+          {/* Top Bar Header */}
+          <div className="bg-white border border-slate-200/80 rounded-[20px] p-4.5 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2">
                 <h3 className="text-sm font-black text-slate-900">
-                  {editorMode === "create" ? "Create New Blog Post" : "Edit Blog Post"}
+                  {editorMode === "create" ? "Create SEO Blog Post" : `Edit Article: ${title || slug}`}
                 </h3>
-                <p className="text-[10px] text-slate-500 mt-0.5">Define your post structure, tags, SEO settings, and content</p>
+                <span className={`text-[9.5px] font-black px-2.5 py-0.5 rounded-full border ${
+                  seoScore >= 80 ? "bg-emerald-50 text-emerald-700 border-emerald-200" :
+                  seoScore >= 60 ? "bg-amber-50 text-amber-700 border-amber-200" :
+                  "bg-rose-50 text-rose-700 border-rose-200"
+                }`}>
+                  SEO Content Score: {seoScore}/100
+                </span>
               </div>
-
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => setPreviewActive(!previewActive)}
-                  className="bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-extrabold px-3.5 py-2 rounded-xl cursor-pointer"
-                >
-                  <i className={`fa-regular ${previewActive ? "fa-pen-to-square" : "fa-eye"} mr-1`} /> 
-                  {previewActive ? "Back to Write" : "Live Preview"}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsEditing(false)}
-                  className="bg-slate-100 hover:bg-slate-200/60 text-slate-700 text-[10px] font-extrabold px-3.5 py-2 rounded-xl cursor-pointer"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-
-            {previewActive ? (
-              // Preview Mode
-              <div className="border border-slate-200 rounded-2xl p-6 min-h-[450px] bg-slate-50/50 max-h-[600px] overflow-y-auto">
-                <div className="mb-6 pb-6 border-b border-slate-200/80">
-                  <div className="flex gap-2 mb-3">
-                    <span className="bg-primary/10 text-primary text-[9px] font-extrabold px-3 py-0.5 rounded-full uppercase tracking-wider">
-                      {category}
-                    </span>
-                  </div>
-                  <h1 className="text-2xl font-black text-slate-950 mb-3">{title || "Untitled Post"}</h1>
-                  <div className="flex items-center gap-2.5 text-[11px] text-slate-500 font-semibold">
-                    <span>By {author}</span>
-                    <span>•</span>
-                    <span>{date}</span>
-                  </div>
-                </div>
-
-                {imagePreview && (
-                  <div className="relative w-full h-56 rounded-xl overflow-hidden mb-6 border border-slate-200">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={imagePreview} alt="Thumbnail preview" className="w-full h-full object-cover" />
-                  </div>
-                )}
-
-                <div className="prose max-w-none text-left">
-                  {renderMarkdownPreview(content)}
-                </div>
-              </div>
-            ) : (
-              // Editing Form Input Areas
-              <div className="flex flex-col gap-4">
-                {/* Title */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-0.5">
-                    Post Title <span className="text-rose-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={title}
-                    onChange={(e) => handleTitleChange(e.target.value)}
-                    placeholder="e.g. Why Page Speed Matters for Conversions in 2026"
-                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-semibold"
-                  />
-                </div>
-
-                {/* Slug & Category (Two columns) */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-0.5">
-                      URL Slug <span className="text-rose-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={slug}
-                      onChange={(e) => setSlug(e.target.value.toLowerCase().replace(/\s+/g, "-"))}
-                      placeholder="e.g. why-page-speed-matters"
-                      disabled={editorMode === "edit"}
-                      className={`w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-mono font-semibold ${
-                        editorMode === "edit" ? "opacity-60 cursor-not-allowed" : ""
-                      }`}
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-0.5">
-                      Category
-                    </label>
-                    <select
-                      value={category}
-                      onChange={(e) => setCategory(e.target.value)}
-                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-bold"
-                    >
-                      <option value="SEO">SEO</option>
-                      <option value="Web Development">Web Development</option>
-                      <option value="Website Design">Website Design</option>
-                      <option value="E-commerce">E-commerce</option>
-                      <option value="Digital Marketing">Digital Marketing</option>
-                      <option value="Branding">Branding</option>
-                      <option value="General">General</option>
-                    </select>
-                  </div>
-                </div>
-
-                {/* Date & Author (Two columns) */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-0.5">
-                      Publish Date
-                    </label>
-                    <input
-                      type="date"
-                      required
-                      value={date}
-                      onChange={(e) => setDate(e.target.value)}
-                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-semibold"
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-0.5">
-                      Author Profile
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={author}
-                      onChange={(e) => setAuthor(e.target.value)}
-                      placeholder="e.g. Saravanan L"
-                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-semibold"
-                    />
-                  </div>
-                </div>
-
-                {/* Content Area */}
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between">
-                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-0.5">
-                      Markdown Body Content <span className="text-rose-500">*</span>
-                    </label>
-                    <span className="text-[9px] text-slate-400 font-semibold">Supports headers (##), blockquotes (&gt;), and bullet points (-)</span>
-                  </div>
-                  <textarea
-                    required
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    placeholder="Write article markdown contents here..."
-                    rows={16}
-                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-mono leading-relaxed"
-                  />
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Sidebar SEO & Assets Form (Right) */}
-          <div className="lg:col-span-4 flex flex-col gap-6">
-            
-            {/* Thumbnail Image Section */}
-            <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm text-left flex flex-col gap-4">
-              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider">Thumbnail Image</h3>
-              <p className="text-[10px] text-slate-500 font-semibold leading-normal">
-                Upload a cover thumbnail image for the blog post. Mapped fallbacks will render if empty.
+              <p className="text-[10px] text-slate-500 font-semibold mt-0.5">
+                {wordCount} words &bull; {readingTime} min read &bull; {headingsList.length} Headings
               </p>
-
-              <input
-                type="file"
-                ref={fileInputRef}
-                accept="image/*"
-                onChange={handleImageChange}
-                className="hidden"
-              />
-
-              {imagePreview ? (
-                <div className="relative w-full h-40 bg-slate-50 rounded-xl overflow-hidden border border-slate-200 group">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={imagePreview} alt="Preview thumbnail" className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                    <button
-                      type="button"
-                      onClick={triggerFileSelect}
-                      className="bg-white text-slate-900 text-[10px] font-extrabold px-3 py-1.5 rounded-lg shadow-sm hover:scale-105 transition-all cursor-pointer"
-                    >
-                      Replace
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setImagePreview("");
-                        setImageFile(null);
-                        setExistingImage("");
-                      }}
-                      className="bg-rose-600 text-white text-[10px] font-extrabold px-3 py-1.5 rounded-lg shadow-sm hover:scale-105 transition-all cursor-pointer"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div
-                  onClick={triggerFileSelect}
-                  className="w-full h-40 border-2 border-dashed border-slate-200 rounded-xl hover:border-primary/50 transition-colors flex flex-col items-center justify-center gap-2.5 cursor-pointer bg-slate-50"
-                >
-                  <i className="fa-regular fa-image text-xl text-slate-350" />
-                  <span className="text-[10px] font-bold text-slate-500">Upload Image Cover</span>
-                </div>
-              )}
             </div>
 
-            {/* SEO Metadata Settings */}
-            <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm text-left flex flex-col gap-4">
-              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider">SEO Metadata</h3>
-              
-              <div className="flex flex-col gap-2">
-                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-0.5">
-                  SEO Meta Description
-                </label>
-                <textarea
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="e.g. Discover essential web optimization tools and speeds..."
-                  rows={4}
-                  maxLength={170}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-semibold leading-relaxed"
-                />
-                <div className="flex justify-between items-center text-[9px] text-slate-400 font-bold px-0.5 mt-0.5">
-                  <span>Google recommended length: 155 chars</span>
-                  <span className={description.length > 155 ? "text-rose-500" : ""}>{description.length}/170</span>
-                </div>
-              </div>
-            </div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <button
+                type="button"
+                onClick={() => setPreviewActive(!previewActive)}
+                className="bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 text-xs font-bold px-4 py-2 rounded-xl cursor-pointer flex items-center gap-1.5"
+              >
+                <i className={`fa-regular ${previewActive ? "fa-pen-to-square" : "fa-eye"}`} />
+                {previewActive ? "Back to Write" : "Full Live Preview"}
+              </button>
 
-            {/* Submit Action */}
-            <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm text-left flex flex-col gap-3">
               <button
                 type="submit"
                 disabled={submitLoading || isCompressing}
-                className="w-full bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-extrabold text-xs py-3.5 rounded-xl shadow-md cursor-pointer transition-all duration-150 flex items-center justify-center gap-2 disabled:opacity-50"
+                className="bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md cursor-pointer transition-all flex items-center gap-2 disabled:opacity-50"
               >
                 {submitLoading ? (
                   <>
@@ -1028,21 +932,814 @@ export default function BlogAdminPanel() {
                 ) : (
                   <>
                     <i className="fa-solid fa-cloud-arrow-up" />
-                    <span>Publish Article</span>
+                    <span>{status === "Draft" ? "Save Draft" : status === "Scheduled" ? "Schedule Post" : "Publish Article"}</span>
                   </>
                 )}
               </button>
-              
+
               <button
                 type="button"
                 onClick={() => setIsEditing(false)}
-                className="w-full bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 font-extrabold text-xs py-3 rounded-xl cursor-pointer"
+                className="bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200 text-xs font-bold px-3 py-2.5 rounded-xl cursor-pointer"
               >
-                Back to List
+                Cancel
               </button>
             </div>
-
           </div>
+
+          {/* PREVIEW MODE TOGGLE WINDOW */}
+          {previewActive ? (
+            <div className="bg-white border border-slate-200 rounded-[24px] p-8 shadow-sm">
+              <div className="mb-6 pb-6 border-b border-slate-200 flex justify-between items-center">
+                <span className="text-xs font-black uppercase text-primary tracking-widest">Full Web Article Live Preview</span>
+                <button
+                  onClick={() => setPreviewActive(false)}
+                  className="bg-slate-100 hover:bg-slate-200 text-xs font-bold px-4 py-1.5 rounded-lg"
+                >
+                  Return to Editor
+                </button>
+              </div>
+
+              {/* Full Article Mockup Preview */}
+              <div className="max-w-4xl mx-auto text-left space-y-6">
+                <nav className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
+                  Home / Blog / {category} / {title || "Untitled"}
+                </nav>
+                <h1 className="text-3xl font-black text-slate-900 mb-4">{title || "Untitled Post Title"}</h1>
+                <div className="flex items-center gap-3 text-xs text-slate-500 font-semibold border-y border-slate-100 py-3">
+                  <span>By {authorName || author} ({authorRole})</span>
+                  <span>&bull;</span>
+                  <span>{date}</span>
+                  <span>&bull;</span>
+                  <span>{readingTime} min read ({wordCount} words)</span>
+                </div>
+
+                {showFeaturedImage && (imagePreview || existingImage) && (
+                  <div className="relative w-full h-72 rounded-2xl overflow-hidden border border-slate-200 my-6">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={imagePreview || existingImage} alt={imageAlt || title} className="w-full h-full object-cover" />
+                    {imageCaption && <p className="text-center text-xs text-slate-500 italic mt-2">{imageCaption}</p>}
+                  </div>
+                )}
+
+                <div className="prose max-w-none text-slate-700 leading-relaxed text-sm space-y-4">
+                  {content.split("\n").map((line, idx) => {
+                    if (line.startsWith("## ")) return <h2 key={idx} className="text-xl font-bold text-slate-900 border-b border-slate-100 pb-2 mt-6">{line.substring(3)}</h2>;
+                    if (line.startsWith("### ")) return <h3 key={idx} className="text-lg font-bold text-slate-900 mt-5">{line.substring(4)}</h3>;
+                    if (line.startsWith("- ")) return <li key={idx} className="ml-4 list-disc text-xs text-slate-650">{line.substring(2)}</li>;
+                    if (line.trim() === "") return <div key={idx} className="h-2" />;
+                    return <p key={idx} className="text-xs text-slate-700 leading-relaxed">{line}</p>;
+                  })}
+                </div>
+
+                {/* FAQ Preview */}
+                {faqs.length > 0 && (
+                  <div className="mt-8 pt-6 border-t border-slate-200">
+                    <h3 className="text-lg font-bold text-slate-900 mb-4">Frequently Asked Questions</h3>
+                    <div className="space-y-3">
+                      {faqs.map((f, i) => (
+                        <div key={i} className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+                          <div className="font-bold text-slate-900 mb-1">Q: {f.question}</div>
+                          <div className="text-slate-650">{f.answer}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            /* 12 COLLAPSIBLE EDITOR ACCORDION SECTIONS */
+            <div className="flex flex-col gap-5">
+
+              {/* 1. BASIC INFORMATION */}
+              <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => toggleSection("basic")}
+                  className="w-full flex items-center justify-between text-left font-black text-sm text-slate-900 cursor-pointer"
+                >
+                  <span className="flex items-center gap-2">
+                    <i className="fa-solid fa-info-circle text-primary" /> 1. Basic Blog Information
+                  </span>
+                  <i className={`fa-solid fa-chevron-down text-slate-400 transition-transform ${openSections.basic ? "rotate-180 text-primary" : ""}`} />
+                </button>
+
+                {openSections.basic && (
+                  <div className="mt-5 pt-5 border-t border-slate-100 flex flex-col gap-4">
+                    <div className="flex flex-col gap-2">
+                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                        Post Title <span className="text-rose-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={title}
+                        onChange={(e) => handleTitleChange(e.target.value)}
+                        placeholder="e.g. Custom Website Development: Why Your Business Needs a Custom Built Site"
+                        className="w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-semibold"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                          URL Slug <span className="text-rose-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={slug}
+                          onChange={(e) => setSlug(e.target.value.toLowerCase().replace(/\s+/g, "-"))}
+                          placeholder="e.g. custom-website-development-guide"
+                          className="w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-mono font-semibold"
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                          Category <span className="text-rose-500">*</span>
+                        </label>
+                        <select
+                          value={category}
+                          onChange={(e) => setCategory(e.target.value)}
+                          className="w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-bold"
+                        >
+                          <option value="SEO">SEO</option>
+                          <option value="Web Development">Web Development</option>
+                          <option value="Website Design">Website Design</option>
+                          <option value="E-commerce">E-commerce</option>
+                          <option value="Digital Marketing">Digital Marketing</option>
+                          <option value="Branding">Branding</option>
+                          <option value="Local SEO">Local SEO</option>
+                          <option value="General">General</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Tags (comma separated)</label>
+                        <input
+                          type="text"
+                          value={tags}
+                          onChange={(e) => setTags(e.target.value)}
+                          placeholder="e.g. SEO, Web Dev, React"
+                          className="w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none text-xs font-semibold"
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Publish Date</label>
+                        <input
+                          type="date"
+                          value={date}
+                          onChange={(e) => setDate(e.target.value)}
+                          className="w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none text-xs font-semibold"
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Last Updated Date</label>
+                        <input
+                          type="date"
+                          value={lastUpdatedDate}
+                          onChange={(e) => setLastUpdatedDate(e.target.value)}
+                          className="w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none text-xs font-semibold"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 2. CONTENT & READABILITY */}
+              <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => toggleSection("content")}
+                  className="w-full flex items-center justify-between text-left font-black text-sm text-slate-900 cursor-pointer"
+                >
+                  <span className="flex items-center gap-2">
+                    <i className="fa-solid fa-file-pen text-primary" /> 2. Blog Content &amp; Readability
+                  </span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] bg-slate-100 font-bold px-2.5 py-0.5 rounded-full text-slate-600">
+                      {wordCount} words &bull; {readingTime} min read
+                    </span>
+                    <i className={`fa-solid fa-chevron-down text-slate-400 transition-transform ${openSections.content ? "rotate-180 text-primary" : ""}`} />
+                  </div>
+                </button>
+
+                {openSections.content && (
+                  <div className="mt-5 pt-5 border-t border-slate-100 flex flex-col gap-4">
+                    {/* Content Toggles */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                      <label className="flex items-center gap-2 text-xs font-bold text-slate-700 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={showTableOfContents}
+                          onChange={(e) => setShowTableOfContents(e.target.checked)}
+                          className="rounded border-slate-300 text-primary focus:ring-primary"
+                        />
+                        <span>Table of Contents Sidebar</span>
+                      </label>
+
+                      <label className="flex items-center gap-2 text-xs font-bold text-slate-700 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={showAuthorInfo}
+                          onChange={(e) => setShowAuthorInfo(e.target.checked)}
+                          className="rounded border-slate-300 text-primary focus:ring-primary"
+                        />
+                        <span>Show Author E-E-A-T Card</span>
+                      </label>
+
+                      <label className="flex items-center gap-2 text-xs font-bold text-slate-700 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={showFeaturedImage}
+                          onChange={(e) => setShowFeaturedImage(e.target.checked)}
+                          className="rounded border-slate-300 text-primary focus:ring-primary"
+                        />
+                        <span>Show Featured Cover Image</span>
+                      </label>
+                    </div>
+
+                    {/* Markdown Body Textarea */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                        Markdown Content Body <span className="text-rose-500">*</span>
+                      </label>
+                      <textarea
+                        required
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                        placeholder="Write article markdown contents here..."
+                        rows={16}
+                        className="w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none focus:bg-white focus:border-primary text-xs font-mono leading-relaxed"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 3. MEDIA & ASSETS */}
+              <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => toggleSection("media")}
+                  className="w-full flex items-center justify-between text-left font-black text-sm text-slate-900 cursor-pointer"
+                >
+                  <span className="flex items-center gap-2">
+                    <i className="fa-solid fa-image text-primary" /> 3. Featured Image &amp; Media Assets
+                  </span>
+                  <i className={`fa-solid fa-chevron-down text-slate-400 transition-transform ${openSections.media ? "rotate-180 text-primary" : ""}`} />
+                </button>
+
+                {openSections.media && (
+                  <div className="mt-5 pt-5 border-t border-slate-100 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                    <div>
+                      <input type="file" ref={fileInputRef} accept="image/*" onChange={handleImageChange} className="hidden" />
+                      {imagePreview ? (
+                        <div className="relative w-full h-48 bg-slate-50 rounded-xl overflow-hidden border border-slate-200 group">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={imagePreview} alt="Preview cover" className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                            <button type="button" onClick={triggerFileSelect} className="bg-white text-slate-900 text-[10px] font-extrabold px-3 py-1.5 rounded-lg shadow-sm">Replace</button>
+                            <button type="button" onClick={() => { setImagePreview(""); setImageFile(null); setExistingImage(""); }} className="bg-rose-600 text-white text-[10px] font-extrabold px-3 py-1.5 rounded-lg shadow-sm">Delete</button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div onClick={triggerFileSelect} className="w-full h-48 border-2 border-dashed border-slate-200 rounded-xl hover:border-primary/50 transition-colors flex flex-col items-center justify-center gap-2.5 cursor-pointer bg-slate-50">
+                          <i className="fa-regular fa-image text-2xl text-slate-350" />
+                          <span className="text-xs font-bold text-slate-500">Upload Featured Image (WebP/JPG)</span>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col gap-4">
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                          Image Alt Text <span className="text-rose-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={imageAlt}
+                          onChange={(e) => setImageAlt(e.target.value)}
+                          placeholder="e.g. Custom website development architecture diagram"
+                          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none text-xs font-semibold"
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Image Caption</label>
+                        <input
+                          type="text"
+                          value={imageCaption}
+                          onChange={(e) => setImageCaption(e.target.value)}
+                          placeholder="e.g. Custom website systems built for client lead workflows."
+                          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none text-xs font-semibold"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 4. SEO SETTINGS */}
+              <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => toggleSection("seo")}
+                  className="w-full flex items-center justify-between text-left font-black text-sm text-slate-900 cursor-pointer"
+                >
+                  <span className="flex items-center gap-2">
+                    <i className="fa-solid fa-magnifying-glass-chart text-primary" /> 4. SEO Settings &amp; Keywords
+                  </span>
+                  <i className={`fa-solid fa-chevron-down text-slate-400 transition-transform ${openSections.seo ? "rotate-180 text-primary" : ""}`} />
+                </button>
+
+                {openSections.seo && (
+                  <div className="mt-5 pt-5 border-t border-slate-100 flex flex-col gap-4">
+                    <div className="flex flex-col gap-2">
+                      <div className="flex justify-between items-center text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                        <span>SEO Title</span>
+                        <span className={seoTitle.length >= 35 && seoTitle.length <= 60 ? "text-emerald-600" : "text-amber-600"}>
+                          {seoTitle.length}/60 chars (Recommended: 35-60)
+                        </span>
+                      </div>
+                      <input
+                        type="text"
+                        value={seoTitle}
+                        onChange={(e) => setSeoTitle(e.target.value)}
+                        placeholder="e.g. Custom Website Development | Joy Digital"
+                        className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none text-xs font-semibold"
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                      <div className="flex justify-between items-center text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                        <span>Meta Description</span>
+                        <span className={metaDescription.length >= 110 && metaDescription.length <= 160 ? "text-emerald-600" : "text-amber-600"}>
+                          {metaDescription.length}/160 chars (Recommended: 110-160)
+                        </span>
+                      </div>
+                      <textarea
+                        value={metaDescription}
+                        onChange={(e) => setMetaDescription(e.target.value)}
+                        placeholder="Write compelling summary for search result snippets..."
+                        rows={3}
+                        className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none text-xs font-semibold leading-relaxed"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Focus Keyword (1 primary)</label>
+                        <input
+                          type="text"
+                          value={focusKeyword}
+                          onChange={(e) => setFocusKeyword(e.target.value)}
+                          placeholder="e.g. custom website development"
+                          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none text-xs font-semibold"
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Secondary Keywords (comma separated)</label>
+                        <input
+                          type="text"
+                          value={secondaryKeywords}
+                          onChange={(e) => setSecondaryKeywords(e.target.value)}
+                          placeholder="e.g. custom web design, business website requirements"
+                          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none text-xs font-semibold"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Canonical URL</label>
+                        <input
+                          type="text"
+                          value={canonicalUrl}
+                          onChange={(e) => setCanonicalUrl(e.target.value)}
+                          placeholder={`https://joydigital.in/blog/${slug}`}
+                          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none text-xs font-mono font-semibold"
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Robots Meta Tag</label>
+                        <select
+                          value={robots}
+                          onChange={(e) => setRobots(e.target.value)}
+                          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none text-xs font-bold"
+                        >
+                          <option value="Index, Follow">Index, Follow</option>
+                          <option value="Noindex, Follow">Noindex, Follow</option>
+                          <option value="Index, Nofollow">Index, Nofollow</option>
+                          <option value="Noindex, Nofollow">Noindex, Nofollow</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 5. GOOGLE SEARCH PREVIEW */}
+              <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => toggleSection("serp")}
+                  className="w-full flex items-center justify-between text-left font-black text-sm text-slate-900 cursor-pointer"
+                >
+                  <span className="flex items-center gap-2">
+                    <i className="fa-brands fa-google text-blue-600" /> 5. Live Google Search Preview
+                  </span>
+                  <i className={`fa-solid fa-chevron-down text-slate-400 transition-transform ${openSections.serp ? "rotate-180 text-primary" : ""}`} />
+                </button>
+
+                {openSections.serp && (
+                  <div className="mt-5 pt-5 border-t border-slate-100 flex flex-col gap-4">
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setSerpTab("desktop")}
+                        className={`px-3 py-1 rounded-lg text-xs font-bold cursor-pointer ${serpTab === "desktop" ? "bg-primary text-white" : "bg-slate-100 text-slate-600"}`}
+                      >
+                        Desktop View
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setSerpTab("mobile")}
+                        className={`px-3 py-1 rounded-lg text-xs font-bold cursor-pointer ${serpTab === "mobile" ? "bg-primary text-white" : "bg-slate-100 text-slate-600"}`}
+                      >
+                        Mobile View
+                      </button>
+                    </div>
+
+                    <div className={`p-4 bg-white border border-slate-200 rounded-2xl font-sans ${serpTab === "mobile" ? "max-w-sm border-2" : "w-full"}`}>
+                      <div className="flex items-center gap-2 mb-1 text-xs text-slate-600">
+                        <span className="w-4 h-4 rounded-full bg-blue-600 text-white font-bold text-[9px] flex items-center justify-center">J</span>
+                        <span className="text-[11px] font-bold text-slate-800">Joy Digital</span>
+                        <span className="text-[10px] text-slate-400">https://joydigital.in &gt; blog &gt; {slug || "slug"}</span>
+                      </div>
+                      <h3 className="text-base sm:text-lg font-normal text-[#1a0dab] hover:underline cursor-pointer leading-tight mb-1 truncate">
+                        {seoTitle || title || "Untitled Post Title - Joy Digital"}
+                      </h3>
+                      <p className="text-xs text-[#4d5156] leading-relaxed line-clamp-2">
+                        {metaDescription || description || "No meta description provided. Search engines will automatically generate a snippet from your content."}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 6. CONTENT SEO CHECKLIST & SCORE */}
+              <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => toggleSection("checklist")}
+                  className="w-full flex items-center justify-between text-left font-black text-sm text-slate-900 cursor-pointer"
+                >
+                  <span className="flex items-center gap-2">
+                    <i className="fa-solid fa-list-check text-emerald-600" /> 6. Content SEO Checklist &amp; Score
+                  </span>
+                  <div className="flex items-center gap-3">
+                    <span className={`text-[11px] font-black px-3 py-0.5 rounded-full border ${
+                      seoScore >= 80 ? "bg-emerald-50 text-emerald-700 border-emerald-200" :
+                      seoScore >= 60 ? "bg-amber-50 text-amber-700 border-amber-200" :
+                      "bg-rose-50 text-rose-700 border-rose-200"
+                    }`}>
+                      Score: {seoScore}/100
+                    </span>
+                    <i className={`fa-solid fa-chevron-down text-slate-400 transition-transform ${openSections.checklist ? "rotate-180 text-primary" : ""}`} />
+                  </div>
+                </button>
+
+                {openSections.checklist && (
+                  <div className="mt-5 pt-5 border-t border-slate-100 flex flex-col gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                      {seoChecks.map((check, idx) => (
+                        <div key={idx} className={`p-3 rounded-xl border flex items-start gap-2.5 ${check.passed ? "bg-emerald-50/60 border-emerald-200 text-emerald-900" : "bg-slate-50 border-slate-200 text-slate-700"}`}>
+                          <i className={`fa-solid ${check.passed ? "fa-circle-check text-emerald-600 mt-0.5" : "fa-triangle-exclamation text-amber-500 mt-0.5"}`} />
+                          <div>
+                            <div className="font-bold text-xs">{check.label}</div>
+                            {!check.passed && <div className="text-[10px] text-slate-500 mt-0.5 font-semibold">{check.rec}</div>}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 7. INTERNAL LINKING */}
+              <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => toggleSection("internalLinks")}
+                  className="w-full flex items-center justify-between text-left font-black text-sm text-slate-900 cursor-pointer"
+                >
+                  <span className="flex items-center gap-2">
+                    <i className="fa-solid fa-link text-primary" /> 7. Internal Linking Matrix
+                  </span>
+                  <i className={`fa-solid fa-chevron-down text-slate-400 transition-transform ${openSections.internalLinks ? "rotate-180 text-primary" : ""}`} />
+                </button>
+
+                {openSections.internalLinks && (
+                  <div className="mt-5 pt-5 border-t border-slate-100 flex flex-col gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                      <input
+                        type="text"
+                        value={newAnchor}
+                        onChange={(e) => setNewAnchor(e.target.value)}
+                        placeholder="Anchor Text (e.g. custom website development)"
+                        className="px-3.5 py-2.5 bg-slate-50 border border-slate-200 text-xs font-semibold rounded-xl outline-none"
+                      />
+                      <select
+                        value={newTarget}
+                        onChange={(e) => setNewTarget(e.target.value)}
+                        className="px-3.5 py-2.5 bg-slate-50 border border-slate-200 text-xs font-bold rounded-xl outline-none"
+                      >
+                        {SERVICE_LINK_PRESETS.map((p, i) => (
+                          <option key={i} value={p.url}>{p.label} ({p.url})</option>
+                        ))}
+                      </select>
+                      <button
+                        type="button"
+                        onClick={handleAddInternalLink}
+                        className="bg-primary text-white font-bold text-xs py-2.5 px-4 rounded-xl cursor-pointer hover:bg-primary-light"
+                      >
+                        Add Internal Link
+                      </button>
+                    </div>
+
+                    {internalLinks.length > 0 && (
+                      <div className="space-y-2 mt-2">
+                        {internalLinks.map((item, idx) => (
+                          <div key={idx} className="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+                            <span className="font-bold text-slate-800">&quot;{item.anchorText}&quot; &rarr; <code className="text-primary">{item.targetUrl}</code></span>
+                            <button type="button" onClick={() => handleRemoveInternalLink(idx)} className="text-rose-600 text-xs hover:underline">Remove</button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* 8. RELATED BLOG POSTS */}
+              <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => toggleSection("related")}
+                  className="w-full flex items-center justify-between text-left font-black text-sm text-slate-900 cursor-pointer"
+                >
+                  <span className="flex items-center gap-2">
+                    <i className="fa-solid fa-layer-group text-primary" /> 8. Related Blog Posts
+                  </span>
+                  <i className={`fa-solid fa-chevron-down text-slate-400 transition-transform ${openSections.related ? "rotate-180 text-primary" : ""}`} />
+                </button>
+
+                {openSections.related && (
+                  <div className="mt-5 pt-5 border-t border-slate-100 flex flex-col gap-4">
+                    <label className="flex items-center gap-2 text-xs font-bold text-slate-800 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={autoSuggestRelated}
+                        onChange={(e) => setAutoSuggestRelated(e.target.checked)}
+                        className="rounded border-slate-300 text-primary"
+                      />
+                      <span>Automatically suggest related articles (based on Category &amp; Tags)</span>
+                    </label>
+
+                    <div>
+                      <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">Manually Select Related Articles</span>
+                      <div className="max-h-40 overflow-y-auto space-y-1.5 p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+                        {posts.filter((p) => p.slug !== slug).map((p) => {
+                          const isSelected = manualRelatedSlugs.includes(p.slug);
+                          return (
+                            <label key={p.slug} className="flex items-center gap-2 cursor-pointer p-1 hover:bg-white rounded">
+                              <input
+                                type="checkbox"
+                                checked={isSelected}
+                                onChange={(e) => {
+                                  if (e.target.checked) setManualRelatedSlugs([...manualRelatedSlugs, p.slug]);
+                                  else setManualRelatedSlugs(manualRelatedSlugs.filter((s) => s !== p.slug));
+                                }}
+                              />
+                              <span className="font-bold text-slate-800 truncate">{p.title}</span>
+                            </label>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 9. AUTHOR E-E-A-T INFORMATION */}
+              <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => toggleSection("author")}
+                  className="w-full flex items-center justify-between text-left font-black text-sm text-slate-900 cursor-pointer"
+                >
+                  <span className="flex items-center gap-2">
+                    <i className="fa-solid fa-user-gear text-primary" /> 9. Author / E-E-A-T Profile
+                  </span>
+                  <i className={`fa-solid fa-chevron-down text-slate-400 transition-transform ${openSections.author ? "rotate-180 text-primary" : ""}`} />
+                </button>
+
+                {openSections.author && (
+                  <div className="mt-5 pt-5 border-t border-slate-100 flex flex-col gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Author Name</label>
+                        <input
+                          type="text"
+                          value={authorName}
+                          onChange={(e) => setAuthorName(e.target.value)}
+                          className="px-4 py-2.5 bg-slate-50 border border-slate-200 text-xs font-semibold rounded-xl"
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Author Role</label>
+                        <input
+                          type="text"
+                          value={authorRole}
+                          onChange={(e) => setAuthorRole(e.target.value)}
+                          className="px-4 py-2.5 bg-slate-50 border border-slate-200 text-xs font-semibold rounded-xl"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Author Bio</label>
+                      <textarea
+                        value={authorBio}
+                        onChange={(e) => setAuthorBio(e.target.value)}
+                        rows={2}
+                        className="px-4 py-2.5 bg-slate-50 border border-slate-200 text-xs font-semibold rounded-xl"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 10. FAQ BUILDER */}
+              <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => toggleSection("faq")}
+                  className="w-full flex items-center justify-between text-left font-black text-sm text-slate-900 cursor-pointer"
+                >
+                  <span className="flex items-center gap-2">
+                    <i className="fa-solid fa-circle-question text-primary" /> 10. Article FAQ Builder ({faqs.length} Q&amp;A)
+                  </span>
+                  <i className={`fa-solid fa-chevron-down text-slate-400 transition-transform ${openSections.faq ? "rotate-180 text-primary" : ""}`} />
+                </button>
+
+                {openSections.faq && (
+                  <div className="mt-5 pt-5 border-t border-slate-100 flex flex-col gap-4">
+                    <div className="flex flex-col gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                      <input
+                        type="text"
+                        value={newFaqQuestion}
+                        onChange={(e) => setNewFaqQuestion(e.target.value)}
+                        placeholder="Question (e.g. How much does custom website development cost?)"
+                        className="px-3.5 py-2.5 bg-white border border-slate-200 text-xs font-semibold rounded-xl outline-none"
+                      />
+                      <textarea
+                        value={newFaqAnswer}
+                        onChange={(e) => setNewFaqAnswer(e.target.value)}
+                        placeholder="Answer details..."
+                        rows={2}
+                        className="px-3.5 py-2.5 bg-white border border-slate-200 text-xs font-semibold rounded-xl outline-none"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleAddFaq}
+                        className="bg-primary text-white font-bold text-xs py-2 px-4 rounded-xl cursor-pointer self-start hover:bg-primary-light"
+                      >
+                        Add FAQ Item
+                      </button>
+                    </div>
+
+                    {faqs.length > 0 && (
+                      <div className="space-y-3">
+                        {faqs.map((f, idx) => (
+                          <div key={idx} className="p-3.5 bg-white border border-slate-200 rounded-xl text-xs flex justify-between items-start gap-3">
+                            <div>
+                              <div className="font-extrabold text-slate-900">Q: {f.question}</div>
+                              <div className="text-slate-600 mt-1">A: {f.answer}</div>
+                            </div>
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              <button type="button" onClick={() => handleMoveFaq(idx, "up")} disabled={idx === 0} className="text-slate-400 hover:text-slate-900 disabled:opacity-30">▲</button>
+                              <button type="button" onClick={() => handleMoveFaq(idx, "down")} disabled={idx === faqs.length - 1} className="text-slate-400 hover:text-slate-900 disabled:opacity-30">▼</button>
+                              <button type="button" onClick={() => handleRemoveFaq(idx)} className="text-rose-600 hover:underline">Remove</button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* 11. SOCIAL MEDIA & OPEN GRAPH PREVIEWS */}
+              <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => toggleSection("social")}
+                  className="w-full flex items-center justify-between text-left font-black text-sm text-slate-900 cursor-pointer"
+                >
+                  <span className="flex items-center gap-2">
+                    <i className="fa-solid fa-share-nodes text-primary" /> 11. Social Sharing &amp; Open Graph Previews
+                  </span>
+                  <i className={`fa-solid fa-chevron-down text-slate-400 transition-transform ${openSections.social ? "rotate-180 text-primary" : ""}`} />
+                </button>
+
+                {openSections.social && (
+                  <div className="mt-5 pt-5 border-t border-slate-100 flex flex-col gap-4">
+                    <div className="flex gap-2 select-none">
+                      {(["facebook", "linkedin", "twitter"] as const).map((st) => (
+                        <button
+                          key={st}
+                          type="button"
+                          onClick={() => setSocialTab(st)}
+                          className={`px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer ${socialTab === st ? "bg-primary text-white" : "bg-slate-100 text-slate-600"}`}
+                        >
+                          {st}
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl max-w-md select-none">
+                      <div className="relative w-full h-40 rounded-xl overflow-hidden bg-slate-200 mb-3 border border-slate-300">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={ogImage || imagePreview || existingImage || "/assets/images/hero-banner.webp"} alt="Social preview" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="text-[10px] text-slate-400 uppercase font-mono tracking-wider">JOYDIGITAL.IN</div>
+                      <div className="font-extrabold text-slate-900 text-sm truncate">{ogTitle || seoTitle || title || "Article Title"}</div>
+                      <div className="text-xs text-slate-600 line-clamp-2 mt-0.5">{ogDescription || metaDescription || description || "Article Description"}</div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 12. PUBLISHING & STATUS */}
+              <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => toggleSection("publishing")}
+                  className="w-full flex items-center justify-between text-left font-black text-sm text-slate-900 cursor-pointer"
+                >
+                  <span className="flex items-center gap-2">
+                    <i className="fa-solid fa-paper-plane text-primary" /> 12. Publishing Settings &amp; Status Workflow
+                  </span>
+                  <i className={`fa-solid fa-chevron-down text-slate-400 transition-transform ${openSections.publishing ? "rotate-180 text-primary" : ""}`} />
+                </button>
+
+                {openSections.publishing && (
+                  <div className="mt-5 pt-5 border-t border-slate-100 flex flex-col gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Publication Status</label>
+                        <select
+                          value={status}
+                          onChange={(e) => setStatus(e.target.value as any)}
+                          className="px-4 py-2.5 bg-slate-50 border border-slate-200 text-xs font-bold rounded-xl outline-none"
+                        >
+                          <option value="Published">Published (Live on website &amp; sitemap)</option>
+                          <option value="Draft">Draft (Saved in CMS only)</option>
+                          <option value="Scheduled">Scheduled (Future publication date)</option>
+                          <option value="Archived">Archived (Hidden from site)</option>
+                        </select>
+                      </div>
+
+                      {status === "Scheduled" && (
+                        <div className="flex flex-col gap-2">
+                          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Scheduled Date &amp; Time</label>
+                          <input
+                            type="datetime-local"
+                            value={scheduledPublishDate}
+                            onChange={(e) => setScheduledPublishDate(e.target.value)}
+                            className="px-4 py-2.5 bg-slate-50 border border-slate-200 text-xs font-semibold rounded-xl outline-none"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+            </div>
+          )}
 
         </form>
       )}

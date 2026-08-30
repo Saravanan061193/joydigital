@@ -5,7 +5,6 @@ import { getAllPosts } from "@/lib/blog";
 import { getDb } from "@/lib/mongodb";
 import { v2 as cloudinary } from "cloudinary";
 
-// Configure Cloudinary only if environment variables are provided
 if (
   process.env.CLOUDINARY_CLOUD_NAME &&
   process.env.CLOUDINARY_API_KEY &&
@@ -20,7 +19,7 @@ if (
 
 const BLOG_DIR = path.join(process.cwd(), "content/blog");
 
-// GET: List all blog posts (merges local & DB, sorted by date) with pageviews aggregated
+// GET: List all blog posts with aggregated pageviews
 export async function GET(req: NextRequest) {
   try {
     const posts = await getAllPosts();
@@ -30,7 +29,7 @@ export async function GET(req: NextRequest) {
       try {
         const db = await getDb();
         const pageviewsCol = db.collection("pageviews");
-        
+
         const viewsAggregation = await pageviewsCol.aggregate([
           { $match: { path: { $regex: "^/blog" } } },
           { $group: { _id: "$path", count: { $sum: 1 } } }
@@ -62,7 +61,7 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// POST: Add or edit a blog post (handles form data, DB save, and local file fallback)
+// POST: Add or edit a blog post with full SEO & CMS fields
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -72,17 +71,89 @@ export async function POST(req: NextRequest) {
     const category = formData.get("category") as string;
     const author = formData.get("author") as string;
     const date = formData.get("date") as string;
+    const lastUpdatedDate = (formData.get("lastUpdatedDate") as string) || date || new Date().toISOString().split("T")[0];
     const content = formData.get("content") as string;
+
     const imageFile = formData.get("image") as File | null;
-    const existingImage = formData.get("existingImage") as string; // if editing
+    const existingImage = formData.get("existingImage") as string;
+    const imageAlt = (formData.get("imageAlt") as string) || title || "";
+    const imageCaption = (formData.get("imageCaption") as string) || "";
+
+    const tagsJson = formData.get("tags") as string;
+    let tags: string[] = [];
+    if (tagsJson) {
+      try {
+        tags = JSON.parse(tagsJson);
+      } catch (e) {
+        tags = tagsJson.split(",").map((t) => t.trim()).filter(Boolean);
+      }
+    }
+
+    const showTableOfContents = formData.get("showTableOfContents") !== "false";
+    const showAuthorInfo = formData.get("showAuthorInfo") !== "false";
+    const showFeaturedImage = formData.get("showFeaturedImage") !== "false";
+
+    const seoTitle = (formData.get("seoTitle") as string) || title || "";
+    const metaDescription = (formData.get("metaDescription") as string) || description || "";
+    const focusKeyword = (formData.get("focusKeyword") as string) || "";
+    const secondaryKeywords = (formData.get("secondaryKeywords") as string) || "";
+    const canonicalUrl = (formData.get("canonicalUrl") as string) || `https://joydigital.in/blog/${slug}`;
+    const robots = (formData.get("robots") as string) || "Index, Follow";
+
+    const internalLinksJson = formData.get("internalLinks") as string;
+    let internalLinks = [];
+    if (internalLinksJson) {
+      try {
+        internalLinks = JSON.parse(internalLinksJson);
+      } catch (e) {
+        internalLinks = [];
+      }
+    }
+
+    const autoSuggestRelated = formData.get("autoSuggestRelated") !== "false";
+    const manualRelatedSlugsJson = formData.get("manualRelatedSlugs") as string;
+    let manualRelatedSlugs: string[] = [];
+    if (manualRelatedSlugsJson) {
+      try {
+        manualRelatedSlugs = JSON.parse(manualRelatedSlugsJson);
+      } catch (e) {
+        manualRelatedSlugs = manualRelatedSlugsJson.split(",").map((s) => s.trim()).filter(Boolean);
+      }
+    }
+
+    const authorName = (formData.get("authorName") as string) || author || "Saravanan L";
+    const authorRole = (formData.get("authorRole") as string) || "Technical Web Specialist";
+    const authorBio = (formData.get("authorBio") as string) || "";
+    const authorImage = (formData.get("authorImage") as string) || "/assets/images/logo.webp";
+    const authorProfileUrl = (formData.get("authorProfileUrl") as string) || "https://joydigital.in/about";
+
+    const faqsJson = formData.get("faqs") as string;
+    let faqs = [];
+    if (faqsJson) {
+      try {
+        faqs = JSON.parse(faqsJson);
+      } catch (e) {
+        faqs = [];
+      }
+    }
+
+    const ogTitle = (formData.get("ogTitle") as string) || seoTitle || title || "";
+    const ogDescription = (formData.get("ogDescription") as string) || metaDescription || description || "";
+    const ogImage = (formData.get("ogImage") as string) || "";
+
+    const twitterTitle = (formData.get("twitterTitle") as string) || ogTitle || seoTitle || title || "";
+    const twitterDescription = (formData.get("twitterDescription") as string) || ogDescription || metaDescription || description || "";
+    const twitterImage = (formData.get("twitterImage") as string) || ogImage || "";
+
+    const status = (formData.get("status") as string) || "Published";
+    const scheduledPublishDate = (formData.get("scheduledPublishDate") as string) || "";
+    const seoScore = parseInt((formData.get("seoScore") as string) || "0", 10);
 
     if (!title || !slug || !content) {
       return NextResponse.json({ error: "Missing required parameters: title, slug, or content" }, { status: 400 });
     }
 
-    // Clean slug for filename safety
     const cleanSlug = slug.toLowerCase().replace(/[^a-z0-9-_]/g, "");
-
     let imagePath = existingImage || "";
     let isWriteable = true;
 
@@ -90,7 +161,6 @@ export async function POST(req: NextRequest) {
     if (imageFile && imageFile.name && imageFile.size > 0) {
       const buffer = Buffer.from(await imageFile.arrayBuffer());
 
-      // 1. Retrieve Cloudinary configuration from database if available
       let cloudName = process.env.CLOUDINARY_CLOUD_NAME;
       let apiKey = process.env.CLOUDINARY_API_KEY;
       let apiSecret = process.env.CLOUDINARY_API_SECRET;
@@ -109,7 +179,6 @@ export async function POST(req: NextRequest) {
         }
       }
 
-      // 2. Try uploading to Cloudinary if credentials are configured
       if (cloudName && apiKey && apiSecret) {
         try {
           cloudinary.config({
@@ -136,7 +205,6 @@ export async function POST(req: NextRequest) {
         }
       }
 
-      // 2. Fallback to local filesystem write or base64 storage if Cloudinary upload failed/not configured
       if (!imagePath || !imagePath.startsWith("http")) {
         try {
           const uploadDir = path.join(process.cwd(), "public", "assets", "images", "blog");
@@ -144,7 +212,6 @@ export async function POST(req: NextRequest) {
             fs.mkdirSync(uploadDir, { recursive: true });
           }
 
-          // Generate secure filename
           const fileExt = path.extname(imageFile.name) || ".jpg";
           const filename = `${cleanSlug}-${Date.now()}${fileExt}`;
           const filePath = path.join(uploadDir, filename);
@@ -160,20 +227,53 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Standardize frontmatter template
+    const finalOgImage = ogImage || imagePath;
+    const finalTwitterImage = twitterImage || finalOgImage;
+
+    // YAML Frontmatter construction
     const mdContent = `---
 title: "${title.replace(/"/g, '\\"')}"
 description: "${description.replace(/"/g, '\\"')}"
 date: "${date || new Date().toISOString().split("T")[0]}"
+lastUpdatedDate: "${lastUpdatedDate}"
 category: "${category || "SEO"}"
-author: "${author || "Saravanan L"}"
+author: "${authorName || author || "Saravanan L"}"
 image: "${imagePath}"
+imageAlt: "${imageAlt.replace(/"/g, '\\"')}"
+imageCaption: "${imageCaption.replace(/"/g, '\\"')}"
+tags: ${JSON.stringify(tags)}
+showTableOfContents: ${showTableOfContents}
+showAuthorInfo: ${showAuthorInfo}
+showFeaturedImage: ${showFeaturedImage}
+seoTitle: "${seoTitle.replace(/"/g, '\\"')}"
+metaDescription: "${metaDescription.replace(/"/g, '\\"')}"
+focusKeyword: "${focusKeyword.replace(/"/g, '\\"')}"
+secondaryKeywords: "${secondaryKeywords.replace(/"/g, '\\"')}"
+canonicalUrl: "${canonicalUrl}"
+robots: "${robots}"
+internalLinks: ${JSON.stringify(internalLinks)}
+autoSuggestRelated: ${autoSuggestRelated}
+manualRelatedSlugs: ${JSON.stringify(manualRelatedSlugs)}
+authorName: "${authorName.replace(/"/g, '\\"')}"
+authorRole: "${authorRole.replace(/"/g, '\\"')}"
+authorBio: "${authorBio.replace(/"/g, '\\"')}"
+authorImage: "${authorImage}"
+authorProfileUrl: "${authorProfileUrl}"
+faqs: ${JSON.stringify(faqs)}
+ogTitle: "${ogTitle.replace(/"/g, '\\"')}"
+ogDescription: "${ogDescription.replace(/"/g, '\\"')}"
+ogImage: "${finalOgImage}"
+twitterTitle: "${twitterTitle.replace(/"/g, '\\"')}"
+twitterDescription: "${twitterDescription.replace(/"/g, '\\"')}"
+twitterImage: "${finalTwitterImage}"
+status: "${status}"
+scheduledPublishDate: "${scheduledPublishDate}"
+seoScore: ${seoScore}
 ---
 
 ${content}
 `;
 
-    // Attempt to write markdown file locally if the filesystem is writeable
     if (isWriteable) {
       try {
         if (!fs.existsSync(BLOG_DIR)) {
@@ -187,7 +287,6 @@ ${content}
       }
     }
 
-    // Save/Update in MongoDB if available
     if (process.env.MONGODB_URI) {
       try {
         const db = await getDb();
@@ -201,17 +300,47 @@ ${content}
               title,
               description,
               date: date || new Date().toISOString().split("T")[0],
+              lastUpdatedDate,
               category: category || "SEO",
-              author: author || "Saravanan L",
+              author: authorName || author || "Saravanan L",
               image: imagePath,
+              imageAlt,
+              imageCaption,
+              tags,
+              showTableOfContents,
+              showAuthorInfo,
+              showFeaturedImage,
+              seoTitle,
+              metaDescription,
+              focusKeyword,
+              secondaryKeywords,
+              canonicalUrl,
+              robots,
+              internalLinks,
+              autoSuggestRelated,
+              manualRelatedSlugs,
+              authorName,
+              authorRole,
+              authorBio,
+              authorImage,
+              authorProfileUrl,
+              faqs,
+              ogTitle,
+              ogDescription,
+              ogImage: finalOgImage,
+              twitterTitle,
+              twitterDescription,
+              twitterImage: finalTwitterImage,
+              status,
+              scheduledPublishDate,
+              seoScore,
               content,
-              isDeleted: false,
+              isDeleted: status === "Archived",
               updatedAt: new Date(),
             },
           },
           { upsert: true }
         );
-        console.log(`Successfully saved/updated blog post "${cleanSlug}" in MongoDB.`);
       } catch (dbErr: any) {
         console.error("Failed to save blog post in MongoDB:", dbErr);
         if (!isWriteable) {
@@ -231,7 +360,7 @@ ${content}
   }
 }
 
-// DELETE: Delete a blog post (handles local file delete and marking deleted in DB)
+// DELETE: Delete a blog post
 export async function DELETE(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
@@ -244,7 +373,6 @@ export async function DELETE(req: NextRequest) {
     const cleanSlug = slug.toLowerCase().replace(/[^a-z0-9-_]/g, "");
     let localDeleted = false;
 
-    // Try deleting local file
     try {
       const filePath = path.join(BLOG_DIR, `${cleanSlug}.md`);
       if (fs.existsSync(filePath)) {
@@ -252,7 +380,7 @@ export async function DELETE(req: NextRequest) {
         localDeleted = true;
       }
     } catch (err) {
-      console.warn("Could not delete local file (read-only filesystem):", err);
+      console.warn("Could not delete local file:", err);
     }
 
     let dbDeleted = false;
@@ -261,13 +389,13 @@ export async function DELETE(req: NextRequest) {
         const db = await getDb();
         const blogsCol = db.collection("blogs");
 
-        // Set isDeleted flag so that statically bundled version is hidden
         await blogsCol.updateOne(
           { slug: cleanSlug },
           {
             $set: {
               slug: cleanSlug,
               isDeleted: true,
+              status: "Archived",
               deletedAt: new Date(),
             },
           },

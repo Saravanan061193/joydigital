@@ -115,11 +115,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   });
 
-  // 4. Fetch blog posts dynamically (unified root level)
+  // 4. Fetch blog posts dynamically (unified root level, excluding Draft, Archived, or Noindex posts)
   const blogPosts = await getAllPosts();
-  const blogRoutes = blogPosts.map((post) => ({
+  const indexableBlogPosts = blogPosts.filter(
+    (post) =>
+      post.status !== "Draft" &&
+      post.status !== "Archived" &&
+      !post.robots?.toLowerCase().includes("noindex")
+  );
+
+  const blogRoutes = indexableBlogPosts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: post.date || todayStr,
+    lastModified: post.lastUpdatedDate || post.date || todayStr,
     changeFrequency: 'weekly' as const,
     priority: 0.6,
   }));
