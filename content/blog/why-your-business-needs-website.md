@@ -22,7 +22,7 @@ metaDescription: >-
   Discover why relying solely on social media pages is a risky marketing
   strategy, and how a custom business website builds authority and generates
   leads.
-focusKeyword: Web Development
+focusKeyword: Business Needs a Website
 secondaryKeywords: >-
   Web Development, Joy Digital, Search Engine Optimization, SEO Strategy, 2026
   Digital Trends
@@ -56,7 +56,7 @@ twitterDescription: >-
   leads.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 73
+seoScore: 90
 ---
 
 Many small business owners believe that having a Facebook page or an Instagram profile is sufficient for their digital marketing. While social media is great for engagement, relying solely on platforms you do not own is a risky business strategy.

@@ -50,7 +50,7 @@ twitterDescription: >-
   (GEO) gets your business recommended by ChatGPT and Google AI Overview.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 73
+seoScore: 84
 ---
 
 Google Search is changing rapidly. Is your business ready?

@@ -20,7 +20,7 @@ seoTitle: 'SEO vs Google Ads: Which Has Better ROI for Small Businesses?'
 metaDescription: >-
   Compare organic search engine optimization (SEO) with pay-per-click (PPC)
   advertising to find the best channel for your marketing budget.
-focusKeyword: SEO
+focusKeyword: SEO vs Google Ads
 secondaryKeywords: 'SEO, Joy Digital, Search Engine Optimization'
 canonicalUrl: 'https://joydigital.in/blog/seo-vs-google-ads'
 robots: 'Index, Follow'
@@ -50,7 +50,7 @@ twitterDescription: >-
   advertising to find the best channel for your marketing budget.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 85
+seoScore: 90
 ---
 
 When deciding where to allocate your digital marketing budget, businesses often choose between Search Engine Optimization (SEO) and Pay-Per-Click (PPC) ads like Google Ads. Both channels help drive search visibility, but they offer different timelines, costs, and return on investment (ROI).

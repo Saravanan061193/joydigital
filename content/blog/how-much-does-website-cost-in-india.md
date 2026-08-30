@@ -56,7 +56,7 @@ twitterDescription: >-
   layouts.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 85
+seoScore: 90
 ---
 
 Planning a website development budget is a critical step for startups and growing businesses in India. In 2026, the cost of website development varies widely depending on page counts, features, design customization, and speed requirements.

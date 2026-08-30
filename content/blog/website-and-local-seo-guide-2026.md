@@ -52,7 +52,7 @@ twitterDescription: >-
   2026. Learn to attract visitors and boost online visibility.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 79
+seoScore: 90
 ---
 
 ## Introduction

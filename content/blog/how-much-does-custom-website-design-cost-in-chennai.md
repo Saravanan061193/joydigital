@@ -52,7 +52,7 @@ twitterDescription: >-
   including domain, hosting, framework, UI/UX design, and development packages.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 91
+seoScore: 96
 ---
 
 ## Understanding Website Design Price in Chennai

@@ -20,7 +20,7 @@ seoTitle: 'Website vs Social Media Marketing: Which is Best for Your Business?'
 metaDescription: >-
   Compare the pros, cons, and ROI of custom business websites and social media
   marketing. Learn why combining both is the key to digital growth.
-focusKeyword: Digital Marketing
+focusKeyword: Social Media Marketing
 secondaryKeywords: 'Digital Marketing, Joy Digital, Search Engine Optimization, SEO Strategy'
 canonicalUrl: 'https://joydigital.in/blog/website-vs-social-media-marketing'
 robots: 'Index, Follow'
@@ -50,7 +50,7 @@ twitterDescription: >-
   marketing. Learn why combining both is the key to digital growth.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 66
+seoScore: 91
 ---
 
 When launching a new business or planning a marketing budget, one of the most common questions is: *Should I invest in a custom website, or focus on social media marketing?*

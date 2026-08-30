@@ -26,7 +26,7 @@ seoTitle: >-
 metaDescription: >-
   Learn 4 strategic moves for independent resorts to increase direct website
   bookings, cut high OTA commission fees, and capture high-intent travelers.
-focusKeyword: Travel
+focusKeyword: Direct Bookings
 secondaryKeywords: 'SEO, Joy Digital, Search Engine Optimization, SEO Strategy'
 canonicalUrl: >-
   https://joydigital.in/blog/how-independent-resorts-can-increase-direct-bookings
@@ -61,7 +61,7 @@ twitterDescription: >-
   bookings, cut high OTA commission fees, and capture high-intent travelers.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 79
+seoScore: 90
 ---
 
 For boutique and independent resort owners, platforms like MakeMyTrip, Booking.com, and Agoda are a double-edged sword. While they provide initial visibility, they charge between **18% to 25% in commissions** on every room night.

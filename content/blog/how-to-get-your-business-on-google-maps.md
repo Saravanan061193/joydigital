@@ -26,7 +26,7 @@ seoTitle: >-
 metaDescription: >-
   Learn how to add your business to Google Maps, verify your Google Business
   Profile, gather reviews, and boost local map pack rankings.
-focusKeyword: Google Maps
+focusKeyword: Google Business Profile
 secondaryKeywords: 'Local SEO, Joy Digital, Search Engine Optimization, SEO Strategy'
 canonicalUrl: 'https://joydigital.in/blog/how-to-get-your-business-on-google-maps'
 robots: 'Index, Follow'
@@ -60,7 +60,7 @@ twitterDescription: >-
   Profile, gather reviews, and boost local map pack rankings.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 79
+seoScore: 90
 ---
 
 If you run a local business, one of the first things you should do online is make sure your business can be found on Google Maps.

@@ -50,7 +50,7 @@ twitterDescription: >-
   how the Google Maps ranking algorithm evaluates local business listings.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 85
+seoScore: 90
 ---
 
 If you own a physical store, a local medical clinic, or provide services in a specific geographic area, standard SEO is not enough. You need **Local SEO**. 

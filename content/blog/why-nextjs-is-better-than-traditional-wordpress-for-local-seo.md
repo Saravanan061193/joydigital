@@ -55,7 +55,7 @@ twitterDescription: >-
   ranking factors.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 85
+seoScore: 90
 ---
 
 ## Headless Next.js vs. WordPress for Local Search Engine Rankings

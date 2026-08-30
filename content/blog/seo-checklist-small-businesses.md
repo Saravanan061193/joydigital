@@ -20,7 +20,7 @@ seoTitle: The Ultimate SEO Checklist for Small Businesses in 2026
 metaDescription: >-
   Follow this step-by-step SEO checklist to optimize your small business website
   for search rankings, improve page speeds, and attract organic inquiries.
-focusKeyword: SEO
+focusKeyword: SEO Checklist
 secondaryKeywords: 'SEO Services, Joy Digital, Search Engine Optimization, 2026 Digital Trends'
 canonicalUrl: 'https://joydigital.in/blog/seo-checklist-small-businesses'
 robots: 'Index, Follow'
@@ -50,7 +50,7 @@ twitterDescription: >-
   for search rankings, improve page speeds, and attract organic inquiries.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 85
+seoScore: 90
 ---
 
 Search Engine Optimization (SEO) can feel overwhelming for small business owners. With constant algorithm updates and technical terms, it is easy to lose track of what matters. 

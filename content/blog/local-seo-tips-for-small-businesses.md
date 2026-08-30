@@ -52,7 +52,7 @@ twitterDescription: >-
   sales to your small business in 2026. Read our ultimate local search guide.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 84
+seoScore: 90
 ---
 
 For small businesses operating in a specific geographic area, traditional search engine optimization is no longer enough. If you own a dental clinic, a local accounting firm, or a regional web design studio, you aren't competing with global corporations; you are competing with the business down the street. 

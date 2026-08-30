@@ -50,7 +50,7 @@ twitterDescription: >-
   small businesses in India to scale lead generation and build brand visibility.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 85
+seoScore: 96
 ---
 
 Planning a digital marketing budget can be difficult for small business owners. With limited resources, you cannot afford to waste ad spend on channels that do not convert. 

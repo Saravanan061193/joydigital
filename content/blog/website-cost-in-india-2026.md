@@ -52,7 +52,7 @@ twitterDescription: >-
   business, e-commerce, and custom website packages.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 85
+seoScore: 96
 ---
 
 If you are planning to build a website for your business, one of the first questions you will probably ask is:

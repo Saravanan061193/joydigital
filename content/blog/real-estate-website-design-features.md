@@ -60,7 +60,7 @@ twitterDescription: >-
   businesses attract visitors, build trust and generate more property enquiries.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 85
+seoScore: 90
 ---
 
 When someone visits a real estate website, they usually have one simple goal — **find the right property and contact the right person.**

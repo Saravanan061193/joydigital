@@ -26,7 +26,7 @@ seoTitle: >-
 metaDescription: >-
   Master Google Business Profile Optimization in 2026. Learn how to rank in the
   Local 3-Pack, manage customer reviews, and drive phone calls and walk-ins.
-focusKeyword: Google Maps
+focusKeyword: Google Business Profile
 secondaryKeywords: >-
   Local SEO, Joy Digital, Search Engine Optimization, SEO Strategy, 2026 Digital
   Trends
@@ -62,7 +62,7 @@ twitterDescription: >-
   Local 3-Pack, manage customer reviews, and drive phone calls and walk-ins.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 73
+seoScore: 84
 ---
 
 When a local customer searches for a service nearby—whether it is a "dentist in Chennai," a "boutique near me," or a "plumbing company in London"—they rarely scroll past the first page of search results. In fact, they rarely scroll past the map block at the very top. This prominent map section is known as the Google Local 3-Pack, and it is the single most valuable piece of digital real estate for any physical or service-area business today.

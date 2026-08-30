@@ -50,7 +50,7 @@ twitterDescription: >-
   requirements beats template sites for UX, lead generation, and scalability.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 85
+seoScore: 96
 ---
 
 A website should do more than simply make your business look professional.

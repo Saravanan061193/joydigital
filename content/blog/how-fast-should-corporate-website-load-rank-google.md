@@ -20,7 +20,7 @@ seoTitle: How fast should a corporate website load to rank on Google?
 metaDescription: >-
   Learn the impact of load times and Core Web Vitals on search rankings.
   Understand how fast-loading Next.js websites improve bounce rates and leads.
-focusKeyword: SEO
+focusKeyword: Corporate Website
 secondaryKeywords: 'Web Speed, Joy Digital, Search Engine Optimization'
 canonicalUrl: 'https://joydigital.in/blog/how-fast-should-corporate-website-load-rank-google'
 robots: 'Index, Follow'
@@ -50,7 +50,7 @@ twitterDescription: >-
   Understand how fast-loading Next.js websites improve bounce rates and leads.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 79
+seoScore: 96
 ---
 
 ## Website Speed: The Silent Ranking Factor in Google Search

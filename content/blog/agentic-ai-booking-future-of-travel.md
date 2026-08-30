@@ -22,7 +22,7 @@ metaDescription: >-
   Discover how Agentic AI is transforming travel booking in 2026, from
   personalised trip planning and tour comparisons to automated booking and
   customer support.
-focusKeyword: Travel
+focusKeyword: Direct Bookings
 secondaryKeywords: >-
   SEO, Joy Digital, Search Engine Optimization, SEO Strategy, 2026 Digital
   Trends
@@ -56,7 +56,7 @@ twitterDescription: >-
   customer support.
 twitterImage: /assets/images/hero-banner.webp
 status: Published
-seoScore: 91
+seoScore: 84
 ---
 
 Travel booking has changed dramatically over the last few years.
