@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free SEO Audit Tool | Instant Website SEO Check | Joy Digital",
+  metadataBase: new URL("https://joydigital.in"),
+  title: "Free Instant Website SEO Audit Tool | Joy Digital",
   description: "Run a free SEO audit on any website URL. Check title tags, meta descriptions, heading structure, canonical tags, and core on-page SEO elements instantly.",
   alternates: {
     canonical: "https://joydigital.in/seo-audit-tool",

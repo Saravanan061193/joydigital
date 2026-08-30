@@ -1,6 +1,6 @@
 ---
 title: "AI Search Optimization (AEO/GEO): Why Your Business Needs It in 2026"
-description: "Is your website prepared for AI-powered search? Learn how Generative Engine Optimization (GEO) and AI Search Optimization (AEO) help your business get recommended by ChatGPT, Gemini, and Google AI Overview."
+description: "Prepare your website for AI search. Learn how Generative Engine Optimization (GEO) gets your business recommended by ChatGPT and Google AI Overview."
 date: "2026-07-17"
 category: "SEO"
 author: "Saravanan"

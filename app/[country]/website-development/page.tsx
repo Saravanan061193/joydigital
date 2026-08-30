@@ -84,6 +84,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: `Joy Digital is a top web development agency serving the ${config.targetMarket}. We engineer fast, secure, and mobile-responsive websites using Next.js & React to rank on Google and scale leads.`,
     alternates: {
       canonical: `https://joydigital.in/${countryLower}/website-development`,
+      languages: {
+        "x-default": "https://joydigital.in/website-development",
+        "en-us": "https://joydigital.in/us/website-development",
+        "en-gb": "https://joydigital.in/uk/website-development",
+        "en-ae": "https://joydigital.in/ae/website-development",
+        "en-in": "https://joydigital.in/in/website-development",
+      },
     },
   };
 }

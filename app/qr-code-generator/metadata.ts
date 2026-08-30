@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free QR Code Generator | URL, WhatsApp, UPI, WiFi | Joy Digital",
+  metadataBase: new URL("https://joydigital.in"),
+  title: "Free Custom QR Code Generator | Joy Digital",
   description: "Generate free QR codes for website URLs, WhatsApp numbers, UPI payments, Google Maps, and WiFi networks. Download in PNG format instantly.",
   alternates: {
     canonical: "https://joydigital.in/qr-code-generator",

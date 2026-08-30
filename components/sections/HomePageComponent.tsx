@@ -1023,7 +1023,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
             {/* View All Tools CTA Button */}
             <div className="text-center mb-16 reveal-hidden">
               <Link
-                href="/tools"
+                href="/free-tools"
                 className="inline-flex items-center gap-2 bg-[#171126] hover:bg-slate-800 hover:scale-[1.025] text-white font-bold text-xs px-8 py-4 rounded-xl transition-all group"
               >
                 Explore All Free Tools <i className="fa-solid fa-arrow-right-long text-xs group-hover:translate-x-1 transition-transform" />

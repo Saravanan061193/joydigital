@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Web Design Company in Chennai | Premium Website Design Agency",
+  title: "Web Design Company in Chennai | Joy Digital",
   description: "Joy Digital is a leading web design company in Chennai. We build high-speed, responsive websites & local SEO plans. Find a website developer near me.",
   alternates: {
     canonical: "https://joydigital.in/website-design-company-in-chennai",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Web Development Company in Chennai | Next.js & React App Coders",
+  title: "Web Development Company in Chennai | Joy Digital",
   description: "Looking for a professional web development company in Chennai? We build dynamic, fast, secure Next.js/React web platforms for growing businesses.",
   alternates: {
     canonical: "https://joydigital.in/web-development-company-chennai",

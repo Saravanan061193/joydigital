@@ -28,6 +28,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${post.title} | Blog | Joy Digital`,
     description: post.description,
+    alternates: {
+      canonical: `https://joydigital.in/blog/${resolvedParams.slug}`,
+    },
+    openGraph: {
+      type: "article",
+      url: `https://joydigital.in/blog/${resolvedParams.slug}`,
+      siteName: "Joy Digital Agency",
+      title: `${post.title} | Blog | Joy Digital`,
+      description: post.description,
+      images: [
+        {
+          url: post.image || "https://joydigital.in/assets/images/hero-banner.webp",
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
   };
 }
 

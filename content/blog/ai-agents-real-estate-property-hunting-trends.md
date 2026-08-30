@@ -1,6 +1,6 @@
 ---
 title: "AI Agent Property Hunting: How Next-Gen Tech is Transforming Real Estate Discovery in 2026"
-description: "Discover how Agentic AI transforms real estate in 2026. From conversational buyer profiling to automated title checks and predictive valuation, explore next-gen property scouting."
+description: "Discover how Agentic AI transforms real estate in 2026. Explore conversational buyer profiling, automated title checks, and predictive valuation."
 date: "2026-08-29"
 category: "SEO"
 author: "Joy Digital Team"

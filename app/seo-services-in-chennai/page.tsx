@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "SEO Services in Chennai | Google Maps Ranking & Search Marketing",
+  title: "SEO Services in Chennai & Maps Pack | Joy Digital",
   description: "Joy Digital is the premier Local SEO company in Chennai, India. We rank your business in the Google Maps 3-Pack and optimize local citation directories.",
   alternates: {
     canonical: "https://joydigital.in/seo-services-in-chennai",
@@ -201,9 +201,11 @@ export default function SEOServicesChennai() {
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
+        { href: "/seo-company-chennai", label: "SEO Company Chennai" },
+        { href: "/seo-services-chennai", label: "SEO Services Chennai" },
         { href: "/website-design-company-in-chennai", label: "Web Design Chennai" },
-        { href: "/website-development-company-chennai", label: "website development in Chennai" },
-        { href: "/google-business-profile-optimization", label: "GBP Optimization" },
+        { href: "/website-development-company-chennai", label: "Web Development Chennai" },
+        { href: "/digital-marketing-agency-in-chennai", label: "Digital Marketing Agency Chennai" },
       ]}
     />
   );

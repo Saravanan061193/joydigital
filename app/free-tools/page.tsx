@@ -7,7 +7,7 @@ import Footer from "@/components/layout/Footer";
 export const metadata: Metadata = {
   metadataBase: new URL("https://joydigital.in"),
   title: "Free Business Tools & Generators | Joy Digital",
-  description: "Boost your productivity with our free business tools. Calculate GST, generate professional PDF invoices & quotations, build QR codes, and create WhatsApp chat links instantly.",
+  description: "Boost productivity with free online business tools. Calculate GST, create PDF invoices & quotes, build QR codes, and generate WhatsApp chat links.",
   alternates: {
     canonical: "https://joydigital.in/free-tools",
   },

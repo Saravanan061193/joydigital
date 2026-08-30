@@ -3,10 +3,17 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Professional SEO Services & Organic Search Agency | Joy Digital",
-  description: "Joy Digital is a professional SEO agency. We rank your website on Google's first page using on-page, off-page, and technical SEO campaigns.",
+  title: "Professional SEO Services Agency | Joy Digital",
+  description: "Joy Digital is a professional SEO agency. We optimize code, build map pack rankings, and drive organic Google search traffic to scale business leads.",
   alternates: {
     canonical: "https://joydigital.in/seo-services",
+    languages: {
+      "x-default": "https://joydigital.in/seo-services",
+      "en-us": "https://joydigital.in/us/seo-services",
+      "en-gb": "https://joydigital.in/uk/seo-services",
+      "en-ae": "https://joydigital.in/ae/seo-services",
+      "en-in": "https://joydigital.in/in/seo-services",
+    },
   },
 };
 

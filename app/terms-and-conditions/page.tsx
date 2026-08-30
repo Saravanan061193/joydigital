@@ -6,7 +6,7 @@ import StickyWidgets from "@/components/ui/StickyWidgets";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions | Joy Digital",
-  description: "Read the Terms & Conditions of Joy Digital to understand the agreement and rules for using our services.",
+  description: "Read the official Terms and Conditions of Joy Digital to understand the client agreement and rules for using our agency services and tools.",
   alternates: {
     canonical: "https://joydigital.in/terms-and-conditions",
   },
@@ -33,8 +33,8 @@ export default function TermsAndConditionsPage() {
             <span className="inline-block bg-accent-glow text-accent font-bold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full border border-accent/20 mb-4">
               Legal Info
             </span>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-primary-dark tracking-tight mb-4">
-              Terms & Conditions
+            <h1 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-4">
+              Terms and Conditions Agreement
             </h1>
             <p className="text-xs sm:text-sm text-text-secondary font-semibold">
               Last Updated: June 2026

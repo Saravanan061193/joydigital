@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Logo Design in Chennai | Corporate Branding Agency - Joy Digital",
+  title: "Logo Design & Corporate Branding | Joy Digital",
   description: "Joy Digital is a professional logo design company in Chennai, India. We design creative, custom vector logos, brand color boards, and corporate identity sets.",
   alternates: {
     canonical: "https://joydigital.in/logo-design-services",

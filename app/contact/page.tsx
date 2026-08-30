@@ -10,6 +10,13 @@ export const metadata: Metadata = {
   description: "Get in touch with our digital specialists. Request a free SEO audit, custom website quotes, or logo design consulting from our office.",
   alternates: {
     canonical: "https://joydigital.in/contact",
+    languages: {
+      "x-default": "https://joydigital.in/contact",
+      "en-us": "https://joydigital.in/us/contact",
+      "en-gb": "https://joydigital.in/uk/contact",
+      "en-ae": "https://joydigital.in/ae/contact",
+      "en-in": "https://joydigital.in/in/contact",
+    },
   },
   openGraph: {
     type: "website",

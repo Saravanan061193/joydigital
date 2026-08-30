@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Quotation Generator | Professional PDF Quotes | Joy Digital",
+  metadataBase: new URL("https://joydigital.in"),
+  title: "Free PDF Quotation Generator | Joy Digital",
   description: "Create professional business quotations in seconds with our free online quotation generator. Add your logo, itemized pricing, and download as PDF instantly.",
   alternates: {
     canonical: "https://joydigital.in/quotation-generator",

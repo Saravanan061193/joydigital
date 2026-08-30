@@ -15,11 +15,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const unifiedStaticPaths = [
     '/about',
     '/portfolio',
+    '/case-studies',
+    '/case-studies/chennai-clinic-leads',
+    '/case-studies/ecommerce-sales-increase',
+    '/case-studies/saas-landing-optimization',
     '/blog',
+    '/web-design-services',
+    '/local-seo-services',
+    '/google-business-profile-setup',
+    '/google-business-profile-optimization',
+    '/social-media-marketing',
+    '/logo-design-services',
+    '/custom-software-development',
+    '/ecommerce-website-development',
     '/free-website-audit',
     '/privacy-policy',
     '/terms-and-conditions',
     '/cookie-policy',
+    '/disclaimer',
+    '/refund-policy',
     '/free-tools',
     '/gst-calculator',
     '/invoice-generator',
@@ -38,12 +52,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/website-for-small-business',
     '/website-design-company-madurai',
     '/web-development-company-madurai',
+    '/website-development-company-madurai',
     '/seo-company-madurai',
+    '/seo-services-madurai',
     '/digital-marketing-agency-madurai',
     '/local-seo-madurai',
     '/website-design-company-chennai',
+    '/website-design-company-in-chennai',
     '/web-development-company-chennai',
+    '/website-development-company-chennai',
+    '/affordable-web-design-agency-chennai',
+    '/digital-marketing-agency-in-chennai',
     '/seo-company-chennai',
+    '/seo-services-chennai',
+    '/seo-services-in-chennai',
     '/website-design-company-coimbatore',
     '/seo-company-coimbatore',
   ];
@@ -53,7 +75,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${baseUrl}${route}`,
     lastModified: todayStr,
     changeFrequency: 'weekly' as const,
-    priority: 0.7,
+    priority: route.startsWith('/case-studies/') ? 0.6 : 0.7,
   }));
 
   // 2. Helper to get languages alternate mapping for a localized route
@@ -92,6 +114,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     });
   });
+
   // 4. Fetch blog posts dynamically (unified root level)
   const blogPosts = await getAllPosts();
   const blogRoutes = blogPosts.map((post) => ({

@@ -207,9 +207,11 @@ export default function SeoServicesChennai() {
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
+        { href: "/seo-company-chennai", label: "SEO Company Chennai" },
+        { href: "/seo-services-in-chennai", label: "SEO Services in Chennai" },
+        { href: "/digital-marketing-agency-in-chennai", label: "Digital Marketing Chennai" },
+        { href: "/affordable-web-design-agency-chennai", label: "Affordable Web Design Chennai" },
         { href: "/website-development-company-chennai", label: "Web Development Chennai" },
-        { href: "/seo-services-madurai", label: "SEO Services Madurai" },
-        { href: "/website-development-company-madurai", label: "Web Development Madurai" },
       ]}
     />
   );

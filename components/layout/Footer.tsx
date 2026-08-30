@@ -103,7 +103,7 @@ export default function Footer() {
         {/* Service Locations Sitemap Links */}
         <div className="flex flex-col gap-6">
           <h4 className="text-sm font-bold uppercase tracking-wider text-[#111827] relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
-            Service Locations
+            Global & Regional
           </h4>
           <ul className="flex flex-col gap-3 text-xs text-text-secondary">
             {REGIONAL_SITES.map((site) => (
@@ -117,15 +117,62 @@ export default function Footer() {
                 </Link>
               </li>
             ))}
-            <li className="border-t border-[#E5E7EB] pt-2 mt-1">
-              <Link href="/website-development" className="hover:text-accent hover:pl-1 transition-all block">
-                Web Development Services India
-              </Link>
+            <li className="border-t border-[#E5E7EB] pt-2 mt-1 font-bold text-[#111827]">
+              Regional Hubs (Tamil Nadu)
             </li>
             <li>
-              <Link href="/web-design-services" className="hover:text-accent hover:pl-1 transition-all block">
-                Website Design Services India
-              </Link>
+              <Link href="/website-design-company-chennai" className="hover:text-accent hover:pl-1 transition-all block">Web Design Chennai</Link>
+            </li>
+            <li>
+              <Link href="/website-design-company-in-chennai" className="hover:text-accent hover:pl-1 transition-all block">Website Design in Chennai</Link>
+            </li>
+            <li>
+              <Link href="/web-development-company-chennai" className="hover:text-accent hover:pl-1 transition-all block">Web Development Chennai</Link>
+            </li>
+            <li>
+              <Link href="/website-development-company-chennai" className="hover:text-accent hover:pl-1 transition-all block">Website Dev Agency Chennai</Link>
+            </li>
+            <li>
+              <Link href="/affordable-web-design-agency-chennai" className="hover:text-accent hover:pl-1 transition-all block">Affordable Web Design Chennai</Link>
+            </li>
+            <li>
+              <Link href="/seo-company-chennai" className="hover:text-accent hover:pl-1 transition-all block">SEO Agency Chennai</Link>
+            </li>
+            <li>
+              <Link href="/seo-services-chennai" className="hover:text-accent hover:pl-1 transition-all block">SEO Services Chennai</Link>
+            </li>
+            <li>
+              <Link href="/seo-services-in-chennai" className="hover:text-accent hover:pl-1 transition-all block">SEO Company in Chennai</Link>
+            </li>
+            <li>
+              <Link href="/digital-marketing-agency-in-chennai" className="hover:text-accent hover:pl-1 transition-all block">Digital Marketing Chennai</Link>
+            </li>
+            <li>
+              <Link href="/website-design-company-madurai" className="hover:text-accent hover:pl-1 transition-all block">Web Design Madurai</Link>
+            </li>
+            <li>
+              <Link href="/web-development-company-madurai" className="hover:text-accent hover:pl-1 transition-all block">Web Development Madurai</Link>
+            </li>
+            <li>
+              <Link href="/website-development-company-madurai" className="hover:text-accent hover:pl-1 transition-all block">Website Dev Agency Madurai</Link>
+            </li>
+            <li>
+              <Link href="/seo-company-madurai" className="hover:text-accent hover:pl-1 transition-all block">SEO Services Madurai</Link>
+            </li>
+            <li>
+              <Link href="/seo-services-madurai" className="hover:text-accent hover:pl-1 transition-all block">SEO Agency Madurai</Link>
+            </li>
+            <li>
+              <Link href="/digital-marketing-agency-madurai" className="hover:text-accent hover:pl-1 transition-all block">Digital Marketing Madurai</Link>
+            </li>
+            <li>
+              <Link href="/local-seo-madurai" className="hover:text-accent hover:pl-1 transition-all block">Local SEO Madurai</Link>
+            </li>
+            <li>
+              <Link href="/website-design-company-coimbatore" className="hover:text-accent hover:pl-1 transition-all block">Web Design Coimbatore</Link>
+            </li>
+            <li>
+              <Link href="/seo-company-coimbatore" className="hover:text-accent hover:pl-1 transition-all block">SEO Company Coimbatore</Link>
             </li>
           </ul>
         </div>
@@ -147,6 +194,31 @@ export default function Footer() {
               </Link>
             </li>
             <li>
+              <Link href="/local-seo-services" className="hover:text-accent hover:pl-1 transition-all">
+                Local SEO Services
+              </Link>
+            </li>
+            <li>
+              <Link href="/google-business-profile-setup" className="hover:text-accent hover:pl-1 transition-all">
+                Google Business Profile Setup
+              </Link>
+            </li>
+            <li>
+              <Link href="/google-business-profile-optimization" className="hover:text-accent hover:pl-1 transition-all">
+                Google Business Profile Audit
+              </Link>
+            </li>
+            <li>
+              <Link href="/social-media-marketing" className="hover:text-accent hover:pl-1 transition-all">
+                Social Media Marketing
+              </Link>
+            </li>
+            <li>
+              <Link href="/logo-design-services" className="hover:text-accent hover:pl-1 transition-all">
+                Logo & Branding Design
+              </Link>
+            </li>
+            <li>
               <Link href="/ecommerce-website-development" className="hover:text-accent hover:pl-1 transition-all">
                 Headless E-commerce Web Dev
               </Link>
@@ -156,45 +228,32 @@ export default function Footer() {
                 Custom Software Development
               </Link>
             </li>
-            <li className="border-t border-[#E5E7EB] pt-2 mt-1">
-              <Link href="/website-for-insurance-agents" className="hover:text-accent hover:pl-1 transition-all">
-                Website for Insurance Agents
-              </Link>
+            <li className="border-t border-[#E5E7EB] pt-2 mt-1 font-bold text-[#111827]">
+              Industry Solutions
             </li>
             <li>
-              <Link href="/website-for-hotels" className="hover:text-accent hover:pl-1 transition-all">
-                Website for Hotels
-              </Link>
+              <Link href="/website-for-insurance-agents" className="hover:text-accent hover:pl-1 transition-all">Website for Insurance Agents</Link>
             </li>
             <li>
-              <Link href="/website-for-hospitals" className="hover:text-accent hover:pl-1 transition-all">
-                Website for Hospitals
-              </Link>
+              <Link href="/website-for-hotels" className="hover:text-accent hover:pl-1 transition-all">Website for Hotels</Link>
             </li>
             <li>
-              <Link href="/website-for-real-estate" className="hover:text-accent hover:pl-1 transition-all">
-                Website for Real Estate
-              </Link>
+              <Link href="/website-for-hospitals" className="hover:text-accent hover:pl-1 transition-all">Website for Hospitals</Link>
             </li>
             <li>
-              <Link href="/website-for-tours-and-travels" className="hover:text-accent hover:pl-1 transition-all">
-                Website for Tours & Travels
-              </Link>
+              <Link href="/website-for-real-estate" className="hover:text-accent hover:pl-1 transition-all">Website for Real Estate</Link>
             </li>
             <li>
-              <Link href="/website-for-schools" className="hover:text-accent hover:pl-1 transition-all">
-                Website for Schools
-              </Link>
+              <Link href="/website-for-tours-and-travels" className="hover:text-accent hover:pl-1 transition-all">Website for Tours & Travels</Link>
             </li>
             <li>
-              <Link href="/website-for-small-business" className="hover:text-accent hover:pl-1 transition-all">
-                Website for Small Business
-              </Link>
+              <Link href="/website-for-schools" className="hover:text-accent hover:pl-1 transition-all">Website for Schools</Link>
             </li>
             <li>
-              <Link href="/website-for-ecommerce" className="hover:text-accent hover:pl-1 transition-all">
-                Website for E-commerce Stores
-              </Link>
+              <Link href="/website-for-small-business" className="hover:text-accent hover:pl-1 transition-all">Website for Small Business</Link>
+            </li>
+            <li>
+              <Link href="/website-for-ecommerce" className="hover:text-accent hover:pl-1 transition-all">Website for E-commerce Stores</Link>
             </li>
           </ul>
         </div>
@@ -202,53 +261,65 @@ export default function Footer() {
         {/* Legal Info */}
         <div className="flex flex-col gap-6">
           <h4 className="text-sm font-bold uppercase tracking-wider text-[#111827] relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
-            Company & Legal
+            Tools & Company
           </h4>
           <ul className="flex flex-col gap-3.5 text-xs text-text-secondary">
             <li>
-              <Link href="/about" className="hover:text-accent hover:pl-1 transition-all">
-                About Our Agency
-              </Link>
+              <Link href="/about" className="hover:text-accent hover:pl-1 transition-all">About Our Agency</Link>
             </li>
             <li>
-              <Link href="/privacy-policy" className="hover:text-accent hover:pl-1 transition-all">
-                Privacy Policy
-              </Link>
+              <Link href={getRegionalHref("/contact")} className="hover:text-accent hover:pl-1 transition-all">Contact Us</Link>
             </li>
             <li>
-              <Link href="/terms-and-conditions" className="hover:text-accent hover:pl-1 transition-all">
-                Terms & Conditions
-              </Link>
+              <Link href="/portfolio" className="hover:text-accent hover:pl-1 transition-all">Portfolio</Link>
             </li>
             <li>
-              <Link href="/disclaimer" className="hover:text-accent hover:pl-1 transition-all">
-                Disclaimer
-              </Link>
+              <Link href="/case-studies" className="hover:text-accent hover:pl-1 transition-all">Case Studies</Link>
             </li>
             <li>
-              <Link href="/refund-policy" className="hover:text-accent hover:pl-1 transition-all">
-                Refund Policy
-              </Link>
+              <Link href="/privacy-policy" className="hover:text-accent hover:pl-1 transition-all">Privacy Policy</Link>
             </li>
             <li>
-              <Link href="/cookie-policy" className="hover:text-accent hover:pl-1 transition-all">
-                Cookie Policy
-              </Link>
-            </li>
-            <li className="border-t border-[#E5E7EB] pt-2 mt-1">
-              <Link href="/seo-audit-tool" className="hover:text-accent hover:pl-1 transition-all">
-                Free SEO Audit Tool
-              </Link>
+              <Link href="/terms-and-conditions" className="hover:text-accent hover:pl-1 transition-all">Terms & Conditions</Link>
             </li>
             <li>
-              <Link href="/image-compressor" className="hover:text-accent hover:pl-1 transition-all">
-                Free Image Compressor
-              </Link>
+              <Link href="/disclaimer" className="hover:text-accent hover:pl-1 transition-all">Disclaimer</Link>
             </li>
             <li>
-              <Link href="/free-website-audit" className="font-bold text-accent hover:text-accent-dark hover:pl-1 transition-all">
-                Claim Free Website Audit
-              </Link>
+              <Link href="/refund-policy" className="hover:text-accent hover:pl-1 transition-all">Refund Policy</Link>
+            </li>
+            <li>
+              <Link href="/cookie-policy" className="hover:text-accent hover:pl-1 transition-all">Cookie Policy</Link>
+            </li>
+            <li className="border-t border-[#E5E7EB] pt-2 mt-1 font-bold text-[#111827]">
+              Free Online Tools
+            </li>
+            <li>
+              <Link href="/free-tools" className="hover:text-accent hover:pl-1 transition-all">All Free Business Tools</Link>
+            </li>
+            <li>
+              <Link href="/gst-calculator" className="hover:text-accent hover:pl-1 transition-all">GST Calculator</Link>
+            </li>
+            <li>
+              <Link href="/invoice-generator" className="hover:text-accent hover:pl-1 transition-all">Invoice Generator</Link>
+            </li>
+            <li>
+              <Link href="/quotation-generator" className="hover:text-accent hover:pl-1 transition-all">Quotation Generator</Link>
+            </li>
+            <li>
+              <Link href="/qr-code-generator" className="hover:text-accent hover:pl-1 transition-all">QR Code Generator</Link>
+            </li>
+            <li>
+              <Link href="/whatsapp-link-generator" className="hover:text-accent hover:pl-1 transition-all">WhatsApp Link Generator</Link>
+            </li>
+            <li>
+              <Link href="/seo-audit-tool" className="hover:text-accent hover:pl-1 transition-all">Free SEO Audit Tool</Link>
+            </li>
+            <li>
+              <Link href="/image-compressor" className="hover:text-accent hover:pl-1 transition-all">Free Image Compressor</Link>
+            </li>
+            <li>
+              <Link href="/free-website-audit" className="font-bold text-accent hover:text-accent-dark hover:pl-1 transition-all">Claim Free Website Audit</Link>
             </li>
           </ul>
         </div>

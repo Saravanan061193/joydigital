@@ -84,6 +84,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: `Joy Digital is a professional SEO agency serving the ${config.targetMarket}. We rank your website on Google using technical audits, content clusters, and high-quality backlink outreach.`,
     alternates: {
       canonical: `https://joydigital.in/${countryLower}/seo-services`,
+      languages: {
+        "x-default": "https://joydigital.in/seo-services",
+        "en-us": "https://joydigital.in/us/seo-services",
+        "en-gb": "https://joydigital.in/uk/seo-services",
+        "en-ae": "https://joydigital.in/ae/seo-services",
+        "en-in": "https://joydigital.in/in/seo-services",
+      },
     },
   };
 }

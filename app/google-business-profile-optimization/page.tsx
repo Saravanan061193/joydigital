@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Google Business Profile Optimization | Rank in Google Maps 3-Pack",
+  title: "Google Business Profile Optimization | Joy Digital",
   description: "Joy Digital offers expert Google Business Profile optimization services. We audit, claim, optimize, and rank your local map listing in Google Maps.",
   alternates: {
     canonical: "https://joydigital.in/google-business-profile-optimization",

@@ -22,7 +22,7 @@ interface CaseStudyData {
 const DATA: Record<string, CaseStudyData> = {
   "chennai-clinic-leads": {
     category: "Local SEO & GBP Optimization",
-    title: "How a Chennai Dental Clinic Increased Patient Appointments by 240%",
+    title: "Chennai Dental Clinic Patient Growth",
     metricValue: "240%",
     metricLabel: "Appointment Growth",
     challenge: "A leading dental clinic in Chennai was struggling to attract patients from Google Search. Despite their established medical expertise, their Google Business Profile was unoptimized, suffered from name and address inconsistencies across local citation directories, and did not appear in local maps listings for high-intent keywords like 'best dentist in Chennai'.",
@@ -75,8 +75,26 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const study = DATA[resolvedParams.slug];
   if (!study) return {};
   return {
-    title: `${study.title} | Case Study | Joy Digital`,
+    title: `${study.title} | Joy Digital`,
     description: `Read how Joy Digital delivered a ${study.metricValue} increase in ${study.metricLabel} through specialized ${study.category}.`,
+    alternates: {
+      canonical: `https://joydigital.in/case-studies/${resolvedParams.slug}`,
+    },
+    openGraph: {
+      type: "article",
+      url: `https://joydigital.in/case-studies/${resolvedParams.slug}`,
+      siteName: "Joy Digital Agency",
+      title: `${study.title} | Joy Digital`,
+      description: `Read how Joy Digital delivered a ${study.metricValue} increase in ${study.metricLabel} through specialized ${study.category}.`,
+      images: [
+        {
+          url: "https://joydigital.in/assets/images/hero-banner.webp",
+          width: 1200,
+          height: 630,
+          alt: study.title,
+        },
+      ],
+    },
   };
 }
 

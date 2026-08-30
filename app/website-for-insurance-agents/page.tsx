@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Insurance Agent & LIC Advisor Web Design | Joy Digital",
-  description: "Get a custom lead-generation website designed specifically for Insurance Agents, LIC Advisors, and Financial Planners. Generate policy inquiries directly on WhatsApp.",
+  title: "Website for Insurance Agents & LIC Advisors | Joy Digital",
+  description: "Custom lead-generation websites for Insurance Agents and LIC Advisors. Showcase policies, download brochures, and capture leads directly on WhatsApp.",
   alternates: {
     canonical: "https://joydigital.in/website-for-insurance-agents",
   },

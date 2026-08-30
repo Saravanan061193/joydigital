@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Image Compressor | Reduce Image Size Online | Joy Digital",
+  metadataBase: new URL("https://joydigital.in"),
+  title: "Free Image Compressor Online | Joy Digital",
   description: "Compress JPG, PNG, and WebP images for free without losing quality. Reduce file sizes instantly and improve your website's page load speed.",
   alternates: {
     canonical: "https://joydigital.in/image-compressor",

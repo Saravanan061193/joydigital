@@ -4,8 +4,8 @@ import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Real Estate Website Design & Development | Joy Digital",
-  description: "High-converting real estate website design and development built for lead generation. Features property search, WhatsApp integration, maps, and SEO to attract buyers.",
+  title: "Real Estate Website Development & SEO | Joy Digital",
+  description: "High-converting real estate website design and development built for lead generation. Features property listings, WhatsApp sync, and map search.",
   alternates: {
     canonical: "https://joydigital.in/website-for-real-estate",
   },
@@ -58,7 +58,7 @@ export default function RealEstateWebPage() {
   return (
     <ServicePageTemplate
       serviceName="Website for Real Estate"
-      heroTitle="High-Converting Real Estate Websites Designed to Generate More Property Enquiries"
+      heroTitle="High-Converting Real Estate Website Design & SEO"
       heroSubtitle="Stop relying strictly on expensive listing portals where you share leads with competitors. Own a high-performing property website that showcases your apartments, villas, plots, and commercial projects while converting search traffic directly into site visit bookings and WhatsApp enquiries."
       leadSource="Website for Real Estate Landing Page"
       heroCtaText="Get Free Real Estate Quote"

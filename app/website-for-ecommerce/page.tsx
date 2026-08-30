@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Headless E-commerce Development & Conversion Rates | Joy Digital",
+  title: "E-commerce Website Development | Joy Digital",
   description: "Custom web development for e-commerce brands. Build lightning-fast shopping sites, simple checkout pages, and custom WhatsApp billing integrations.",
   alternates: {
     canonical: "https://joydigital.in/website-for-ecommerce",

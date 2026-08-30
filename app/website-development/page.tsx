@@ -3,10 +3,17 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Custom React & Next.js Web Development Services | Joy Digital",
-  description: "Joy Digital is a custom web development agency. We engineer fast, secure, and mobile-responsive websites using Next.js & React to rank on Google and scale leads globally.",
+  title: "Custom Web Development Services | Joy Digital",
+  description: "Joy Digital is a custom web development agency. We engineer fast, secure, mobile-responsive Next.js & React websites to drive organic leads.",
   alternates: {
     canonical: "https://joydigital.in/website-development",
+    languages: {
+      "x-default": "https://joydigital.in/website-development",
+      "en-us": "https://joydigital.in/us/website-development",
+      "en-gb": "https://joydigital.in/uk/website-development",
+      "en-ae": "https://joydigital.in/ae/website-development",
+      "en-in": "https://joydigital.in/in/website-development",
+    },
   },
 };
 

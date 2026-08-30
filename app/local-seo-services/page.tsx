@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Local SEO Services in Chennai | Google Maps Ranking - Joy Digital",
+  title: "Local SEO Services & Maps Ranking | Joy Digital",
   description: "Joy Digital is the premier Local SEO company in Chennai, India. We rank your business in the Google Maps 3-Pack and optimize local citation directories.",
   alternates: {
     canonical: "https://joydigital.in/local-seo-services",

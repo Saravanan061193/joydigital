@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Ecommerce Website Development | Custom Headless E-commerce - Joy Digital",
+  title: "Headless E-commerce Web Development | Joy Digital",
   description: "Joy Digital is the premier e-commerce website development agency. We build fast, responsive Next.js headless e-commerce sites that increase sales.",
   alternates: {
     canonical: "https://joydigital.in/ecommerce-website-development",

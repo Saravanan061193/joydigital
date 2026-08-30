@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free WhatsApp Link Generator | Click-to-Chat with QR Code | Joy Digital",
+  metadataBase: new URL("https://joydigital.in"),
+  title: "Free WhatsApp Link Generator | Joy Digital",
   description: "Create WhatsApp click-to-chat links with pre-filled messages and matching QR codes for your business. Free tool — no app required.",
   alternates: {
     canonical: "https://joydigital.in/whatsapp-link-generator",

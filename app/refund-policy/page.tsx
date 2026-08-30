@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
 
 export const metadata: Metadata = {
-  title: "Refund Policy | Joy Digital",
+  title: "Refund & Cancellation Policy | Joy Digital",
   description: "Read the refund policy for website development, SEO, digital marketing, and custom software services provided by Joy Digital.",
   alternates: {
     canonical: "https://joydigital.in/refund-policy",
@@ -33,8 +33,8 @@ export default function RefundPolicyPage() {
             <span className="inline-block bg-accent-glow text-accent font-bold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full border border-accent/20 mb-4">
               Legal Info
             </span>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-primary-dark tracking-tight mb-4">
-              Refund Policy
+            <h1 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-4">
+              Refund &amp; Cancellation Policy
             </h1>
             <p className="text-xs sm:text-sm text-text-secondary font-semibold">
               Last Updated: June 2026

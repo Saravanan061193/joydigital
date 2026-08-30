@@ -7,8 +7,8 @@ import StrongCTA from "@/components/StrongCTA";
 
 
 export const metadata: Metadata = {
-  title: "About Our Digital Marketing Agency | Joy Digital",
-  description: "Learn about Joy Digital's mission, values, and how our digital marketing agency helps businesses grow through web design, SEO, and local maps marketing.",
+  title: "About Our Web Agency | Joy Digital",
+  description: "Learn about Joy Digital, a growth agency building custom Next.js websites, local SEO campaigns, and digital solutions for companies worldwide.",
   alternates: {
     canonical: "https://joydigital.in/about",
   },

@@ -1,6 +1,6 @@
 ---
 title: "How to Rank a Website on Google in 2026: The Definitive SEO Strategy"
-description: "Discover the core ranking factors Google uses in 2026. Learn how to optimize for Core Web Vitals, build semantic content clusters, and earn high-authority backlinks."
+description: "Discover core Google ranking factors for 2026. Learn how to optimize Core Web Vitals, build semantic content clusters, and earn quality links."
 date: "2026-06-07"
 category: "SEO Services"
 author: "Saravanan"

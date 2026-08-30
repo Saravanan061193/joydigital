@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Thank You | Joy Digital",
+  metadataBase: new URL("https://joydigital.in"),
+  title: "Thank You for Reaching Out | Joy Digital",
   description: "Thank you for reaching out to Joy Digital. Our team will review your inquiry and get back to you within 24 hours.",
+  robots: {
+    index: false,
+    follow: false,
+  },
   alternates: {
     canonical: "https://joydigital.in/thank-you",
   },

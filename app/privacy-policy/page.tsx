@@ -33,8 +33,8 @@ export default function PrivacyPolicyPage() {
             <span className="inline-block bg-accent-glow text-accent font-bold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full border border-accent/20 mb-4">
               Legal Info
             </span>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-primary-dark tracking-tight mb-4">
-              Privacy Policy
+            <h1 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-4">
+              Joy Digital Privacy &amp; Data Policy
             </h1>
             <p className="text-xs sm:text-sm text-text-secondary font-semibold">
               Last Updated: June 2026

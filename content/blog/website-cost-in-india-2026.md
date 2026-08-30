@@ -1,6 +1,6 @@
 ---
 title: "How Much Does a Website Cost in India in 2026? A Practical Pricing Guide"
-description: "Wondering how much a website costs in India in 2026? Explore website pricing for business, e-commerce and custom websites, plus tips to choose the right package."
+description: "How much does a website cost in India in 2026? Explore practical pricing for business, e-commerce, and custom website packages."
 date: "2026-08-18"
 category: "Web Development"
 author: "Saravanan"

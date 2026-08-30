@@ -49,6 +49,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: data.description,
     alternates: {
       canonical: `https://joydigital.in/${countryLower}`,
+      languages: {
+        "x-default": "https://joydigital.in",
+        "en-us": "https://joydigital.in/us",
+        "en-gb": "https://joydigital.in/uk",
+        "en-ae": "https://joydigital.in/ae",
+        "en-in": "https://joydigital.in/in",
+      },
     },
   };
 }

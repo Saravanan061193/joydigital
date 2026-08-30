@@ -5,8 +5,8 @@ import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
 
 export const metadata: Metadata = {
-  title: "Disclaimer | Joy Digital",
-  description: "Read the website disclaimer and limitation of liability policy for Joy Digital.",
+  title: "Website Disclaimer & Terms | Joy Digital",
+  description: "Read the official website disclaimer, legal notices, and limitation of liability policy for Joy Digital web design & digital marketing services.",
   alternates: {
     canonical: "https://joydigital.in/disclaimer",
   },
@@ -33,9 +33,9 @@ export default function DisclaimerPage() {
             <span className="inline-block bg-accent-glow text-accent font-bold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full border border-accent/20 mb-4">
               Legal Info
             </span>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-primary-dark tracking-tight mb-4">
-              Disclaimer
-            </h1>
+            <h1 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-4">
+            Website Disclaimer &amp; Terms of Use
+          </h1>
             <p className="text-xs sm:text-sm text-text-secondary font-semibold">
               Last Updated: June 2026
             </p>

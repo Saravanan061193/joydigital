@@ -1,6 +1,6 @@
 ---
 title: "How to Get Your Business on Google Maps: Complete Google Business Profile Guide"
-description: "Learn how to add your business to Google Maps, set up your Google Business Profile, complete verification, collect reviews, and improve your local SEO search rankings."
+description: "Learn how to add your business to Google Maps, verify your Google Business Profile, gather reviews, and boost local map pack rankings."
 date: "2026-08-18"
 category: "Local SEO"
 author: "Saravanan"

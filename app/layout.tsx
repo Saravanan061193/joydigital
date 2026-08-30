@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://joydigital.in/",
+    canonical: "https://joydigital.in",
   },
   verification: {
     google: "yYfFlGYZPthQmXcw3V9yq2U2OlPPPxWBCtG7URIXDwQ",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://joydigital.in/",
+    url: "https://joydigital.in",
     siteName: "Joy Digital",
     title: "Web Design, Next.js Development & SEO Agency | Joy Digital",
     description: "Grow your business with Joy Digital. We build high-converting, fast Next.js websites and data-driven SEO solutions for global clients.",

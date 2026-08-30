@@ -6,8 +6,8 @@ import StickyWidgets from "@/components/ui/StickyWidgets";
 import AuditForm from "@/components/ui/AuditForm";
 
 export const metadata: Metadata = {
-  title: "Get Your Free Website Growth Report | Joy Digital",
-  description: "Find out what's stopping your website from getting more traffic, enquiries, and customers. Claim your free SEO, speed, and conversion audit report.",
+  title: "Claim Free Website Audit & SEO Check | Joy Digital",
+  description: "Claim your free website audit report from Joy Digital. Discover page speed bottlenecks, mobile layout errors, and SEO ranking opportunities.",
   alternates: {
     canonical: "https://joydigital.in/free-website-audit",
   },

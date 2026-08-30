@@ -5,8 +5,8 @@ import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
 
 export const metadata: Metadata = {
-  title: "Cookie Policy & Data Tracking Terms | Joy Digital",
-  description: "Read the Cookie Policy for Joy Digital to understand how we use cookies to improve your user experience.",
+  title: "Cookie Policy | Joy Digital",
+  description: "Read the official Cookie Policy for Joy Digital to understand how we use cookies and tracking technologies to optimize your browsing experience.",
   alternates: {
     canonical: "https://joydigital.in/cookie-policy",
   },
@@ -33,9 +33,9 @@ export default function CookiePolicyPage() {
             <span className="inline-block bg-accent-glow text-accent font-bold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full border border-accent/20 mb-4">
               Legal Info
             </span>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-primary-dark tracking-tight mb-4">
-              Cookie Policy
-            </h1>
+            <h1 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-4">
+            Joy Digital Cookie Policy &amp; Data Rules
+          </h1>
             <p className="text-xs sm:text-sm text-text-secondary font-semibold">
               Last Updated: June 2026
             </p>
