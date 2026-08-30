@@ -53,6 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/website-for-schools',
     '/website-for-ecommerce',
     '/website-for-small-business',
+    '/website-for-solar-companies',
     '/website-design-company-madurai',
     '/web-development-company-madurai',
     '/website-development-company-madurai',

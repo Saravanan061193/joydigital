@@ -255,6 +255,9 @@ export default function Footer() {
             <li>
               <Link href="/website-for-ecommerce" className="hover:text-accent hover:pl-1 transition-all">Website for E-commerce Stores</Link>
             </li>
+            <li>
+              <Link href="/website-for-solar-companies" className="hover:text-accent hover:pl-1 transition-all font-semibold text-accent">Website for Solar Companies</Link>
+            </li>
           </ul>
         </div>
 
