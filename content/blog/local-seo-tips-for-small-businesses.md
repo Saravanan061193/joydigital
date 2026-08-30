@@ -1,9 +1,58 @@
 ---
-title: "15 Local SEO Tips for Small Businesses to Get More Customers in 2026"
-description: "Discover 15 actionable Local SEO Tips to drive more foot traffic, calls, and sales to your small business in 2026. Read our ultimate local search guide."
-date: "2026-06-11"
-category: "Local SEO"
-author: "Saravanan"
+title: 15 Local SEO Tips for Small Businesses to Get More Customers in 2026
+description: >-
+  Discover 15 actionable Local SEO Tips to drive more foot traffic, calls, and
+  sales to your small business in 2026. Read our ultimate local search guide.
+date: '2026-06-11'
+lastUpdatedDate: '2026-06-11'
+category: Local SEO
+author: Saravanan
+image: /assets/images/hero-banner.webp
+imageAlt: 15 Local SEO Tips for Small Businesses to Get More Customers in 2026
+imageCaption: ''
+tags:
+  - Local SEO
+  - Web Development
+showTableOfContents: true
+showAuthorInfo: true
+showFeaturedImage: true
+seoTitle: 15 Local SEO Tips for Small Businesses to Get More Customers in 2026
+metaDescription: >-
+  Discover 15 actionable Local SEO Tips to drive more foot traffic, calls, and
+  sales to your small business in 2026. Read our ultimate local search guide.
+focusKeyword: Local SEO
+secondaryKeywords: >-
+  Local SEO, Joy Digital, Search Engine Optimization, SEO Strategy, 2026 Digital
+  Trends
+canonicalUrl: 'https://joydigital.in/blog/local-seo-tips-for-small-businesses'
+robots: 'Index, Follow'
+internalLinks:
+  - anchorText: Google Business Profile Optimization
+    targetUrl: /google-business-profile-optimization
+  - anchorText: Local SEO Services
+    targetUrl: /local-seo-services
+autoSuggestRelated: true
+manualRelatedSlugs: []
+authorName: Saravanan
+authorRole: Technical Web & SEO Specialist
+authorBio: >-
+  Digital marketing strategist and Next.js web developer focusing on search
+  optimization and conversion rate growth.
+authorImage: /assets/images/logo.webp
+authorProfileUrl: 'https://joydigital.in/about'
+faqs: []
+ogTitle: 15 Local SEO Tips for Small Businesses to Get More Customers in 2026
+ogDescription: >-
+  Discover 15 actionable Local SEO Tips to drive more foot traffic, calls, and
+  sales to your small business in 2026. Read our ultimate local search guide.
+ogImage: /assets/images/hero-banner.webp
+twitterTitle: 15 Local SEO Tips for Small Businesses to Get More Customers in 2026
+twitterDescription: >-
+  Discover 15 actionable Local SEO Tips to drive more foot traffic, calls, and
+  sales to your small business in 2026. Read our ultimate local search guide.
+twitterImage: /assets/images/hero-banner.webp
+status: Published
+seoScore: 84
 ---
 
 For small businesses operating in a specific geographic area, traditional search engine optimization is no longer enough. If you own a dental clinic, a local accounting firm, or a regional web design studio, you aren't competing with global corporations; you are competing with the business down the street. 

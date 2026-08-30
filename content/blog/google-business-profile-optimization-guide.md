@@ -1,9 +1,68 @@
 ---
-title: "Google Business Profile Optimization: Complete Guide for Small Businesses in 2026"
-description: "Master Google Business Profile Optimization in 2026. Learn how to rank in the Local 3-Pack, manage customer reviews, and drive phone calls and walk-ins."
-date: "2026-06-11"
-category: "Local SEO"
-author: "Saravanan"
+title: >-
+  Google Business Profile Optimization: Complete Guide for Small Businesses in
+  2026
+description: >-
+  Master Google Business Profile Optimization in 2026. Learn how to rank in the
+  Local 3-Pack, manage customer reviews, and drive phone calls and walk-ins.
+date: '2026-06-11'
+lastUpdatedDate: '2026-06-11'
+category: Local SEO
+author: Saravanan
+image: /assets/images/hero-banner.webp
+imageAlt: >-
+  Google Business Profile Optimization: Complete Guide for Small Businesses in
+  2026
+imageCaption: ''
+tags:
+  - Local SEO
+  - Web Development
+showTableOfContents: true
+showAuthorInfo: true
+showFeaturedImage: true
+seoTitle: >-
+  Google Business Profile Optimization: Complete Guide for Small Businesses in
+  2026
+metaDescription: >-
+  Master Google Business Profile Optimization in 2026. Learn how to rank in the
+  Local 3-Pack, manage customer reviews, and drive phone calls and walk-ins.
+focusKeyword: Google Maps
+secondaryKeywords: >-
+  Local SEO, Joy Digital, Search Engine Optimization, SEO Strategy, 2026 Digital
+  Trends
+canonicalUrl: 'https://joydigital.in/blog/google-business-profile-optimization-guide'
+robots: 'Index, Follow'
+internalLinks:
+  - anchorText: Google Business Profile Optimization
+    targetUrl: /google-business-profile-optimization
+  - anchorText: Local SEO Services
+    targetUrl: /local-seo-services
+autoSuggestRelated: true
+manualRelatedSlugs: []
+authorName: Saravanan
+authorRole: Technical Web & SEO Specialist
+authorBio: >-
+  Digital marketing strategist and Next.js web developer focusing on search
+  optimization and conversion rate growth.
+authorImage: /assets/images/logo.webp
+authorProfileUrl: 'https://joydigital.in/about'
+faqs: []
+ogTitle: >-
+  Google Business Profile Optimization: Complete Guide for Small Businesses in
+  2026
+ogDescription: >-
+  Master Google Business Profile Optimization in 2026. Learn how to rank in the
+  Local 3-Pack, manage customer reviews, and drive phone calls and walk-ins.
+ogImage: /assets/images/hero-banner.webp
+twitterTitle: >-
+  Google Business Profile Optimization: Complete Guide for Small Businesses in
+  2026
+twitterDescription: >-
+  Master Google Business Profile Optimization in 2026. Learn how to rank in the
+  Local 3-Pack, manage customer reviews, and drive phone calls and walk-ins.
+twitterImage: /assets/images/hero-banner.webp
+status: Published
+seoScore: 73
 ---
 
 When a local customer searches for a service nearby—whether it is a "dentist in Chennai," a "boutique near me," or a "plumbing company in London"—they rarely scroll past the first page of search results. In fact, they rarely scroll past the map block at the very top. This prominent map section is known as the Google Local 3-Pack, and it is the single most valuable piece of digital real estate for any physical or service-area business today.

@@ -1,9 +1,56 @@
 ---
-title: "The Ultimate SEO Checklist for Small Businesses in 2026"
-description: "Follow this step-by-step SEO checklist to optimize your small business website for search rankings, improve page speeds, and attract organic inquiries."
-date: "2026-06-04"
-category: "SEO Services"
-author: "Saravanan"
+title: The Ultimate SEO Checklist for Small Businesses in 2026
+description: >-
+  Follow this step-by-step SEO checklist to optimize your small business website
+  for search rankings, improve page speeds, and attract organic inquiries.
+date: '2026-06-04'
+lastUpdatedDate: '2026-06-04'
+category: SEO Services
+author: Saravanan
+image: /assets/images/hero-banner.webp
+imageAlt: The Ultimate SEO Checklist for Small Businesses in 2026
+imageCaption: ''
+tags:
+  - SEO Services
+  - Web Development
+showTableOfContents: true
+showAuthorInfo: true
+showFeaturedImage: true
+seoTitle: The Ultimate SEO Checklist for Small Businesses in 2026
+metaDescription: >-
+  Follow this step-by-step SEO checklist to optimize your small business website
+  for search rankings, improve page speeds, and attract organic inquiries.
+focusKeyword: SEO
+secondaryKeywords: 'SEO Services, Joy Digital, Search Engine Optimization, 2026 Digital Trends'
+canonicalUrl: 'https://joydigital.in/blog/seo-checklist-small-businesses'
+robots: 'Index, Follow'
+internalLinks:
+  - anchorText: SEO Services
+    targetUrl: /seo-services
+  - anchorText: Free Website Audit
+    targetUrl: /free-website-audit
+autoSuggestRelated: true
+manualRelatedSlugs: []
+authorName: Saravanan
+authorRole: Technical Web & SEO Specialist
+authorBio: >-
+  Digital marketing strategist and Next.js web developer focusing on search
+  optimization and conversion rate growth.
+authorImage: /assets/images/logo.webp
+authorProfileUrl: 'https://joydigital.in/about'
+faqs: []
+ogTitle: The Ultimate SEO Checklist for Small Businesses in 2026
+ogDescription: >-
+  Follow this step-by-step SEO checklist to optimize your small business website
+  for search rankings, improve page speeds, and attract organic inquiries.
+ogImage: /assets/images/hero-banner.webp
+twitterTitle: The Ultimate SEO Checklist for Small Businesses in 2026
+twitterDescription: >-
+  Follow this step-by-step SEO checklist to optimize your small business website
+  for search rankings, improve page speeds, and attract organic inquiries.
+twitterImage: /assets/images/hero-banner.webp
+status: Published
+seoScore: 85
 ---
 
 Search Engine Optimization (SEO) can feel overwhelming for small business owners. With constant algorithm updates and technical terms, it is easy to lose track of what matters. 

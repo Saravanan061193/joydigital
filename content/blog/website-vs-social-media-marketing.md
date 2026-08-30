@@ -1,9 +1,56 @@
 ---
-title: "Website vs Social Media Marketing: Which is Best for Your Business?"
-description: "Compare the pros, cons, and ROI of custom business websites and social media marketing. Learn why combining both is the key to digital growth."
-date: "2026-06-03"
-category: "Digital Marketing"
-author: "Saravanan"
+title: 'Website vs Social Media Marketing: Which is Best for Your Business?'
+description: >-
+  Compare the pros, cons, and ROI of custom business websites and social media
+  marketing. Learn why combining both is the key to digital growth.
+date: '2026-06-03'
+lastUpdatedDate: '2026-06-03'
+category: Digital Marketing
+author: Saravanan
+image: /assets/images/hero-banner.webp
+imageAlt: 'Website vs Social Media Marketing: Which is Best for Your Business?'
+imageCaption: ''
+tags:
+  - Digital Marketing
+  - Web Development
+showTableOfContents: true
+showAuthorInfo: true
+showFeaturedImage: true
+seoTitle: 'Website vs Social Media Marketing: Which is Best for Your Business?'
+metaDescription: >-
+  Compare the pros, cons, and ROI of custom business websites and social media
+  marketing. Learn why combining both is the key to digital growth.
+focusKeyword: Digital Marketing
+secondaryKeywords: 'Digital Marketing, Joy Digital, Search Engine Optimization, SEO Strategy'
+canonicalUrl: 'https://joydigital.in/blog/website-vs-social-media-marketing'
+robots: 'Index, Follow'
+internalLinks:
+  - anchorText: Digital Marketing Agency
+    targetUrl: /digital-marketing-agency-in-chennai
+  - anchorText: Social Media Marketing
+    targetUrl: /social-media-marketing
+autoSuggestRelated: true
+manualRelatedSlugs: []
+authorName: Saravanan
+authorRole: Technical Web & SEO Specialist
+authorBio: >-
+  Digital marketing strategist and Next.js web developer focusing on search
+  optimization and conversion rate growth.
+authorImage: /assets/images/logo.webp
+authorProfileUrl: 'https://joydigital.in/about'
+faqs: []
+ogTitle: 'Website vs Social Media Marketing: Which is Best for Your Business?'
+ogDescription: >-
+  Compare the pros, cons, and ROI of custom business websites and social media
+  marketing. Learn why combining both is the key to digital growth.
+ogImage: /assets/images/hero-banner.webp
+twitterTitle: 'Website vs Social Media Marketing: Which is Best for Your Business?'
+twitterDescription: >-
+  Compare the pros, cons, and ROI of custom business websites and social media
+  marketing. Learn why combining both is the key to digital growth.
+twitterImage: /assets/images/hero-banner.webp
+status: Published
+seoScore: 66
 ---
 
 When launching a new business or planning a marketing budget, one of the most common questions is: *Should I invest in a custom website, or focus on social media marketing?*

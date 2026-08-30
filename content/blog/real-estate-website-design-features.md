@@ -1,10 +1,66 @@
 ---
-title: "Real Estate Website Design: 10 Features That Convert Visitors into Property Enquiries"
-description: "Discover 10 essential real estate website features that can help property businesses attract visitors, build trust and generate more property enquiries."
-date: "2026-08-29"
-category: "Web Design"
-author: "Joy Digital Team"
-image: "/assets/images/hero-banner.webp"
+title: >-
+  Real Estate Website Design: 10 Features That Convert Visitors into Property
+  Enquiries
+description: >-
+  Discover 10 essential real estate website features that can help property
+  businesses attract visitors, build trust and generate more property enquiries.
+date: '2026-08-29'
+lastUpdatedDate: '2026-08-29'
+category: Web Design
+author: Joy Digital Team
+image: /assets/images/hero-banner.webp
+imageAlt: >-
+  Real Estate Website Design: 10 Features That Convert Visitors into Property
+  Enquiries
+imageCaption: ''
+tags:
+  - Web Design
+  - Web Development
+showTableOfContents: true
+showAuthorInfo: true
+showFeaturedImage: true
+seoTitle: >-
+  Real Estate Website Design: 10 Features That Convert Visitors into Property
+  Enquiries
+metaDescription: >-
+  Discover 10 essential real estate website features that can help property
+  businesses attract visitors, build trust and generate more property enquiries.
+focusKeyword: Real Estate
+secondaryKeywords: 'Web Design, Joy Digital, Search Engine Optimization, SEO Strategy'
+canonicalUrl: 'https://joydigital.in/blog/real-estate-website-design-features'
+robots: 'Index, Follow'
+internalLinks:
+  - anchorText: Website Design Agency
+    targetUrl: /web-design-services
+  - anchorText: Ecommerce Website Development
+    targetUrl: /ecommerce-website-development
+autoSuggestRelated: true
+manualRelatedSlugs: []
+authorName: Joy Digital Team
+authorRole: Technical Web & SEO Specialist
+authorBio: >-
+  Digital marketing strategist and Next.js web developer focusing on search
+  optimization and conversion rate growth.
+authorImage: /assets/images/logo.webp
+authorProfileUrl: 'https://joydigital.in/about'
+faqs: []
+ogTitle: >-
+  Real Estate Website Design: 10 Features That Convert Visitors into Property
+  Enquiries
+ogDescription: >-
+  Discover 10 essential real estate website features that can help property
+  businesses attract visitors, build trust and generate more property enquiries.
+ogImage: /assets/images/hero-banner.webp
+twitterTitle: >-
+  Real Estate Website Design: 10 Features That Convert Visitors into Property
+  Enquiries
+twitterDescription: >-
+  Discover 10 essential real estate website features that can help property
+  businesses attract visitors, build trust and generate more property enquiries.
+twitterImage: /assets/images/hero-banner.webp
+status: Published
+seoScore: 85
 ---
 
 When someone visits a real estate website, they usually have one simple goal — **find the right property and contact the right person.**

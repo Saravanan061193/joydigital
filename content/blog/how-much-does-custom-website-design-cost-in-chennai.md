@@ -1,9 +1,58 @@
 ---
-title: "How much does a custom website design cost in Chennai?"
-description: "Understand the factors behind custom website design costs in Chennai, including domain, hosting, framework, UI/UX design, and development packages."
-date: "2026-08-05"
-category: "Web Development"
-author: "Joy Digital Team"
+title: How much does a custom website design cost in Chennai?
+description: >-
+  Understand the factors behind custom website design costs in Chennai,
+  including domain, hosting, framework, UI/UX design, and development packages.
+date: '2026-08-05'
+lastUpdatedDate: '2026-08-05'
+category: Web Development
+author: Joy Digital Team
+image: /assets/images/hero-banner.webp
+imageAlt: How much does a custom website design cost in Chennai?
+imageCaption: ''
+tags:
+  - Web Development
+  - Web Development
+showTableOfContents: true
+showAuthorInfo: true
+showFeaturedImage: true
+seoTitle: How much does a custom website design cost in Chennai?
+metaDescription: >-
+  Understand the factors behind custom website design costs in Chennai,
+  including domain, hosting, framework, UI/UX design, and development packages.
+focusKeyword: Custom Website
+secondaryKeywords: >-
+  Web Development, Joy Digital, Search Engine Optimization, SEO Strategy,
+  Chennai Web Agency
+canonicalUrl: 'https://joydigital.in/blog/how-much-does-custom-website-design-cost-in-chennai'
+robots: 'Index, Follow'
+internalLinks:
+  - anchorText: Custom Web Development
+    targetUrl: /website-development
+  - anchorText: Web Design Services
+    targetUrl: /web-design-services
+autoSuggestRelated: true
+manualRelatedSlugs: []
+authorName: Joy Digital Team
+authorRole: Technical Web & SEO Specialist
+authorBio: >-
+  Digital marketing strategist and Next.js web developer focusing on search
+  optimization and conversion rate growth.
+authorImage: /assets/images/logo.webp
+authorProfileUrl: 'https://joydigital.in/about'
+faqs: []
+ogTitle: How much does a custom website design cost in Chennai?
+ogDescription: >-
+  Understand the factors behind custom website design costs in Chennai,
+  including domain, hosting, framework, UI/UX design, and development packages.
+ogImage: /assets/images/hero-banner.webp
+twitterTitle: How much does a custom website design cost in Chennai?
+twitterDescription: >-
+  Understand the factors behind custom website design costs in Chennai,
+  including domain, hosting, framework, UI/UX design, and development packages.
+twitterImage: /assets/images/hero-banner.webp
+status: Published
+seoScore: 91
 ---
 
 ## Understanding Website Design Price in Chennai

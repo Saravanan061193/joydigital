@@ -1,9 +1,62 @@
 ---
-title: "Agentic AI Booking: The Future of Travel Booking in 2026"
-description: "Discover how Agentic AI is transforming travel booking in 2026, from personalised trip planning and tour comparisons to automated booking and customer support."
-date: "2026-08-28"
-category: "SEO"
-author: "Joy Digital Team"
+title: 'Agentic AI Booking: The Future of Travel Booking in 2026'
+description: >-
+  Discover how Agentic AI is transforming travel booking in 2026, from
+  personalised trip planning and tour comparisons to automated booking and
+  customer support.
+date: '2026-08-28'
+lastUpdatedDate: '2026-08-28'
+category: SEO
+author: Joy Digital Team
+image: /assets/images/hero-banner.webp
+imageAlt: 'Agentic AI Booking: The Future of Travel Booking in 2026'
+imageCaption: ''
+tags:
+  - SEO
+  - Web Development
+showTableOfContents: true
+showAuthorInfo: true
+showFeaturedImage: true
+seoTitle: 'Agentic AI Booking: The Future of Travel Booking in 2026'
+metaDescription: >-
+  Discover how Agentic AI is transforming travel booking in 2026, from
+  personalised trip planning and tour comparisons to automated booking and
+  customer support.
+focusKeyword: Travel
+secondaryKeywords: >-
+  SEO, Joy Digital, Search Engine Optimization, SEO Strategy, 2026 Digital
+  Trends
+canonicalUrl: 'https://joydigital.in/blog/agentic-ai-booking-future-of-travel'
+robots: 'Index, Follow'
+internalLinks:
+  - anchorText: SEO Services
+    targetUrl: /seo-services
+  - anchorText: Local SEO Solutions
+    targetUrl: /local-seo-services
+autoSuggestRelated: true
+manualRelatedSlugs: []
+authorName: Joy Digital Team
+authorRole: Technical Web & SEO Specialist
+authorBio: >-
+  Digital marketing strategist and Next.js web developer focusing on search
+  optimization and conversion rate growth.
+authorImage: /assets/images/logo.webp
+authorProfileUrl: 'https://joydigital.in/about'
+faqs: []
+ogTitle: 'Agentic AI Booking: The Future of Travel Booking in 2026'
+ogDescription: >-
+  Discover how Agentic AI is transforming travel booking in 2026, from
+  personalised trip planning and tour comparisons to automated booking and
+  customer support.
+ogImage: /assets/images/hero-banner.webp
+twitterTitle: 'Agentic AI Booking: The Future of Travel Booking in 2026'
+twitterDescription: >-
+  Discover how Agentic AI is transforming travel booking in 2026, from
+  personalised trip planning and tour comparisons to automated booking and
+  customer support.
+twitterImage: /assets/images/hero-banner.webp
+status: Published
+seoScore: 91
 ---
 
 Travel booking has changed dramatically over the last few years.

@@ -1,9 +1,56 @@
 ---
-title: "Digital Marketing Strategy for Small Businesses: A Practical Roadmap"
-description: "Follow this practical digital marketing roadmap designed specifically for small businesses in India to scale lead generation and build brand visibility."
-date: "2026-05-28"
-category: "Digital Marketing"
-author: "Saravanan"
+title: 'Digital Marketing Strategy for Small Businesses: A Practical Roadmap'
+description: >-
+  Follow this practical digital marketing roadmap designed specifically for
+  small businesses in India to scale lead generation and build brand visibility.
+date: '2026-05-28'
+lastUpdatedDate: '2026-05-28'
+category: Digital Marketing
+author: Saravanan
+image: /assets/images/hero-banner.webp
+imageAlt: 'Digital Marketing Strategy for Small Businesses: A Practical Roadmap'
+imageCaption: ''
+tags:
+  - Digital Marketing
+  - Web Development
+showTableOfContents: true
+showAuthorInfo: true
+showFeaturedImage: true
+seoTitle: 'Digital Marketing Strategy for Small Businesses: A Practical Roadmap'
+metaDescription: >-
+  Follow this practical digital marketing roadmap designed specifically for
+  small businesses in India to scale lead generation and build brand visibility.
+focusKeyword: Digital Marketing
+secondaryKeywords: 'Digital Marketing, Joy Digital, Search Engine Optimization, SEO Strategy'
+canonicalUrl: 'https://joydigital.in/blog/digital-marketing-strategy-small-businesses'
+robots: 'Index, Follow'
+internalLinks:
+  - anchorText: Digital Marketing Agency
+    targetUrl: /digital-marketing-agency-in-chennai
+  - anchorText: Social Media Marketing
+    targetUrl: /social-media-marketing
+autoSuggestRelated: true
+manualRelatedSlugs: []
+authorName: Saravanan
+authorRole: Technical Web & SEO Specialist
+authorBio: >-
+  Digital marketing strategist and Next.js web developer focusing on search
+  optimization and conversion rate growth.
+authorImage: /assets/images/logo.webp
+authorProfileUrl: 'https://joydigital.in/about'
+faqs: []
+ogTitle: 'Digital Marketing Strategy for Small Businesses: A Practical Roadmap'
+ogDescription: >-
+  Follow this practical digital marketing roadmap designed specifically for
+  small businesses in India to scale lead generation and build brand visibility.
+ogImage: /assets/images/hero-banner.webp
+twitterTitle: 'Digital Marketing Strategy for Small Businesses: A Practical Roadmap'
+twitterDescription: >-
+  Follow this practical digital marketing roadmap designed specifically for
+  small businesses in India to scale lead generation and build brand visibility.
+twitterImage: /assets/images/hero-banner.webp
+status: Published
+seoScore: 85
 ---
 
 Planning a digital marketing budget can be difficult for small business owners. With limited resources, you cannot afford to waste ad spend on channels that do not convert. 

@@ -1,10 +1,67 @@
 ---
-title: "How Independent Resorts Can Increase Direct Bookings & Cut High OTA Commissions"
-description: "Learn 4 strategic moves for independent resorts to increase direct website bookings, cut high OTA commission fees, and capture high-intent travelers."
-date: "2026-08-29"
-category: "SEO"
-author: "Joy Digital Team"
-image: "/assets/images/hero-banner.webp"
+title: >-
+  How Independent Resorts Can Increase Direct Bookings & Cut High OTA
+  Commissions
+description: >-
+  Learn 4 strategic moves for independent resorts to increase direct website
+  bookings, cut high OTA commission fees, and capture high-intent travelers.
+date: '2026-08-29'
+lastUpdatedDate: '2026-08-29'
+category: SEO
+author: Joy Digital Team
+image: /assets/images/hero-banner.webp
+imageAlt: >-
+  How Independent Resorts Can Increase Direct Bookings & Cut High OTA
+  Commissions
+imageCaption: ''
+tags:
+  - SEO
+  - Web Development
+showTableOfContents: true
+showAuthorInfo: true
+showFeaturedImage: true
+seoTitle: >-
+  How Independent Resorts Can Increase Direct Bookings & Cut High OTA
+  Commissions
+metaDescription: >-
+  Learn 4 strategic moves for independent resorts to increase direct website
+  bookings, cut high OTA commission fees, and capture high-intent travelers.
+focusKeyword: Travel
+secondaryKeywords: 'SEO, Joy Digital, Search Engine Optimization, SEO Strategy'
+canonicalUrl: >-
+  https://joydigital.in/blog/how-independent-resorts-can-increase-direct-bookings
+robots: 'Index, Follow'
+internalLinks:
+  - anchorText: SEO Services
+    targetUrl: /seo-services
+  - anchorText: Local SEO Solutions
+    targetUrl: /local-seo-services
+autoSuggestRelated: true
+manualRelatedSlugs: []
+authorName: Joy Digital Team
+authorRole: Technical Web & SEO Specialist
+authorBio: >-
+  Digital marketing strategist and Next.js web developer focusing on search
+  optimization and conversion rate growth.
+authorImage: /assets/images/logo.webp
+authorProfileUrl: 'https://joydigital.in/about'
+faqs: []
+ogTitle: >-
+  How Independent Resorts Can Increase Direct Bookings & Cut High OTA
+  Commissions
+ogDescription: >-
+  Learn 4 strategic moves for independent resorts to increase direct website
+  bookings, cut high OTA commission fees, and capture high-intent travelers.
+ogImage: /assets/images/hero-banner.webp
+twitterTitle: >-
+  How Independent Resorts Can Increase Direct Bookings & Cut High OTA
+  Commissions
+twitterDescription: >-
+  Learn 4 strategic moves for independent resorts to increase direct website
+  bookings, cut high OTA commission fees, and capture high-intent travelers.
+twitterImage: /assets/images/hero-banner.webp
+status: Published
+seoScore: 79
 ---
 
 For boutique and independent resort owners, platforms like MakeMyTrip, Booking.com, and Agoda are a double-edged sword. While they provide initial visibility, they charge between **18% to 25% in commissions** on every room night.

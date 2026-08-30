@@ -1,9 +1,56 @@
 ---
-title: "What is Local SEO and How It Works? A Beginner's Guide"
-description: "Learn what Local SEO is, why it is crucial for brick-and-mortar stores, and how the Google Maps ranking algorithm evaluates local business listings."
-date: "2026-06-06"
-category: "Local SEO"
-author: "Saravanan"
+title: What is Local SEO and How It Works? A Beginner's Guide
+description: >-
+  Learn what Local SEO is, why it is crucial for brick-and-mortar stores, and
+  how the Google Maps ranking algorithm evaluates local business listings.
+date: '2026-06-06'
+lastUpdatedDate: '2026-06-06'
+category: Local SEO
+author: Saravanan
+image: /assets/images/hero-banner.webp
+imageAlt: What is Local SEO and How It Works? A Beginner's Guide
+imageCaption: ''
+tags:
+  - Local SEO
+  - Web Development
+showTableOfContents: true
+showAuthorInfo: true
+showFeaturedImage: true
+seoTitle: What is Local SEO and How It Works? A Beginner's Guide
+metaDescription: >-
+  Learn what Local SEO is, why it is crucial for brick-and-mortar stores, and
+  how the Google Maps ranking algorithm evaluates local business listings.
+focusKeyword: Local SEO
+secondaryKeywords: 'Local SEO, Joy Digital, Search Engine Optimization, SEO Strategy'
+canonicalUrl: 'https://joydigital.in/blog/what-is-local-seo-how-it-works'
+robots: 'Index, Follow'
+internalLinks:
+  - anchorText: Google Business Profile Optimization
+    targetUrl: /google-business-profile-optimization
+  - anchorText: Local SEO Services
+    targetUrl: /local-seo-services
+autoSuggestRelated: true
+manualRelatedSlugs: []
+authorName: Saravanan
+authorRole: Technical Web & SEO Specialist
+authorBio: >-
+  Digital marketing strategist and Next.js web developer focusing on search
+  optimization and conversion rate growth.
+authorImage: /assets/images/logo.webp
+authorProfileUrl: 'https://joydigital.in/about'
+faqs: []
+ogTitle: What is Local SEO and How It Works? A Beginner's Guide
+ogDescription: >-
+  Learn what Local SEO is, why it is crucial for brick-and-mortar stores, and
+  how the Google Maps ranking algorithm evaluates local business listings.
+ogImage: /assets/images/hero-banner.webp
+twitterTitle: What is Local SEO and How It Works? A Beginner's Guide
+twitterDescription: >-
+  Learn what Local SEO is, why it is crucial for brick-and-mortar stores, and
+  how the Google Maps ranking algorithm evaluates local business listings.
+twitterImage: /assets/images/hero-banner.webp
+status: Published
+seoScore: 85
 ---
 
 If you own a physical store, a local medical clinic, or provide services in a specific geographic area, standard SEO is not enough. You need **Local SEO**. 

@@ -1,10 +1,58 @@
 ---
-title: "Insurance Agent Website: How to Generate More Leads with AI & SEO in 2026"
-description: "Learn how an insurance agent website with SEO, WhatsApp integration, and AI lead generation helps attract and convert policy leads in 2026."
-date: "2026-08-29"
-category: "SEO"
-author: "Joy Digital Team"
-image: "/assets/images/blog/insurance-agent-website-ai-lead-generation.png"
+title: 'Insurance Agent Website: How to Generate More Leads with AI & SEO in 2026'
+description: >-
+  Learn how an insurance agent website with SEO, WhatsApp integration, and AI
+  lead generation helps attract and convert policy leads in 2026.
+date: '2026-08-29'
+lastUpdatedDate: '2026-08-29'
+category: SEO
+author: Joy Digital Team
+image: /assets/images/blog/insurance-agent-website-ai-lead-generation.png
+imageAlt: 'Insurance Agent Website: How to Generate More Leads with AI & SEO in 2026'
+imageCaption: ''
+tags:
+  - SEO
+  - Web Development
+showTableOfContents: true
+showAuthorInfo: true
+showFeaturedImage: true
+seoTitle: 'Insurance Agent Website: How to Generate More Leads with AI & SEO in 2026'
+metaDescription: >-
+  Learn how an insurance agent website with SEO, WhatsApp integration, and AI
+  lead generation helps attract and convert policy leads in 2026.
+focusKeyword: Insurance Agent
+secondaryKeywords: >-
+  SEO, Joy Digital, Search Engine Optimization, SEO Strategy, 2026 Digital
+  Trends
+canonicalUrl: 'https://joydigital.in/blog/insurance-agent-website-ai-lead-generation'
+robots: 'Index, Follow'
+internalLinks:
+  - anchorText: SEO Services
+    targetUrl: /seo-services
+  - anchorText: Local SEO Solutions
+    targetUrl: /local-seo-services
+autoSuggestRelated: true
+manualRelatedSlugs: []
+authorName: Joy Digital Team
+authorRole: Technical Web & SEO Specialist
+authorBio: >-
+  Digital marketing strategist and Next.js web developer focusing on search
+  optimization and conversion rate growth.
+authorImage: /assets/images/logo.webp
+authorProfileUrl: 'https://joydigital.in/about'
+faqs: []
+ogTitle: 'Insurance Agent Website: How to Generate More Leads with AI & SEO in 2026'
+ogDescription: >-
+  Learn how an insurance agent website with SEO, WhatsApp integration, and AI
+  lead generation helps attract and convert policy leads in 2026.
+ogImage: /assets/images/blog/insurance-agent-website-ai-lead-generation.png
+twitterTitle: 'Insurance Agent Website: How to Generate More Leads with AI & SEO in 2026'
+twitterDescription: >-
+  Learn how an insurance agent website with SEO, WhatsApp integration, and AI
+  lead generation helps attract and convert policy leads in 2026.
+twitterImage: /assets/images/blog/insurance-agent-website-ai-lead-generation.png
+status: Published
+seoScore: 84
 ---
 
 ![Insurance agent website with AI-powered lead generation](/assets/images/blog/insurance-agent-website-ai-lead-generation.png)

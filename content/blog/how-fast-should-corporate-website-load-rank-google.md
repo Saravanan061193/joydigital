@@ -1,9 +1,56 @@
 ---
-title: "How fast should a corporate website load to rank on Google?"
-description: "Learn the impact of load times and Core Web Vitals on search rankings. Understand how fast-loading Next.js websites improve bounce rates and leads."
-date: "2026-08-03"
-category: "Web Speed"
-author: "Joy Digital Team"
+title: How fast should a corporate website load to rank on Google?
+description: >-
+  Learn the impact of load times and Core Web Vitals on search rankings.
+  Understand how fast-loading Next.js websites improve bounce rates and leads.
+date: '2026-08-03'
+lastUpdatedDate: '2026-08-03'
+category: Web Speed
+author: Joy Digital Team
+image: /assets/images/hero-banner.webp
+imageAlt: How fast should a corporate website load to rank on Google?
+imageCaption: ''
+tags:
+  - Web Speed
+  - Web Development
+showTableOfContents: true
+showAuthorInfo: true
+showFeaturedImage: true
+seoTitle: How fast should a corporate website load to rank on Google?
+metaDescription: >-
+  Learn the impact of load times and Core Web Vitals on search rankings.
+  Understand how fast-loading Next.js websites improve bounce rates and leads.
+focusKeyword: SEO
+secondaryKeywords: 'Web Speed, Joy Digital, Search Engine Optimization'
+canonicalUrl: 'https://joydigital.in/blog/how-fast-should-corporate-website-load-rank-google'
+robots: 'Index, Follow'
+internalLinks:
+  - anchorText: Free Website Audit Tool
+    targetUrl: /free-website-audit
+  - anchorText: Custom Software Solutions
+    targetUrl: /custom-software-development
+autoSuggestRelated: true
+manualRelatedSlugs: []
+authorName: Joy Digital Team
+authorRole: Technical Web & SEO Specialist
+authorBio: >-
+  Digital marketing strategist and Next.js web developer focusing on search
+  optimization and conversion rate growth.
+authorImage: /assets/images/logo.webp
+authorProfileUrl: 'https://joydigital.in/about'
+faqs: []
+ogTitle: How fast should a corporate website load to rank on Google?
+ogDescription: >-
+  Learn the impact of load times and Core Web Vitals on search rankings.
+  Understand how fast-loading Next.js websites improve bounce rates and leads.
+ogImage: /assets/images/hero-banner.webp
+twitterTitle: How fast should a corporate website load to rank on Google?
+twitterDescription: >-
+  Learn the impact of load times and Core Web Vitals on search rankings.
+  Understand how fast-loading Next.js websites improve bounce rates and leads.
+twitterImage: /assets/images/hero-banner.webp
+status: Published
+seoScore: 79
 ---
 
 ## Website Speed: The Silent Ranking Factor in Google Search

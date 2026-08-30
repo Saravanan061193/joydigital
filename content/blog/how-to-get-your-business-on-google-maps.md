@@ -1,9 +1,66 @@
 ---
-title: "How to Get Your Business on Google Maps: Complete Google Business Profile Guide"
-description: "Learn how to add your business to Google Maps, verify your Google Business Profile, gather reviews, and boost local map pack rankings."
-date: "2026-08-18"
-category: "Local SEO"
-author: "Saravanan"
+title: >-
+  How to Get Your Business on Google Maps: Complete Google Business Profile
+  Guide
+description: >-
+  Learn how to add your business to Google Maps, verify your Google Business
+  Profile, gather reviews, and boost local map pack rankings.
+date: '2026-08-18'
+lastUpdatedDate: '2026-08-18'
+category: Local SEO
+author: Saravanan
+image: /assets/images/hero-banner.webp
+imageAlt: >-
+  How to Get Your Business on Google Maps: Complete Google Business Profile
+  Guide
+imageCaption: ''
+tags:
+  - Local SEO
+  - Web Development
+showTableOfContents: true
+showAuthorInfo: true
+showFeaturedImage: true
+seoTitle: >-
+  How to Get Your Business on Google Maps: Complete Google Business Profile
+  Guide
+metaDescription: >-
+  Learn how to add your business to Google Maps, verify your Google Business
+  Profile, gather reviews, and boost local map pack rankings.
+focusKeyword: Google Maps
+secondaryKeywords: 'Local SEO, Joy Digital, Search Engine Optimization, SEO Strategy'
+canonicalUrl: 'https://joydigital.in/blog/how-to-get-your-business-on-google-maps'
+robots: 'Index, Follow'
+internalLinks:
+  - anchorText: Google Business Profile Optimization
+    targetUrl: /google-business-profile-optimization
+  - anchorText: Local SEO Services
+    targetUrl: /local-seo-services
+autoSuggestRelated: true
+manualRelatedSlugs: []
+authorName: Saravanan
+authorRole: Technical Web & SEO Specialist
+authorBio: >-
+  Digital marketing strategist and Next.js web developer focusing on search
+  optimization and conversion rate growth.
+authorImage: /assets/images/logo.webp
+authorProfileUrl: 'https://joydigital.in/about'
+faqs: []
+ogTitle: >-
+  How to Get Your Business on Google Maps: Complete Google Business Profile
+  Guide
+ogDescription: >-
+  Learn how to add your business to Google Maps, verify your Google Business
+  Profile, gather reviews, and boost local map pack rankings.
+ogImage: /assets/images/hero-banner.webp
+twitterTitle: >-
+  How to Get Your Business on Google Maps: Complete Google Business Profile
+  Guide
+twitterDescription: >-
+  Learn how to add your business to Google Maps, verify your Google Business
+  Profile, gather reviews, and boost local map pack rankings.
+twitterImage: /assets/images/hero-banner.webp
+status: Published
+seoScore: 79
 ---
 
 If you run a local business, one of the first things you should do online is make sure your business can be found on Google Maps.

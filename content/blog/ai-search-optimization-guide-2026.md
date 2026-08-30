@@ -1,9 +1,56 @@
 ---
-title: "AI Search Optimization (AEO/GEO): Why Your Business Needs It in 2026"
-description: "Prepare your website for AI search. Learn how Generative Engine Optimization (GEO) gets your business recommended by ChatGPT and Google AI Overview."
-date: "2026-07-17"
-category: "SEO"
-author: "Saravanan"
+title: 'AI Search Optimization (AEO/GEO): Why Your Business Needs It in 2026'
+description: >-
+  Prepare your website for AI search. Learn how Generative Engine Optimization
+  (GEO) gets your business recommended by ChatGPT and Google AI Overview.
+date: '2026-07-17'
+lastUpdatedDate: '2026-07-17'
+category: SEO
+author: Saravanan
+image: /assets/images/hero-banner.webp
+imageAlt: 'AI Search Optimization (AEO/GEO): Why Your Business Needs It in 2026'
+imageCaption: ''
+tags:
+  - SEO
+  - Web Development
+showTableOfContents: true
+showAuthorInfo: true
+showFeaturedImage: true
+seoTitle: 'AI Search Optimization (AEO/GEO): Why Your Business Needs It in 2026'
+metaDescription: >-
+  Prepare your website for AI search. Learn how Generative Engine Optimization
+  (GEO) gets your business recommended by ChatGPT and Google AI Overview.
+focusKeyword: SEO
+secondaryKeywords: 'SEO, Joy Digital, Search Engine Optimization, 2026 Digital Trends'
+canonicalUrl: 'https://joydigital.in/blog/ai-search-optimization-guide-2026'
+robots: 'Index, Follow'
+internalLinks:
+  - anchorText: SEO Services
+    targetUrl: /seo-services
+  - anchorText: Local SEO Solutions
+    targetUrl: /local-seo-services
+autoSuggestRelated: true
+manualRelatedSlugs: []
+authorName: Saravanan
+authorRole: Technical Web & SEO Specialist
+authorBio: >-
+  Digital marketing strategist and Next.js web developer focusing on search
+  optimization and conversion rate growth.
+authorImage: /assets/images/logo.webp
+authorProfileUrl: 'https://joydigital.in/about'
+faqs: []
+ogTitle: 'AI Search Optimization (AEO/GEO): Why Your Business Needs It in 2026'
+ogDescription: >-
+  Prepare your website for AI search. Learn how Generative Engine Optimization
+  (GEO) gets your business recommended by ChatGPT and Google AI Overview.
+ogImage: /assets/images/hero-banner.webp
+twitterTitle: 'AI Search Optimization (AEO/GEO): Why Your Business Needs It in 2026'
+twitterDescription: >-
+  Prepare your website for AI search. Learn how Generative Engine Optimization
+  (GEO) gets your business recommended by ChatGPT and Google AI Overview.
+twitterImage: /assets/images/hero-banner.webp
+status: Published
+seoScore: 73
 ---
 
 Google Search is changing rapidly. Is your business ready?
