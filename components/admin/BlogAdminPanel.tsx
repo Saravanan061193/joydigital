@@ -758,19 +758,16 @@ export default function BlogAdminPanel() {
                         <tr className="border-b border-slate-200 text-slate-500 font-black text-[9px] uppercase tracking-wider">
                           <th className="py-3 px-4">Title / Slug</th>
                           <th className="py-3 px-4">Category</th>
-                          <th className="py-3 px-4">Author</th>
                           <th className="py-3 px-4">Status</th>
                           <th className="py-3 px-4">Views</th>
                           <th className="py-3 px-4">Dates</th>
                           <th className="py-3 px-4">SEO Content Score</th>
-                          <th className="py-3 px-4">Indexing</th>
                           <th className="py-3 px-4 text-right">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
                         {paginatedPosts.map((post) => {
                           const pStatus = post.status || "Published";
-                          const isNoindex = post.robots?.toLowerCase().includes("noindex");
                           const score = post.seoScore ?? 85;
 
                           return (
@@ -786,10 +783,6 @@ export default function BlogAdminPanel() {
                                 <span className="bg-primary/10 text-primary border border-primary/20 text-[9px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                                   {post.category}
                                 </span>
-                              </td>
-
-                              <td className="py-4 px-4 text-slate-650 font-semibold whitespace-nowrap">
-                                {post.authorName || post.author}
                               </td>
 
                               <td className="py-4 px-4 whitespace-nowrap">
@@ -824,14 +817,6 @@ export default function BlogAdminPanel() {
                                   "bg-rose-50 text-rose-700 border-rose-200"
                                 }`}>
                                   <i className="fa-solid fa-chart-pie text-[9px]" /> {score}/100
-                                </span>
-                              </td>
-
-                              <td className="py-4 px-4 whitespace-nowrap">
-                                <span className={`text-[9.5px] font-bold px-2 py-0.5 rounded-md ${
-                                  !isNoindex && pStatus === "Published" ? "bg-emerald-50 text-emerald-600" : "bg-rose-50 text-rose-600"
-                                }`}>
-                                  {!isNoindex && pStatus === "Published" ? "Indexable: Yes" : "Indexable: No"}
                                 </span>
                               </td>
 
