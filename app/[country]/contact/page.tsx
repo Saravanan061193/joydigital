@@ -17,6 +17,8 @@ export async function generateStaticParams() {
     { country: "uk" },
     { country: "ae" },
     { country: "in" },
+    { country: "ca" },
+    { country: "au" },
   ];
 }
 
@@ -65,6 +67,24 @@ const REGIONAL_CONTACTS: Record<string, {
     showMap: true,
     marketName: "India",
   },
+  ca: {
+    title: "Canada Digital Consultation Desk",
+    description: "Connect with our Next.js designers and search engine optimization team serving Canadian enterprises and startups. Receive localized proposals.",
+    phone: "+16508990122",
+    phoneFormatted: "+1 (650) 899-0122",
+    address: "North America Regional Relations, Toronto, Canada",
+    showMap: false,
+    marketName: "Canada",
+  },
+  au: {
+    title: "Australia Business Consultation Desk",
+    description: "Connect with our custom web design and SEO team serving Australian businesses. Receive localized project quotes and technical recommendations.",
+    phone: "+61280001234",
+    phoneFormatted: "+61 2 8000 1234",
+    address: "APAC Regional Relations, Sydney, Australia",
+    showMap: false,
+    marketName: "Australia",
+  },
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -77,6 +97,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     uk: "UK",
     ae: "UAE",
     in: "India",
+    ca: "Canada",
+    au: "Australia",
   };
   const countryName = countryNames[countryLower] || "US";
   const title = `Contact Joy Digital ${countryName} | Custom Web & SEO Solutions`;
@@ -92,6 +114,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         "en-gb": "https://joydigital.in/uk/contact",
         "en-ae": "https://joydigital.in/ae/contact",
         "en-in": "https://joydigital.in/in/contact",
+        "en-ca": "https://joydigital.in/ca/contact",
+        "en-au": "https://joydigital.in/au/contact",
       },
     },
   };

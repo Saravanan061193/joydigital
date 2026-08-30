@@ -14,6 +14,8 @@ export async function generateStaticParams() {
     { country: "uk" },
     { country: "ae" },
     { country: "in" },
+    { country: "ca" },
+    { country: "au" },
   ];
 }
 
@@ -33,6 +35,14 @@ const METADATA_MAP: Record<string, { title: string; description: string }> = {
   in: {
     title: "Top Website Design & SEO Company India | Joy Digital",
     description: "Boost your customer conversions. Joy Digital is India's leading SEO & custom web design agency, delivering search marketing and Map pack ranking systems.",
+  },
+  ca: {
+    title: "Next.js Web Development & SEO Agency Canada | Joy Digital",
+    description: "Scale organic revenue. Joy Digital builds high-performance Next.js websites, headless storefronts, and SEO campaigns for Canadian enterprises and startups.",
+  },
+  au: {
+    title: "Custom Web Design & SEO Agency Australia | Joy Digital",
+    description: "Empower your business with fast, search-compliant Next.js websites and Google ranking strategies engineered for Australian businesses.",
   },
 };
 
@@ -55,6 +65,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         "en-gb": "https://joydigital.in/uk",
         "en-ae": "https://joydigital.in/ae",
         "en-in": "https://joydigital.in/in",
+        "en-ca": "https://joydigital.in/ca",
+        "en-au": "https://joydigital.in/au",
       },
     },
   };

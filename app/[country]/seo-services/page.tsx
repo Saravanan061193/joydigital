@@ -14,6 +14,8 @@ export async function generateStaticParams() {
     { country: "uk" },
     { country: "ae" },
     { country: "in" },
+    { country: "ca" },
+    { country: "au" },
   ];
 }
 
@@ -63,6 +65,24 @@ const REGIONAL_CONFIGS: Record<string, {
     highPrice: "65,000",
     targetMarket: "India",
   },
+  ca: {
+    heroTitle: "Grow Organic Revenue with Expert SEO Services in Canada",
+    heroSubtitle: "Improve your Canadian search visibility, acquire high-intent B2B leads, and outperform competitors. We deploy data-driven campaigns targeting buyers across Canada.",
+    currency: "C$",
+    lowPrice: "399",
+    medPrice: "899",
+    highPrice: "1,699",
+    targetMarket: "Canada",
+  },
+  au: {
+    heroTitle: "Convert Organic Search Traffic with Australia Professional SEO Services",
+    heroSubtitle: "Drive qualified search visits to your business across Australia. Our expert organic search optimization improves page rank, trust, and client pipeline.",
+    currency: "A$",
+    lowPrice: "449",
+    medPrice: "999",
+    highPrice: "1,899",
+    targetMarket: "Australia",
+  },
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -75,6 +95,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     uk: "UK",
     ae: "UAE",
     in: "India",
+    ca: "Canada",
+    au: "Australia",
   };
   const countryName = countryNames[countryLower] || "US";
   const title = `SEO Services in ${countryName} | Drive Organic Growth - Joy Digital`;
@@ -90,6 +112,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         "en-gb": "https://joydigital.in/uk/seo-services",
         "en-ae": "https://joydigital.in/ae/seo-services",
         "en-in": "https://joydigital.in/in/seo-services",
+        "en-ca": "https://joydigital.in/ca/seo-services",
+        "en-au": "https://joydigital.in/au/seo-services",
       },
     },
   };

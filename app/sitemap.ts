@@ -6,7 +6,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const todayStr = new Date().toISOString().split('T')[0];
 
   // Target country subdirectory codes
-  const countries = ['us', 'uk', 'ae', 'in'];
+  const countries = ['us', 'uk', 'ae', 'in', 'ca', 'au'];
   
   // Localized routes
   const localizedPaths = ['', '/seo-services', '/website-development', '/contact'];
@@ -19,6 +19,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/case-studies/chennai-clinic-leads',
     '/case-studies/ecommerce-sales-increase',
     '/case-studies/saas-landing-optimization',
+    '/wordpress-to-nextjs-migration',
+    '/shopify-vs-headless-nextjs',
+    '/offshore-web-development-partner',
     '/blog',
     '/web-design-services',
     '/local-seo-services',
@@ -86,6 +89,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       'en-gb': `${baseUrl}/uk${routePath}`,
       'en-ae': `${baseUrl}/ae${routePath}`,
       'en-in': `${baseUrl}/in${routePath}`,
+      'en-ca': `${baseUrl}/ca${routePath}`,
+      'en-au': `${baseUrl}/au${routePath}`,
     };
     return { languages: langs };
   };

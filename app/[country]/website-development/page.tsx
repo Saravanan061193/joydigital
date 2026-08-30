@@ -14,6 +14,8 @@ export async function generateStaticParams() {
     { country: "uk" },
     { country: "ae" },
     { country: "in" },
+    { country: "ca" },
+    { country: "au" },
   ];
 }
 
@@ -63,6 +65,24 @@ const REGIONAL_CONFIGS: Record<string, {
     highPrice: "75,000",
     targetMarket: "India",
   },
+  ca: {
+    heroTitle: "High-Performance Next.js & React Web Development in Canada",
+    heroSubtitle: "Transform your digital footprint with custom business websites engineered for speed, secure operations, and search positioning for Canadian enterprises and startups.",
+    currency: "C$",
+    lowPrice: "599",
+    medPrice: "1,199",
+    highPrice: "2,399",
+    targetMarket: "Canada",
+  },
+  au: {
+    heroTitle: "Custom Next.js & React Web Development Agency Australia",
+    heroSubtitle: "Build ultra-fast, Core Web Vitals compliant websites using modern React and Tailwind CSS. We construct robust client lead pipelines for Australian businesses.",
+    currency: "A$",
+    lowPrice: "649",
+    medPrice: "1,299",
+    highPrice: "2,599",
+    targetMarket: "Australia",
+  },
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -75,6 +95,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     uk: "UK",
     ae: "UAE",
     in: "India",
+    ca: "Canada",
+    au: "Australia",
   };
   const countryName = countryNames[countryLower] || "US";
   const title = `Custom Next.js Web Development ${countryName} | Joy Digital`;
@@ -90,6 +112,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         "en-gb": "https://joydigital.in/uk/website-development",
         "en-ae": "https://joydigital.in/ae/website-development",
         "en-in": "https://joydigital.in/in/website-development",
+        "en-ca": "https://joydigital.in/ca/website-development",
+        "en-au": "https://joydigital.in/au/website-development",
       },
     },
   };

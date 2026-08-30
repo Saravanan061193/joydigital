@@ -156,6 +156,18 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           h1: "Websites, SEO & Digital Marketing for Indian Businesses",
           subtitle: "Grow your business online. Joy Digital designs high-speed business sites, Google Maps ranking systems, and lead-generation setups for companies across India.",
         };
+      case "ca":
+        return {
+          badge: "Canada Web Engineering Partner",
+          h1: "Websites, SEO & Digital Marketing for Canadian Businesses",
+          subtitle: "Joy Digital helps startups and enterprise teams across Canada build high-speed Next.js platforms and capture organic search pipelines.",
+        };
+      case "au":
+        return {
+          badge: "Australia Custom Web & SEO",
+          h1: "Websites, SEO & Digital Marketing for Australian Businesses",
+          subtitle: "Empower your business with fast, search-compliant Next.js websites and Google ranking strategies engineered for Australian companies.",
+        };
       default:
         return {
           badge: "Your Digital Growth Partner",
@@ -575,7 +587,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               <div className="border-t border-[#2A203F] pt-5 w-full max-w-lg">
                 <p className="text-[10px] font-bold text-[#A78BFA] uppercase tracking-wider mb-1">Base & Global Reach</p>
                 <p className="text-xs text-[#D8D2E6] leading-relaxed font-semibold">
-                  Based in India | Remotely serving clients across USA, UK, UAE, Australia, and India.
+                  Based in India | Remotely serving clients across USA, UK, UAE, Canada, Australia, and India.
                 </p>
               </div>
             </div>
