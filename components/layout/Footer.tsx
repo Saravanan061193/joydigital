@@ -82,7 +82,7 @@ export default function Footer() {
               <i className="fa-brands fa-youtube"></i>
             </a>
             <a
-              href="https://www.linkedin.com/in/saravanan-joydigital/"
+              href="https://www.linkedin.com/in/saravanan-l-34a861154/"
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded bg-[#E5E7EB]/50 border border-[#E5E7EB] flex items-center justify-center text-text-secondary hover:bg-accent hover:text-white transition-all duration-300"

@@ -1,5 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
@@ -101,14 +102,22 @@ export default function AboutPage() {
               Founder Profile & Vision
             </h2>
             <div className="bg-white border border-[#E5E7EB] rounded-3xl p-8 sm:p-12 shadow-sm flex flex-col items-center">
-              <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-[#2563EB]/10 to-accent/20 border-2 border-accent/30 flex items-center justify-center text-accent text-3xl mb-4 shadow-sm">
-                <i className="fa-solid fa-circle-user" />
+              <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-accent/30 shadow-md mb-4 group">
+                <Image
+                  src="/assets/images/founder.jpg"
+                  alt="Saravanan L - Founder & Director of Joy Digital"
+                  title="Saravanan L - Founder & Director"
+                  fill
+                  sizes="(max-width: 640px) 112px, 128px"
+                  className="object-cover object-center transform group-hover:scale-105 transition-transform duration-300"
+                  priority
+                />
               </div>
               <h3 className="text-xl font-extrabold text-primary-dark mb-1">Saravanan L</h3>
               <span className="text-xs font-semibold text-accent uppercase tracking-widest mb-3">Founder & Director</span>
               
               <a
-                href="https://www.linkedin.com/in/saravanan-joydigital/"
+                href="https://www.linkedin.com/in/saravanan-l-34a861154/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs text-text-muted hover:text-accent transition-colors font-medium mb-6"
