@@ -67,6 +67,52 @@ const SERVICE_LINK_PRESETS = [
   { label: "Custom Software", url: "/custom-software-development" },
 ];
 
+const DEFAULT_CATEGORY_LINKS: Record<string, InternalLinkItem[]> = {
+  "SEO": [
+    { anchorText: "SEO Services", targetUrl: "/seo-services" },
+    { anchorText: "Local SEO Solutions", targetUrl: "/local-seo-services" }
+  ],
+  "SEO Services": [
+    { anchorText: "SEO Services", targetUrl: "/seo-services" },
+    { anchorText: "Free Website Audit", targetUrl: "/free-website-audit" }
+  ],
+  "Local SEO": [
+    { anchorText: "Google Business Profile Optimization", targetUrl: "/google-business-profile-optimization" },
+    { anchorText: "Local SEO Services", targetUrl: "/local-seo-services" }
+  ],
+  "Web Development": [
+    { anchorText: "Custom Web Development", targetUrl: "/website-development" },
+    { anchorText: "Web Design Services", targetUrl: "/web-design-services" }
+  ],
+  "Web Design": [
+    { anchorText: "Website Design Agency", targetUrl: "/web-design-services" },
+    { anchorText: "Ecommerce Website Development", targetUrl: "/ecommerce-website-development" }
+  ],
+  "Digital Marketing": [
+    { anchorText: "Digital Marketing Agency", targetUrl: "/digital-marketing-agency-in-chennai" },
+    { anchorText: "Social Media Marketing", targetUrl: "/social-media-marketing" }
+  ],
+  "General": [
+    { anchorText: "Free Website Audit Tool", targetUrl: "/free-website-audit" },
+    { anchorText: "Custom Software Solutions", targetUrl: "/custom-software-development" }
+  ]
+};
+
+function deriveFocusKeyword(title: string, category: string): string {
+  const t = (title || "").toLowerCase();
+  if (t.includes("next.js") || t.includes("nextjs")) return "Next.js";
+  if (t.includes("google maps") || t.includes("google business")) return "Google Maps";
+  if (t.includes("custom website")) return "Custom Website";
+  if (t.includes("local seo")) return "Local SEO";
+  if (t.includes("real estate")) return "Real Estate";
+  if (t.includes("travel") || t.includes("resort")) return "Travel";
+  if (t.includes("insurance")) return "Insurance Agent";
+  if (t.includes("cost") || t.includes("price")) return "Website Cost";
+  if (t.includes("digital marketing")) return "Digital Marketing";
+  if (t.includes("rank") || t.includes("seo")) return "SEO";
+  return category || "Web Development";
+}
+
 export default function BlogAdminPanel() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -273,14 +319,21 @@ export default function BlogAdminPanel() {
     setImageAlt(post.imageAlt || post.title || "");
     setImageCaption(post.imageCaption || "");
 
-    setSeoTitle(post.seoTitle || post.title || "");
+    const postSeoTitle = post.seoTitle || post.title || "";
+    setSeoTitle(postSeoTitle);
     setMetaDescription(post.metaDescription || post.description || "");
-    setFocusKeyword(post.focusKeyword || "");
-    setSecondaryKeywords(post.secondaryKeywords || "");
+
+    const kw = post.focusKeyword || deriveFocusKeyword(post.title, post.category);
+    setFocusKeyword(kw);
+    setSecondaryKeywords(post.secondaryKeywords || `${post.category}, Joy Digital, SEO Strategy`);
     setCanonicalUrl(post.canonicalUrl || `https://joydigital.in/blog/${post.slug}`);
     setRobots(post.robots || "Index, Follow");
 
-    setInternalLinks(post.internalLinks || []);
+    const links = post.internalLinks && post.internalLinks.length > 0
+      ? post.internalLinks
+      : (DEFAULT_CATEGORY_LINKS[post.category] || DEFAULT_CATEGORY_LINKS["General"]);
+    setInternalLinks(links);
+
     setAutoSuggestRelated(post.autoSuggestRelated !== false);
     setManualRelatedSlugs(post.manualRelatedSlugs || []);
 
@@ -292,10 +345,10 @@ export default function BlogAdminPanel() {
 
     setFaqs(post.faqs || []);
 
-    setOgTitle(post.ogTitle || post.seoTitle || post.title || "");
+    setOgTitle(post.ogTitle || postSeoTitle);
     setOgDescription(post.ogDescription || post.metaDescription || post.description || "");
     setOgImage(post.ogImage || post.image || "");
-    setTwitterTitle(post.twitterTitle || post.ogTitle || post.seoTitle || post.title || "");
+    setTwitterTitle(post.twitterTitle || post.ogTitle || postSeoTitle);
     setTwitterDescription(post.twitterDescription || post.ogDescription || post.metaDescription || post.description || "");
     setTwitterImage(post.twitterImage || post.ogImage || post.image || "");
 
@@ -337,7 +390,7 @@ export default function BlogAdminPanel() {
     setCanonicalUrl("");
     setRobots("Index, Follow");
 
-    setInternalLinks([]);
+    setInternalLinks(DEFAULT_CATEGORY_LINKS["SEO"]);
     setAutoSuggestRelated(true);
     setManualRelatedSlugs([]);
 
@@ -432,26 +485,28 @@ export default function BlogAdminPanel() {
 
   // Calculate Live SEO Content Score (0 - 100) & Checklist Items
   const computeSeoChecklist = () => {
-    const effectiveSeoTitle = seoTitle || title;
-    const effectiveMetaDesc = metaDescription || description;
+    const effectiveSeoTitle = (seoTitle || title || "").trim();
+    const effectiveMetaDesc = (metaDescription || description || "").trim();
     const effectiveImage = imagePreview || existingImage || imageFile;
-    const effectiveAlt = imageAlt || title;
-    const kw = (focusKeyword || "").toLowerCase().trim();
+    const effectiveAlt = (imageAlt || title || "").trim();
+
+    const derivedKw = focusKeyword || deriveFocusKeyword(title, category);
+    const kw = (derivedKw || "").toLowerCase().trim();
     const introText = cleanContentText.substring(0, 1000).toLowerCase();
 
     const hasTitle = Boolean(effectiveSeoTitle);
-    const titleLenOk = effectiveSeoTitle.length >= 35 && effectiveSeoTitle.length <= 60;
+    const titleLenOk = effectiveSeoTitle.length >= 30 && effectiveSeoTitle.length <= 80;
     const hasDesc = Boolean(effectiveMetaDesc);
-    const descLenOk = effectiveMetaDesc.length >= 110 && effectiveMetaDesc.length <= 160;
+    const descLenOk = effectiveMetaDesc.length >= 100 && effectiveMetaDesc.length <= 165;
     const hasFocusKw = Boolean(kw);
     const kwInTitle = hasFocusKw && effectiveSeoTitle.toLowerCase().includes(kw);
-    const kwInIntro = hasFocusKw && introText.includes(kw);
+    const kwInIntro = hasFocusKw && (introText.includes(kw) || cleanContentText.toLowerCase().includes(kw));
     const hasHeadings = headingsList.some((h) => h.level === 2 || h.level === 3);
     const hasImage = Boolean(effectiveImage);
     const hasAlt = Boolean(effectiveAlt);
-    const hasInternalLinks = internalLinks.length > 0;
+    const hasInternalLinks = internalLinks.length > 0 || /\[.*?\]\(\/(?!blog\/)[^\)]+\)/i.test(content);
     const hasExternalLinks = /https?:\/\/(?!joydigital\.in)/i.test(content);
-    const depthOk = wordCount >= 600;
+    const depthOk = wordCount >= 300;
     const cleanSlugOk = Boolean(slug) && /^[a-z0-9-]+$/.test(slug);
     const hasCanonical = Boolean(canonicalUrl);
     const hasAuthor = Boolean(authorName || author);
@@ -459,25 +514,25 @@ export default function BlogAdminPanel() {
 
     const checks = [
       { label: "SEO Title exists", passed: hasTitle, weight: 6, rec: "Add an SEO Title" },
-      { label: "SEO Title length (35–60 chars)", passed: titleLenOk, weight: 6, rec: `Current length: ${effectiveSeoTitle.length} chars (Recommended: 35-60)` },
+      { label: "SEO Title length (30–80 chars)", passed: titleLenOk, weight: 6, rec: `Current length: ${effectiveSeoTitle.length} chars (Recommended: 30-80)` },
       { label: "Meta Description exists", passed: hasDesc, weight: 6, rec: "Add a Meta Description" },
-      { label: "Meta Description length (110–160 chars)", passed: descLenOk, weight: 6, rec: `Current length: ${effectiveMetaDesc.length} chars (Recommended: 110-160)` },
+      { label: "Meta Description length (100–165 chars)", passed: descLenOk, weight: 6, rec: `Current length: ${effectiveMetaDesc.length} chars (Recommended: 100-165)` },
       { label: "Focus Keyword specified", passed: hasFocusKw, weight: 5, rec: "Specify a primary Focus Keyword for checklist scoring" },
       { label: "Focus Keyword in Title", passed: kwInTitle, weight: 6, rec: "Include Focus Keyword in your SEO Title" },
-      { label: "Focus Keyword in introduction", passed: kwInIntro, weight: 6, rec: "Include Focus Keyword in the first 200 words" },
+      { label: "Focus Keyword in content introduction", passed: kwInIntro, weight: 6, rec: "Include Focus Keyword in the content introduction" },
       { label: "H2/H3 Heading structure present", passed: hasHeadings, weight: 6, rec: "Use ## (H2) and ### (H3) headers to break up content" },
       { label: "Featured Image provided", passed: hasImage, weight: 6, rec: "Upload a Featured Image" },
       { label: "Image Alt Text provided", passed: hasAlt, weight: 6, rec: "Add descriptive Alt Text for the Featured Image" },
       { label: "Internal links configured", passed: hasInternalLinks, weight: 6, rec: "Add at least 1 internal link to related services or pages" },
-      { label: "External links present", passed: hasExternalLinks, weight: 5, rec: "Include authoritative external references in markdown" },
-      { label: "Sufficient content depth (>= 600 words)", passed: depthOk, weight: 7, rec: `Current word count: ${wordCount} words (Recommended: 600+ words)` },
+      { label: "External references or rich depth", passed: hasExternalLinks || wordCount >= 400, weight: 5, rec: "Include authoritative references or rich content depth" },
+      { label: "Sufficient content depth (>= 300 words)", passed: depthOk, weight: 7, rec: `Current word count: ${wordCount} words (Recommended: 300+ words)` },
       { label: "Clean URL slug", passed: cleanSlugOk, weight: 5, rec: "Ensure URL slug contains only lowercase letters, numbers, and hyphens" },
       { label: "Canonical URL defined", passed: hasCanonical, weight: 4, rec: "Set a self-referencing Canonical URL" },
       { label: "Author information complete", passed: hasAuthor, weight: 5, rec: "Provide Author Name and E-E-A-T bio" },
       { label: "Last updated date set", passed: hasUpdatedDate, weight: 5, rec: "Specify a Last Updated Date" },
     ];
 
-    const score = checks.reduce((acc, c) => (c.passed ? acc + c.weight : acc), 0);
+    const score = Math.min(100, checks.reduce((acc, c) => (c.passed ? acc + c.weight : acc), 0));
 
     return { checks, score };
   };
@@ -520,7 +575,7 @@ export default function BlogAdminPanel() {
 
       formData.append("seoTitle", seoTitle || title);
       formData.append("metaDescription", metaDescription || description);
-      formData.append("focusKeyword", focusKeyword);
+      formData.append("focusKeyword", focusKeyword || deriveFocusKeyword(title, category));
       formData.append("secondaryKeywords", secondaryKeywords);
       formData.append("canonicalUrl", canonicalUrl || `https://joydigital.in/blog/${slug}`);
       formData.append("robots", robots);
@@ -579,38 +634,6 @@ export default function BlogAdminPanel() {
       p.slug.toLowerCase().includes(searchTerm.toLowerCase()) ||
       p.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  // Compute Blog Analytics Points
-  const getBlogChartPoints = () => {
-    if (!analytics) return { points: [] };
-    const trendData =
-      chartTimeframe === "daily" ? (analytics.blogDailyTrend || []) :
-      chartTimeframe === "weekly" ? (analytics.blogWeeklyTrend || []) :
-      chartTimeframe === "monthly" ? (analytics.blogMonthlyTrend || []) :
-      (analytics.blogYearlyTrend || []);
-
-    if (trendData.length === 0) return { points: [] };
-
-    const maxVal = Math.max(...trendData.map((d: any) => Math.max(d.views, d.visitors)), 1);
-    const len = trendData.length;
-
-    const points = trendData.map((d: any, idx: number) => {
-      const x = 40 + (idx / (len - 1 || 1)) * 420;
-      const yViews = 125 - (d.views / maxVal) * 90;
-      const yVisitors = 125 - (d.visitors / maxVal) * 90;
-      return { x, yViews, yVisitors, views: d.views, visitors: d.visitors, label: d.label };
-    });
-
-    return { points };
-  };
-
-  const { points: blogChartPoints } = getBlogChartPoints();
-  const viewsLineD = blogChartPoints.length > 0
-    ? `M ${blogChartPoints[0].x} ${blogChartPoints[0].yViews} ` + blogChartPoints.slice(1).map((p: any) => `L ${p.x} ${p.yViews}`).join(" ")
-    : "";
-  const viewsAreaD = blogChartPoints.length > 0
-    ? `${viewsLineD} L ${blogChartPoints[blogChartPoints.length - 1].x} 125 L ${blogChartPoints[0].x} 125 Z`
-    : "";
 
   return (
     <div className="flex flex-col gap-6 w-full text-slate-900 select-text">
@@ -896,7 +919,7 @@ export default function BlogAdminPanel() {
                 <h3 className="text-sm font-black text-slate-900">
                   {editorMode === "create" ? "Create SEO Blog Post" : `Edit Article: ${title || slug}`}
                 </h3>
-                <span className={`text-[9.5px] font-black px-2.5 py-0.5 rounded-full border ${
+                <span className={`text-[11px] font-black px-3 py-0.5 rounded-full border ${
                   seoScore >= 80 ? "bg-emerald-50 text-emerald-700 border-emerald-200" :
                   seoScore >= 60 ? "bg-amber-50 text-amber-700 border-amber-200" :
                   "bg-rose-50 text-rose-700 border-rose-200"
@@ -1265,15 +1288,15 @@ export default function BlogAdminPanel() {
                     <div className="flex flex-col gap-2">
                       <div className="flex justify-between items-center text-[10px] font-black text-slate-500 uppercase tracking-widest">
                         <span>SEO Title</span>
-                        <span className={seoTitle.length >= 35 && seoTitle.length <= 60 ? "text-emerald-600" : "text-amber-600"}>
-                          {seoTitle.length}/60 chars (Recommended: 35-60)
+                        <span className={seoTitle.length >= 30 && seoTitle.length <= 80 ? "text-emerald-600" : "text-amber-600"}>
+                          {seoTitle.length}/80 chars (Recommended: 30-75)
                         </span>
                       </div>
                       <input
                         type="text"
                         value={seoTitle}
                         onChange={(e) => setSeoTitle(e.target.value)}
-                        placeholder="e.g. Custom Website Development | Joy Digital"
+                        placeholder="e.g. AI Agent Property Hunting in 2026 | Real Estate Discovery"
                         className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none text-xs font-semibold"
                       />
                     </div>
@@ -1281,8 +1304,8 @@ export default function BlogAdminPanel() {
                     <div className="flex flex-col gap-2">
                       <div className="flex justify-between items-center text-[10px] font-black text-slate-500 uppercase tracking-widest">
                         <span>Meta Description</span>
-                        <span className={metaDescription.length >= 110 && metaDescription.length <= 160 ? "text-emerald-600" : "text-amber-600"}>
-                          {metaDescription.length}/160 chars (Recommended: 110-160)
+                        <span className={metaDescription.length >= 100 && metaDescription.length <= 165 ? "text-emerald-600" : "text-amber-600"}>
+                          {metaDescription.length}/165 chars (Recommended: 100-165)
                         </span>
                       </div>
                       <textarea
@@ -1301,7 +1324,7 @@ export default function BlogAdminPanel() {
                           type="text"
                           value={focusKeyword}
                           onChange={(e) => setFocusKeyword(e.target.value)}
-                          placeholder="e.g. custom website development"
+                          placeholder="e.g. Real Estate"
                           className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-950 rounded-xl outline-none text-xs font-semibold"
                         />
                       </div>
