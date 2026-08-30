@@ -324,21 +324,39 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Global Support Numbers */}
-        <div className="flex flex-col gap-6">
+        {/* Global Support & Office Location */}
+        <div className="flex flex-col gap-5">
           <h4 className="text-sm font-bold uppercase tracking-wider text-[#111827] relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-8 after:h-0.5 after:bg-accent">
-            Helpdesk
+            Office Location
           </h4>
-          <ul className="flex flex-col gap-3 text-xs text-text-secondary">
+          <div className="text-xs text-text-secondary flex flex-col gap-2">
+            <p className="font-medium text-[#111827] flex items-start gap-1.5 leading-relaxed">
+              <i className="fa-solid fa-location-dot text-accent mt-0.5 shrink-0" />
+              <span>RUBY SHOBHA CASTLE, 10D, Old Perungalathur, Tambaram, Chennai, Tamil Nadu 600063</span>
+            </p>
+          </div>
+          <ul className="flex flex-col gap-2.5 text-xs text-text-secondary border-t border-[#E5E7EB] pt-3">
             <li className="flex items-center gap-2">
               <span>🇮🇳</span>
               <span><strong>India & WA:</strong> <a href="tel:+919080026133" className="hover:text-accent text-[#111827] font-medium transition-colors">+91 90800 26133</a></span>
             </li>
-            <li className="flex items-center gap-2 border-t border-[#E5E7EB] pt-3 mt-1">
+            <li className="flex items-center gap-2">
               <span className="text-accent"><i className="fa-solid fa-envelope" /></span>
               <a href="mailto:saravanan061193@gmail.com" className="hover:text-accent text-[#111827] font-medium transition-colors">saravanan061193@gmail.com</a>
             </li>
           </ul>
+          <div className="w-full h-44 rounded-xl overflow-hidden border border-[#E5E7EB] shadow-sm mt-1">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7777.443250431031!2d80.08850594066773!3d12.925604899541957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52f58f958eb23d%3A0xff0979a4a8ce5768!2sRUBY%20SHOBHA%20CASTLE%2C%2010D%2C%20Old%20Perungalathur%2C%20Tambaram%2C%20Tamil%20Nadu%20600063!5e0!3m2!1sen!2sin!4v1788103977912!5m2!1sen!2sin"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen={true}
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+              title="Joy Digital Office Location - Ruby Shobha Castle, Tambaram, Chennai"
+            />
+          </div>
         </div>
 
       </div>
