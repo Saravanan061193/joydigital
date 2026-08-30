@@ -760,6 +760,7 @@ export default function BlogAdminPanel() {
                           <th className="py-3 px-4">Category</th>
                           <th className="py-3 px-4">Author</th>
                           <th className="py-3 px-4">Status</th>
+                          <th className="py-3 px-4">Views</th>
                           <th className="py-3 px-4">Dates</th>
                           <th className="py-3 px-4">SEO Content Score</th>
                           <th className="py-3 px-4">Indexing</th>
@@ -799,6 +800,13 @@ export default function BlogAdminPanel() {
                                   "bg-slate-100 text-slate-600 border-slate-200"
                                 }`}>
                                   {pStatus}
+                                </span>
+                              </td>
+
+                              <td className="py-4 px-4 whitespace-nowrap">
+                                <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold text-slate-800 bg-slate-100 border border-slate-200/80 px-2.5 py-1 rounded-full" title={`${post.views || 0} Total Pageviews`}>
+                                  <i className="fa-solid fa-eye text-primary text-[9px]" />
+                                  {(post.views || 0).toLocaleString()} Views
                                 </span>
                               </td>
 
