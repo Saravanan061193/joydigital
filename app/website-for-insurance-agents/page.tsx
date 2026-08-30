@@ -1,178 +1,271 @@
 import React from "react";
 import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Website for Insurance Agents & LIC Advisors | Joy Digital",
-  description: "Custom lead-generation websites for Insurance Agents and LIC Advisors. Showcase policies, download brochures, and capture leads directly on WhatsApp.",
+  title: "Insurance Agent Website Design & Lead Generation SEO | Joy Digital",
+  description: "High-converting website design & digital marketing for insurance agents, financial advisors, and insurance brokerages. NRI insurance leads, premium calculators, and financial SEO.",
   alternates: {
     canonical: "https://joydigital.in/website-for-insurance-agents",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://joydigital.in/website-for-insurance-agents",
+    title: "Insurance Agent Website Design & NRI Expat Lead Generation | Joy Digital",
+    description: "Ultra-fast Next.js website design for insurance advisors, wealth consultants, and financial planners. Premium quote estimators, NRI expat health & term insurance forms, and local SEO.",
+    images: [{ url: "https://joydigital.in/assets/images/hero-banner.webp", width: 1200, height: 630, alt: "Insurance Agent Website Design Joy Digital" }],
   },
 };
 
 const pageSchema = {
   "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "Website Design for Insurance Agents",
-  "serviceType": "Bespoke Web Development for Financial Advisors",
-  "provider": {
-    "@type": "LocalBusiness",
-    "name": "Joy Digital",
-    "image": "https://joydigital.in/assets/images/logo.webp",
-    "telephone": "+919080026133",
-    "priceRange": "₹₹",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Old Perungalathur",
-      "addressLocality": "Chennai",
-      "addressRegion": "Tamil Nadu",
-      "postalCode": "600063",
-      "addressCountry": "IN"
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": "https://joydigital.in/website-for-insurance-agents#service",
+      "name": "Insurance Agent Website Design & Financial SEO",
+      "serviceType": "Insurance Web Development & Financial Advisor Marketing",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Joy Digital",
+        "image": "https://joydigital.in/assets/images/logo.webp",
+        "telephone": "+919080026133",
+        "url": "https://joydigital.in",
+        "priceRange": "₹₹",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Old Perungalathur",
+          "addressLocality": "Chennai",
+          "addressRegion": "Tamil Nadu",
+          "postalCode": "600063",
+          "addressCountry": "IN"
+        }
+      },
+      "description": "Custom web design for insurance agents, LIC advisors, health insurance brokers, and wealth planners. Features instant premium quote forms, NRI health/term policy pages, and search optimization.",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "INR",
+        "lowPrice": "15000",
+        "highPrice": "38000",
+        "offerCount": "2"
+      }
     }
-  },
-  "description": "Professional web design services for insurance agents, LIC advisors, and financial consultants. Integrated with WhatsApp CTA, direct policy contact forms, and local SEO setup.",
-  "offers": {
-    "@type": "AggregateOffer",
-    "priceCurrency": "INR",
-    "lowPrice": "15000",
-    "highPrice": "25000",
-    "offerCount": "2"
-  }
+  ]
 };
 
-export default function InsuranceAgentWebPage() {
+export default function InsuranceWebPage() {
   return (
     <ServicePageTemplate
       serviceName="Website for Insurance Agents"
-      heroTitle="Custom Lead-Generation Websites for Insurance Agents & LIC Advisors"
-      heroSubtitle="Stop relying strictly on cold calling. Build authority, present policy calculators, and capture high-intent insurance inquiries directly on your own branded web layout."
+      heroTitle="High-Converting Website Design & SEO for Insurance Agents & Financial Advisors"
+      heroSubtitle="Generate qualified health, term, vehicle, and NRI expat insurance leads 24/7. We engineer fast, trustworthy Next.js websites for insurance brokers, financial advisors, wealth managers, and agency teams."
       leadSource="Website for Insurance Agents Landing Page"
-      heroCtaText="Get Insurance Website Quote"
-      overviewTitle="Personal Branding & Direct Lead Capture for Financial Advisors"
+      heroCtaText="Get Free Insurance Web Quote"
+      overviewTitle="Why Most Insurance Agent Websites Fail to Capture Quality Policy Leads (And How We Fix It)"
       overviewContent={
         <div className="space-y-6">
           <p>
-            In the insurance and financial planning sector, client trust is your most valuable asset. When a prospect searches for a policy, they expect to deal with a professional, verified advisor. Having a custom web address (like *www.advisorname.com*) establishes immediate authority and differentiates you from generic competitors.
+            When families, business owners, or overseas NRIs search for insurance policies, they look for clarity, financial trust, policy comparisons, tax benefits, and easy consultation scheduling.
           </p>
           <p>
-            At Joy Digital, we build high-converting portfolios designed specifically for **LIC advisors, insurance consultants, and wealth planners**. Each site features direct lead routing, downloadable policy brochure cards, and dynamic WhatsApp chat hooks.
+            Unfortunately, many insurance agent websites look untrustworthy, load slowly, hide policy benefits, and lack interactive premium quote forms or instant WhatsApp inquiry buttons.
           </p>
-          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Optimized to Drive Direct Inquiries</h3>
+          <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-sm space-y-4 my-6">
+            <h3 className="text-lg font-bold text-primary-dark">How Joy Digital Builds High-Converting Insurance Agent Websites</h3>
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-text-secondary">
+              <li className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
+                <span><strong>Instant Policy Premium Quote Estimator</strong>: Health, life & vehicle inputs</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
+                <span><strong>NRI & Expat Insurance Portal</strong>: Specialized term & health policy advisories</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
+                <span><strong>Policy Comparison Matrix</strong>: Coverage, sum assured & rider options</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
+                <span><strong>Local & Global Financial SEO Strategy</strong>: Rank for high-value policy keywords</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
+                <span><strong>Sub-1.5s Load Speeds</strong>: Ultra-fast serverless Next.js architecture</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
+                <span><strong>Advisor WhatsApp Routing</strong>: Instant client policy consultation</span>
+              </li>
+            </ul>
+          </div>
           <p>
-            We don&apos;t build generic portfolios. Every template is structured around your direct contact options. Visitors can select the policy type they are interested in (Life Insurance, Health, Vehicle, Pension plans) and submit a custom quote request form, sending the data directly to your email or WhatsApp number.
+            At Joy Digital, we combine financial branding with <Link href="/website-development" className="text-primary font-bold hover:underline">custom web engineering</Link>, <Link href="/seo-services" className="text-primary font-bold hover:underline">insurance search optimization</Link>, and <Link href="/google-business-profile-setup" className="text-primary font-bold hover:underline">Google Business Profile setup</Link> to help agents scale policy sales.
           </p>
         </div>
       }
-      benefitsTitle="Bespoke Insurance Website Features"
-      benefitsSubtitle="We build layouts focused on establishing credibility and making it simple for clients to reach you."
+      benefitsTitle="10 Essential Features We Build for Insurance Agent Websites"
+      benefitsSubtitle="Designed to build financial credibility, explain policy benefits, and capture qualified policy leads."
       benefits={[
         {
+          icon: "fa-solid fa-calculator",
+          title: "1. Policy Premium Quote Form",
+          description: "Allow clients to enter age, sum assured, coverage type, and city for instant customized policy recommendations.",
+        },
+        {
+          icon: "fa-solid fa-plane-departure",
+          title: "2. NRI & Overseas Expat Insurance Section",
+          description: "Target non-resident Indians with specialized term insurance, parents health insurance, and global travel policies.",
+        },
+        {
+          icon: "fa-solid fa-heart-pulse",
+          title: "3. Health, Term & Family Policy Hubs",
+          description: "Dedicated pages detailing cashless hospital networks, critical illness coverage, tax savings (80C/80D), and maturity benefits.",
+        },
+        {
+          icon: "fa-solid fa-car-burst",
+          title: "4. Vehicle, Commercial & Business Insurance",
+          description: "Showcase motor insurance, zero-depreciation coverage, shopkeeper policies, and marine/transit risk protection.",
+        },
+        {
+          icon: "fa-solid fa-hand-holding-dollar",
+          title: "5. Claims Settlement Support & Assistance Hub",
+          description: "Reassure policyholders with a clear 24/7 claims assistance guide and dedicated helpline contact details.",
+        },
+        {
           icon: "fa-solid fa-user-shield",
-          title: "Personal Branding Setup",
-          description: "Establish professional authority with profile sections, certificates, client reviews, and direct awards displays.",
+          title: "6. Advisor Credentials & MDRT Achievement Showcase",
+          description: "Highlight advisor experience, IRDAI license details, total claims settled, and industry recognitions.",
         },
         {
-          icon: "fa-solid fa-comments-dollar",
-          title: "WhatsApp Leads Sync",
-          description: "Allow clients to click and start a WhatsApp conversation with a pre-filled template about specific policies.",
+          icon: "fa-solid fa-scale-balanced",
+          title: "7. Interactive Policy Comparison Table",
+          description: "Help clients compare premium rates, waiting periods, room rent capping, and co-payment clauses clearly.",
         },
         {
-          icon: "fa-solid fa-list-check",
-          title: "Custom Policy Forms",
-          description: "Capture prospect details including age, budget, policy category, and contact numbers with clean data validation.",
+          icon: "fa-brands fa-whatsapp",
+          title: "8. One-Tap Advisor WhatsApp Link",
+          description: "Instant button connecting clients to your desk pre-filled with: 'Hi, I need a consultation for health/term insurance policy.'",
         },
         {
-          icon: "fa-solid fa-bolt",
-          title: "Blazing Speed Delivery",
-          description: "Built on serverless Next.js frameworks so mobile pages load in under 1.2 seconds, preventing lead drop-off.",
+          icon: "fa-solid fa-magnifying-glass-location",
+          title: "9. Financial SEO Keyword Strategy",
+          description: "Target high-intent terms like 'Best health insurance agent Chennai', 'NRI term insurance advisor', and 'LIC agent near me'.",
         },
         {
-          icon: "fa-solid fa-globe",
-          title: "Custom Domain & SSL",
-          description: "We configure your custom personal domain (e.g. www.name.com) with secure HTTPS encryption to build trust.",
-        },
-        {
-          icon: "fa-solid fa-qrcode",
-          title: "Digital Business Card Link",
-          description: "Get a mobile-optimized business card page to share easily via WhatsApp status, QR code, or SMS.",
+          icon: "fa-solid fa-calendar-check",
+          title: "10. Online Policy Renewal Reminder Workflow",
+          description: "Simple lead capture forms allowing existing clients to request policy renewal assistance or coverage upgrades.",
         },
       ]}
-      processTitle="How We Build Your Advisor Website"
-      processSubtitle="We systematically construct your personal profile and connect all direct inquiry routing."
+      processTitle="Our 6-Step Insurance Web Engineering Roadmap"
+      processSubtitle="A proven roadmap from policy audit to live client lead acquisition."
       processSteps={[
         {
           step: "1",
-          icon: "fa-solid fa-clipboard-question",
-          title: "Gather Profile Details",
-          description: "We collect your profile details, policy services list, awards photos, and contact information.",
+          icon: "fa-solid fa-clipboard-user",
+          title: "Advisor & Target Audit",
+          description: "We audit your insurance portfolio, preferred tie-ups (Star Health, HDFC Ergo, LIC, ICICI Prudential), and lead workflow.",
         },
         {
           step: "2",
-          icon: "fa-solid fa-file-code",
-          title: "Design & Development",
-          description: "We code a fast, secure website tailored to your branding with optimized conversion actions.",
+          icon: "fa-solid fa-sitemap",
+          title: "Taxonomy & Keyword Structure",
+          description: "We structure policy category hubs, quote calculators, NRI expat pages, and financial SEO term maps.",
         },
         {
           step: "3",
-          icon: "fa-solid fa-message",
-          title: "Setup WhatsApp Leads",
-          description: "We configure forms and floating widgets to redirect inquiries directly to your mobile chat.",
+          icon: "fa-solid fa-pen-ruler",
+          title: "Trustworthy UI/UX Design",
+          description: "We design clean, authoritative desktop and mobile interface mockups with clear call-to-action buttons.",
         },
         {
           step: "4",
-          icon: "fa-solid fa-globe",
-          title: "Domain Launch",
-          description: "We connect your domain, deploy the cloud hosting, and submit pages directly to search engines.",
+          icon: "fa-solid fa-code",
+          title: "Next.js High-Speed Build",
+          description: "We build your platform on serverless Next.js frameworks for sub-1.5s page load speeds across global networks.",
+        },
+        {
+          step: "5",
+          icon: "fa-solid fa-chart-line",
+          title: "Financial Schema & Lead Sync",
+          description: "We implement FinancialService schema markup, configure GA4 event tracking, and sync quote leads to your email.",
+        },
+        {
+          step: "6",
+          icon: "fa-solid fa-rocket",
+          title: "Launch & Google Indexing",
+          description: "We launch live on your custom domain, submit XML sitemaps to Google Search Console, and verify search engine indexing.",
         },
       ]}
-      pricingTitle="Affordable Pricing Packages"
-      pricingSubtitle="Get a premium, lead-converting advisor website with no recurring developer costs."
+      pricingTitle="Transparent Pricing Packages for Insurance Agents"
+      pricingSubtitle="Get a modern, high-converting insurance portal with zero ongoing monthly software commissions."
       pricingTiers={[
         {
-          name: "Standard Advisor Portfolio",
+          name: "Individual Advisor Plan",
           price: "₹15,000",
-          period: "one-time",
-          description: "Perfect for individual LIC and general insurance agents aiming for a professional profile.",
+          period: "one-time ($750 USD)",
+          description: "Ideal for individual insurance agents, LIC advisors, and independent health insurance consultants.",
           features: [
-            "1-5 Custom Layout Pages",
-            "About Me & Biography Section",
-            "Listed Policies Grid (Life, Health, Motor)",
-            "WhatsApp & Call CTAs",
-            "Secure Contact / Inquiry Form",
-            "1 Year Hosting Setup Support",
+            "1-5 Custom Responsive Pages",
+            "Policy Quote Request Form",
+            "Health & Term Insurance Showcase",
+            "WhatsApp & Phone Direct Links",
+            "Advisor Bio & License Display",
+            "Google Maps Local Citation Setup",
+            "Basic Financial SEO & Schema Markup",
+            "1 Year Priority Technical Support",
           ],
-          ctaText: "Select Standard Plan",
+          ctaText: "Choose Individual Advisor Plan",
         },
         {
-          name: "Premium Agency Funnel",
-          price: "₹25,000",
-          period: "one-time",
-          description: "Recommended for financial planners, team managers, and established agencies.",
+          name: "Enterprise Agency Portal",
+          price: "₹38,000",
+          period: "one-time ($1,800 USD)",
+          description: "Recommended for insurance brokerages, financial planning firms, and NRI policy advisories.",
           isPopular: true,
           features: [
-            "Up to 10 Advanced Pages",
-            "Dynamic Policy Quote Calculators Form",
-            "Client Testimonials & Feedback Carousel",
-            "Google Maps Local Citation Setup",
-            "Detailed Blog & News Section Setup",
-            "1 Year Domain & Priority Support",
+            "Up to 15 Custom Policy & Service Pages",
+            "Interactive Policy Premium Calculator",
+            "NRI & Overseas Expat Dedicated Section",
+            "Claims Assistance & Download Hub",
+            "Policy Comparison Matrix Widget",
+            "Full Financial SEO & Search Architecture",
+            "Google Analytics 4 & Search Console Sync",
+            "1 Year Technical Support & Maintenance",
           ],
-          ctaText: "Select Premium Plan",
+          ctaText: "Choose Enterprise Agency Plan",
         },
       ]}
       faqs={[
         {
-          question: "Do I need to pay monthly maintenance charges?",
-          answer: "No. We build on serverless architectures, so there are zero recurring monthly hosting or coding fees. You only pay for your annual domain name renewal.",
+          question: "How much does a website for an insurance agent cost?",
+          answer: "Our insurance agent website packages start from ₹15,000 ($750 USD) for individual advisors up to ₹38,000 ($1,800 USD) for enterprise brokerage portals.",
         },
         {
-          question: "Can clients request a custom policy quote directly?",
-          answer: "Yes! We integrate secure interactive forms where clients submit their details. These requests are sent directly to your email and WhatsApp.",
+          question: "Can prospective clients request policy quotes for health and term insurance online?",
+          answer: "Yes! We build custom quote request forms where clients select sum assured, age bracket, family members, and policy type sent directly to your phone and email.",
+        },
+        {
+          question: "Will the website help us generate NRI insurance leads from overseas?",
+          answer: "Yes. We design dedicated NRI insurance landing sections targeting non-resident Indians searching for parents' health insurance, term policies, and tax-saving plans in India.",
+        },
+        {
+          question: "Can we showcase multiple insurance brand tie-ups (Star Health, HDFC Ergo, LIC, TATA AIG)?",
+          answer: "Yes. We display authorized partner logos, cashless hospital counts, and claim settlement ratios for all insurers you represent.",
+        },
+        {
+          question: "Are there any monthly listing or platform fees?",
+          answer: "No. You own 100% of your website code and custom domain. There are zero recurring monthly listing fees or per-lead commissions.",
         },
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
-        { href: "/website-development-company-chennai", label: "website development in Chennai" },
+        { href: "/website-development", label: "Custom Web Development" },
+        { href: "/seo-services", label: "Financial SEO Services" },
+        { href: "/local-seo-services", label: "Local Map SEO" },
+        { href: "/google-business-profile-setup", label: "Google Business Setup" },
         { href: "/portfolio", label: "View Portfolio" },
         { href: "/contact", label: "Contact Us" },
       ]}

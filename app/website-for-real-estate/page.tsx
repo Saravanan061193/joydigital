@@ -4,16 +4,16 @@ import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Real Estate Website Development & SEO | Joy Digital",
-  description: "High-converting real estate website design and development built for lead generation. Features property listings, WhatsApp sync, and map search.",
+  title: "Real Estate Website Design & Property Lead SEO | Joy Digital",
+  description: "High-converting website design & digital marketing for real estate developers, property brokers, luxury builders, and NRI property consultants. Features property portals, virtual 3D tour embeds, and real estate SEO.",
   alternates: {
     canonical: "https://joydigital.in/website-for-real-estate",
   },
   openGraph: {
     type: "website",
     url: "https://joydigital.in/website-for-real-estate",
-    title: "Real Estate Website Design & Development | Joy Digital",
-    description: "High-converting real estate website design and development built for lead generation. Features property search, WhatsApp integration, maps, and SEO to attract buyers.",
+    title: "Real Estate Website Design & NRI Property Buyer Leads | Joy Digital",
+    description: "Ultra-fast Next.js website design for real estate agencies, luxury home builders, and commercial brokers. Interactive floor plans, NRI buyer portals, site visit scheduling, and local/global property SEO.",
     images: [{ url: "https://joydigital.in/assets/images/hero-banner.webp", width: 1200, height: 630, alt: "Real Estate Website Design Joy Digital" }],
   },
 };
@@ -24,8 +24,8 @@ const pageSchema = {
     {
       "@type": "Service",
       "@id": "https://joydigital.in/website-for-real-estate#service",
-      "name": "Real Estate Website Design & Development",
-      "serviceType": "Real Estate Web Development",
+      "name": "Real Estate Website Design & Property SEO",
+      "serviceType": "Real Estate Web Development & Property Lead Generation",
       "provider": {
         "@type": "LocalBusiness",
         "name": "Joy Digital",
@@ -42,12 +42,12 @@ const pageSchema = {
           "addressCountry": "IN"
         }
       },
-      "description": "Custom real estate website design and web development for brokers, agencies, and property developers. Includes property search filters, WhatsApp leads, and local SEO.",
+      "description": "Custom web design for real estate developers, property agencies, luxury villa builders, and NRI investment advisories. Features property listing directories, site visit booking forms, RERA disclosures, and search optimization.",
       "offers": {
         "@type": "AggregateOffer",
         "priceCurrency": "INR",
-        "lowPrice": "15000",
-        "highPrice": "35000",
+        "lowPrice": "20000",
+        "highPrice": "55000",
         "offerCount": "2"
       }
     }
@@ -58,213 +58,216 @@ export default function RealEstateWebPage() {
   return (
     <ServicePageTemplate
       serviceName="Website for Real Estate"
-      heroTitle="High-Converting Real Estate Website Design & SEO"
-      heroSubtitle="Stop relying strictly on expensive listing portals where you share leads with competitors. Own a high-performing property website that showcases your apartments, villas, plots, and commercial projects while converting search traffic directly into site visit bookings and WhatsApp enquiries."
+      heroTitle="High-Converting Website Design & Property SEO for Real Estate Developers & Brokers"
+      heroSubtitle="Convert high-intent homebuyers, commercial tenants, and NRI property investors into direct site visit bookings. We engineer fast, visually arresting Next.js portals for real estate builders, luxury brokers, and property agencies."
       leadSource="Website for Real Estate Landing Page"
-      heroCtaText="Get Free Real Estate Quote"
-      overviewTitle="Why Most Real Estate Websites Fail to Generate Enquiries (And How We Fix It)"
+      heroCtaText="Get Free Real Estate Web Quote"
+      overviewTitle="Why Most Real Estate Websites Fail to Capture High-Value Buyer Leads (And How We Fix It)"
       overviewContent={
         <div className="space-y-6">
           <p>
-            In the property market, your website is often the first interaction a buyer has with your brand. Yet, most real estate websites operate like digital brochures — pretty to look at, but ineffective at starting conversations.
+            Homebuyers and NRI property investors demand detailed information—floor plans, master layouts, location advantages, pricing breakdowns, RERA registration numbers, and 3D virtual walkthroughs—before requesting site inspections.
           </p>
           <p>
-            If your website suffers from complex navigation, slow image loading, generic contact forms, or poor mobile responsiveness, you are likely losing qualified property buyers to competitors. A buyer interested in a high-value property will not struggle through a clunky website; if getting information takes effort, they will move on.
+            Unfortunately, many real estate websites suffer from slow image rendering, unorganized property listings, broken mobile inquiry popups, and missing direct WhatsApp links or site visit scheduling widgets.
           </p>
           <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-sm space-y-4 my-6">
-            <h3 className="text-lg font-bold text-primary-dark">How Joy Digital Builds Real Estate Websites for Conversion</h3>
+            <h3 className="text-lg font-bold text-primary-dark">How Joy Digital Builds High-Converting Real Estate Portals</h3>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-text-secondary">
               <li className="flex items-center gap-2">
                 <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
-                <span><strong>Mobile-First UX Strategy</strong>: Thumb-friendly filters & sticky contact bars</span>
+                <span><strong>Site Visit & VIP Consultation Form</strong>: Direct booking widget with date selection</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
-                <span><strong>Property WhatsApp Routing</strong>: Direct chat pre-filled with property title</span>
+                <span><strong>NRI Investment Portal</strong>: Specialized currency converters & video walkthroughs</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
-                <span><strong>SEO-Ready Architecture</strong>: Property schema & dynamic URL paths</span>
+                <span><strong>Filterable Property Directory</strong>: BHK, location, budget & possession timeline</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
-                <span><strong>Sub-1.5s Load Speeds</strong>: Built on modern serverless Next.js engine</span>
+                <span><strong>Real Estate SEO Strategy</strong>: Rank for competitive local & global property keywords</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
+                <span><strong>Sub-1.5s Load Speeds</strong>: Ultra-fast serverless Next.js architecture</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
+                <span><strong>Property Sales WhatsApp Routing</strong>: Instant buyer lead connection</span>
               </li>
             </ul>
           </div>
           <p>
-            At Joy Digital, we build custom lead-generation engines tailored to how modern property buyers make decisions. Combine our expert <Link href="/website-development" className="text-primary font-bold hover:underline">custom web development</Link> with targeted <Link href="/seo-services" className="text-primary font-bold hover:underline">real estate SEO services</Link> and <Link href="/google-business-profile-setup" className="text-primary font-bold hover:underline">Google Business Profile citations</Link> to dominate local search results.
+            At Joy Digital, we merge real estate branding with <Link href="/website-development" className="text-primary font-bold hover:underline">high-speed Next.js web development</Link>, <Link href="/seo-services" className="text-primary font-bold hover:underline">property SEO strategies</Link>, and <Link href="/local-seo-services" className="text-primary font-bold hover:underline">Google Business Profile optimization</Link> to help builders sell out inventory faster.
           </p>
         </div>
       }
-      benefitsTitle="10 Essential Real Estate Website Features We Build"
-      benefitsSubtitle="Every component is engineered to establish immediate buyer trust and drive direct site visit bookings."
+      benefitsTitle="10 Essential Features We Build for Real Estate Websites"
+      benefitsSubtitle="Engineered to showcase property developments, capture buyer inquiries, and drive site visits."
       benefits={[
         {
-          icon: "fa-solid fa-filter",
-          title: "1. Advanced Property Search Filter",
-          description: "Filter listings by location, price, property type (Apartment, Villa, Plot), bedrooms, and construction status instantly.",
-        },
-        {
-          icon: "fa-solid fa-images",
-          title: "2. Photo Galleries & Virtual Tours",
-          description: "Multi-image viewports, high-resolution downloadable PDF floor plans, master layouts, and embedded 360° virtual video walkthroughs.",
-        },
-        {
-          icon: "fa-solid fa-list-check",
-          title: "3. Detailed Property Specification Cards",
-          description: "Present RERA registration number, price per sq. ft., total area, possession date, furnishing status, and amenities upfront.",
-        },
-        {
-          icon: "fa-brands fa-whatsapp",
-          title: "4. Property-Specific WhatsApp Leads",
-          description: "One click opens WhatsApp with a pre-filled message: 'Hi, I am interested in [Property Title]. Please share availability.'",
+          icon: "fa-solid fa-building",
+          title: "1. Filterable Property & Project Directory",
+          description: "Organize properties by BHK type (1/2/3/4 BHK, Luxury Villas), locality, budget range, and construction status.",
         },
         {
           icon: "fa-solid fa-map-location-dot",
-          title: "5. Google Maps & Landmark Distances",
-          description: "Interactive map pins highlighting distance to nearby schools, hospitals, IT parks, metro stations, and highways.",
+          title: "2. Interactive Floor Plans & Master Layouts",
+          description: "High-resolution downloadable floor plan PDFs, 2D/3D layout diagrams, and unit area breakdowns (Sq. Ft.).",
+        },
+        {
+          icon: "fa-solid fa-plane-arrival",
+          title: "3. NRI Investor & Expat Property Portal",
+          description: "Target overseas buyers with USD/EUR currency calculators, virtual video walkthroughs, and RBI/FEMA legal guides.",
         },
         {
           icon: "fa-solid fa-calendar-check",
-          title: "6. 'Schedule Site Visit' Lead Capture",
-          description: "Streamlined 3-field form allowing prospective buyers to choose a preferred date and time for an in-person viewing.",
+          title: "4. Schedule Site Visit & Cab Pickup Form",
+          description: "Lead capture form allowing prospective buyers to choose site inspection dates and request free cab pickup.",
         },
         {
-          icon: "fa-solid fa-file-pdf",
-          title: "7. Gated Project Brochure Downloads",
-          description: "Capture prospect phone number and email in exchange for instant access to high-res project brochure files.",
+          icon: "fa-solid fa-calculator",
+          title: "5. EMI & Property Home Loan Calculator",
+          description: "Interactive financial tools allowing buyers to calculate monthly EMI installments and bank loan eligibility.",
         },
         {
-          icon: "fa-solid fa-id-card",
-          title: "8. Agent & Branch Location Pages",
-          description: "Dedicated profile pages for team members and regional offices featuring photos, direct contact links, and active listings.",
+          icon: "fa-solid fa-shield-check",
+          title: "6. RERA Compliance & Legal Disclosure Wall",
+          description: "Prominently display RERA approval numbers, bank pre-approvals (HDFC, SBI, ICICI), and title deed transparency.",
+        },
+        {
+          icon: "fa-solid fa-vr-cardboard",
+          title: "7. 360° Virtual Tour & Video Walkthrough",
+          description: "Embed Matterport 3D virtual tours and YouTube drone aerial videos showcasing project surroundings.",
+        },
+        {
+          icon: "fa-brands fa-whatsapp",
+          title: "8. One-Tap Property Advisor WhatsApp Button",
+          description: "Instant button connecting buyers directly to your sales desk pre-filled with: 'Hi, I want details and brochure for project.'",
         },
         {
           icon: "fa-solid fa-magnifying-glass-location",
-          title: "9. SEO Category & Location Pages",
-          description: "Target search queries like 'Apartments for sale in Chennai' or 'Villas in Madurai' with dedicated landing pages.",
+          title: "9. Property SEO & Location Keyword Strategy",
+          description: "Target high-intent search terms like '3 BHK luxury apartments in Chennai', 'Villas in Ooty', and 'Commercial office space Madurai'.",
         },
         {
-          icon: "fa-solid fa-sliders",
-          title: "10. Easy Property Admin Panel",
-          description: "Simple CMS dashboard allowing your team to add, update, archive, or mark properties as sold without coding.",
+          icon: "fa-solid fa-download",
+          title: "10. E-Brochure & Price List Download Hub",
+          description: "Capture qualified buyer leads by offering instant PDF brochure downloads in exchange for contact details.",
         },
       ]}
-      processTitle="Our 6-Step Real Estate Website Development Process"
-      processSubtitle="A proven roadmap from initial strategy to live search engine indexing."
+      processTitle="Our 6-Step Real Estate Web Engineering Roadmap"
+      processSubtitle="A proven roadmap from project audit to live buyer lead generation."
       processSteps={[
         {
           step: "1",
-          icon: "fa-solid fa-clipboard-list",
-          title: "Business & Inventory Audit",
-          description: "We analyze your target market, property portfolio, pricing model, and sales team lead handling.",
+          icon: "fa-solid fa-city",
+          title: "Project & Target Audit",
+          description: "We audit your property listings, target buyer personas (local buyers vs NRIs), pricing, and sales manager workflow.",
         },
         {
           step: "2",
           icon: "fa-solid fa-sitemap",
-          title: "UX & Search Architecture",
-          description: "We map out user flows, listing categories, property filter taxonomies, and target SEO keywords.",
+          title: "Taxonomy & Keyword Structure",
+          description: "We structure project categories, floor plan layouts, brochure download triggers, and real estate SEO term maps.",
         },
         {
           step: "3",
-          icon: "fa-solid fa-pen-ruler",
-          title: "Custom UI/UX Design",
-          description: "We craft modern desktop and mobile layouts, property cards, brochure views, and booking forms.",
+          icon: "fa-solid fa-palette",
+          title: "High-Impact UI/UX Design",
+          description: "We design striking, luxury desktop and mobile interface mockups with full-screen image heroes.",
         },
         {
           step: "4",
           icon: "fa-solid fa-code",
-          title: "Next.js Web Development",
-          description: "We code your site using serverless Next.js frameworks for sub-1.5s loading speed and responsive galleries.",
+          title: "Next.js High-Speed Build",
+          description: "We build your platform on serverless Next.js frameworks for sub-1.5s page load speeds across global networks.",
         },
         {
           step: "5",
           icon: "fa-solid fa-chart-line",
-          title: "SEO & Lead Tracking Setup",
-          description: "We implement RealEstate schema, configure GA4 event tracking, and test WhatsApp lead routing.",
+          title: "Real Estate Schema & Lead Sync",
+          description: "We implement RealEstateAgent & SingleFamilyResidence schema markup, configure GA4 event tracking, and sync leads with CRM.",
         },
         {
           step: "6",
           icon: "fa-solid fa-rocket",
-          title: "Launch & Team Training",
-          description: "We deploy live on custom domain, submit XML sitemaps to Google, and train your team on updates.",
+          title: "Launch & Google Indexing",
+          description: "We launch live on your custom domain, submit XML sitemaps to Google Search Console, and verify local search indexing.",
         },
       ]}
-      pricingTitle="Transparent Pricing Packages"
-      pricingSubtitle="Get a custom, high-converting property website with zero monthly listing fees or portal commissions."
+      pricingTitle="Transparent Pricing Packages for Real Estate"
+      pricingSubtitle="Invest in a high-converting property portal with zero ongoing monthly software commissions."
       pricingTiers={[
         {
-          name: "Standard Broker Portfolio",
-          price: "₹15,000",
-          period: "one-time",
-          description: "Perfect for independent real estate agents, brokers, and local property consultants.",
+          name: "Broker & Agency Plan",
+          price: "₹20,000",
+          period: "one-time ($1,000 USD)",
+          description: "Ideal for real estate brokers, property consultancy agencies, and individual property advisors.",
           features: [
-            "1-5 Custom Responsive Pages",
-            "Up to 15 Active Property Listings",
-            "Property Search & Filter System",
-            "WhatsApp Lead Integration",
-            "Schedule Site Visit Booking Form",
-            "Google Maps Local Citation Setup",
-            "Basic On-Page SEO & Schema Markup",
+            "1-6 Custom Responsive Pages",
+            "Property Listing Directory (Up to 25 properties)",
+            "Site Visit Request Lead Form",
+            "WhatsApp & Phone Direct Links",
+            "EMI Calculator Widget",
+            "Google Maps Local Business Setup",
+            "Basic Real Estate SEO & Schema",
             "1 Year Priority Technical Support",
           ],
-          ctaText: "Choose Standard Plan",
+          ctaText: "Choose Broker Plan",
         },
         {
-          name: "Premium Agency & Developer Funnel",
-          price: "₹35,000",
-          period: "one-time",
-          description: "Recommended for property consulting groups, builders, and developers with multiple active projects.",
+          name: "Grand Builder & Developer Portal",
+          price: "₹55,000",
+          period: "one-time ($2,600 USD)",
+          description: "Recommended for real estate builders, multi-project developers, and luxury property groups.",
           isPopular: true,
           features: [
-            "Up to 15 Advanced Pages & Location Landing",
-            "Unlimited Property Listings & Categories",
-            "Gated Brochure PDF Download Capture",
-            "Agent & Regional Branch Profile Pages",
-            "Custom EMI Calculator Widget",
-            "Full SEO Architecture & Schema Setup",
-            "Google Analytics 4 & Search Console Sync",
-            "1 Year Priority Technical Support & Maintenance",
+            "Up to 20 Custom Project & Location Pages",
+            "Interactive Floor Plan & Master Layout Viewer",
+            "NRI Buyer Portal & Multi-Currency Setup",
+            "E-Brochure Gated Download Lead System",
+            "360° Virtual Tour & Drone Video Embeds",
+            "Full Global Real Estate SEO Architecture",
+            "Google Analytics 4 & CRM API Sync",
+            "1 Year Technical Support & Maintenance",
           ],
-          ctaText: "Choose Premium Plan",
+          ctaText: "Choose Builder Portal Plan",
         },
       ]}
       faqs={[
         {
-          question: "How much does a custom real estate website cost?",
-          answer: "The investment depends on your property inventory size and custom features. Joy Digital offers transparent packages starting from ₹15,000 for independent brokers up to ₹35,000 for multi-project developer portals.",
+          question: "How much does a website for a real estate business cost?",
+          answer: "Our real estate website packages start from ₹20,000 ($1,000 USD) for property brokers up to ₹55,000 ($2,600 USD) for grand builder and developer project portals.",
         },
         {
-          question: "Can buyers schedule site visits directly through the website?",
-          answer: "Yes! We install interactive site visit booking forms where buyers select their preferred viewing date and time. Enquiries route directly to your email and mobile WhatsApp.",
+          question: "Can homebuyers schedule site visits or request cab pickups online?",
+          answer: "Yes! We build custom site visit request forms where buyers select preferred inspection dates, time slots, and pickup locations sent directly to your sales desk.",
         },
         {
-          question: "How does WhatsApp integration work on property listings?",
-          answer: "Clicking the WhatsApp button on any listing opens WhatsApp with a pre-filled message including property title, ID, and URL, so your sales agent immediately knows what the customer wants to view.",
+          question: "Will the website help us generate NRI property buyers from overseas?",
+          answer: "Yes. We design dedicated NRI real estate sections featuring multi-currency pricing, virtual 3D walkthroughs, and international SEO targeting overseas buyers in US, Europe, and Middle East.",
         },
         {
-          question: "Can we manage and update property listings ourselves?",
-          answer: "Yes. We provide a simple, user-friendly CMS admin panel. Your team can add new listings, upload photos, update prices, or mark properties as 'Sold' without touching code.",
+          question: "Can we update property listings, floor plans, and price lists ourselves?",
+          answer: "Yes. We provide an intuitive CMS dashboard so your sales or marketing team can upload new project photos, update flat availability, and change price quotes anytime.",
         },
         {
-          question: "Will the website rank on Google for local property searches?",
-          answer: "Yes. We construct every real estate website with search-friendly URLs, fast sub-1.5s loading performance, structured schema markup, and localized landing pages.",
-        },
-        {
-          question: "Do we have to pay monthly listing fees or commissions?",
-          answer: "No. Unlike third-party real estate listing portals, you own 100% of your website code and database. There are zero monthly listing fees or recurring developer commissions.",
+          question: "Are there any monthly portal listing or lead commission fees?",
+          answer: "No. You own 100% of your website code and custom domain. There are zero recurring monthly listing fees or per-lead commissions.",
         },
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
         { href: "/website-development", label: "Custom Web Development" },
         { href: "/seo-services", label: "Real Estate SEO Services" },
-        { href: "/local-seo-services", label: "Local SEO Solutions" },
-        { href: "/google-business-profile-setup", label: "Google Business Profile Setup" },
+        { href: "/local-seo-services", label: "Local Map SEO" },
+        { href: "/google-business-profile-setup", label: "Google Business Setup" },
         { href: "/portfolio", label: "View Portfolio" },
-        { href: "/blog/real-estate-website-design-features", label: "Read Real Estate Web Design Guide" },
-        { href: "/contact", label: "Contact Sales Team" },
+        { href: "/contact", label: "Contact Sales Desk" },
       ]}
     />
   );

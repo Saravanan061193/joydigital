@@ -4,8 +4,8 @@ import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Solar Company Website Design & SEO | Joy Digital",
-  description: "High-converting website design and web development for solar companies, EPC contractors, and rooftop installers. Features quote forms, WhatsApp leads, and local SEO.",
+  title: "Solar Company Website Design & Clean Energy B2B SEO | Joy Digital",
+  description: "High-converting website design & digital lead portals for solar installers, EPC contractors, commercial rooftop solar vendors, and clean energy distributors. Rooftop quote forms, solar calculators, and global SEO.",
   alternates: {
     canonical: "https://joydigital.in/website-for-solar-companies",
   },
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://joydigital.in/website-for-solar-companies",
     title: "Solar Company Website Design & Lead Generation | Joy Digital",
-    description: "High-converting website design and web development built for solar installers and EPC contractors. Includes rooftop quote forms, WhatsApp integration, and local SEO to capture inquiries.",
+    description: "High-performance Next.js website design for residential solar installers, commercial EPC contractors, and global solar equipment vendors. Interactive quote forms, solar savings calculators, and search engine optimization.",
     images: [{ url: "https://joydigital.in/assets/images/hero-banner.webp", width: 1200, height: 630, alt: "Solar Company Website Design Joy Digital" }],
   },
 };
@@ -24,8 +24,8 @@ const pageSchema = {
     {
       "@type": "Service",
       "@id": "https://joydigital.in/website-for-solar-companies#service",
-      "name": "Solar Company Website Design & Development",
-      "serviceType": "Solar Web Development & SEO",
+      "name": "Solar Company Website Design & Clean Energy SEO",
+      "serviceType": "Solar Web Development & Clean Energy B2B Marketing",
       "provider": {
         "@type": "LocalBusiness",
         "name": "Joy Digital",
@@ -42,7 +42,7 @@ const pageSchema = {
           "addressCountry": "IN"
         }
       },
-      "description": "Custom solar company website design and web development for rooftop solar installers, EPC contractors, and commercial solar vendors. Includes lead capture forms, solar savings guides, and local SEO.",
+      "description": "Custom web design for solar companies, rooftop installers, commercial EPC contractors, and utility-scale solar vendors. Features interactive quote forms, solar capacity estimators, project photo galleries, and search optimization.",
       "offers": {
         "@type": "AggregateOffer",
         "priceCurrency": "INR",
@@ -58,18 +58,18 @@ export default function SolarWebPage() {
   return (
     <ServicePageTemplate
       serviceName="Website for Solar Companies"
-      heroTitle="High-Converting Website Design & SEO for Solar Companies"
-      heroSubtitle="Convert rooftop solar interest into direct site survey bookings and WhatsApp inquiries. We build fast, search-ready Next.js websites for residential & commercial solar installers, EPC contractors, and solar equipment distributors."
+      heroTitle="High-Converting Website Design & SEO for Solar Companies & EPC Contractors"
+      heroSubtitle="Convert rooftop solar interest into direct site survey bookings and qualified inquiry leads. We build fast, search-ready Next.js websites for residential & commercial solar installers, EPC contractors, and solar equipment distributors worldwide."
       leadSource="Website for Solar Companies Landing Page"
       heroCtaText="Get Free Solar Web Quote"
       overviewTitle="Why Most Solar Installer Websites Fail to Generate Inquiries (And How We Fix It)"
       overviewContent={
         <div className="space-y-6">
           <p>
-            With electricity tariffs rising and government initiatives like PM Surya Ghar boosting adoption, residential homeowners and industrial businesses are actively searching for reliable local solar installers. However, most solar websites fail because they act like static brochure sites rather than active sales funnels.
+            With electricity tariffs rising and global initiatives boosting clean energy adoption, residential homeowners and industrial businesses are actively searching for reliable local and commercial solar installers. However, most solar websites fail because they act like static brochure sites rather than active lead funnels.
           </p>
           <p>
-            If your solar website suffers from slow loading speeds, confusing technical jargon, lack of pricing transparency, or missing mobile WhatsApp lead buttons, potential clients will bounce to competing solar vendors in your city.
+            If your solar website suffers from slow loading speeds, confusing technical jargon, lack of pricing transparency, or missing mobile WhatsApp lead buttons, potential clients will bounce to competing solar vendors in your city or region.
           </p>
           <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-sm space-y-4 my-6">
             <h3 className="text-lg font-bold text-primary-dark">How Joy Digital Builds High-Converting Solar Websites</h3>
@@ -84,20 +84,28 @@ export default function SolarWebPage() {
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
-                <span><strong>Local Solar SEO Strategy</strong>: Rank for local installation keywords</span>
+                <span><strong>Global & Local Solar SEO Strategy</strong>: Rank for high-value installation keywords</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
-                <span><strong>Sub-1.5s Load Speeds</strong>: Built on ultra-fast Next.js architecture</span>
+                <span><strong>Sub-1.5s Load Speeds</strong>: Ultra-fast serverless Next.js architecture</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
+                <span><strong>Tier-1 Brand Catalog</strong>: Mono PERC, TOPCon panels & inverter showcases</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
+                <span><strong>Government Subsidy Guide</strong>: PM Surya Ghar & net metering approval breakdowns</span>
               </li>
             </ul>
           </div>
           <p>
-            At Joy Digital, we combine expert <Link href="/website-development" className="text-primary font-bold hover:underline">custom web development</Link> with localized <Link href="/seo-services" className="text-primary font-bold hover:underline">solar SEO strategies</Link> and <Link href="/google-business-profile-setup" className="text-primary font-bold hover:underline">Google Business Profile citations</Link> to help solar companies establish authority and generate qualified installation leads.
+            At Joy Digital, we combine expert <Link href="/website-development" className="text-primary font-bold hover:underline">custom web development</Link> with localized & global <Link href="/seo-services" className="text-primary font-bold hover:underline">solar SEO strategies</Link> and <Link href="/google-business-profile-setup" className="text-primary font-bold hover:underline">Google Business Profile citations</Link> to help solar companies establish authority and generate qualified installation leads.
           </p>
         </div>
       }
-      benefitsTitle="10 Essential Solar Website Features We Build"
+      benefitsTitle="10 Essential Features We Build for Solar Websites"
       benefitsSubtitle="Every component is engineered to educate homeowners, build technical credibility, and drive site audit requests."
       benefits={[
         {
@@ -122,7 +130,7 @@ export default function SolarWebPage() {
         },
         {
           icon: "fa-solid fa-hand-holding-dollar",
-          title: "5. Solar Subsidy & PM Surya Ghar Guide",
+          title: "5. Solar Subsidy & Government Incentive Guide",
           description: "Educate prospective buyers on government solar subsidies, DISCOM approval steps, and net metering registration processes.",
         },
         {
@@ -142,8 +150,8 @@ export default function SolarWebPage() {
         },
         {
           icon: "fa-solid fa-magnifying-glass-location",
-          title: "9. Local City Solar SEO Pages",
-          description: "Target queries like 'Solar panel installers in Chennai' or 'Commercial solar company in Madurai' with dedicated landing pages.",
+          title: "9. Global & Local Solar SEO Pages",
+          description: "Target queries like 'Solar panel installers near me' or 'Commercial solar company' with dedicated landing pages.",
         },
         {
           icon: "fa-solid fa-shield-halved",
@@ -164,7 +172,7 @@ export default function SolarWebPage() {
           step: "2",
           icon: "fa-solid fa-sitemap",
           title: "Funnel & SEO Keyword Mapping",
-          description: "We structure category layouts, solar system breakdowns, calculator user flows, and targeted local SEO terms.",
+          description: "We structure category layouts, solar system breakdowns, calculator user flows, and targeted local/global SEO terms.",
         },
         {
           step: "3",
@@ -197,7 +205,7 @@ export default function SolarWebPage() {
         {
           name: "Local Installer Growth Plan",
           price: "₹15,000",
-          period: "one-time",
+          period: "one-time ($750 USD)",
           description: "Perfect for local solar installers, rooftop vendors, and regional solar service contractors.",
           features: [
             "1-5 Custom Responsive Pages",
@@ -214,13 +222,13 @@ export default function SolarWebPage() {
         {
           name: "Enterprise Solar & EPC Portal",
           price: "₹35,000",
-          period: "one-time",
+          period: "one-time ($1,600 USD)",
           description: "Recommended for commercial solar EPC contractors, regional distributors, and utility-scale installers.",
           isPopular: true,
           features: [
             "Up to 15 Advanced Pages & City Landing Pages",
             "Interactive Solar Savings Calculator Widget",
-            "Government Subsidy & PM Surya Ghar Guide Pages",
+            "Government Subsidy & Incentive Guide Pages",
             "Tier-1 Solar Brand & Component Catalog",
             "Detailed Case Studies & Wattage Filter",
             "Full SEO Architecture & Service Schema",
@@ -233,23 +241,19 @@ export default function SolarWebPage() {
       faqs={[
         {
           question: "How much does a website for a solar company cost?",
-          answer: "Our solar website packages start from ₹15,000 for local rooftop installers up to ₹35,000 for multi-city commercial solar EPC portals.",
+          answer: "Our solar website packages start from ₹15,000 ($750 USD) for local rooftop installers up to ₹35,000 ($1,600 USD) for multi-city commercial solar EPC portals.",
         },
         {
           question: "Can homeowners request solar rooftop site audits through the website?",
-          answer: "Yes! We build interactive site survey request forms where customers enter their roof details, monthly bill amount, and city location. Inquiries route directly to your email and WhatsApp.",
+          answer: "Yes! We build interactive site survey request forms where customers enter their roof details, monthly bill amount, and city location sent directly to your email and WhatsApp.",
         },
         {
-          question: "Will the website help us rank on Google for local solar searches?",
-          answer: "Yes. Every solar website we build includes search-optimized URLs, schema markup, sub-1.5s page load speed, and local city keywords to attract buyers searching for solar panel installers.",
+          question: "Will the website help us rank on Google for local and global solar searches?",
+          answer: "Yes. Every solar website we build includes search-optimized URLs, schema markup, sub-1.5s page load speed, and local/global solar keywords to attract buyers.",
         },
         {
           question: "How does the WhatsApp lead button work on solar project pages?",
           answer: "Clicking the WhatsApp button opens WhatsApp on the prospect's mobile or web with a pre-filled message specifying their KW interest and city, allowing your sales team to respond instantly.",
-        },
-        {
-          question: "Can we update our solar installation portfolio and photos ourselves?",
-          answer: "Yes. We provide a clean, easy-to-use CMS dashboard so your team can upload new installation photos, add project wattage details, and update product models anytime.",
         },
         {
           question: "Are there any recurring monthly listing or software fees?",
