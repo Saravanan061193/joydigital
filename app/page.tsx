@@ -16,7 +16,12 @@ export const metadata: Metadata = {
     "web developer near me",
     "website designer near me",
     "website developer near me",
-    "web designer near me"
+    "web designer near me",
+    "digital marketing business in india",
+    "digital marketing firms in india",
+    "digital advertising companies in india",
+    "search engine optimization companies in india",
+    "digital marketing company in india"
   ],
   authors: [{ name: "Joy Digital", url: "https://joydigital.in" }],
   publisher: "Joy Digital",

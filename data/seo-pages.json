@@ -194,5 +194,37 @@
     "faq_schema": [],
     "alt_texts": [],
     "updated_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "page-india-seo-mkt",
+    "path": "/in",
+    "category": "Regional Market",
+    "title_template": "Top Digital Marketing Company in India | Joy Digital",
+    "meta_description": "Joy Digital is a premier digital marketing company in india & search engine optimization agency. We scale organic search rankings and lead funnels across India.",
+    "h1": "Premier Digital Marketing & SEO Company in India",
+    "h2_tags": [
+      "Leading Search Engine Optimization Companies in India",
+      "Performance Digital Advertising Companies in India",
+      "Strategic Digital Marketing Business in India Solutions"
+    ],
+    "h3_tags": [
+      "GA4 Conversion Tracking & Google Map Packs",
+      "Sub-Second Next.js Page Speeds"
+    ],
+    "primary_keyword_id": "kw-india-mkt-05",
+    "secondary_keyword_ids": ["kw-india-mkt-02", "kw-india-mkt-03"],
+    "longtail_keyword_ids": ["kw-india-mkt-01", "kw-india-mkt-04"],
+    "faq_schema": [
+      {
+        "question": "Why choose Joy Digital as your digital marketing company in India?",
+        "answer": "Joy Digital is one of the top search engine optimization companies in India engineering sub-second Next.js web platforms, local Google Map pack rankings, and conversion-focused digital advertising campaigns."
+      },
+      {
+        "question": "What services do digital marketing firms in India provide?",
+        "answer": "Leading digital marketing firms in India provide technical SEO audits, Google Map pack optimization, performance PPC advertising, content clusters, and custom web engineering."
+      }
+    ],
+    "alt_texts": [],
+    "updated_at": "2026-08-31T00:00:00.000Z"
   }
 ]

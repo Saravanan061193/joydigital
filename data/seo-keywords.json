@@ -55,6 +55,61 @@
     "created_at": "2026-08-31T00:00:00.000Z"
   },
   {
+    "id": "kw-india-mkt-01",
+    "keyword": "digital marketing business in india",
+    "type": "Primary",
+    "search_intent": "Transactional",
+    "target_audience": "Indian Businesses & Global Brands seeking Indian Agency Partners",
+    "notes": "High commercial intent keyword for digital marketing services in India.",
+    "status": "Active",
+    "assigned_page_id": "page-india-seo-mkt",
+    "created_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "kw-india-mkt-02",
+    "keyword": "digital marketing firms in india",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Startups & SMEs in India",
+    "notes": "High volume agency discovery query.",
+    "status": "Active",
+    "assigned_page_id": "page-india-seo-mkt",
+    "created_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "kw-india-mkt-03",
+    "keyword": "digital advertising companies in india",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "E-Commerce Brands & Enterprise Companies in India",
+    "notes": "Performance marketing search query.",
+    "status": "Active",
+    "assigned_page_id": "page-india-seo-mkt",
+    "created_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "kw-india-mkt-04",
+    "keyword": "search engine optimization companies in india",
+    "type": "Primary",
+    "search_intent": "Transactional",
+    "target_audience": "B2B Companies & Retail Brands in India",
+    "notes": "Top tier search engine optimization query for India.",
+    "status": "Active",
+    "assigned_page_id": "page-india-seo-mkt",
+    "created_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "kw-india-mkt-05",
+    "keyword": "digital marketing company in india",
+    "type": "Primary",
+    "search_intent": "Commercial",
+    "target_audience": "Global Startups & Indian Enterprises",
+    "notes": "High search volume broad commercial term.",
+    "status": "Active",
+    "assigned_page_id": "page-india-seo-mkt",
+    "created_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
     "id": "kw-custom-web-06",
     "keyword": "custom website development for small business",
     "type": "Long-tail",

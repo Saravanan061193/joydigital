@@ -484,6 +484,14 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
       answer: "Partnering with an experienced website developer near me ensures your business website is custom-built to attract local customers, achieve 90+ Core Web Vitals scores, and capture organic leads. We specialize in custom web development, local SEO, and mobile-first responsive design, giving your business a distinct competitive edge."
     },
     {
+      question: "Why is Joy Digital a leading digital marketing company in India and search engine optimization agency?",
+      answer: "Joy Digital stands out among top search engine optimization companies in India and digital marketing firms in India by combining sub-second Next.js web engineering with technical SEO audits, Google Map pack optimization, and high-converting performance marketing. We help Indian startups and global brands scale organic revenue."
+    },
+    {
+      question: "What should businesses look for when partnering with digital advertising companies in India?",
+      answer: "When hiring a digital marketing business in India or a digital advertising company in India, prioritize agencies with proven Core Web Vitals performance, transparent GA4 conversion tracking, and custom strategy execution rather than automated templates. Joy Digital provides end-to-end web development, technical search optimization, and lead funnels tailored to your growth goals."
+    },
+    {
       question: "How do I start a project with Joy Digital?",
       answer: "The easiest way is to fill out our Free Website Audit form on the homepage, or message us directly on WhatsApp at +91 90800 26133. We will analyze your inputs and present a flat-rate proposal."
     }
