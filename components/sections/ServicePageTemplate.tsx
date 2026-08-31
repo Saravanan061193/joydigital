@@ -40,7 +40,7 @@ interface FAQItem {
 
 interface ServicePageTemplateProps {
   serviceName: string;
-  heroTitle: string;
+  heroTitle: React.ReactNode;
   heroSubtitle: string;
   leadSource: string;
   overviewTitle: string;
@@ -203,7 +203,25 @@ export default function ServicePageTemplate({
                 </span>
               </div>
               <h1 className="text-3xl md:text-5xl font-extrabold text-primary-dark tracking-tight mb-6 leading-tight">
-                {heroTitle}
+                {typeof heroTitle === "string" ? (
+                  heroTitle.includes(" for ") ? (
+                    <>
+                      {heroTitle.split(" for ")[0]} <span className="text-[#7C3AED]">for {heroTitle.split(" for ").slice(1).join(" for ")}</span>
+                    </>
+                  ) : heroTitle.includes(" in ") ? (
+                    <>
+                      {heroTitle.split(" in ")[0]} <span className="text-[#7C3AED]">in {heroTitle.split(" in ").slice(1).join(" in ")}</span>
+                    </>
+                  ) : heroTitle.includes(" & ") ? (
+                    <>
+                      {heroTitle.split(" & ")[0]} <span className="text-[#7C3AED]">&amp; {heroTitle.split(" & ").slice(1).join(" & ")}</span>
+                    </>
+                  ) : (
+                    heroTitle
+                  )
+                ) : (
+                  heroTitle
+                )}
               </h1>
               <p className="text-sm md:text-base text-text-secondary mb-8 max-w-xl leading-relaxed">
                 {heroSubtitle}
