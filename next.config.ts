@@ -1,11 +1,22 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  compress: true,
   reactStrictMode: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
+  experimental: {
+    optimizePackageImports: ["lucide-react", "date-fns"],
+  },
   images: {
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 31536000,
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     remotePatterns: [
       {
         protocol: "https",
@@ -107,6 +118,31 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/seo_services",
+        destination: "/seo-services",
+        permanent: true,
+      },
+      {
+        source: "/website_development",
+        destination: "/website-development",
+        permanent: true,
+      },
+      {
+        source: "/custom_website_development",
+        destination: "/custom-website-development",
+        permanent: true,
+      },
+      {
+        source: "/dynamic_website_development",
+        destination: "/dynamic-website-development",
+        permanent: true,
+      },
+      {
+        source: "/web_design_services",
+        destination: "/web-design-services",
+        permanent: true,
+      },
+      {
         source: "/nocev/:path*",
         destination: "/",
         permanent: true,
@@ -133,6 +169,33 @@ const nextConfig: NextConfig = {
           {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
+      },
+      {
+        source: "/_next/static/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/assets/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/:all*(svg|jpg|png|webp|avif|woff2)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
           },
         ],
       },

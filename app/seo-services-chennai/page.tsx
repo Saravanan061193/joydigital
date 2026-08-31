@@ -3,21 +3,21 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "SEO Services in Chennai | Local Business SEO Company",
-  description: "Scale organic search traffic. Joy Digital is a premium SEO company in Chennai, delivering map pack rankings, technical code audits, and keyword optimization.",
+  title: "SEO Services in Chennai | Technical SEO & Organic Rank Agency",
+  description: "Get organic search growth with Joy Digital's technical SEO services in Chennai. We run code audits, optimize site speeds, and capture high-intent buyers.",
   alternates: {
     canonical: "https://joydigital.in/seo-services-chennai",
   },
   openGraph: {
-    title: "SEO Services in Chennai | Local Business SEO Company",
-    description: "Scale organic search traffic. Joy Digital is a premium SEO company in Chennai, delivering map pack rankings, technical code audits, and keyword optimization.",
+    title: "SEO Services in Chennai | Technical SEO & Organic Rank Agency",
+    description: "Get organic search growth with Joy Digital's technical SEO services in Chennai. We run code audits, optimize site speeds, and capture high-intent buyers.",
     url: "https://joydigital.in/seo-services-chennai",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SEO Services in Chennai | Local Business SEO Company",
-    description: "Scale organic search traffic. Joy Digital is a premium SEO company in Chennai, delivering map pack rankings, technical code audits, and keyword optimization.",
+    title: "SEO Services in Chennai | Technical SEO & Organic Rank Agency",
+    description: "Get organic search growth with Joy Digital's technical SEO services in Chennai. We run code audits, optimize site speeds, and capture high-intent buyers.",
   }
 };
 

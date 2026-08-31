@@ -4,20 +4,20 @@ import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
   title: "SEO Services in Chennai & Maps Pack | Joy Digital",
-  description: "Joy Digital is the premier Local SEO company in Chennai, India. We rank your business in the Google Maps 3-Pack and optimize local citation directories.",
+  description: "Dominate Google Maps 3-Pack and local search rankings with Joy Digital's local SEO services in Chennai. Multi-location citations, NAP audits & GA4 lead tracking.",
   alternates: {
     canonical: "https://joydigital.in/seo-services-in-chennai",
   },
   openGraph: {
-    title: "SEO Services in Chennai | Google Maps Ranking & Search Marketing",
-    description: "Joy Digital is the premier Local SEO company in Chennai, India. We rank your business in the Google Maps 3-Pack and optimize local citation directories.",
+    title: "SEO Services in Chennai & Maps Pack | Joy Digital",
+    description: "Dominate Google Maps 3-Pack and local search rankings with Joy Digital's local SEO services in Chennai. Multi-location citations, NAP audits & GA4 lead tracking.",
     url: "https://joydigital.in/seo-services-in-chennai",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SEO Services in Chennai | Google Maps Ranking & Search Marketing",
-    description: "Joy Digital is the premier Local SEO company in Chennai, India. We rank your business in the Google Maps 3-Pack and optimize local citation directories.",
+    title: "SEO Services in Chennai & Maps Pack | Joy Digital",
+    description: "Dominate Google Maps 3-Pack and local search rankings with Joy Digital's local SEO services in Chennai. Multi-location citations, NAP audits & GA4 lead tracking.",
   }
 };
 

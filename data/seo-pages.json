@@ -42,7 +42,7 @@
     "id": "page-dynamic-web-dev",
     "path": "/dynamic-website-development",
     "category": "Core Service",
-    "title_template": "Dynamic Website Development Services & Custom CMS | Joy Digital",
+    "title_template": "Dynamic Website Development Services | Joy Digital",
     "meta_description": "Build high-speed, database-driven dynamic websites with custom admin panels, real-time API sync, and secure PostgreSQL/Supabase backends.",
     "h1": "Dynamic Website Development Services with Custom Admin Controls",
     "h2_tags": [
@@ -178,7 +178,7 @@
     "id": "page-ind-ecommerce",
     "path": "/industries/ecommerce",
     "category": "Industry Page",
-    "title_template": "Custom E-Commerce Website Development Services | Joy Digital",
+    "title_template": "Custom E-Commerce Website Development | Joy Digital",
     "meta_description": "Next.js headless e-commerce store development. Sub-second mobile load times, custom checkout, and global payment sync.",
     "h1": "Custom E-Commerce Website Development & Headless Stores",
     "h2_tags": [

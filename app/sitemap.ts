@@ -14,6 +14,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Global static routes that are unified (no country subfolders)
   const unifiedStaticPaths = [
     '/about',
+    '/custom-website-development',
+    '/dynamic-website-development',
     '/portfolio',
     '/case-studies',
     '/case-studies/chennai-clinic-leads',
