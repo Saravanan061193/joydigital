@@ -124,6 +124,9 @@ export default function BlogAdminPanel() {
 
   // Analytics state
   const [analytics, setAnalytics] = useState<any>(null);
+  const [analyticsLoading, setAnalyticsLoading] = useState(false);
+  const [activityPage, setActivityPage] = useState(1);
+  const activityItemsPerPage = 10;
   const [chartTimeframe, setChartTimeframe] = useState<"daily" | "weekly" | "monthly" | "yearly">("daily");
 
   // Section Collapse State (All 12 Sections)
@@ -246,6 +249,7 @@ export default function BlogAdminPanel() {
   };
 
   const fetchAnalytics = async () => {
+    setAnalyticsLoading(true);
     try {
       const res = await fetch("/api/admin/analytics");
       if (res.ok) {
@@ -254,6 +258,8 @@ export default function BlogAdminPanel() {
       }
     } catch (err) {
       console.error("Error fetching blog analytics:", err);
+    } finally {
+      setAnalyticsLoading(false);
     }
   };
 
@@ -705,109 +711,7 @@ export default function BlogAdminPanel() {
             </div>
           </div>
 
-          {/* REAL-TIME BLOG READERS & VISITOR LOGS (Ethana Maniku, Enga Irunthu, Yaru Pathaga) */}
-          <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm flex flex-col gap-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse" />
-                  <h3 className="text-sm font-black text-slate-900">Real-Time Blog Readers & Location Activity Log</h3>
-                </div>
-                <p className="text-[10px] text-slate-500 font-semibold mt-0.5">
-                  Track who viewed your blog articles, exact timestamp (ethana maniku), reader location (enga irunthu), and traffic source.
-                </p>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => fetchAnalytics()}
-                  className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-extrabold px-3 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1.5"
-                >
-                  <i className="fa-solid fa-arrows-rotate text-xs" /> Refresh Live Logs
-                </button>
-              </div>
-            </div>
-
-            {!analytics?.recentBlogActivities || analytics.recentBlogActivities.length === 0 ? (
-              <div className="py-8 text-center border-2 border-dashed border-slate-150 rounded-2xl">
-                <i className="fa-solid fa-user-clock text-xl text-slate-300 mb-2 block" />
-                <p className="text-xs font-bold text-slate-600">No blog reader sessions logged yet</p>
-                <p className="text-[10px] text-slate-400 mt-1 max-w-sm mx-auto">
-                  When visitors read your blog articles, their reading history, exact time, location, and referrer source will be recorded here in real-time.
-                </p>
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs border-collapse">
-                  <thead>
-                    <tr className="border-b border-slate-200 text-slate-400 font-black text-[9px] uppercase tracking-wider">
-                      <th className="py-2.5 px-3">Time & Date (Ethana Maniku)</th>
-                      <th className="py-2.5 px-3">Article Read (Yaru Pathaga)</th>
-                      <th className="py-2.5 px-3">Location (Enga Irunthu)</th>
-                      <th className="py-2.5 px-3">Traffic Source</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {analytics.recentBlogActivities.map((log: any, idx: number) => {
-                      const logDate = log.timestamp ? new Date(log.timestamp) : new Date();
-                      const dateFormatted = logDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-                      const timeFormatted = logDate.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true });
-
-                      const countryCode = (log.country || "IN").toUpperCase();
-                      const flag = countryCode === "IN" ? "🇮🇳" :
-                                   countryCode === "US" ? "🇺🇸" :
-                                   countryCode === "UK" || countryCode === "GB" ? "🇬🇧" :
-                                   countryCode === "AE" ? "🇦🇪" :
-                                   countryCode === "CA" ? "🇨🇦" :
-                                   countryCode === "AU" ? "🇦🇺" : "🌐";
-
-                      const articleSlug = log.slug || "blog-hub";
-                      const articlePath = log.path || `/blog/${articleSlug}`;
-
-                      return (
-                        <tr key={log.id || idx} className="border-b border-slate-100 hover:bg-slate-50/60 transition-colors">
-                          <td className="py-3 px-3 whitespace-nowrap">
-                            <div className="font-bold text-slate-900 text-xs">{timeFormatted}</div>
-                            <div className="text-[10px] text-slate-400 font-semibold">{dateFormatted}</div>
-                          </td>
-
-                          <td className="py-3 px-3 max-w-xs">
-                            <a
-                              href={articlePath}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="font-bold text-primary hover:underline block truncate text-xs"
-                              title={articlePath}
-                            >
-                              {articleSlug}
-                            </a>
-                            <div className="text-[9.5px] text-slate-400 font-mono truncate">{articlePath}</div>
-                          </td>
-
-                          <td className="py-3 px-3 whitespace-nowrap">
-                            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-800 bg-slate-100/80 px-2.5 py-1 rounded-lg border border-slate-200/60">
-                              <span className="text-sm">{flag}</span>
-                              <span>{log.city || "Chennai"}, {countryCode}</span>
-                            </div>
-                          </td>
-
-                          <td className="py-3 px-3 whitespace-nowrap">
-                            <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-slate-600 bg-slate-50 border border-slate-200 px-2 py-0.5 rounded-md">
-                              <i className="fa-solid fa-link text-[9px] text-slate-400" />
-                              {log.referrer || "Direct / Google"}
-                            </span>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-
-          {/* TABLE CONTAINER */}
+          {/* 1. SEO-OPTIMIZED BLOG ARTICLES TABLE (Top) */}
           <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
               <div>
@@ -954,7 +858,7 @@ export default function BlogAdminPanel() {
                     </table>
                   </div>
 
-                  {/* Pagination Controls */}
+                  {/* Pagination Controls for Blog Articles */}
                   {totalPages > 1 && (
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 pt-4 border-t border-slate-100 text-xs font-bold text-slate-500">
                       <div>
@@ -989,6 +893,179 @@ export default function BlogAdminPanel() {
                         <button
                           onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                           disabled={currentPage === totalPages}
+                          className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-extrabold disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+                        >
+                          Next <i className="fa-solid fa-chevron-right text-[10px]" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* 2. REAL-TIME BLOG READERS & VISITOR LOGS (Bottom, with Pagination & Loading Spinner) */}
+          <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm flex flex-col gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse" />
+                  <h3 className="text-sm font-black text-slate-900">Real-Time Blog Readers & Location Activity Log</h3>
+                </div>
+                <p className="text-[10px] text-slate-500 font-semibold mt-0.5">
+                  Track who viewed your blog articles, exact timestamp (ethana maniku), reader location (enga irunthu), and traffic source.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => fetchAnalytics()}
+                  disabled={analyticsLoading}
+                  className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-extrabold px-3.5 py-2 rounded-xl transition-all cursor-pointer flex items-center gap-2 disabled:opacity-60"
+                >
+                  {analyticsLoading ? (
+                    <>
+                      <div className="w-3.5 h-3.5 border-2 border-slate-400 border-t-primary rounded-full animate-spin" />
+                      <span>Refreshing Live Logs...</span>
+                    </>
+                  ) : (
+                    <>
+                      <i className="fa-solid fa-arrows-rotate text-xs" />
+                      <span>Refresh Live Logs</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {analyticsLoading && !analytics?.recentBlogActivities ? (
+              <div className="py-12 flex flex-col items-center justify-center gap-3">
+                <div className="w-6 h-6 border-2 border-slate-200 border-t-primary rounded-full animate-spin" />
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Fetching live visitor logs...</span>
+              </div>
+            ) : !analytics?.recentBlogActivities || analytics.recentBlogActivities.length === 0 ? (
+              <div className="py-8 text-center border-2 border-dashed border-slate-150 rounded-2xl">
+                <i className="fa-solid fa-user-clock text-xl text-slate-300 mb-2 block" />
+                <p className="text-xs font-bold text-slate-600">No blog reader sessions logged yet</p>
+                <p className="text-[10px] text-slate-400 mt-1 max-w-sm mx-auto">
+                  When visitors read your blog articles, their reading history, exact time, location, and referrer source will be recorded here in real-time.
+                </p>
+              </div>
+            ) : (() => {
+              const allActivities = analytics.recentBlogActivities || [];
+              const totalActivityPages = Math.ceil(allActivities.length / activityItemsPerPage);
+              const activityStartIndex = (activityPage - 1) * activityItemsPerPage;
+              const paginatedActivities = allActivities.slice(activityStartIndex, activityStartIndex + activityItemsPerPage);
+
+              return (
+                <div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs border-collapse">
+                      <thead>
+                        <tr className="border-b border-slate-200 text-slate-400 font-black text-[9px] uppercase tracking-wider">
+                          <th className="py-2.5 px-3">Time & Date (Ethana Maniku)</th>
+                          <th className="py-2.5 px-3">Article Read (Yaru Pathaga)</th>
+                          <th className="py-2.5 px-3">Location (Enga Irunthu)</th>
+                          <th className="py-2.5 px-3">Traffic Source</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {paginatedActivities.map((log: any, idx: number) => {
+                          const logDate = log.timestamp ? new Date(log.timestamp) : new Date();
+                          const dateFormatted = logDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+                          const timeFormatted = logDate.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true });
+
+                          const countryCode = (log.country || "IN").toUpperCase();
+                          const flag = countryCode === "IN" ? "🇮🇳" :
+                                       countryCode === "US" ? "🇺🇸" :
+                                       countryCode === "UK" || countryCode === "GB" ? "🇬🇧" :
+                                       countryCode === "AE" ? "🇦🇪" :
+                                       countryCode === "CA" ? "🇨🇦" :
+                                       countryCode === "AU" ? "🇦🇺" : "🌐";
+
+                          const articleSlug = log.slug || "blog-hub";
+                          const articlePath = log.path || `/blog/${articleSlug}`;
+
+                          return (
+                            <tr key={log.id || idx} className="border-b border-slate-100 hover:bg-slate-50/60 transition-colors">
+                              <td className="py-3 px-3 whitespace-nowrap">
+                                <div className="font-bold text-slate-900 text-xs">{timeFormatted}</div>
+                                <div className="text-[10px] text-slate-400 font-semibold">{dateFormatted}</div>
+                              </td>
+
+                              <td className="py-3 px-3 max-w-xs">
+                                <a
+                                  href={articlePath}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="font-bold text-primary hover:underline block truncate text-xs"
+                                  title={articlePath}
+                                >
+                                  {articleSlug}
+                                </a>
+                                <div className="text-[9.5px] text-slate-400 font-mono truncate">{articlePath}</div>
+                              </td>
+
+                              <td className="py-3 px-3 whitespace-nowrap">
+                                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-800 bg-slate-100/80 px-2.5 py-1 rounded-lg border border-slate-200/60">
+                                  <span className="text-sm">{flag}</span>
+                                  <span>{log.city || "Chennai"}, {countryCode}</span>
+                                </div>
+                              </td>
+
+                              <td className="py-3 px-3 whitespace-nowrap">
+                                <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-slate-600 bg-slate-50 border border-slate-200 px-2 py-0.5 rounded-md max-w-xs truncate" title={log.referrer || "Direct / Google"}>
+                                  <i className="fa-solid fa-link text-[9px] text-slate-400" />
+                                  {log.referrer || "Direct / Google"}
+                                </span>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Pagination Controls for Readers Activity Log */}
+                  {totalActivityPages > 1 && (
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-5 pt-4 border-t border-slate-100 text-xs font-bold text-slate-500">
+                      <div>
+                        Showing <span className="text-slate-900 font-extrabold">{activityStartIndex + 1}</span> to{" "}
+                        <span className="text-slate-900 font-extrabold">{Math.min(activityStartIndex + activityItemsPerPage, allActivities.length)}</span> of{" "}
+                        <span className="text-slate-900 font-extrabold">{allActivities.length}</span> reader logs
+                      </div>
+
+                      <div className="flex items-center gap-1.5 select-none">
+                        <button
+                          type="button"
+                          onClick={() => setActivityPage((prev) => Math.max(prev - 1, 1))}
+                          disabled={activityPage === 1}
+                          className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-extrabold disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+                        >
+                          <i className="fa-solid fa-chevron-left text-[10px]" /> Prev
+                        </button>
+
+                        {Array.from({ length: Math.min(totalActivityPages, 10) }, (_, i) => i + 1).map((pageNum) => (
+                          <button
+                            type="button"
+                            key={pageNum}
+                            onClick={() => setActivityPage(pageNum)}
+                            className={`w-8 h-8 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${
+                              activityPage === pageNum
+                                ? "bg-primary text-white shadow-xs"
+                                : "bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200"
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        ))}
+
+                        <button
+                          type="button"
+                          onClick={() => setActivityPage((prev) => Math.min(prev + 1, totalActivityPages))}
+                          disabled={activityPage === totalActivityPages}
                           className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-extrabold disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
                         >
                           Next <i className="fa-solid fa-chevron-right text-[10px]" />

@@ -279,12 +279,12 @@ export async function GET() {
       visitors: item.visitors.size
     }));
 
-    // 5. Fetch Recent Blog Reader Activity Stream (last 20 blog reads)
+    // 5. Fetch Recent Blog Reader Activity Stream (last 200 blog reads)
     let recentBlogActivities: any[] = [];
     try {
       const recentBlogLogsRaw = await db.collection("pageviews").find({
         path: { $regex: "^/blog" }
-      }).sort({ createdAt: -1 }).limit(20).toArray();
+      }).sort({ createdAt: -1 }).limit(200).toArray();
 
       recentBlogActivities = recentBlogLogsRaw.map((log: any) => {
         const pathClean = (log.path || "/blog").split("?")[0].replace(/\/$/, "");
