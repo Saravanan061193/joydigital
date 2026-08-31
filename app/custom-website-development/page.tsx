@@ -49,10 +49,10 @@ export default async function CustomWebDevPage() {
         overviewContent={
           <div className="space-y-6">
             <p>
-              Joy Digital architects bespoke, API-first Next.js and React web applications engineered for sub-second page loads, flawless conversion paths, and enterprise-grade security. No rigid page builders. No plugin vulnerability chains. Just pure, scalable code built for your unique business goals.
+              Joy Digital delivers an end-to-end <strong>custom website development service</strong> and engineering framework designed for sub-second page loads, flawless conversion paths, and enterprise-grade security. No rigid page builders. No plugin vulnerability chains. Just pure, scalable Next.js & React code built for your unique business goals.
             </p>
             <p>
-              We decouple your front-end user experience from back-end content stores. Content creators get intuitive editorial workflows (Sanity, Strapi, Contentful) while engineers retain total freedom over presentation, state management, and performance.
+              Whether you need a brand-new digital platform or a <strong>custom website redesign</strong> for a slow legacy site, we decouple your front-end user experience from back-end content stores. Content creators get intuitive editorial workflows (Sanity, Strapi, Contentful) while engineers retain total freedom over presentation, state management, and performance.
             </p>
             <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Serverless & Edge Compute Execution</h3>
             <p>

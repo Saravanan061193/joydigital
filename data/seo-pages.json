@@ -18,8 +18,8 @@
       "Sub-300ms Global Edge Response Times"
     ],
     "primary_keyword_id": "kw-custom-web-01",
-    "secondary_keyword_ids": ["kw-custom-web-03", "kw-custom-web-04", "kw-custom-web-05"],
-    "longtail_keyword_ids": ["kw-custom-web-06", "kw-custom-web-07", "kw-custom-web-08", "kw-custom-web-09"],
+    "secondary_keyword_ids": ["kw-custom-web-03", "kw-custom-web-04", "kw-custom-web-05", "kw-custom-web-10"],
+    "longtail_keyword_ids": ["kw-custom-web-06", "kw-custom-web-07", "kw-custom-web-08", "kw-custom-web-09", "kw-custom-web-12"],
     "faq_schema": [
       {
         "question": "Why choose custom website development over WordPress or templates?",

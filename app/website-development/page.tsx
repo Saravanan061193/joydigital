@@ -53,7 +53,7 @@ export default function WebDevPage() {
             In today&apos;s highly competitive digital landscape, your website serves as the operational engine of your entire company. It functions as your primary brand builder, your digital front office, and your most valuable lead acquisition funnel. Standard drag-and-drop website builders or bloated templates often bundle massive, unused Javascript files. This results in slow load speeds, poor core web vitals, and frustrating user experiences that push prospective customers straight to your competitors.
           </p>
           <p>
-            At Joy Digital, a leading <strong>custom web development agency</strong>, we believe that premium web engineering should be both affordable and results-oriented. We design and develop custom web portals using next-generation frameworks like Next.js, React, and optimized HTML5/Tailwind architectures. This guarantees that your platforms load in less than 1.5 seconds, achieve perfect PageSpeed scores, and rank highly on search engine results pages.
+            At Joy Digital, a leading <strong>custom web development agency</strong> delivering <strong>professional website development india</strong> services, we believe that premium web engineering should be both affordable and results-oriented. We design and develop custom web portals using next-generation frameworks like Next.js, React, and optimized HTML5/Tailwind architectures. This guarantees that your platforms load in less than 1.5 seconds, achieve perfect PageSpeed scores, and rank highly on search engine results pages.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Why Code Quality and Architecture Impact Search Rankings</h3>
           <p>

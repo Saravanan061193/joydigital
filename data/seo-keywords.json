@@ -306,5 +306,49 @@
     "status": "Active",
     "assigned_page_id": "page-ind-ecommerce",
     "created_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "kw-custom-web-10",
+    "keyword": "custom website development service",
+    "type": "Primary",
+    "search_intent": "Transactional",
+    "target_audience": "Global Startups, Founders, Enterprises",
+    "notes": "High intent singular search term for custom web dev services.",
+    "status": "Active",
+    "assigned_page_id": "page-custom-web-dev",
+    "created_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "kw-custom-web-11",
+    "keyword": "custom website design services",
+    "type": "Primary",
+    "search_intent": "Commercial",
+    "target_audience": "B2B Brands & Creative Agencies",
+    "notes": "High conversion search query for custom UI/UX design.",
+    "status": "Active",
+    "assigned_page_id": "page-web-design-services",
+    "created_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "kw-custom-web-12",
+    "keyword": "custom website redesign",
+    "type": "Secondary",
+    "search_intent": "Transactional",
+    "target_audience": "Existing Businesses needing website migration or UI revamp",
+    "notes": "Redesign and legacy website migration query.",
+    "status": "Active",
+    "assigned_page_id": "page-custom-web-dev",
+    "created_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "kw-custom-web-13",
+    "keyword": "professional website development india",
+    "type": "Primary",
+    "search_intent": "Transactional",
+    "target_audience": "Global Clients & Indian Businesses",
+    "notes": "High intent commercial search term targeting Indian offshore agency expertise.",
+    "status": "Active",
+    "assigned_page_id": "page-web-dev-services",
+    "created_at": "2026-08-31T00:00:00.000Z"
   }
 ]
