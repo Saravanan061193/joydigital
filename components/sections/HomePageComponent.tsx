@@ -606,11 +606,33 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                 />
               </div>
             </div>
+
+            {/* Scroll Down Option Icon (Middle Bottom of Hero) */}
+            <div className="lg:col-span-12 flex justify-center pt-8 sm:pt-10 z-20">
+              <button
+                type="button"
+                onClick={() => {
+                  const target = document.getElementById("value-proposition");
+                  if (target) {
+                    target.scrollIntoView({ behavior: "smooth" });
+                  } else {
+                    window.scrollBy({ top: window.innerHeight * 0.75, behavior: "smooth" });
+                  }
+                }}
+                aria-label="Scroll down to value proposition"
+                className="group flex items-center gap-2.5 text-xs font-bold text-[#A78BFA] hover:text-white transition-all cursor-pointer bg-[#7C3AED]/15 hover:bg-[#7C3AED]/30 border border-[#7C3AED]/40 px-5 py-2.5 rounded-full shadow-lg backdrop-blur-md hover:scale-105 active:scale-95"
+              >
+                <span className="uppercase tracking-widest text-[11px] font-bold">Scroll</span>
+                <div className="w-6 h-6 rounded-full bg-[#7C3AED]/30 group-hover:bg-[#7C3AED] flex items-center justify-center transition-colors">
+                  <i className="fa-solid fa-chevron-down text-[10px] text-[#A78BFA] group-hover:text-white animate-bounce" />
+                </div>
+              </button>
+            </div>
           </div>
         </section>
 
         {/* 2. TRUST / VALUE SECTION WITH SCROLL REVEALS (Soft background alternates) */}
-        <section className="py-20 bg-white border-b border-[#E9E4F2] relative z-10">
+        <section id="value-proposition" className="py-20 bg-white border-b border-[#E9E4F2] relative z-10">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
               <span className="text-xs font-bold text-[#7C3AED] uppercase tracking-widest block mb-3">

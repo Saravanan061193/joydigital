@@ -270,11 +270,33 @@ export default function ServicePageTemplate({
                 source={leadSource}
               />
             </div>
+
+            {/* Scroll Down Option Icon (Middle Bottom of Hero) */}
+            <div className="lg:col-span-12 flex justify-center pt-8 z-20">
+              <button
+                type="button"
+                onClick={() => {
+                  const target = document.getElementById("service-overview");
+                  if (target) {
+                    target.scrollIntoView({ behavior: "smooth" });
+                  } else {
+                    window.scrollBy({ top: window.innerHeight * 0.75, behavior: "smooth" });
+                  }
+                }}
+                aria-label="Scroll down to service details"
+                className="group flex items-center gap-2.5 text-xs font-bold text-primary hover:text-accent transition-all cursor-pointer bg-light-bg hover:bg-white border border-[#E5E7EB] px-5 py-2.5 rounded-full shadow-sm hover:shadow-md hover:scale-105 active:scale-95"
+              >
+                <span className="uppercase tracking-widest text-[11px] font-bold">Scroll</span>
+                <div className="w-6 h-6 rounded-full bg-accent/10 group-hover:bg-accent flex items-center justify-center transition-colors">
+                  <i className="fa-solid fa-chevron-down text-[10px] text-accent group-hover:text-white animate-bounce" />
+                </div>
+              </button>
+            </div>
           </div>
         </section>
 
         {/* Overview Section */}
-        <section className="py-16 lg:py-24 bg-light-bg">
+        <section id="service-overview" className="py-16 lg:py-24 bg-light-bg">
           <div className="max-w-4xl mx-auto px-6">
             <h2 className="text-2xl md:text-3xl font-extrabold text-primary-dark text-center mb-8">
               {overviewTitle}
