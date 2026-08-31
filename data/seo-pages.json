@@ -1,0 +1,198 @@
+[
+  {
+    "id": "page-custom-web-dev",
+    "path": "/custom-website-development",
+    "category": "Core Service",
+    "title_template": "Custom Website Development Services | Joy Digital",
+    "meta_description": "Enterprise custom website development services. We build high-speed Next.js & React web applications with 99+ Core Web Vitals and zero template bloat.",
+    "h1": "Custom Website Development Services for Global Enterprises",
+    "h2_tags": [
+      "Modular Headless Architectures & Headless CMS",
+      "API-First Microservices Integration",
+      "Serverless & Edge Compute Performance",
+      "Client Pain Points vs. Custom Engineering"
+    ],
+    "h3_tags": [
+      "Decoupled Sanity & Strapi Workflows",
+      "Stripe & Salesforce Middleware Connectors",
+      "Sub-300ms Global Edge Response Times"
+    ],
+    "primary_keyword_id": "kw-custom-web-01",
+    "secondary_keyword_ids": ["kw-custom-web-03", "kw-custom-web-04", "kw-custom-web-05"],
+    "longtail_keyword_ids": ["kw-custom-web-06", "kw-custom-web-07", "kw-custom-web-08", "kw-custom-web-09"],
+    "faq_schema": [
+      {
+        "question": "Why choose custom website development over WordPress or templates?",
+        "answer": "Custom website development with Next.js provides sub-second load times, 100% security against plugin hacks, total UI customization, and 100% IP code ownership."
+      },
+      {
+        "question": "How long does custom web application development take?",
+        "answer": "A standard custom web application project takes 2 to 4 weeks for initial MVP deployment, adhering to 2-week Agile sprints."
+      }
+    ],
+    "alt_texts": [
+      {
+        "image_url": "/assets/images/hero-banner.webp",
+        "alt_text": "Custom website development agency dashboard showing Next.js performance benchmarks."
+      }
+    ],
+    "updated_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "page-dynamic-web-dev",
+    "path": "/dynamic-website-development",
+    "category": "Core Service",
+    "title_template": "Dynamic Website Development Services & Custom CMS | Joy Digital",
+    "meta_description": "Build high-speed, database-driven dynamic websites with custom admin panels, real-time API sync, and secure PostgreSQL/Supabase backends.",
+    "h1": "Dynamic Website Development Services with Custom Admin Controls",
+    "h2_tags": [
+      "Database-Driven Dynamic Architecture",
+      "Custom Admin Panel & Editorial Workflows",
+      "Real-Time Data Indexing & Edge Caching"
+    ],
+    "h3_tags": [
+      "PostgreSQL & Supabase Relational Schemas",
+      "Role-Based Access Control (RBAC)"
+    ],
+    "primary_keyword_id": "kw-dynamic-web-01",
+    "secondary_keyword_ids": ["kw-dynamic-web-03", "kw-dynamic-web-04"],
+    "longtail_keyword_ids": ["kw-dynamic-web-05", "kw-dynamic-web-06"],
+    "faq_schema": [
+      {
+        "question": "What is a dynamic website development service?",
+        "answer": "Dynamic website development builds data-driven web applications that pull real-time content from databases and APIs, offering admin controls to update content instantly."
+      }
+    ],
+    "alt_texts": [
+      {
+        "image_url": "/assets/images/hero-banner.webp",
+        "alt_text": "Dynamic website development admin panel interface."
+      }
+    ],
+    "updated_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "page-web-dev-services",
+    "path": "/website-development",
+    "category": "Core Service",
+    "title_template": "Professional Web Development Services | Joy Digital",
+    "meta_description": "Full-stack web development services for global startups, agencies, and enterprises. Fast Next.js, React & Node.js web applications.",
+    "h1": "Full-Stack Web Development Services for Global Growth",
+    "h2_tags": [
+      "End-to-End Web Engineering",
+      "Conversion-Focused UX & Fast Pre-renders",
+      "Seamless API & Payment Gateway Integrations"
+    ],
+    "h3_tags": [
+      "React Server Components (RSC)",
+      "Automated Technical SEO & JSON-LD Schemas"
+    ],
+    "primary_keyword_id": "kw-web-services-01",
+    "secondary_keyword_ids": ["kw-web-services-02"],
+    "longtail_keyword_ids": ["kw-web-services-03"],
+    "faq_schema": [
+      {
+        "question": "What technologies do you use for web development?",
+        "answer": "We leverage Next.js, React, Node.js, TypeScript, PostgreSQL, and Vercel Edge Networks."
+      }
+    ],
+    "alt_texts": [
+      {
+        "image_url": "/assets/images/logo.webp",
+        "alt_text": "Joy Digital professional web development services team."
+      }
+    ],
+    "updated_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "page-ind-real-estate",
+    "path": "/industries/real-estate",
+    "category": "Industry Page",
+    "title_template": "Real Estate Website Development Company | Joy Digital",
+    "meta_description": "High-converting real estate website development services. Build property listing portals, interactive map filters, and WhatsApp lead capture funnels.",
+    "h1": "Custom Real Estate Website Development & Property Portals",
+    "h2_tags": [
+      "Property Listing Directories & Filters",
+      "Interactive Google Maps Integration",
+      "Instant WhatsApp & CRM Lead Capture"
+    ],
+    "h3_tags": [
+      "MLS API Data Sync",
+      "High-Resolution Image Compression"
+    ],
+    "primary_keyword_id": "kw-ind-realestate-01",
+    "secondary_keyword_ids": ["kw-ind-realestate-02"],
+    "longtail_keyword_ids": [],
+    "faq_schema": [
+      {
+        "question": "Can you integrate map filters in real estate websites?",
+        "answer": "Yes, we build interactive map search tools with instant price and location filtering."
+      }
+    ],
+    "alt_texts": [],
+    "updated_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "page-ind-travel-tourism",
+    "path": "/industries/travel-tourism",
+    "category": "Industry Page",
+    "title_template": "Custom Travel Website Development Services | Joy Digital",
+    "meta_description": "Build high-speed travel portals, tour package booking engines, and multi-currency travel agency websites.",
+    "h1": "Custom Travel Website Development & Booking Portals",
+    "h2_tags": [
+      "Tour Package Itinerary Display",
+      "Multi-Currency Payment Gateway Integration"
+    ],
+    "h3_tags": [
+      "Automated Booking Confirmation Emails"
+    ],
+    "primary_keyword_id": "kw-ind-travel-01",
+    "secondary_keyword_ids": [],
+    "longtail_keyword_ids": [],
+    "faq_schema": [],
+    "alt_texts": [],
+    "updated_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "page-ind-healthcare",
+    "path": "/industries/healthcare",
+    "category": "Industry Page",
+    "title_template": "Healthcare Website Development Services | Joy Digital",
+    "meta_description": "Secure healthcare and hospital website development. Doctor appointment scheduling, patient portals, and local SEO.",
+    "h1": "Healthcare Website Development Services & Hospital Portals",
+    "h2_tags": [
+      "Doctor Directory & Appointment Scheduling",
+      "Patient Privacy & HIPAA Compliant Forms"
+    ],
+    "h3_tags": [
+      "Teleconsultation API Sync"
+    ],
+    "primary_keyword_id": "kw-ind-healthcare-01",
+    "secondary_keyword_ids": [],
+    "longtail_keyword_ids": [],
+    "faq_schema": [],
+    "alt_texts": [],
+    "updated_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "page-ind-ecommerce",
+    "path": "/industries/ecommerce",
+    "category": "Industry Page",
+    "title_template": "Custom E-Commerce Website Development Services | Joy Digital",
+    "meta_description": "Next.js headless e-commerce store development. Sub-second mobile load times, custom checkout, and global payment sync.",
+    "h1": "Custom E-Commerce Website Development & Headless Stores",
+    "h2_tags": [
+      "Headless Next.js Storefronts",
+      "Optimized Mobile Checkout Funnels"
+    ],
+    "h3_tags": [
+      "Stripe & Razorpay Integration"
+    ],
+    "primary_keyword_id": "kw-ind-ecom-01",
+    "secondary_keyword_ids": [],
+    "longtail_keyword_ids": [],
+    "faq_schema": [],
+    "alt_texts": [],
+    "updated_at": "2026-08-31T00:00:00.000Z"
+  }
+]

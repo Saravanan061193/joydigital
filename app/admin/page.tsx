@@ -5,6 +5,7 @@ import Link from "next/link";
 import VisitorMap from "@/components/VisitorMap";
 import LeadDetailsDrawer from "@/components/ui/LeadDetailsDrawer";
 import BlogAdminPanel from "@/components/admin/BlogAdminPanel";
+import SeoKeywordManager from "@/components/admin/SeoKeywordManager";
 
 interface UtmData {
   source?: string;
@@ -117,8 +118,8 @@ export default function AdminPage() {
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Active Menu: "dashboard" | "leads" | "map" | "heatmaps" | "blog" | "reports" | "chats" | "settings"
-  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "map" | "heatmaps" | "blog" | "reports" | "chats" | "settings">("dashboard");
+  // Active Menu: "dashboard" | "leads" | "map" | "heatmaps" | "blog" | "seo" | "reports" | "chats" | "settings"
+  const [activeTab, setActiveTab] = useState<"dashboard" | "leads" | "map" | "heatmaps" | "blog" | "seo" | "reports" | "chats" | "settings">("dashboard");
   const [trafficTimeframe, setTrafficTimeframe] = useState<"daily" | "weekly" | "monthly" | "yearly">("daily");
   const [trafficScope, setTrafficScope] = useState<"all" | "blog">("all");
   const [settingsSubTab, setSettingsSubTab] = useState<"cloudinary" | "system">("cloudinary");
@@ -1152,6 +1153,12 @@ export default function AdminPage() {
           subtitle: "Draft modern technical articles, upload thumbnails, manage SEO settings, and generate static articles",
           icon: "fa-regular fa-pen-to-square"
         };
+      case "seo":
+        return {
+          title: "SEO Keyword & Meta Architecture Manager",
+          subtitle: "Manage global keywords, page SEO mappings, metadata tags, and internal link structures",
+          icon: "fa-solid fa-[#7C3AED] fa-chart-line"
+        };
       case "reports":
         return {
           title: "CRM Lead Reports & Analysis",
@@ -1324,7 +1331,8 @@ export default function AdminPage() {
               {[
                 { id: "dashboard", label: "Dashboard Hub", icon: "fa-solid fa-gauge" },
                 { id: "leads", label: "CRM Pipeline v2", icon: "fa-regular fa-address-book" },
-                { id: "blog", label: "Blog Editor Desk", icon: "fa-regular fa-pen-to-square" }
+                { id: "blog", label: "Blog Editor Desk", icon: "fa-regular fa-pen-to-square" },
+                { id: "seo", label: "SEO Keyword Manager", icon: "fa-solid fa-chart-line" }
               ].map((tab) => {
                 const isTabActive = activeTab === tab.id;
                 return (
@@ -3563,6 +3571,12 @@ export default function AdminPage() {
           {activeTab === "blog" && (
             <div className="w-full animate-fade-in">
               <BlogAdminPanel />
+            </div>
+          )}
+
+          {activeTab === "seo" && (
+            <div className="w-full animate-fade-in">
+              <SeoKeywordManager />
             </div>
           )}
 
