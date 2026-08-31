@@ -476,6 +476,14 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
       answer: "Yes. We build responsive e-commerce storefronts using Next.js. We integrate checkout funnels, secure payment links, catalog displays, and order management."
     },
     {
+      question: "How do I choose the right web developer near me or website designer near me?",
+      answer: "If you are searching for a qualified web developer near me or an experienced website designer near me, look for an agency that delivers custom, high-speed, and search-optimized solutions rather than rigid templates. At Joy Digital, we act as your dedicated web engineering team, building bespoke Next.js and React websites engineered for sub-second speeds, mobile responsiveness, and high Google search visibility."
+    },
+    {
+      question: "Why should I hire a professional website developer near me for my business?",
+      answer: "Partnering with an experienced website developer near me ensures your business website is custom-built to attract local customers, achieve 90+ Core Web Vitals scores, and capture organic leads. We specialize in custom web development, local SEO, and mobile-first responsive design, giving your business a distinct competitive edge."
+    },
+    {
       question: "How do I start a project with Joy Digital?",
       answer: "The easiest way is to fill out our Free Website Audit form on the homepage, or message us directly on WhatsApp at +91 90800 26133. We will analyze your inputs and present a flat-rate proposal."
     }
@@ -1070,6 +1078,20 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
               <p className="text-xs text-[#6B6478] leading-relaxed font-semibold">
                 Joy Digital provides a growing collection of free online business tools designed to make everyday tasks faster and easier. Use our GST calculator, invoice generator, quotation generator, QR code generator, SEO audit tool and image compressor directly from your browser. These tools are designed for businesses, freelancers, professionals and individuals who want simple solutions without complicated software.
               </p>
+            </div>
+
+            {/* Near Me Local SEO Keyword Copy Block */}
+            <div className="max-w-4xl mx-auto border-t border-[#E9E4F2] pt-8 pb-6 text-left reveal-hidden">
+              <h3 className="text-sm font-bold text-[#1F1B2D] uppercase tracking-wider mb-3">Looking for a Web Developer or Website Designer Near Me?</h3>
+              <p className="text-xs text-[#6B6478] leading-relaxed font-semibold mb-4">
+                If you are searching for a trusted <strong>web developer near me</strong>, a creative <strong>website designer near me</strong>, or an experienced <strong>website developer near me</strong>, Joy Digital is your premier digital engineering team. We build high-speed Next.js websites, custom web applications, responsive corporate portals, and data-driven local SEO campaigns engineered to bring local and global customers straight to your business.
+              </p>
+              <div className="flex flex-wrap gap-2 text-[10px] font-bold text-[#7C3AED]">
+                <span className="bg-[#7C3AED]/10 border border-[#7C3AED]/20 px-3 py-1 rounded-full">✓ Web Developer Near Me</span>
+                <span className="bg-[#7C3AED]/10 border border-[#7C3AED]/20 px-3 py-1 rounded-full">✓ Website Designer Near Me</span>
+                <span className="bg-[#7C3AED]/10 border border-[#7C3AED]/20 px-3 py-1 rounded-full">✓ Website Developer Near Me</span>
+                <span className="bg-[#7C3AED]/10 border border-[#7C3AED]/20 px-3 py-1 rounded-full">✓ Web Designer Near Me</span>
+              </div>
             </div>
 
             {/* Lead Gen block */}

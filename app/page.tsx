@@ -12,7 +12,11 @@ export const metadata: Metadata = {
     "Next.js Development",
     "SEO Services",
     "Joy Digital",
-    "Digital Marketing"
+    "Digital Marketing",
+    "web developer near me",
+    "website designer near me",
+    "website developer near me",
+    "web designer near me"
   ],
   authors: [{ name: "Joy Digital", url: "https://joydigital.in" }],
   publisher: "Joy Digital",

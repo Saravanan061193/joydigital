@@ -62,6 +62,10 @@ export default function WebDevPage() {
           <p>
             Whether you need a simple corporate landing page, an e-commerce platform with payment integrations (like Razorpay or Stripe), or a custom SaaS admin panel, we align our development milestones with your marketing objectives. Every line of code we write is structured to build long-term brand equity, improve search engine visibility, and generate recurring client inquiries organically.
           </p>
+          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Looking for a Skilled Web Developer Near Me?</h3>
+          <p>
+            If you are actively searching for a top-rated <strong>web developer near me</strong> or a dedicated <strong>website developer near me</strong>, Joy Digital provides complete web development solutions tailored to your market. Whether you need a local service site, a multi-regional enterprise application, or a high-converting landing page, our full-stack engineering team builds custom websites that load instantly and capture high-intent customer leads.
+          </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Next.js and React: The Future of Business Websites</h3>
           <p>
             Many businesses rely on legacy platforms that suffer from security vulnerabilities and slow response times. By choosing a custom React or Next.js static site setup, you eliminate the risk of database hacks and ensure your platform remains online 100% of the time. Our setups are hosted on global Content Delivery Networks (CDNs), meaning your website loads instantly for users anywhere globally.
