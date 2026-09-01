@@ -11,6 +11,8 @@ const REGIONAL_SITES = [
   { code: "uk", label: "United Kingdom (GBP)", flag: "🇬🇧" },
   { code: "ae", label: "United Arab Emirates (AED)", flag: "🇦🇪" },
   { code: "in", label: "India (INR)", flag: "🇮🇳" },
+  { code: "ca", label: "Canada (CAD)", flag: "🇨🇦" },
+  { code: "au", label: "Australia (AUD)", flag: "🇦🇺" },
 ];
 
 export default function Footer() {
@@ -18,7 +20,7 @@ export default function Footer() {
 
   // Detect current region from pathname
   const parts = pathname.split("/").filter(Boolean);
-  const currentRegion = (parts.length > 0 && ["us", "uk", "ae", "in"].includes(parts[0])) ? parts[0] : "";
+  const currentRegion = (parts.length > 0 && ["us", "uk", "ae", "in", "ca", "au"].includes(parts[0])) ? parts[0] : "";
 
   const getRegionalHref = (path: string) => {
     const localizedPaths = ["/", "/seo-services", "/website-development", "/contact"];
@@ -228,6 +230,31 @@ export default function Footer() {
                 Custom Software Development
               </Link>
             </li>
+            <li>
+              <Link href="/custom-website-development" className="hover:text-accent hover:pl-1 transition-all">
+                Custom Next.js Web Systems
+              </Link>
+            </li>
+            <li>
+              <Link href="/dynamic-website-development" className="hover:text-accent hover:pl-1 transition-all">
+                Dynamic Web Applications
+              </Link>
+            </li>
+            <li>
+              <Link href="/wordpress-to-nextjs-migration" className="hover:text-accent hover:pl-1 transition-all">
+                WordPress to Next.js Migration
+              </Link>
+            </li>
+            <li>
+              <Link href="/shopify-vs-headless-nextjs" className="hover:text-accent hover:pl-1 transition-all">
+                Shopify vs Headless Next.js
+              </Link>
+            </li>
+            <li>
+              <Link href="/offshore-web-development-partner" className="hover:text-accent hover:pl-1 transition-all">
+                Offshore Web Dev Partner
+              </Link>
+            </li>
             <li className="border-t border-[#E5E7EB] pt-2 mt-1 font-bold text-[#111827]">
               Industry Solutions
             </li>
@@ -396,7 +423,8 @@ export default function Footer() {
           <p>
             Copyright &copy; {new Date().getFullYear()} Joy Digital Growth Agency. All Rights Reserved.
           </p>
-          <div className="flex gap-6">
+          <div className="flex gap-6 flex-wrap justify-center">
+            <Link href="/sitemap" className="hover:text-accent transition-colors font-semibold text-accent">HTML Sitemap</Link>
             <Link href="/privacy-policy" className="hover:text-accent transition-colors">Privacy Policy</Link>
             <Link href="/terms-and-conditions" className="hover:text-accent transition-colors">Terms of Service</Link>
           </div>

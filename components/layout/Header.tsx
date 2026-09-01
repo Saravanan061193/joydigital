@@ -17,6 +17,8 @@ const REGIONS = [
   { code: "uk", label: "United Kingdom", flag: "🇬🇧" },
   { code: "ae", label: "United Arab Emirates", flag: "🇦🇪" },
   { code: "in", label: "India", flag: "🇮🇳" },
+  { code: "ca", label: "Canada", flag: "🇨🇦" },
+  { code: "au", label: "Australia", flag: "🇦🇺" },
 ];
 
 const LANGUAGES = [
@@ -71,7 +73,7 @@ export default function Header({ transparent = false }: { transparent?: boolean 
 
   // Detect current region from pathname
   const parts = pathname.split("/").filter(Boolean);
-  const currentRegion = (parts.length > 0 && ["us", "uk", "ae", "in"].includes(parts[0])) ? parts[0] : "";
+  const currentRegion = (parts.length > 0 && ["us", "uk", "ae", "in", "ca", "au"].includes(parts[0])) ? parts[0] : "";
 
   useEffect(() => {
     let ticking = false;
@@ -178,7 +180,7 @@ export default function Header({ transparent = false }: { transparent?: boolean 
     const partsLoc = pathname.split("/").filter(Boolean);
     const rootPath = partsLoc[0];
     
-    const hasRegion = ["us", "uk", "ae", "in"].includes(rootPath);
+    const hasRegion = ["us", "uk", "ae", "in", "ca", "au"].includes(rootPath);
     const cleanSegments = hasRegion ? partsLoc.slice(1) : partsLoc;
     const cleanPath = "/" + cleanSegments.join("/");
     
