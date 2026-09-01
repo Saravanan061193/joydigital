@@ -8,6 +8,8 @@ import ClarityTracker from "@/components/ClarityTracker";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import NavigationLoadingBar from "@/components/ui/NavigationLoadingBar";
 
+import GoogleTranslateLoader from "@/components/GoogleTranslateLoader";
+
 const ChatbotWidget = dynamic(() => import("@/components/ui/ChatbotWidget"));
 import "./globals.css";
 
@@ -111,27 +113,7 @@ export default function RootLayout({
         <GoogleAnalytics />
         <AnalyticsTracker />
         <ClarityTracker />
-        <div id="google_translate_element" style={{ display: 'none' }} className="hidden"></div>
-        <Script
-          id="google-translate-init"
-          strategy="lazyOnload"
-          dangerouslySetInnerHTML={{
-            __html: `
-              function googleTranslateElementInit() {
-                new google.translate.TranslateElement({
-                  pageLanguage: 'en',
-                  includedLanguages: 'en,ta,hi,ar,es,de,fr,te,kn,ml,bn,mr,gu,pa,it,pt,ru,zh-CN,ja,ko,tr,nl,vi,th',
-                  layout: typeof window !== 'undefined' && window.google && window.google.translate ? google.translate.TranslateElement.InlineLayout.SIMPLE : 0,
-                  autoDisplay: false
-                }, 'google_translate_element');
-              }
-            `,
-          }}
-        />
-        <Script
-          src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-          strategy="lazyOnload"
-        />
+        <GoogleTranslateLoader />
         {children}
         <ChatbotWidget />
       </body>

@@ -221,11 +221,11 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
             {/* User Image Display - High Resolution & High Prominence */}
             <div className="relative rounded-xl overflow-hidden border border-[#2B2346] shadow-2xl bg-black w-full">
               <Image
-                src="/assets/images/gsc-performance-dashboard.jpg"
+                src="/assets/images/gsc-performance-dashboard.webp"
                 alt="Google Search Console Performance Metrics - JoyDigital SEO Results"
-                width={1200}
-                height={780}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                width={1024}
+                height={683}
+                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 550px"
                 className="w-full h-auto object-cover rounded-xl"
                 priority
               />
