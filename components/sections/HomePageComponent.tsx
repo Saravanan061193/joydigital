@@ -7,12 +7,13 @@ import Image from "next/image";
 import Header from "@/components/layout/Header";
 import DigitalNetworkBackground from "@/components/ui/DigitalNetworkBackground";
 
-// Dynamic imports for performance and code-splitting
 const WorldwideServiceNetwork = dynamic(() => import("@/components/ui/WorldwideServiceNetwork"), { ssr: false });
 const Footer = dynamic(() => import("@/components/layout/Footer"));
-const StickyWidgets = dynamic(() => import("@/components/ui/StickyWidgets"), { ssr: false });
+const UnifiedFloatingWidget = dynamic(() => import("@/components/ui/UnifiedFloatingWidget"), { ssr: false });
 const LeadForm = dynamic(() => import("@/components/ui/LeadForm"));
 const Accordion = dynamic(() => import("@/components/ui/Accordion"));
+const ModernHeroSection = dynamic(() => import("@/components/sections/ModernHeroSection"));
+const ClientLogoMarquee = dynamic(() => import("@/components/ui/ClientLogoMarquee"));
 
 // Lightweight Count-Up Component honoring prefers-reduced-motion
 function CountUpNumber({ target, suffix = "" }: { target: number; suffix?: string }) {
@@ -539,113 +540,9 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
       
       <main className="bg-[#FAF9FF] text-[#1F1B2D] min-h-screen overflow-hidden">
         
-        {/* 1. HERO SECTION WITH PREMIUM DARK-PURPLE THEME (#171126) */}
-        <section className="relative pt-24 lg:pt-32 pb-16 overflow-hidden bg-[#171126] border-b border-[#2A203F]">
-          {/* Lightweight particle canvas connections */}
-          <DigitalNetworkBackground />
-          
-          <div className="absolute inset-0 bg-grid-pattern opacity-[0.015] pointer-events-none" />
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#7C3AED]/10 rounded-full blur-[120px] pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#A78BFA]/10 rounded-full blur-[100px] pointer-events-none" />
-
-          <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-            {/* Hero text content with fade reveal */}
-            <div className="lg:col-span-7 text-left flex flex-col items-start reveal-hidden reveal-visible">
-              <div className="inline-flex items-center gap-2 bg-[#7C3AED]/15 border border-[#7C3AED]/35 px-4 py-1.5 rounded-full mb-6 select-none">
-                <span className="w-2.5 h-2.5 bg-[#A78BFA] rounded-full animate-pulse" />
-                <span className="text-xs font-bold text-[#A78BFA] uppercase tracking-wider">
-                  {hero.badge}
-                </span>
-              </div>
-                         <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight mb-6 leading-tight">
-                Get a Website That <span className="text-[#A78BFA]">Brings You More Customers</span>
-              </h1>
-              
-              <p className="text-sm md:text-base text-[#D8D2E6] mb-6 max-w-xl leading-relaxed font-medium">
-                Custom Websites, SEO & Digital Marketing solutions designed to increase your online visibility, generate enquiries, and grow your business.
-              </p>
-
-              {/* Small trust statement below CTA */}
-              <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[10px] sm:text-xs text-[#A78BFA] font-bold uppercase tracking-wider mb-8">
-                <span>Custom-built</span>
-                <span className="text-[#2A203F] select-none">•</span>
-                <span>SEO-ready</span>
-                <span className="text-[#2A203F] select-none">•</span>
-                <span>Mobile-friendly</span>
-                <span className="text-[#2A203F] select-none">•</span>
-                <span>Lead-focused</span>
-              </div>
-              
-              {/* CTAs with hover scale microinteractions */}
-              <div className="flex flex-wrap items-center gap-4 w-full mb-8">
-                <Link
-                  href="/free-website-audit"
-                  onClick={() => handleCtaEvent("Get Free Website Audit")}
-                  className="w-full sm:w-auto text-center bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-bold text-xs px-8 py-4 rounded-xl shadow-lg shadow-[#7C3AED]/25 hover:scale-[1.025] transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 group"
-                >
-                  Get Free Website Audit
-                  <i className="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform" />
-                </Link>
-                
-                <a
-                  href="https://wa.me/919080026133?text=Hi%20Joy%20Digital,%20I%20need%20a%20website%20for%20my%20business.%20I%20would%20like%20to%20know%20the%20pricing%20and%20process."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => handleWaEvent("hero_section")}
-                  className="w-full sm:w-auto bg-[#10b981] hover:bg-[#059669] text-white font-bold text-xs px-8 py-4 rounded-xl shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/25 hover:scale-[1.025] transition-all flex items-center justify-center gap-2 duration-200 cursor-pointer"
-                >
-                  <i className="fa-brands fa-whatsapp text-lg animate-pulse" />
-                  Chat on WhatsApp
-                </a>
-              </div>
-
-              {/* Minimal base statement */}
-              <div className="border-t border-[#2A203F] pt-5 w-full max-w-lg">
-                <p className="text-[10px] font-bold text-[#A78BFA] uppercase tracking-wider mb-1">Base & Global Reach</p>
-                <p className="text-xs text-[#D8D2E6] leading-relaxed font-semibold">
-                  Based in India | Remotely serving clients across USA, UK, UAE, Canada, Australia, and India.
-                </p>
-              </div>
-            </div>
-
-            {/* Embedded lead form on right */}
-            <div className="lg:col-span-5 flex justify-center lg:justify-end reveal-hidden reveal-visible">
-              <div id="enquiry-section" className="w-full max-w-md relative">
-                <LeadForm
-                  layout="vertical"
-                  title="Claim Free Consultation"
-                  subtitle="Submit your requirements to get an custom quote for your digital roadmap."
-                  ctaText="Start Your Project"
-                  source={`Homepage Hero Form - ${country || "Global"}`}
-                  showWebsiteField={true}
-                  hideEmailField={false}
-                />
-              </div>
-            </div>
-
-            {/* Scroll Down Option Icon (Middle Bottom of Hero) */}
-            <div className="lg:col-span-12 flex justify-center pt-8 sm:pt-10 z-20">
-              <button
-                type="button"
-                onClick={() => {
-                  const target = document.getElementById("value-proposition");
-                  if (target) {
-                    target.scrollIntoView({ behavior: "smooth" });
-                  } else {
-                    window.scrollBy({ top: window.innerHeight * 0.75, behavior: "smooth" });
-                  }
-                }}
-                aria-label="Scroll down to value proposition"
-                className="group flex items-center gap-2.5 text-xs font-bold text-[#A78BFA] hover:text-white transition-all cursor-pointer bg-[#7C3AED]/15 hover:bg-[#7C3AED]/30 border border-[#7C3AED]/40 px-5 py-2.5 rounded-full shadow-lg backdrop-blur-md hover:scale-105 active:scale-95"
-              >
-                <span className="uppercase tracking-widest text-[11px] font-bold">Scroll</span>
-                <div className="w-6 h-6 rounded-full bg-[#7C3AED]/30 group-hover:bg-[#7C3AED] flex items-center justify-center transition-colors">
-                  <i className="fa-solid fa-chevron-down text-[10px] text-[#A78BFA] group-hover:text-white animate-bounce" />
-                </div>
-              </button>
-            </div>
-          </div>
-        </section>
+        {/* 1. MODERNIZED INTERNATIONAL HERO SECTION & CLIENT LOGO MARQUEE */}
+        <ModernHeroSection country={country} />
+        <ClientLogoMarquee />
 
         {/* 2. TRUST / VALUE SECTION WITH SCROLL REVEALS (Soft background alternates) */}
         <section id="value-proposition" className="py-20 bg-white border-b border-[#E9E4F2] relative z-10">
@@ -1677,9 +1574,9 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
       </main>
 
-      {/* 14. FOOTER */}
+      {/* 14. FOOTER & UNIFIED FLOATING WIDGET */}
       <Footer />
-      <StickyWidgets />
+      <UnifiedFloatingWidget />
     </>
   );
 }
