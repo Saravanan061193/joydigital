@@ -13,7 +13,6 @@ const UnifiedFloatingWidget = dynamic(() => import("@/components/ui/UnifiedFloat
 const LeadForm = dynamic(() => import("@/components/ui/LeadForm"));
 const Accordion = dynamic(() => import("@/components/ui/Accordion"));
 const ModernHeroSection = dynamic(() => import("@/components/sections/ModernHeroSection"));
-const ClientLogoMarquee = dynamic(() => import("@/components/ui/ClientLogoMarquee"));
 
 // Lightweight Count-Up Component honoring prefers-reduced-motion
 function CountUpNumber({ target, suffix = "" }: { target: number; suffix?: string }) {
@@ -540,9 +539,8 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
       
       <main className="bg-[#FAF9FF] text-[#1F1B2D] min-h-screen overflow-hidden">
         
-        {/* 1. MODERNIZED INTERNATIONAL HERO SECTION & CLIENT LOGO MARQUEE */}
+        {/* 1. MODERNIZED INTERNATIONAL HERO SECTION */}
         <ModernHeroSection country={country} />
-        <ClientLogoMarquee />
 
         {/* 2. TRUST / VALUE SECTION WITH SCROLL REVEALS (Soft background alternates) */}
         <section id="value-proposition" className="py-20 bg-white border-b border-[#E9E4F2] relative z-10">
