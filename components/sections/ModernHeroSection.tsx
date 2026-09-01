@@ -225,6 +225,7 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
                 alt="Google Search Console Performance Metrics - JoyDigital SEO Results"
                 width={1200}
                 height={780}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                 className="w-full h-auto object-cover rounded-xl"
                 priority
               />

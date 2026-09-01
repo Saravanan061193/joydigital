@@ -36,7 +36,7 @@
         "alt_text": "Custom website development agency dashboard showing Next.js performance benchmarks."
       }
     ],
-    "updated_at": "2026-08-31T00:00:00.000Z"
+    "updated_at": "2026-09-01T00:00:00.000Z"
   },
   {
     "id": "page-dynamic-web-dev",
@@ -55,8 +55,8 @@
       "Role-Based Access Control (RBAC)"
     ],
     "primary_keyword_id": "kw-dynamic-web-01",
-    "secondary_keyword_ids": ["kw-dynamic-web-03", "kw-dynamic-web-04"],
-    "longtail_keyword_ids": ["kw-dynamic-web-05", "kw-dynamic-web-06"],
+    "secondary_keyword_ids": ["kw-dynamic-web-03", "kw-dynamic-web-04", "kw-dynamic-web-07"],
+    "longtail_keyword_ids": ["kw-dynamic-web-05", "kw-dynamic-web-06", "kw-dynamic-web-08"],
     "faq_schema": [
       {
         "question": "What is a dynamic website development service?",
@@ -69,7 +69,7 @@
         "alt_text": "Dynamic website development admin panel interface."
       }
     ],
-    "updated_at": "2026-08-31T00:00:00.000Z"
+    "updated_at": "2026-09-01T00:00:00.000Z"
   },
   {
     "id": "page-web-dev-services",
@@ -88,8 +88,8 @@
       "Automated Technical SEO & JSON-LD Schemas"
     ],
     "primary_keyword_id": "kw-web-services-01",
-    "secondary_keyword_ids": ["kw-web-services-02"],
-    "longtail_keyword_ids": ["kw-web-services-03"],
+    "secondary_keyword_ids": ["kw-web-services-02", "kw-custom-web-11", "kw-web-services-04", "kw-web-services-05"],
+    "longtail_keyword_ids": ["kw-web-services-03", "kw-web-services-06", "kw-web-services-07"],
     "faq_schema": [
       {
         "question": "What technologies do you use for web development?",
@@ -102,7 +102,7 @@
         "alt_text": "Joy Digital professional web development services team."
       }
     ],
-    "updated_at": "2026-08-31T00:00:00.000Z"
+    "updated_at": "2026-09-01T00:00:00.000Z"
   },
   {
     "id": "page-ind-real-estate",
@@ -121,8 +121,8 @@
       "High-Resolution Image Compression"
     ],
     "primary_keyword_id": "kw-ind-realestate-01",
-    "secondary_keyword_ids": ["kw-ind-realestate-02"],
-    "longtail_keyword_ids": [],
+    "secondary_keyword_ids": ["kw-ind-realestate-02", "kw-ind-realestate-03", "kw-ind-realestate-04", "kw-ind-realestate-05"],
+    "longtail_keyword_ids": ["kw-ind-realestate-06", "kw-ind-realestate-07", "kw-ind-realestate-08"],
     "faq_schema": [
       {
         "question": "Can you integrate map filters in real estate websites?",
@@ -130,7 +130,7 @@
       }
     ],
     "alt_texts": [],
-    "updated_at": "2026-08-31T00:00:00.000Z"
+    "updated_at": "2026-09-01T00:00:00.000Z"
   },
   {
     "id": "page-ind-travel-tourism",
@@ -147,11 +147,11 @@
       "Automated Booking Confirmation Emails"
     ],
     "primary_keyword_id": "kw-ind-travel-01",
-    "secondary_keyword_ids": [],
-    "longtail_keyword_ids": [],
+    "secondary_keyword_ids": ["kw-ind-travel-02", "kw-ind-travel-03", "kw-ind-travel-04"],
+    "longtail_keyword_ids": ["kw-ind-travel-05", "kw-ind-travel-06", "kw-ind-travel-07"],
     "faq_schema": [],
     "alt_texts": [],
-    "updated_at": "2026-08-31T00:00:00.000Z"
+    "updated_at": "2026-09-01T00:00:00.000Z"
   },
   {
     "id": "page-ind-healthcare",
@@ -168,11 +168,11 @@
       "Teleconsultation API Sync"
     ],
     "primary_keyword_id": "kw-ind-healthcare-01",
-    "secondary_keyword_ids": [],
-    "longtail_keyword_ids": [],
+    "secondary_keyword_ids": ["kw-ind-healthcare-02", "kw-ind-healthcare-03", "kw-ind-healthcare-04"],
+    "longtail_keyword_ids": ["kw-ind-healthcare-05", "kw-ind-healthcare-06", "kw-ind-healthcare-07"],
     "faq_schema": [],
     "alt_texts": [],
-    "updated_at": "2026-08-31T00:00:00.000Z"
+    "updated_at": "2026-09-01T00:00:00.000Z"
   },
   {
     "id": "page-ind-ecommerce",
@@ -189,11 +189,11 @@
       "Stripe & Razorpay Integration"
     ],
     "primary_keyword_id": "kw-ind-ecom-01",
-    "secondary_keyword_ids": [],
-    "longtail_keyword_ids": [],
+    "secondary_keyword_ids": ["kw-ind-ecom-02", "kw-ind-ecom-03", "kw-ind-ecom-04"],
+    "longtail_keyword_ids": ["kw-ind-ecom-05", "kw-ind-ecom-06", "kw-ind-ecom-07"],
     "faq_schema": [],
     "alt_texts": [],
-    "updated_at": "2026-08-31T00:00:00.000Z"
+    "updated_at": "2026-09-01T00:00:00.000Z"
   },
   {
     "id": "page-india-seo-mkt",
@@ -212,8 +212,8 @@
       "Sub-Second Next.js Page Speeds"
     ],
     "primary_keyword_id": "kw-india-mkt-05",
-    "secondary_keyword_ids": ["kw-india-mkt-02", "kw-india-mkt-03"],
-    "longtail_keyword_ids": ["kw-india-mkt-01", "kw-india-mkt-04"],
+    "secondary_keyword_ids": ["kw-india-mkt-02", "kw-india-mkt-03", "kw-india-mkt-06"],
+    "longtail_keyword_ids": ["kw-india-mkt-01", "kw-india-mkt-04", "kw-india-mkt-07"],
     "faq_schema": [
       {
         "question": "Why choose Joy Digital as your digital marketing company in India?",
@@ -225,6 +225,6 @@
       }
     ],
     "alt_texts": [],
-    "updated_at": "2026-08-31T00:00:00.000Z"
+    "updated_at": "2026-09-01T00:00:00.000Z"
   }
 ]

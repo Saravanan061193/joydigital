@@ -220,6 +220,28 @@
     "created_at": "2026-08-31T00:00:00.000Z"
   },
   {
+    "id": "kw-dynamic-web-07",
+    "keyword": "custom web application development agency",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Global SaaS Founders & Enterprise Product Leads",
+    "notes": "Generated to complete secondary keyword count rule for dynamic website development.",
+    "status": "Active",
+    "assigned_page_id": "page-dynamic-web-dev",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-dynamic-web-08",
+    "keyword": "scalable dynamic website development for enterprises",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "Global Enterprise CTOs & Tech Procurement",
+    "notes": "Generated to complete long-tail keyword count rule for dynamic website development.",
+    "status": "Active",
+    "assigned_page_id": "page-dynamic-web-dev",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
     "id": "kw-web-services-01",
     "keyword": "professional web development services",
     "type": "Primary",
@@ -253,6 +275,72 @@
     "created_at": "2026-08-31T00:00:00.000Z"
   },
   {
+    "id": "kw-web-services-04",
+    "keyword": "enterprise website development company",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Global B2B & Enterprise Procurement",
+    "notes": "Generated secondary keyword for /website-development.",
+    "status": "Active",
+    "assigned_page_id": "page-web-dev-services",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-web-services-05",
+    "keyword": "custom nextjs web development services",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "US, UK & European Tech Companies",
+    "notes": "Generated secondary keyword for /website-development.",
+    "status": "Active",
+    "assigned_page_id": "page-web-dev-services",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-web-services-06",
+    "keyword": "full stack website development for global startups",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "VC-Backed Founders & Global Startup Leaders",
+    "notes": "Generated long-tail keyword for /website-development.",
+    "status": "Active",
+    "assigned_page_id": "page-web-dev-services",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-web-services-07",
+    "keyword": "high performance B2B website development agency",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "Global B2B SaaS & Tech Enterprises",
+    "notes": "Generated long-tail keyword for /website-development.",
+    "status": "Active",
+    "assigned_page_id": "page-web-dev-services",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-india-mkt-06",
+    "keyword": "top website development agency in india",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Global Brands seeking Indian IT Development Partners",
+    "notes": "Generated secondary keyword for /in regional hub.",
+    "status": "Active",
+    "assigned_page_id": "page-india-seo-mkt",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-india-mkt-07",
+    "keyword": "offshore website development services in india",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "US & European Tech Agencies & Businesses",
+    "notes": "Generated long-tail keyword for /in regional hub.",
+    "status": "Active",
+    "assigned_page_id": "page-india-seo-mkt",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
     "id": "kw-ind-realestate-01",
     "keyword": "real estate website development company",
     "type": "Primary",
@@ -275,6 +363,72 @@
     "created_at": "2026-08-31T00:00:00.000Z"
   },
   {
+    "id": "kw-ind-realestate-03",
+    "keyword": "custom property listing website development",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Global Real Estate Agencies & Brokers",
+    "notes": "Generated secondary keyword for real estate industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-real-estate",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-realestate-04",
+    "keyword": "real estate portal development services",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Property Aggregators & Commercial Real Estate",
+    "notes": "Generated secondary keyword for real estate industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-real-estate",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-realestate-05",
+    "keyword": "luxury real estate website design company",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "High-End Luxury Property Developers Worldwide",
+    "notes": "Generated secondary keyword for real estate industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-real-estate",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-realestate-06",
+    "keyword": "real estate website development with interactive map search",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "Global Property Firms & MLS Platforms",
+    "notes": "Generated long-tail keyword for real estate industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-real-estate",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-realestate-07",
+    "keyword": "custom real estate IDX website development services",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "US, UK & Global Real Estate Firms",
+    "notes": "Generated long-tail keyword for real estate industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-real-estate",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-realestate-08",
+    "keyword": "high converting real estate web design for brokers",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "Independent Brokers & Enterprise Real Estate Teams",
+    "notes": "Generated long-tail keyword for real estate industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-real-estate",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
     "id": "kw-ind-travel-01",
     "keyword": "custom travel website development",
     "type": "Primary",
@@ -284,6 +438,72 @@
     "status": "Active",
     "assigned_page_id": "page-ind-travel-tourism",
     "created_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-travel-02",
+    "keyword": "tour operator website development company",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Global Tour Operators & Destination Management",
+    "notes": "Generated secondary keyword for travel industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-travel-tourism",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-travel-03",
+    "keyword": "online travel booking engine development",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Travel Tech Startups & Agencies",
+    "notes": "Generated secondary keyword for travel industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-travel-tourism",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-travel-04",
+    "keyword": "custom vacation rental website development",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Boutique Resorts & Hospitality Chains",
+    "notes": "Generated secondary keyword for travel industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-travel-tourism",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-travel-05",
+    "keyword": "custom travel agency website development with booking engine",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "Global Travel Agencies & Tour Managers",
+    "notes": "Generated long-tail keyword for travel industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-travel-tourism",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-travel-06",
+    "keyword": "multi currency travel website development services",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "International Tourism & Travel Companies",
+    "notes": "Generated long-tail keyword for travel industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-travel-tourism",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-travel-07",
+    "keyword": "high speed travel booking portal development agency",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "Travel Aggregators & Global Tourism Boards",
+    "notes": "Generated long-tail keyword for travel industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-travel-tourism",
+    "created_at": "2026-09-01T00:00:00.000Z"
   },
   {
     "id": "kw-ind-healthcare-01",
@@ -297,6 +517,72 @@
     "created_at": "2026-08-31T00:00:00.000Z"
   },
   {
+    "id": "kw-ind-healthcare-02",
+    "keyword": "hospital website development company",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Private Hospitals & Multi-Specialty Clinics",
+    "notes": "Generated secondary keyword for healthcare industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-healthcare",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-healthcare-03",
+    "keyword": "custom medical website design services",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Healthcare Networks & Medical Practices",
+    "notes": "Generated secondary keyword for healthcare industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-healthcare",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-healthcare-04",
+    "keyword": "doctor appointment booking website development",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Medical Centers & Telehealth Platforms",
+    "notes": "Generated secondary keyword for healthcare industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-healthcare",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-healthcare-05",
+    "keyword": "HIPAA compliant healthcare website development services",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "US & Global Health Organizations & Clinics",
+    "notes": "Generated long-tail keyword for healthcare industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-healthcare",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-healthcare-06",
+    "keyword": "custom hospital patient portal development agency",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "Enterprise Hospitals & Healthcare Systems",
+    "notes": "Generated long-tail keyword for healthcare industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-healthcare",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-healthcare-07",
+    "keyword": "patient appointment scheduling website development for clinics",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "Global Private Medical Clinics & Specialists",
+    "notes": "Generated long-tail keyword for healthcare industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-healthcare",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
     "id": "kw-ind-ecom-01",
     "keyword": "custom ecommerce website development",
     "type": "Primary",
@@ -306,6 +592,72 @@
     "status": "Active",
     "assigned_page_id": "page-ind-ecommerce",
     "created_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-ecom-02",
+    "keyword": "headless ecommerce website development company",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Global D2C Brands & Retail Enterprises",
+    "notes": "Generated secondary keyword for ecommerce industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-ecommerce",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-ecom-03",
+    "keyword": "custom online store web development",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Growing E-Commerce Merchants Worldwide",
+    "notes": "Generated secondary keyword for ecommerce industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-ecommerce",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-ecom-04",
+    "keyword": "nextjs ecommerce website development services",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "High-Growth E-Commerce Retailers & Brands",
+    "notes": "Generated secondary keyword for ecommerce industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-ecommerce",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-ecom-05",
+    "keyword": "high speed headless nextjs ecommerce development agency",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "Enterprise D2C Brands & Retail Leaders",
+    "notes": "Generated long-tail keyword for ecommerce industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-ecommerce",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-ecom-06",
+    "keyword": "custom B2B ecommerce portal development services",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "Wholesale Distributors & B2B Manufacturers",
+    "notes": "Generated long-tail keyword for ecommerce industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-ecommerce",
+    "created_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "kw-ind-ecom-07",
+    "keyword": "custom multi currency ecommerce website development",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "Cross-Border Global E-Commerce Businesses",
+    "notes": "Generated long-tail keyword for ecommerce industry.",
+    "status": "Active",
+    "assigned_page_id": "page-ind-ecommerce",
+    "created_at": "2026-09-01T00:00:00.000Z"
   },
   {
     "id": "kw-custom-web-10",
@@ -324,9 +676,9 @@
     "type": "Primary",
     "search_intent": "Commercial",
     "target_audience": "B2B Brands & Creative Agencies",
-    "notes": "High conversion search query for custom UI/UX design.",
+    "notes": "Mapped to /website-development per SEO rule update.",
     "status": "Active",
-    "assigned_page_id": "page-web-design-services",
+    "assigned_page_id": "page-web-dev-services",
     "created_at": "2026-08-31T00:00:00.000Z"
   },
   {
