@@ -1226,7 +1226,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
         </section>
 
         {/* 9. CASE STUDIES WITH COUNT-UP NUMERICAL COUNTERS */}
-        <section className="py-20 bg-white border-b border-[#E9E4F2]">
+        <section id="case-studies" className="py-20 bg-white border-b border-[#E9E4F2]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
               <span className="text-xs font-bold text-[#7C3AED] uppercase tracking-widest block mb-3">

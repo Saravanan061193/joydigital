@@ -28,16 +28,26 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
     setIsModalOpen(true);
   };
 
+  const handleExploreCaseStudies = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const target = document.getElementById("case-studies");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.href = "/case-studies";
+    }
+  };
+
   return (
     <section className="relative pt-24 lg:pt-32 pb-16 overflow-hidden bg-[#0D0B18] text-white border-b border-[#231C3D] select-none">
       {/* Background Gradients & Ambient Glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(124,58,237,0.12),transparent_50%)] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-900/10 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center relative z-10">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center relative z-10">
         
         {/* LEFT COLUMN: Main Hero Copy & Conversion */}
-        <div className="lg:col-span-7 flex flex-col items-start text-left space-y-6">
+        <div className="lg:col-span-6 flex flex-col items-start text-left space-y-6">
           
           {/* Top Pill Badges */}
           <div className="flex flex-wrap items-center gap-2">
@@ -147,17 +157,18 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
             transition={{ duration: 0.4, delay: 0.4 }}
             className="flex flex-wrap items-center gap-3 pt-1"
           >
-            <Link
+            <a
               href="#case-studies"
-              className="px-5 py-2.5 rounded-xl bg-[#17122B] hover:bg-[#20193B] border border-[#2B2346] hover:border-[#7C3AED]/40 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 group"
+              onClick={handleExploreCaseStudies}
+              className="px-5 py-2.5 rounded-xl bg-[#17122B] hover:bg-[#20193B] border border-[#2B2346] hover:border-[#7C3AED]/40 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 group cursor-pointer"
             >
               <span>Explore Case Studies</span>
               <ChevronRight className="w-4 h-4 text-[#A78BFA] group-hover:translate-x-1 transition-transform" />
-            </Link>
+            </a>
 
             <button
               onClick={() => setIsModalOpen(true)}
-              className="px-5 py-2.5 rounded-xl bg-[#17122B] hover:bg-[#20193B] border border-[#2B2346] hover:border-[#7C3AED]/40 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold transition-all flex items-center gap-2"
+              className="px-5 py-2.5 rounded-xl bg-[#17122B] hover:bg-[#20193B] border border-[#2B2346] hover:border-[#7C3AED]/40 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 cursor-pointer"
             >
               <Calculator className="w-4 h-4 text-[#A78BFA]" />
               <span>Calculate Your ROI</span>
@@ -199,33 +210,22 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
           </motion.div>
         </div>
 
-        {/* RIGHT COLUMN: Exact User Uploaded Performance Dashboard Image */}
-        <div className="lg:col-span-5 relative flex justify-center">
+        {/* RIGHT COLUMN: Large Authentic Google Search Console Performance Screenshot */}
+        <div className="lg:col-span-6 relative flex justify-center w-full">
           <motion.div
             initial={{ opacity: 0, scale: 0.97, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="w-full max-w-md bg-[#130E26]/90 border border-[#271F42] rounded-2xl p-2.5 shadow-2xl backdrop-blur-xl relative overflow-hidden group hover:border-[#7C3AED]/50 transition-colors"
+            className="w-full max-w-2xl bg-[#130E26]/90 border border-[#271F42] hover:border-[#7C3AED]/50 rounded-2xl p-1.5 shadow-2xl backdrop-blur-xl relative overflow-hidden transition-all"
           >
-            {/* Top Bar Indicator */}
-            <div className="flex items-center justify-between px-2 py-1.5 mb-1.5 border-b border-[#211A38]">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-xs font-bold text-slate-200">Google Search Performance</span>
-              </div>
-              <span className="text-[10px] text-emerald-400 font-mono bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                VERIFIED ROI
-              </span>
-            </div>
-
-            {/* User Image Display */}
-            <div className="relative rounded-xl overflow-hidden border border-[#2B2346] shadow-lg bg-black">
+            {/* User Image Display - High Resolution & High Prominence */}
+            <div className="relative rounded-xl overflow-hidden border border-[#2B2346] shadow-2xl bg-black w-full">
               <Image
                 src="/assets/images/gsc-performance-dashboard.jpg"
                 alt="Google Search Console Performance Metrics - JoyDigital SEO Results"
-                width={800}
-                height={520}
-                className="w-full h-auto object-cover rounded-xl group-hover:scale-[1.01] transition-transform duration-300"
+                width={1200}
+                height={780}
+                className="w-full h-auto object-cover rounded-xl"
                 priority
               />
             </div>
