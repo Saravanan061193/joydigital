@@ -7,17 +7,17 @@ import {
   ArrowRight,
   Sparkles,
   Zap,
-  ShieldCheck,
-  Star,
   CheckCircle2,
   TrendingUp,
-  Globe2,
+  Globe,
   Gauge,
   Calculator,
-  Lock,
   ChevronRight,
-  Clock,
+  BarChart3,
+  Star,
+  Activity,
   Layers,
+  ArrowUpRight,
 } from "lucide-react";
 import MultiStepLeadModal from "@/components/ui/MultiStepLeadModal";
 
@@ -28,14 +28,6 @@ interface ModernHeroSectionProps {
 export default function ModernHeroSection({ country = "" }: ModernHeroSectionProps) {
   const [emailInput, setEmailInput] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [monthlyTraffic, setMonthlyTraffic] = useState(15000);
-  const [currentConversion, setCurrentConversion] = useState(1.5);
-  const [targetConversion, setTargetConversion] = useState(4.2);
-
-  // Dynamic ROI calculation
-  const currentLeads = Math.round((monthlyTraffic * currentConversion) / 100);
-  const targetLeads = Math.round((monthlyTraffic * targetConversion) / 100);
-  const netLeadIncrease = targetLeads - currentLeads;
 
   const handleLeadCaptureSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,26 +35,28 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
   };
 
   return (
-    <section className="relative pt-28 lg:pt-36 pb-20 overflow-hidden bg-[#0B0A14] text-white border-b border-[#1E1B33] select-none">
-      {/* Background Gradients & Glow Orbs */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
-      <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-violet-600/15 rounded-full blur-[140px] pointer-events-none animate-pulse" />
-      <div className="absolute bottom-0 left-10 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-purple-600/10 rounded-full blur-[160px] pointer-events-none" />
+    <section className="relative pt-28 lg:pt-36 pb-20 overflow-hidden bg-[#0B121B] text-white border-b border-slate-800/60 select-none">
+      {/* Subtle Technical Blueprint Grid Overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
-        {/* LEFT COLUMN: Main Hero Copy & Ultra-Lean Form */}
+      {/* Ambient Blue Radial Glows */}
+      <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none animate-pulse" />
+      <div className="absolute bottom-10 left-10 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center relative z-10">
+        
+        {/* LEFT COLUMN: Copy & Conversion Architecture */}
         <div className="lg:col-span-7 flex flex-col items-start text-left space-y-7">
           
-          {/* Feature Badges with Glowing Borders */}
+          {/* Top Pill Badges with Subtle Border Strokes & Tech Icons */}
           <div className="flex flex-wrap items-center gap-2.5">
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#17132B] border border-violet-500/40 text-violet-300 text-xs font-semibold shadow-[0_0_15px_rgba(124,58,237,0.2)]"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300 text-xs font-semibold shadow-sm"
             >
-              <Sparkles className="w-3.5 h-3.5 text-violet-400 animate-spin" style={{ animationDuration: "6s" }} />
+              <Sparkles className="w-3.5 h-3.5 text-blue-400 animate-spin" style={{ animationDuration: "6s" }} />
               <span>Custom Tech Stack</span>
             </motion.div>
 
@@ -70,7 +64,7 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#17132B] border border-indigo-500/40 text-indigo-300 text-xs font-semibold shadow-[0_0_15px_rgba(99,102,241,0.2)]"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300 text-xs font-semibold shadow-sm"
             >
               <TrendingUp className="w-3.5 h-3.5 text-indigo-400" />
               <span>Enterprise SEO</span>
@@ -80,42 +74,42 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#17132B] border border-emerald-500/40 text-emerald-300 text-xs font-semibold shadow-[0_0_15px_rgba(16,185,129,0.2)]"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300 text-xs font-semibold shadow-sm"
             >
               <Zap className="w-3.5 h-3.5 text-emerald-400" />
               <span>Sub-second Load Times</span>
             </motion.div>
           </div>
 
-          {/* Outcome-Driven Headline */}
+          {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] text-white"
+            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15]"
           >
             High-Performance Websites & SEO Engineered to{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-indigo-300 to-purple-300">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-300 to-sky-300">
               Scale Your Business Globally.
             </span>
           </motion.h1>
 
-          {/* Sub-headline: 18px, 1.6 line-height */}
+          {/* Subtitle */}
           <motion.p
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-base sm:text-lg text-slate-300 leading-[1.6] max-w-2xl font-normal"
+            className="text-base sm:text-lg text-slate-400 leading-relaxed max-w-2xl font-normal"
           >
             JoyDigital engineers bespoke Next.js web systems and enterprise search architectures built for sub-second speeds, maximum conversion rates, and high organic pipeline growth.
           </motion.p>
 
-          {/* Ultra-Lean 2-Field Capture Form (Zero Cognitive Friction) */}
+          {/* Ultra-Lean Lead Capture Bar */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="w-full max-w-xl"
+            className="w-full max-w-xl space-y-3"
           >
             <form onSubmit={handleLeadCaptureSubmit} className="flex flex-col sm:flex-row gap-3">
               <div className="relative flex-1">
@@ -125,20 +119,21 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
                   placeholder="Enter your work email..."
                   value={emailInput}
                   onChange={(e) => setEmailInput(e.target.value)}
-                  className="w-full bg-[#131024] border border-[#2B2446] focus:border-violet-500 text-sm text-white placeholder:text-slate-500 rounded-xl px-4 py-4 outline-none focus:ring-4 focus:ring-violet-500/20 transition-all font-medium"
+                  className="w-full bg-white text-slate-900 font-medium text-sm placeholder:text-slate-400 rounded-xl px-4 py-3.5 outline-none focus:ring-4 focus:ring-blue-500/30 transition-all"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full sm:w-auto px-7 py-4 rounded-xl bg-gradient-to-r from-violet-600 via-indigo-600 to-purple-600 hover:from-violet-500 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-violet-600/30 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer group whitespace-nowrap"
+                className="w-full sm:w-auto px-6 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-blue-600/30 hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap group"
               >
                 <span>Book a 15-Min Growth Call</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </form>
 
-            <div className="mt-3 flex flex-wrap items-center gap-4 text-xs text-slate-400">
+            {/* Micro-Trust Signals */}
+            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 pt-1">
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Zero Commitment</span>
@@ -154,7 +149,7 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
             </div>
           </motion.div>
 
-          {/* Secondary CTA & Calculator Trigger */}
+          {/* Secondary Actions */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -163,177 +158,190 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
           >
             <Link
               href="#case-studies"
-              className="px-6 py-3 rounded-xl bg-[#141026] hover:bg-[#1D1838] border border-[#2B2446] hover:border-violet-500/40 text-slate-200 text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 group"
+              className="px-5 py-3 rounded-xl bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 group"
             >
               <span>Explore Case Studies</span>
-              <ChevronRight className="w-4 h-4 text-violet-400 group-hover:translate-x-1 transition-transform" />
+              <ChevronRight className="w-4 h-4 text-blue-400 group-hover:translate-x-1 transition-transform" />
             </Link>
 
             <button
-              onClick={() => {
-                const target = document.getElementById("roi-calculator-section");
-                if (target) target.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="px-6 py-3 rounded-xl bg-transparent hover:bg-[#141026] text-slate-300 hover:text-white text-xs sm:text-sm font-semibold transition-colors flex items-center gap-2 border border-transparent hover:border-[#2B2446]"
+              onClick={() => setIsModalOpen(true)}
+              className="px-5 py-3 rounded-xl bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold transition-all flex items-center gap-2"
             >
               <Calculator className="w-4 h-4 text-indigo-400" />
               <span>Calculate Your ROI</span>
             </button>
           </motion.div>
 
-          {/* Above-the-Fold Social Proof & Global Trust Signals */}
+          {/* Bottom Global Trust Line */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            className="pt-4 border-t border-[#1C1733] w-full max-w-xl space-y-3"
+            className="pt-4 border-t border-slate-800/80 w-full max-w-xl flex flex-wrap items-center gap-3 text-xs text-slate-400 font-medium"
           >
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              {/* Star Rating & Clutch/Trustpilot Badge */}
-              <div className="flex items-center gap-3">
-                {/* Mini Client Avatar Cluster */}
-                <div className="flex -space-x-2 overflow-hidden">
-                  <div className="inline-block h-8 w-8 rounded-full ring-2 ring-[#0B0A14] bg-violet-700 text-[10px] font-bold flex items-center justify-center">
-                    GM
-                  </div>
-                  <div className="inline-block h-8 w-8 rounded-full ring-2 ring-[#0B0A14] bg-indigo-600 text-[10px] font-bold flex items-center justify-center">
-                    C
-                  </div>
-                  <div className="inline-block h-8 w-8 rounded-full ring-2 ring-[#0B0A14] bg-purple-600 text-[10px] font-bold flex items-center justify-center">
-                    RK
-                  </div>
-                  <div className="inline-block h-8 w-8 rounded-full ring-2 ring-[#0B0A14] bg-emerald-600 text-[10px] font-bold flex items-center justify-center">
-                    +40
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex items-center gap-1 text-amber-400">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
-                    ))}
-                  </div>
-                  <p className="text-xs text-slate-300 font-medium">
-                    Rated <span className="font-bold text-white">4.9/5</span> on Clutch & Trustpilot
-                  </p>
-                </div>
-              </div>
-
-              {/* Polished Global Trust Note */}
-              <div className="flex items-center gap-2 bg-[#141026] px-3 py-1.5 rounded-lg border border-[#251E3D] text-[11px] text-violet-300 font-medium">
-                <Globe2 className="w-3.5 h-3.5 text-violet-400" />
-                <span>Global Delivery Hub | 100% US & Europe Time-Zone Synchronized</span>
-              </div>
+            <div className="flex items-center gap-1.5 text-slate-300 font-semibold bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800">
+              <Globe className="w-3.5 h-3.5 text-blue-400" />
+              <span>Global Delivery Hub</span>
+            </div>
+            <span className="text-slate-600">•</span>
+            <span>100% US/Europe Time-Zone Synchronized</span>
+            <span className="text-slate-600">•</span>
+            <div className="flex items-center gap-1 text-amber-400 font-bold">
+              <Star className="w-3.5 h-3.5 fill-amber-400" />
+              <span>Clutch & Trustpilot Rated 4.9/5</span>
             </div>
           </motion.div>
         </div>
 
-        {/* RIGHT COLUMN: Interactive SaaS Product Mockup & Live Metric Cards */}
+        {/* RIGHT COLUMN: Authentic Performance Dashboard Mockup */}
         <div className="lg:col-span-5 relative flex justify-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            initial={{ opacity: 0, scale: 0.96, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="w-full max-w-md bg-[#110E21] border border-[#2B2446] rounded-3xl p-6 shadow-2xl shadow-violet-950/40 relative overflow-hidden space-y-6"
+            className="w-full max-w-md bg-slate-900/70 border border-slate-800/80 rounded-2xl p-5 sm:p-6 backdrop-blur-md shadow-2xl space-y-4"
           >
-            {/* Top Glass Header bar */}
-            <div className="flex items-center justify-between pb-4 border-b border-[#201A38]">
+            {/* Dashboard Header Bar */}
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800/80 text-xs">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-rose-500/80" />
-                <div className="w-3 h-3 rounded-full bg-amber-500/80" />
-                <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                <span className="text-xs font-bold text-slate-400 ml-2">Engineered Performance Dashboard</span>
+                <div className="flex gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+                </div>
+                <span className="font-semibold text-slate-400 ml-1">Live Performance Telemetry</span>
               </div>
               <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md font-mono border border-emerald-500/20">
-                LIVE ROI
+                ACTIVE
               </span>
             </div>
 
-            {/* Metric 1: 99/100 Core Web Vitals Lighthouse Gauge */}
-            <div className="bg-[#18132E] border border-[#2B2446] p-4 rounded-2xl flex items-center justify-between">
-              <div className="space-y-1">
-                <div className="flex items-center gap-1.5">
+            {/* Top Widget 1: Google Lighthouse Score */}
+            <div className="bg-slate-950/60 border border-slate-800/90 rounded-xl p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
                   <Gauge className="w-4 h-4 text-emerald-400" />
-                  <span className="text-xs font-bold text-slate-200">Google Lighthouse Score</span>
+                  <span className="text-xs font-bold text-slate-200">Google Lighthouse Speed Score</span>
                 </div>
-                <p className="text-[11px] text-slate-400">Sub-second pre-rendered TTFB (0.24s)</p>
+                {/* Circular Score Badge */}
+                <div className="w-12 h-12 rounded-full border-4 border-emerald-500/40 bg-emerald-500/10 text-emerald-400 text-lg font-black flex items-center justify-center shadow-[0_0_12px_rgba(16,185,129,0.2)]">
+                  99
+                </div>
               </div>
 
-              <div className="relative w-14 h-14 rounded-full border-4 border-emerald-500/30 flex items-center justify-center bg-emerald-500/10 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
-                <span className="text-lg font-black text-emerald-400">99</span>
-              </div>
-            </div>
-
-            {/* Metric 2: +240% Lead Growth Card */}
-            <div className="bg-[#18132E] border border-[#2B2446] p-4 rounded-2xl space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-200">Organic Lead Conversion Lift</span>
-                <span className="text-xs font-extrabold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
-                  +240% Growth
-                </span>
-              </div>
-
-              {/* Visual mini bar graph */}
-              <div className="h-16 flex items-end gap-2 pt-2 border-b border-[#251E3D] pb-2">
-                <div className="flex-1 bg-slate-700/40 rounded-t-md h-30% flex items-end justify-center">
-                  <span className="text-[9px] text-slate-400 mb-1">Q1</span>
+              {/* Core Web Vitals breakdown */}
+              <div className="grid grid-cols-3 gap-2 pt-1 border-t border-slate-800/60 text-[11px]">
+                <div>
+                  <p className="text-slate-400">LCP</p>
+                  <p className="font-bold text-emerald-400">0.7s</p>
+                  <div className="h-1 bg-slate-800 rounded-full mt-1 overflow-hidden">
+                    <div className="h-full bg-emerald-400 w-[95%]" />
+                  </div>
                 </div>
-                <div className="flex-1 bg-slate-700/40 rounded-t-md h-45% flex items-end justify-center">
-                  <span className="text-[9px] text-slate-400 mb-1">Q2</span>
+                <div>
+                  <p className="text-slate-400">FCP</p>
+                  <p className="font-bold text-emerald-400">0.0s</p>
+                  <div className="h-1 bg-slate-800 rounded-full mt-1 overflow-hidden">
+                    <div className="h-full bg-emerald-400 w-[100%]" />
+                  </div>
                 </div>
-                <div className="flex-1 bg-violet-600/60 rounded-t-md h-65% flex items-end justify-center">
-                  <span className="text-[9px] text-violet-200 mb-1">Q3</span>
-                </div>
-                <div className="flex-1 bg-gradient-to-t from-violet-600 to-emerald-400 rounded-t-md h-100% flex items-end justify-center shadow-[0_0_12px_rgba(16,185,129,0.4)]">
-                  <span className="text-[9px] font-bold text-white mb-1">Q4</span>
+                <div>
+                  <p className="text-slate-400">TTFB</p>
+                  <p className="font-bold text-emerald-400">110ms</p>
+                  <div className="h-1 bg-slate-800 rounded-full mt-1 overflow-hidden">
+                    <div className="h-full bg-emerald-400 w-[98%]" />
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Interactive ROI Calculator Preview */}
-            <div id="roi-calculator-section" className="bg-[#18132E] border border-[#2B2446] p-4 rounded-2xl space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-200">
-                  <Calculator className="w-4 h-4 text-violet-400" />
-                  <span>Interactive ROI Estimator</span>
+            {/* Middle Widget 2: Organic Growth Chart */}
+            <div className="bg-slate-950/60 border border-slate-800/90 rounded-xl p-4 space-y-3">
+              {/* Stat Row */}
+              <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                <div>
+                  <p className="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Organic Traffic</p>
+                  <p className="font-extrabold text-white text-sm">
+                    15,668 <span className="text-emerald-400 text-xs font-semibold">(+65.2%)</span>
+                  </p>
                 </div>
-                <span className="text-[10px] text-violet-300 font-medium">Drag Traffic</span>
+                <div>
+                  <p className="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Conversions</p>
+                  <p className="font-extrabold text-white text-sm">1,876</p>
+                </div>
+                <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-extrabold px-2 py-1 rounded-md">
+                  +240% YoY
+                </div>
               </div>
 
-              <div className="space-y-2">
-                <div className="flex justify-between text-[11px] text-slate-400">
-                  <span>Monthly Visitors:</span>
-                  <span className="font-bold text-white">{monthlyTraffic.toLocaleString()}</span>
-                </div>
-                <input
-                  type="range"
-                  min="3000"
-                  max="100000"
-                  step="1000"
-                  value={monthlyTraffic}
-                  onChange={(e) => setMonthlyTraffic(Number(e.target.value))}
-                  className="w-full accent-violet-500 h-1.5 bg-[#251E3D] rounded-lg cursor-pointer"
-                />
+              {/* Glowing Electric Blue SVG Area/Line Chart */}
+              <div className="relative pt-2">
+                <svg viewBox="0 0 400 120" className="w-full h-24 overflow-visible">
+                  <defs>
+                    <linearGradient id="blueAreaGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.35" />
+                      <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.0" />
+                    </linearGradient>
+                  </defs>
 
-                <div className="pt-2 flex items-center justify-between text-xs border-t border-[#251E3D]">
-                  <span className="text-slate-400">Est. Additional Monthly Leads:</span>
-                  <span className="font-extrabold text-emerald-400 text-sm">+{netLeadIncrease} leads/mo</span>
+                  {/* Filled Area */}
+                  <path
+                    d="M 0 100 C 60 90, 110 70, 160 55 C 210 40, 260 50, 310 20 C 350 8, 380 5, 400 2 L 400 120 L 0 120 Z"
+                    fill="url(#blueAreaGradient)"
+                  />
+
+                  {/* Glowing Smooth Curve Line */}
+                  <path
+                    d="M 0 100 C 60 90, 110 70, 160 55 C 210 40, 260 50, 310 20 C 350 8, 380 5, 400 2"
+                    fill="none"
+                    stroke="#3B82F6"
+                    strokeWidth="3"
+                    className="drop-shadow-[0_4px_10px_rgba(59,130,246,0.6)]"
+                  />
+
+                  {/* Active Endpoint Marker */}
+                  <circle cx="400" cy="2" r="5" fill="#60A5FA" className="animate-ping" />
+                  <circle cx="400" cy="2" r="4" fill="#2563EB" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Bottom Widget 3: Conversion Rate Lift & Path */}
+            <div className="bg-slate-950/60 border border-slate-800/90 rounded-xl p-4 space-y-3">
+              <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center gap-1.5 font-bold text-slate-200">
+                  <BarChart3 className="w-4 h-4 text-blue-400" />
+                  <span>Conversion Rate Optimization</span>
+                </div>
+                <span className="text-[11px] font-bold text-emerald-400">1.8% → 4.6%</span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 pt-1 text-xs">
+                <div className="bg-slate-900/90 border border-slate-800 p-2.5 rounded-lg space-y-1">
+                  <p className="text-[10px] text-slate-400">Form Submissions</p>
+                  <div className="flex items-center justify-between">
+                    <span className="font-extrabold text-white">125 → 425</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-emerald-400" />
+                  </div>
+                </div>
+
+                <div className="bg-slate-900/90 border border-slate-800 p-2.5 rounded-lg space-y-1">
+                  <p className="text-[10px] text-slate-400">Qualified Pipeline</p>
+                  <div className="flex items-center justify-between">
+                    <span className="font-extrabold text-white">$45k → $180k</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-emerald-400" />
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Floating Trust Badge */}
-            <div className="text-center pt-1">
-              <p className="text-[11px] text-slate-400 flex items-center justify-center gap-1.5">
-                <Lock className="w-3.5 h-3.5 text-violet-400" />
-                <span>Bespoke Engineering • 100% Code Ownership</span>
-              </p>
-            </div>
           </motion.div>
         </div>
+
       </div>
 
-      {/* Multi-Step Modal */}
+      {/* Multi-Step Progressive Disclosure Modal */}
       <MultiStepLeadModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
