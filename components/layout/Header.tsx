@@ -60,6 +60,7 @@ export default function Header({ transparent = false }: { transparent?: boolean 
   const regionRef = useRef<HTMLDivElement>(null);
   const desktopLangRef = useRef<HTMLDivElement>(null);
   const mobileLangRef = useRef<HTMLDivElement>(null);
+  const servicesRef = useRef<HTMLDivElement>(null);
 
   // Close mobile drawer on route change during render
   const [prevPathname, setPrevPathname] = useState(pathname);
@@ -113,6 +114,9 @@ export default function Header({ transparent = false }: { transparent?: boolean 
       const target = event.target as Node;
       if (regionRef.current && !regionRef.current.contains(target)) {
         setIsRegionDropdownOpen(false);
+      }
+      if (servicesRef.current && !servicesRef.current.contains(target)) {
+        setIsServicesDropdownOpen(false);
       }
       if (
         (desktopLangRef.current && !desktopLangRef.current.contains(target)) &&
@@ -239,12 +243,15 @@ export default function Header({ transparent = false }: { transparent?: boolean 
 
             {/* Services Dropdown */}
             <div
+              ref={servicesRef}
               className="relative group"
               onMouseEnter={() => setIsServicesDropdownOpen(true)}
               onMouseLeave={() => setIsServicesDropdownOpen(false)}
             >
               <button
-                className={`font-semibold text-sm flex items-center gap-1 transition-colors nav-link-underline ${
+                type="button"
+                onClick={() => setIsServicesDropdownOpen(!isServicesDropdownOpen)}
+                className={`font-semibold text-sm flex items-center gap-1 transition-colors nav-link-underline cursor-pointer ${
                   isScrolled ? "hover:text-accent" : "hover:text-primary-light"
                 } ${
                   pathname.includes("-services") || pathname.includes("-development") || pathname.includes("-setup") || pathname.includes("marketing")
@@ -256,29 +263,32 @@ export default function Header({ transparent = false }: { transparent?: boolean 
                 <i className={`fa-solid fa-chevron-down text-[10px] transition-transform duration-200 ${isServicesDropdownOpen ? "rotate-180" : ""}`}></i>
               </button>
 
-              {/* Dropdown Menu */}
+              {/* Dropdown Menu - Bridge container (top-full pt-1.5) to prevent mouse leave gap */}
               <div
-                className={`absolute left-0 mt-2 w-64 bg-white border border-[#E9E4F2] rounded-lg shadow-lg py-2 transition-all duration-200 ${
+                className={`absolute left-0 top-full pt-1.5 w-64 transition-all duration-200 z-[70] ${
                   isServicesDropdownOpen
                     ? "opacity-100 visible translate-y-0"
                     : "opacity-0 invisible -translate-y-2 pointer-events-none"
                 }`}
               >
-                {SERVICES_LINKS.map((link) => {
-                  const targetHref = link.localized ? getRegionalHref(link.href) : link.href;
-                  return (
-                    <Link
-                      key={link.href}
-                      href={targetHref}
-                      title={link.label}
-                      className={`block px-4 py-2 text-sm transition-colors hover:bg-[#FAF9FF] hover:text-primary ${
-                        pathname === targetHref ? "text-primary bg-[#FAF9FF]" : "text-text-primary"
-                      }`}
-                    >
-                      {link.label}
-                    </Link>
-                  );
-                })}
+                <div className="bg-white border border-[#E9E4F2] rounded-xl shadow-xl py-2 overflow-hidden">
+                  {SERVICES_LINKS.map((link) => {
+                    const targetHref = link.localized ? getRegionalHref(link.href) : link.href;
+                    return (
+                      <Link
+                        key={link.href}
+                        href={targetHref}
+                        title={link.label}
+                        onClick={() => setIsServicesDropdownOpen(false)}
+                        className={`block px-4 py-2.5 text-sm font-semibold transition-colors hover:bg-[#FAF9FF] hover:text-[#7C3AED] ${
+                          pathname === targetHref ? "text-[#7C3AED] bg-[#FAF9FF] font-extrabold" : "text-slate-700"
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
