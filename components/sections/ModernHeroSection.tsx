@@ -9,15 +9,8 @@ import {
   Zap,
   CheckCircle2,
   TrendingUp,
-  Globe,
-  Gauge,
   Calculator,
   ChevronRight,
-  BarChart3,
-  Star,
-  Activity,
-  Layers,
-  ArrowUpRight,
 } from "lucide-react";
 import MultiStepLeadModal from "@/components/ui/MultiStepLeadModal";
 
@@ -35,46 +28,43 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
   };
 
   return (
-    <section className="relative pt-28 lg:pt-36 pb-20 overflow-hidden bg-[#0B121B] text-white border-b border-slate-800/60 select-none">
-      {/* Subtle Technical Blueprint Grid Overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
-
-      {/* Ambient Blue Radial Glows */}
-      <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none animate-pulse" />
-      <div className="absolute bottom-10 left-10 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
+    <section className="relative pt-24 lg:pt-32 pb-16 overflow-hidden bg-[#0D0B18] text-white border-b border-[#231C3D] select-none">
+      {/* Background Gradients & Ambient Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(124,58,237,0.12),transparent_50%)] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-900/10 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center relative z-10">
         
-        {/* LEFT COLUMN: Copy & Conversion Architecture */}
-        <div className="lg:col-span-7 flex flex-col items-start text-left space-y-7">
+        {/* LEFT COLUMN: Main Hero Copy & Conversion */}
+        <div className="lg:col-span-7 flex flex-col items-start text-left space-y-6">
           
-          {/* Top Pill Badges with Subtle Border Strokes & Tech Icons */}
-          <div className="flex flex-wrap items-center gap-2.5">
+          {/* Top Pill Badges */}
+          <div className="flex flex-wrap items-center gap-2">
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300 text-xs font-semibold shadow-sm"
+              transition={{ duration: 0.3 }}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18132E] border border-[#2D244E] text-[#A78BFA] text-xs font-semibold"
             >
-              <Sparkles className="w-3.5 h-3.5 text-blue-400 animate-spin" style={{ animationDuration: "6s" }} />
+              <Sparkles className="w-3.5 h-3.5 text-[#A78BFA]" />
               <span>Custom Tech Stack</span>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300 text-xs font-semibold shadow-sm"
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18132E] border border-[#2D244E] text-[#A78BFA] text-xs font-semibold"
             >
-              <TrendingUp className="w-3.5 h-3.5 text-indigo-400" />
+              <TrendingUp className="w-3.5 h-3.5 text-[#A78BFA]" />
               <span>Enterprise SEO</span>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.2 }}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300 text-xs font-semibold shadow-sm"
+              transition={{ duration: 0.3, delay: 0.2 }}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18132E] border border-[#2D244E] text-[#A78BFA] text-xs font-semibold"
             >
               <Zap className="w-3.5 h-3.5 text-emerald-400" />
               <span>Sub-second Load Times</span>
@@ -83,32 +73,32 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
 
           {/* Headline */}
           <motion.h1
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15]"
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]"
           >
             High-Performance Websites & SEO Engineered to{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-300 to-sky-300">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-violet-300 to-indigo-300">
               Scale Your Business Globally.
             </span>
           </motion.h1>
 
           {/* Subtitle */}
           <motion.p
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-base sm:text-lg text-slate-400 leading-relaxed max-w-2xl font-normal"
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal"
           >
             JoyDigital engineers bespoke Next.js web systems and enterprise search architectures built for sub-second speeds, maximum conversion rates, and high organic pipeline growth.
           </motion.p>
 
-          {/* Ultra-Lean Lead Capture Bar */}
+          {/* Lead Capture Bar */}
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+            transition={{ duration: 0.4, delay: 0.3 }}
             className="w-full max-w-xl space-y-3"
           >
             <form onSubmit={handleLeadCaptureSubmit} className="flex flex-col sm:flex-row gap-3">
@@ -119,13 +109,13 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
                   placeholder="Enter your work email..."
                   value={emailInput}
                   onChange={(e) => setEmailInput(e.target.value)}
-                  className="w-full bg-white text-slate-900 font-medium text-sm placeholder:text-slate-400 rounded-xl px-4 py-3.5 outline-none focus:ring-4 focus:ring-blue-500/30 transition-all"
+                  className="w-full bg-[#18142A] border border-[#2B2346] focus:border-[#7C3AED] text-sm text-white placeholder:text-slate-500 rounded-xl px-4 py-3.5 outline-none focus:ring-2 focus:ring-[#7C3AED]/20 transition-all font-medium"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full sm:w-auto px-6 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-blue-600/30 hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap group"
+                className="w-full sm:w-auto px-6 py-3.5 bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-bold text-sm rounded-xl shadow-lg shadow-[#7C3AED]/25 hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap group"
               >
                 <span>Book a 15-Min Growth Call</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -151,188 +141,206 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
 
           {/* Secondary Actions */}
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-wrap items-center gap-4 pt-1"
+            transition={{ duration: 0.4, delay: 0.4 }}
+            className="flex flex-wrap items-center gap-3 pt-1"
           >
             <Link
               href="#case-studies"
-              className="px-5 py-3 rounded-xl bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 group"
+              className="px-5 py-2.5 rounded-xl bg-[#17122B] hover:bg-[#20193B] border border-[#2B2346] hover:border-[#7C3AED]/40 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 group"
             >
               <span>Explore Case Studies</span>
-              <ChevronRight className="w-4 h-4 text-blue-400 group-hover:translate-x-1 transition-transform" />
+              <ChevronRight className="w-4 h-4 text-[#A78BFA] group-hover:translate-x-1 transition-transform" />
             </Link>
 
             <button
               onClick={() => setIsModalOpen(true)}
-              className="px-5 py-3 rounded-xl bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold transition-all flex items-center gap-2"
+              className="px-5 py-2.5 rounded-xl bg-[#17122B] hover:bg-[#20193B] border border-[#2B2346] hover:border-[#7C3AED]/40 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold transition-all flex items-center gap-2"
             >
-              <Calculator className="w-4 h-4 text-indigo-400" />
+              <Calculator className="w-4 h-4 text-[#A78BFA]" />
               <span>Calculate Your ROI</span>
             </button>
           </motion.div>
 
-          {/* Bottom Global Trust Line */}
+          {/* Clean Trust / Value Strip */}
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="pt-4 border-t border-slate-800/80 w-full max-w-xl flex flex-wrap items-center gap-3 text-xs text-slate-400 font-medium"
+            transition={{ duration: 0.4, delay: 0.5 }}
+            className="pt-5 border-t border-[#231C3D] w-full max-w-xl space-y-3"
           >
-            <div className="flex items-center gap-1.5 text-slate-300 font-semibold bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800">
-              <Globe className="w-3.5 h-3.5 text-blue-400" />
-              <span>Global Delivery Hub</span>
-            </div>
-            <span className="text-slate-600">•</span>
-            <span>100% US/Europe Time-Zone Synchronized</span>
-            <span className="text-slate-600">•</span>
-            <div className="flex items-center gap-1 text-amber-400 font-bold">
-              <Star className="w-3.5 h-3.5 fill-amber-400" />
-              <span>Clutch & Trustpilot Rated 4.9/5</span>
+            <div className="flex flex-col gap-2.5 text-xs text-slate-400">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="font-bold text-white uppercase tracking-wider text-[11px]">
+                  Trusted by Businesses Worldwide:
+                </span>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {["USA", "UK", "Canada", "Australia", "UAE", "India", "South Africa", "Germany", "+20 countries"].map((c, i) => (
+                    <span key={i} className="bg-[#17122B] border border-[#251E3E] px-2 py-0.5 rounded text-[11px] font-medium text-slate-300">
+                      {c}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 text-slate-400 text-[11px]">
+                <span className="font-semibold text-slate-300">Delivering Results Across:</span>
+                <span className="text-[#A78BFA] font-medium">Web Design</span>
+                <span className="text-slate-600">•</span>
+                <span className="text-[#A78BFA] font-medium">SEO</span>
+                <span className="text-slate-600">•</span>
+                <span className="text-[#A78BFA] font-medium">E-commerce</span>
+                <span className="text-slate-600">•</span>
+                <span className="text-[#A78BFA] font-medium">Digital Growth</span>
+              </div>
             </div>
           </motion.div>
         </div>
 
-        {/* RIGHT COLUMN: Authentic Performance Dashboard Mockup */}
+        {/* RIGHT COLUMN: Realistic SaaS Analytics Dashboard */}
         <div className="lg:col-span-5 relative flex justify-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.96, y: 20 }}
+            initial={{ opacity: 0, scale: 0.97, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="w-full max-w-md bg-slate-900/70 border border-slate-800/80 rounded-2xl p-5 sm:p-6 backdrop-blur-md shadow-2xl space-y-4"
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="w-full max-w-md bg-[#130E26]/80 border border-[#271F42] rounded-2xl p-5 shadow-2xl backdrop-blur-xl space-y-4"
           >
             {/* Dashboard Header Bar */}
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800/80 text-xs">
+            <div className="flex items-center justify-between pb-3 border-b border-[#211A38]">
               <div className="flex items-center gap-2">
-                <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
-                </div>
-                <span className="font-semibold text-slate-400 ml-1">Live Performance Telemetry</span>
+                <span className="text-sm font-bold text-white">Website Performance</span>
               </div>
-              <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md font-mono border border-emerald-500/20">
-                ACTIVE
-              </span>
+              <div className="flex items-center gap-1.5 text-[11px] font-medium text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Live Performance</span>
+              </div>
             </div>
 
-            {/* Top Widget 1: Google Lighthouse Score */}
-            <div className="bg-slate-950/60 border border-slate-800/90 rounded-xl p-4 space-y-3">
+            {/* Top Section: Performance Score & Metrics Breakdown */}
+            <div className="bg-[#191333]/70 border border-[#271F42] rounded-xl p-4 space-y-3">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Gauge className="w-4 h-4 text-emerald-400" />
-                  <span className="text-xs font-bold text-slate-200">Google Lighthouse Speed Score</span>
+                <div>
+                  <p className="text-xs font-semibold text-slate-300">Overall Performance Score</p>
+                  <p className="text-[11px] text-slate-400">Core Web Vitals Verified</p>
                 </div>
-                {/* Circular Score Badge */}
-                <div className="w-12 h-12 rounded-full border-4 border-emerald-500/40 bg-emerald-500/10 text-emerald-400 text-lg font-black flex items-center justify-center shadow-[0_0_12px_rgba(16,185,129,0.2)]">
-                  99
+                
+                {/* Realistic Circular Progress Indicator */}
+                <div className="relative w-12 h-12 flex items-center justify-center">
+                  <svg className="w-12 h-12 transform -rotate-90">
+                    <circle cx="24" cy="24" r="20" stroke="#2A2147" strokeWidth="4" fill="transparent" />
+                    <circle
+                      cx="24"
+                      cy="24"
+                      r="20"
+                      stroke="#10B981"
+                      strokeWidth="4"
+                      fill="transparent"
+                      strokeDasharray="125.6"
+                      strokeDashoffset="7.5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <span className="absolute text-sm font-black text-white">94</span>
                 </div>
               </div>
 
-              {/* Core Web Vitals breakdown */}
-              <div className="grid grid-cols-3 gap-2 pt-1 border-t border-slate-800/60 text-[11px]">
-                <div>
-                  <p className="text-slate-400">LCP</p>
-                  <p className="font-bold text-emerald-400">0.7s</p>
-                  <div className="h-1 bg-slate-800 rounded-full mt-1 overflow-hidden">
-                    <div className="h-full bg-emerald-400 w-[95%]" />
-                  </div>
+              {/* Metrics Breakdown Grid */}
+              <div className="grid grid-cols-3 gap-2 pt-2 border-t border-[#231A3D] text-center">
+                <div className="bg-[#140E2A] p-2 rounded-lg border border-[#251D40]">
+                  <p className="text-[10px] text-slate-400">Page Speed</p>
+                  <p className="text-xs font-bold text-emerald-400">94</p>
                 </div>
-                <div>
-                  <p className="text-slate-400">FCP</p>
-                  <p className="font-bold text-emerald-400">0.0s</p>
-                  <div className="h-1 bg-slate-800 rounded-full mt-1 overflow-hidden">
-                    <div className="h-full bg-emerald-400 w-[100%]" />
-                  </div>
+                <div className="bg-[#140E2A] p-2 rounded-lg border border-[#251D40]">
+                  <p className="text-[10px] text-slate-400">SEO Score</p>
+                  <p className="text-xs font-bold text-emerald-400">96</p>
                 </div>
-                <div>
-                  <p className="text-slate-400">TTFB</p>
-                  <p className="font-bold text-emerald-400">110ms</p>
-                  <div className="h-1 bg-slate-800 rounded-full mt-1 overflow-hidden">
-                    <div className="h-full bg-emerald-400 w-[98%]" />
-                  </div>
+                <div className="bg-[#140E2A] p-2 rounded-lg border border-[#251D40]">
+                  <p className="text-[10px] text-slate-400">Accessibility</p>
+                  <p className="text-xs font-bold text-emerald-400">92</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Second Row: Organic Traffic & Leads Generated Charts */}
+            <div className="grid grid-cols-2 gap-3">
+              {/* Organic Traffic */}
+              <div className="bg-[#191333]/70 border border-[#271F42] rounded-xl p-3.5 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold text-slate-300">Organic Traffic</span>
+                  <span className="text-[11px] font-bold text-emerald-400">+42%</span>
+                </div>
+                <p className="text-[10px] text-slate-400">Last 6 Months</p>
+
+                {/* Subtle Realistic Line Chart */}
+                <div className="h-10 w-full pt-1">
+                  <svg viewBox="0 0 120 40" className="w-full h-full overflow-visible">
+                    <path
+                      d="M0,32 Q20,28 40,24 T80,14 T120,4"
+                      fill="none"
+                      stroke="#7C3AED"
+                      strokeWidth="2"
+                    />
+                    <path
+                      d="M0,32 Q20,28 40,24 T80,14 T120,4 L120,40 L0,40 Z"
+                      fill="url(#purpleGradient)"
+                      opacity="0.2"
+                    />
+                    <defs>
+                      <linearGradient id="purpleGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#7C3AED" />
+                        <stop offset="100%" stopColor="#7C3AED" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+              </div>
+
+              {/* Leads Generated */}
+              <div className="bg-[#191333]/70 border border-[#271F42] rounded-xl p-3.5 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold text-slate-300">Leads Generated</span>
+                  <span className="text-[11px] font-bold text-emerald-400">+31%</span>
+                </div>
+                <p className="text-[10px] text-slate-400">Last 6 Months</p>
+
+                {/* Subtle Realistic Line Chart */}
+                <div className="h-10 w-full pt-1">
+                  <svg viewBox="0 0 120 40" className="w-full h-full overflow-visible">
+                    <path
+                      d="M0,30 Q30,26 60,18 T120,6"
+                      fill="none"
+                      stroke="#8B5CF6"
+                      strokeWidth="2"
+                    />
+                    <path
+                      d="M0,30 Q30,26 60,18 T120,6 L120,40 L0,40 Z"
+                      fill="url(#violetGradient)"
+                      opacity="0.2"
+                    />
+                    <defs>
+                      <linearGradient id="violetGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#8B5CF6" />
+                        <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
                 </div>
               </div>
             </div>
 
-            {/* Middle Widget 2: Organic Growth Chart */}
-            <div className="bg-slate-950/60 border border-slate-800/90 rounded-xl p-4 space-y-3">
-              {/* Stat Row */}
-              <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-                <div>
-                  <p className="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Organic Traffic</p>
-                  <p className="font-extrabold text-white text-sm">
-                    15,668 <span className="text-emerald-400 text-xs font-semibold">(+65.2%)</span>
-                  </p>
-                </div>
-                <div>
-                  <p className="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Conversions</p>
-                  <p className="font-extrabold text-white text-sm">1,876</p>
-                </div>
-                <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-extrabold px-2 py-1 rounded-md">
-                  +240% YoY
-                </div>
+            {/* Bottom Row: Conversion Rate & Qualified Leads */}
+            <div className="grid grid-cols-2 gap-3 pt-1">
+              <div className="bg-[#191333]/70 border border-[#271F42] rounded-xl p-3.5">
+                <p className="text-[10px] font-medium text-slate-400">Conversion Rate</p>
+                <p className="text-base font-extrabold text-white">3.6%</p>
+                <p className="text-[9px] text-emerald-400 font-medium">+0.8% vs prev period</p>
               </div>
 
-              {/* Glowing Electric Blue SVG Area/Line Chart */}
-              <div className="relative pt-2">
-                <svg viewBox="0 0 400 120" className="w-full h-24 overflow-visible">
-                  <defs>
-                    <linearGradient id="blueAreaGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.35" />
-                      <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.0" />
-                    </linearGradient>
-                  </defs>
-
-                  {/* Filled Area */}
-                  <path
-                    d="M 0 100 C 60 90, 110 70, 160 55 C 210 40, 260 50, 310 20 C 350 8, 380 5, 400 2 L 400 120 L 0 120 Z"
-                    fill="url(#blueAreaGradient)"
-                  />
-
-                  {/* Glowing Smooth Curve Line */}
-                  <path
-                    d="M 0 100 C 60 90, 110 70, 160 55 C 210 40, 260 50, 310 20 C 350 8, 380 5, 400 2"
-                    fill="none"
-                    stroke="#3B82F6"
-                    strokeWidth="3"
-                    className="drop-shadow-[0_4px_10px_rgba(59,130,246,0.6)]"
-                  />
-
-                  {/* Active Endpoint Marker */}
-                  <circle cx="400" cy="2" r="5" fill="#60A5FA" className="animate-ping" />
-                  <circle cx="400" cy="2" r="4" fill="#2563EB" />
-                </svg>
-              </div>
-            </div>
-
-            {/* Bottom Widget 3: Conversion Rate Lift & Path */}
-            <div className="bg-slate-950/60 border border-slate-800/90 rounded-xl p-4 space-y-3">
-              <div className="flex items-center justify-between text-xs">
-                <div className="flex items-center gap-1.5 font-bold text-slate-200">
-                  <BarChart3 className="w-4 h-4 text-blue-400" />
-                  <span>Conversion Rate Optimization</span>
-                </div>
-                <span className="text-[11px] font-bold text-emerald-400">1.8% → 4.6%</span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 pt-1 text-xs">
-                <div className="bg-slate-900/90 border border-slate-800 p-2.5 rounded-lg space-y-1">
-                  <p className="text-[10px] text-slate-400">Form Submissions</p>
-                  <div className="flex items-center justify-between">
-                    <span className="font-extrabold text-white">125 → 425</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-emerald-400" />
-                  </div>
-                </div>
-
-                <div className="bg-slate-900/90 border border-slate-800 p-2.5 rounded-lg space-y-1">
-                  <p className="text-[10px] text-slate-400">Qualified Pipeline</p>
-                  <div className="flex items-center justify-between">
-                    <span className="font-extrabold text-white">$45k → $180k</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-emerald-400" />
-                  </div>
-                </div>
+              <div className="bg-[#191333]/70 border border-[#271F42] rounded-xl p-3.5">
+                <p className="text-[10px] font-medium text-slate-400">Qualified Leads</p>
+                <p className="text-base font-extrabold text-white">128</p>
+                <p className="text-[9px] text-slate-400 font-medium">Last 30 days</p>
               </div>
             </div>
 
