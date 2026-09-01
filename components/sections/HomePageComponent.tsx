@@ -1218,25 +1218,10 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
           </div>
         </section>
 
-        {/* 8. GLOBAL CONNECTIONS NETWORK WIDGET (Deep Purple background #171126) */}
-        <section className="py-20 bg-[#171126] border-b border-[#2A203F] text-white relative">
-          <div className="absolute inset-0 bg-grid-pattern opacity-[0.015] pointer-events-none" />
+        {/* 8. GLOBAL CONNECTIONS NETWORK WIDGET (Deep Dark background #0D0B18) */}
+        <section className="py-20 bg-[#0D0B18] border-b border-[#231C3D] text-white relative">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center max-w-3xl mx-auto mb-16 reveal-hidden">
-              <span className="text-xs font-bold text-[#A78BFA] uppercase tracking-widest block mb-3">
-                Global Network
-              </span>
-              <h2 className="text-3xl font-extrabold text-white mb-4">
-                We Partner with Startups Worldwide
-              </h2>
-              <p className="text-xs sm:text-sm text-[#D8D2E6] font-semibold">
-                Serving growing brands across borders from our development base in India.
-              </p>
-            </div>
-            
-            <div className="reveal-hidden">
-              <WorldwideServiceNetwork />
-            </div>
+            <WorldwideServiceNetwork />
           </div>
         </section>
 

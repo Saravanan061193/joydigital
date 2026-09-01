@@ -11,6 +11,9 @@ import {
   TrendingUp,
   Calculator,
   ChevronRight,
+  Filter,
+  Calendar,
+  CheckSquare,
 } from "lucide-react";
 import MultiStepLeadModal from "@/components/ui/MultiStepLeadModal";
 
@@ -198,150 +201,144 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
           </motion.div>
         </div>
 
-        {/* RIGHT COLUMN: Realistic SaaS Analytics Dashboard */}
+        {/* RIGHT COLUMN: Google Search Console Performance Dashboard Mockup (Matching User Image) */}
         <div className="lg:col-span-5 relative flex justify-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.97, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="w-full max-w-md bg-[#130E26]/80 border border-[#271F42] rounded-2xl p-5 shadow-2xl backdrop-blur-xl space-y-4"
+            className="w-full max-w-md bg-[#130E26]/90 border border-[#271F42] rounded-2xl p-4 sm:p-5 shadow-2xl backdrop-blur-xl space-y-3.5 text-white"
           >
-            {/* Dashboard Header Bar */}
-            <div className="flex items-center justify-between pb-3 border-b border-[#211A38]">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-bold text-white">Website Performance</span>
+            {/* GSC Title Bar */}
+            <div className="flex items-center justify-between pb-2 border-b border-[#211A38]">
+              <h3 className="text-sm font-bold text-white tracking-wide">Performance</h3>
+              <span className="text-[10px] text-slate-400">Last updated: 5 hours ago</span>
+            </div>
+
+            {/* GSC Filter Controls */}
+            <div className="flex flex-wrap items-center gap-2 text-xs">
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1B1436] border border-[#2E2452] text-slate-200 font-medium">
+                <span>Search type: Web</span>
               </div>
-              <div className="flex items-center gap-1.5 text-[11px] font-medium text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Live Performance</span>
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1B1436] border border-[#2E2452] text-slate-200 font-medium">
+                <span>Date: Last 3 months</span>
+              </div>
+              <div className="px-2.5 py-1 rounded-full bg-[#1B1436] border border-[#2E2452] text-slate-400 font-medium cursor-pointer hover:text-white">
+                + NEW
               </div>
             </div>
 
-            {/* Top Section: Performance Score & Metrics Breakdown */}
-            <div className="bg-[#191333]/70 border border-[#271F42] rounded-xl p-4 space-y-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-semibold text-slate-300">Overall Performance Score</p>
-                  <p className="text-[11px] text-slate-400">Core Web Vitals Verified</p>
+            {/* GSC 4 Metric Cards (Matching Colored Blocks from User Image) */}
+            <div className="grid grid-cols-2 gap-2 text-white">
+              {/* Total Clicks (Blue) */}
+              <div className="bg-[#1565C0] p-3 rounded-lg flex flex-col justify-between shadow-sm">
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="flex items-center gap-1 font-semibold">
+                    <CheckSquare className="w-3 h-3" /> Total clicks
+                  </span>
                 </div>
-                
-                {/* Realistic Circular Progress Indicator */}
-                <div className="relative w-12 h-12 flex items-center justify-center">
-                  <svg className="w-12 h-12 transform -rotate-90">
-                    <circle cx="24" cy="24" r="20" stroke="#2A2147" strokeWidth="4" fill="transparent" />
-                    <circle
-                      cx="24"
-                      cy="24"
-                      r="20"
-                      stroke="#10B981"
-                      strokeWidth="4"
-                      fill="transparent"
-                      strokeDasharray="125.6"
-                      strokeDashoffset="7.5"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  <span className="absolute text-sm font-black text-white">94</span>
+                <div className="mt-1">
+                  <span className="text-xl font-extrabold">55</span>
                 </div>
               </div>
 
-              {/* Metrics Breakdown Grid */}
-              <div className="grid grid-cols-3 gap-2 pt-2 border-t border-[#231A3D] text-center">
-                <div className="bg-[#140E2A] p-2 rounded-lg border border-[#251D40]">
-                  <p className="text-[10px] text-slate-400">Page Speed</p>
-                  <p className="text-xs font-bold text-emerald-400">94</p>
+              {/* Total Impressions (Purple) */}
+              <div className="bg-[#6A1B9A] p-3 rounded-lg flex flex-col justify-between shadow-sm">
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="flex items-center gap-1 font-semibold">
+                    <CheckSquare className="w-3 h-3" /> Total impressions
+                  </span>
                 </div>
-                <div className="bg-[#140E2A] p-2 rounded-lg border border-[#251D40]">
-                  <p className="text-[10px] text-slate-400">SEO Score</p>
-                  <p className="text-xs font-bold text-emerald-400">96</p>
-                </div>
-                <div className="bg-[#140E2A] p-2 rounded-lg border border-[#251D40]">
-                  <p className="text-[10px] text-slate-400">Accessibility</p>
-                  <p className="text-xs font-bold text-emerald-400">92</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Second Row: Organic Traffic & Leads Generated Charts */}
-            <div className="grid grid-cols-2 gap-3">
-              {/* Organic Traffic */}
-              <div className="bg-[#191333]/70 border border-[#271F42] rounded-xl p-3.5 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-slate-300">Organic Traffic</span>
-                  <span className="text-[11px] font-bold text-emerald-400">+42%</span>
-                </div>
-                <p className="text-[10px] text-slate-400">Last 6 Months</p>
-
-                {/* Subtle Realistic Line Chart */}
-                <div className="h-10 w-full pt-1">
-                  <svg viewBox="0 0 120 40" className="w-full h-full overflow-visible">
-                    <path
-                      d="M0,32 Q20,28 40,24 T80,14 T120,4"
-                      fill="none"
-                      stroke="#7C3AED"
-                      strokeWidth="2"
-                    />
-                    <path
-                      d="M0,32 Q20,28 40,24 T80,14 T120,4 L120,40 L0,40 Z"
-                      fill="url(#purpleGradient)"
-                      opacity="0.2"
-                    />
-                    <defs>
-                      <linearGradient id="purpleGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#7C3AED" />
-                        <stop offset="100%" stopColor="#7C3AED" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
+                <div className="mt-1">
+                  <span className="text-xl font-extrabold">6.71K</span>
                 </div>
               </div>
 
-              {/* Leads Generated */}
-              <div className="bg-[#191333]/70 border border-[#271F42] rounded-xl p-3.5 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-slate-300">Leads Generated</span>
-                  <span className="text-[11px] font-bold text-emerald-400">+31%</span>
+              {/* Average CTR (Green) */}
+              <div className="bg-[#00796B] p-3 rounded-lg flex flex-col justify-between shadow-sm">
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="flex items-center gap-1 font-semibold">
+                    <CheckSquare className="w-3 h-3" /> Average CTR
+                  </span>
                 </div>
-                <p className="text-[10px] text-slate-400">Last 6 Months</p>
+                <div className="mt-1">
+                  <span className="text-xl font-extrabold">0.8%</span>
+                </div>
+              </div>
 
-                {/* Subtle Realistic Line Chart */}
-                <div className="h-10 w-full pt-1">
-                  <svg viewBox="0 0 120 40" className="w-full h-full overflow-visible">
-                    <path
-                      d="M0,30 Q30,26 60,18 T120,6"
-                      fill="none"
-                      stroke="#8B5CF6"
-                      strokeWidth="2"
-                    />
-                    <path
-                      d="M0,30 Q30,26 60,18 T120,6 L120,40 L0,40 Z"
-                      fill="url(#violetGradient)"
-                      opacity="0.2"
-                    />
-                    <defs>
-                      <linearGradient id="violetGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#8B5CF6" />
-                        <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
+              {/* Average Position (Orange) */}
+              <div className="bg-[#D84315] p-3 rounded-lg flex flex-col justify-between shadow-sm">
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="flex items-center gap-1 font-semibold">
+                    <CheckSquare className="w-3 h-3" /> Average position
+                  </span>
+                </div>
+                <div className="mt-1">
+                  <span className="text-xl font-extrabold">51.8</span>
                 </div>
               </div>
             </div>
 
-            {/* Bottom Row: Conversion Rate & Qualified Leads */}
-            <div className="grid grid-cols-2 gap-3 pt-1">
-              <div className="bg-[#191333]/70 border border-[#271F42] rounded-xl p-3.5">
-                <p className="text-[10px] font-medium text-slate-400">Conversion Rate</p>
-                <p className="text-base font-extrabold text-white">3.6%</p>
-                <p className="text-[9px] text-emerald-400 font-medium">+0.8% vs prev period</p>
-              </div>
+            {/* GSC Multi-Line Performance Chart (Matching User Image curves) */}
+            <div className="bg-[#181232]/80 border border-[#271F42] rounded-xl p-3 space-y-2">
+              <div className="w-full h-28 relative">
+                <svg viewBox="0 0 400 120" className="w-full h-full overflow-visible">
+                  {/* Grid Lines */}
+                  <line x1="0" y1="30" x2="400" y2="30" stroke="#251C42" strokeWidth="1" strokeDasharray="3 3" />
+                  <line x1="0" y1="60" x2="400" y2="60" stroke="#251C42" strokeWidth="1" strokeDasharray="3 3" />
+                  <line x1="0" y1="90" x2="400" y2="90" stroke="#251C42" strokeWidth="1" strokeDasharray="3 3" />
 
-              <div className="bg-[#191333]/70 border border-[#271F42] rounded-xl p-3.5">
-                <p className="text-[10px] font-medium text-slate-400">Qualified Leads</p>
-                <p className="text-base font-extrabold text-white">128</p>
-                <p className="text-[9px] text-slate-400 font-medium">Last 30 days</p>
+                  {/* 1. Orange Curve (Position / Rank) */}
+                  <path
+                    d="M 10 70 L 30 100 L 50 65 L 70 85 L 90 40 L 110 95 L 130 80 L 150 65 L 170 75 L 190 70 L 210 65 L 230 75 L 250 80 L 270 50 L 290 60 L 310 55 L 330 45 L 350 55 L 370 40 L 390 30"
+                    fill="none"
+                    stroke="#FF7043"
+                    strokeWidth="2"
+                  />
+
+                  {/* 2. Green Curve (CTR) */}
+                  <path
+                    d="M 10 110 L 40 110 L 60 105 L 80 75 L 100 100 L 120 105 L 140 55 L 160 105 L 180 110 L 200 95 L 220 100 L 240 70 L 260 90 L 280 65 L 300 95 L 320 85 L 340 90 L 360 80 L 390 75"
+                    fill="none"
+                    stroke="#26A69A"
+                    strokeWidth="2"
+                  />
+
+                  {/* 3. Purple Curve (Impressions) */}
+                  <path
+                    d="M 10 115 L 50 110 L 90 105 L 130 95 L 170 90 L 210 70 L 250 65 L 290 30 L 310 55 L 330 45 L 350 60 L 370 35 L 390 20"
+                    fill="none"
+                    stroke="#AB47BC"
+                    strokeWidth="2"
+                  />
+
+                  {/* 4. Blue Curve (Clicks) */}
+                  <path
+                    d="M 10 118 L 60 115 L 100 110 L 140 100 L 180 95 L 220 85 L 260 75 L 300 70 L 320 50 L 340 75 L 360 55 L 380 40 L 395 15"
+                    fill="none"
+                    stroke="#42A5F5"
+                    strokeWidth="2.5"
+                  />
+                </svg>
+
+                {/* X-Axis Date Ticks */}
+                <div className="flex justify-between text-[9px] text-slate-400 mt-1">
+                  <span>4/2/21</span>
+                  <span>4/13/21</span>
+                  <span>4/24/21</span>
+                  <span>5/5/21</span>
+                  <span>5/16/21</span>
+                  <span>5/27/21</span>
+                </div>
               </div>
+            </div>
+
+            {/* GSC Bottom Tabs */}
+            <div className="flex items-center justify-between border-t border-[#211A38] pt-2 text-[10px] text-slate-400 font-semibold overflow-x-auto">
+              <span className="text-[#A78BFA] border-b-2 border-[#A78BFA] pb-1 cursor-pointer">QUERIES</span>
+              <span className="hover:text-white cursor-pointer pb-1">PAGES</span>
+              <span className="hover:text-white cursor-pointer pb-1">COUNTRIES</span>
+              <span className="hover:text-white cursor-pointer pb-1">DEVICES</span>
             </div>
 
           </motion.div>
