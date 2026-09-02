@@ -3,15 +3,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { motion, Variants } from "framer-motion";
 import {
   ArrowRight,
   Sparkles,
   Zap,
   CheckCircle2,
-  ChevronRight,
-  ShieldCheck,
   Clock,
-  Lock,
+  ShieldCheck,
   Phone,
   Mail,
   User,
@@ -27,23 +26,77 @@ interface ModernHeroSectionProps {
 
 const COUNTRY_CODES = [
   { code: "+91", flag: "🇮🇳", name: "India" },
-  { code: "+1", flag: "🇺🇸", name: "USA" },
-  { code: "+44", flag: "🇬🇧", name: "UK" },
-  { code: "+971", flag: "🇦🇪", name: "UAE" },
+  { code: "+1", flag: "🇺🇸", name: "United States" },
+  { code: "+44", flag: "🇬🇧", name: "United Kingdom" },
+  { code: "+971", flag: "🇦🇪", name: "United Arab Emirates" },
+  { code: "+1", flag: "🇨🇦", name: "Canada" },
   { code: "+61", flag: "🇦🇺", name: "Australia" },
   { code: "+65", flag: "🇸🇬", name: "Singapore" },
-  { code: "+1", flag: "🇨🇦", name: "Canada" },
   { code: "+49", flag: "🇩🇪", name: "Germany" },
   { code: "+33", flag: "🇫🇷", name: "France" },
   { code: "+966", flag: "🇸🇦", name: "Saudi Arabia" },
   { code: "+974", flag: "🇶🇦", name: "Qatar" },
   { code: "+965", flag: "🇰🇼", name: "Kuwait" },
+  { code: "+968", flag: "🇴🇲", name: "Oman" },
+  { code: "+973", flag: "🇧🇭", name: "Bahrain" },
+  { code: "+60", flag: "🇲🇾", name: "Malaysia" },
+  { code: "+81", flag: "🇯🇵", name: "Japan" },
+  { code: "+82", flag: "🇰🇷", name: "South Korea" },
+  { code: "+39", flag: "🇮🇹", name: "Italy" },
+  { code: "+34", flag: "🇪🇸", name: "Spain" },
+  { code: "+55", flag: "🇧🇷", name: "Brazil" },
+  { code: "+27", flag: "🇿🇦", name: "South Africa" },
+  { code: "+64", flag: "🇳🇿", name: "New Zealand" },
+  { code: "+353", flag: "🇮🇪", name: "Ireland" },
+  { code: "+41", flag: "🇨🇭", name: "Switzerland" },
+  { code: "+31", flag: "🇳🇱", name: "Netherlands" },
+  { code: "+46", flag: "🇸🇪", name: "Sweden" },
+  { code: "+47", flag: "🇳🇴", name: "Norway" },
+  { code: "+45", flag: "🇩🇰", name: "Denmark" },
 ];
+
+// Framer Motion Variants for Staggered Orchestration
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.05,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 22 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 30, scale: 0.97 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.7,
+      delay: 0.45,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
 
 export default function ModernHeroSection({ country = "" }: ModernHeroSectionProps) {
   const router = useRouter();
 
-  // Form state
+  // Form State
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -54,7 +107,7 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
 
-  // Country dropdown state
+  // Country Dropdown State
   const [isCountryOpen, setIsCountryOpen] = useState(false);
   const [countrySearch, setCountrySearch] = useState("");
   const countryDropdownRef = useRef<HTMLDivElement>(null);
@@ -122,10 +175,10 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
           ? formData.mobile.trim()
           : `${selectedCountryCode} ${formData.mobile.trim()}`,
         Website: formData.website.trim() || "N/A",
-        Service: "15-Min Strategy Discovery Call",
+        Service: "15-Min Strategy Call + Free $499 Website & SEO Audit",
         Source: "Hero Booking Consultation Form",
         utmParams: utm || undefined,
-        _subject: `🔥 Strategy Call Booking - ${formData.name.trim()} [Joy Digital]`,
+        _subject: `🔥 Free Audit & Strategy Call Booking - ${formData.name.trim()} [Joy Digital]`,
       };
 
       const response = await fetch("/api/enquiry", {
@@ -186,17 +239,62 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
 
   return (
     <section className="relative pt-24 lg:pt-32 pb-20 overflow-hidden bg-[#0B0914] text-white border-b border-[#1E1838] select-none">
-      {/* Ambient background glows */}
-      <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[160px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-900/10 rounded-full blur-[140px] pointer-events-none" />
+      
+      {/* Embedded CSS Keyframes for GPU-Accelerated Micro-Animations */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes ambientBreathing {
+          0%, 100% { transform: scale(1) translateY(0); opacity: 0.14; }
+          50% { transform: scale(1.18) translateY(-12px); opacity: 0.26; }
+        }
+        @keyframes gradientShimmer {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes borderBeamRotate {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        @keyframes shimmerSweep {
+          0% { transform: translateX(-120%) rotate(25deg); }
+          30%, 100% { transform: translateX(260%) rotate(25deg); }
+        }
+        .animate-ambient-glow-1 {
+          animation: ambientBreathing 9s ease-in-out infinite;
+          will-change: transform, opacity;
+        }
+        .animate-ambient-glow-2 {
+          animation: ambientBreathing 12s ease-in-out infinite 2s;
+          will-change: transform, opacity;
+        }
+        .animate-gradient-shimmer {
+          background-size: 200% 200%;
+          animation: gradientShimmer 6s ease infinite;
+        }
+        .animate-border-beam {
+          animation: borderBeamRotate 8s linear infinite;
+        }
+        .animate-shimmer-sweep {
+          animation: shimmerSweep 3.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+      ` }} />
+
+      {/* 1. Ambient Background Glow (Organic Breathing Animation) */}
+      <div className="absolute top-0 right-1/4 w-[650px] h-[650px] bg-purple-600/20 rounded-full blur-[170px] pointer-events-none animate-ambient-glow-1" />
+      <div className="absolute bottom-0 left-0 w-[550px] h-[550px] bg-indigo-900/20 rounded-full blur-[150px] pointer-events-none animate-ambient-glow-2" />
 
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
         
-        {/* LEFT COLUMN: Hero Copy & Actions */}
-        <div className="lg:col-span-7 flex flex-col items-start text-left space-y-6">
+        {/* LEFT COLUMN: Staggered Hero Copy & Actions */}
+        <motion.div
+          className="lg:col-span-7 flex flex-col items-start text-left space-y-6"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           
-          {/* Top Pill Badges */}
-          <div className="flex flex-wrap items-center gap-2">
+          {/* Step 1: Top Badges */}
+          <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-2">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#18132E] border border-[#2D244E] text-[#A78BFA] text-xs font-semibold shadow-sm">
               <Sparkles className="w-3.5 h-3.5 text-[#A78BFA]" />
               <span>Next.js &amp; Enterprise SEO Engineering</span>
@@ -206,256 +304,270 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
               <Zap className="w-3.5 h-3.5 text-emerald-400" />
               <span>🎁 Free Website &amp; SEO Audit ($499 Value)</span>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Main Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
+          {/* Step 2: Main Headline with Animated Gradient Shimmer */}
+          <motion.h1 variants={itemVariants} className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
             High-Performance Websites &amp; SEO Engineered to{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-violet-300 to-indigo-300">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-violet-300 to-indigo-300 animate-gradient-shimmer">
               Scale Your Business Globally.
             </span>
-          </h1>
+          </motion.h1>
 
-          {/* Sub-headline */}
-          <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal">
-            Bespoke Next.js web systems and enterprise SEO designed for sub-second speed and global organic revenue.
-          </p>
-
-          {/* Checkmark Bullet Points */}
-          <div className="space-y-2.5 pt-1">
-            <div className="flex items-center gap-2.5 text-sm text-slate-200 font-medium">
-              <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              </div>
-              <span>Sub-second page loads (Core Web Vitals optimized)</span>
-            </div>
-
-            <div className="flex items-center gap-2.5 text-sm text-slate-200 font-medium">
-              <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              </div>
-              <span>Enterprise-grade search architectures</span>
-            </div>
-
-            <div className="flex items-center gap-2.5 text-sm text-emerald-300 font-bold">
-              <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-400/50 flex items-center justify-center shrink-0">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              </div>
-              <span>Includes 100% Free 20+ Page Website &amp; SEO Audit Report</span>
-            </div>
-          </div>
-
-          {/* Action Button */}
-          <div className="pt-3">
-            <a
-              href="#case-studies"
-              onClick={handleExploreCaseStudies}
-              className="px-7 py-3.5 rounded-xl bg-[#17122B] hover:bg-[#20193B] border border-[#2B2346] hover:border-[#7C3AED]/50 text-white text-sm font-bold transition-all flex items-center gap-2.5 shadow-lg group cursor-pointer"
-            >
-              <span>Explore Case Studies</span>
-              <ArrowRight className="w-4 h-4 text-[#A78BFA] group-hover:translate-x-1 transition-transform" />
-            </a>
-          </div>
-
-          {/* Social Proof Single-line Text */}
-          <div className="pt-6 border-t border-[#1F1938] w-full max-w-xl">
-            <p className="text-xs text-slate-400 font-medium">
-              Trusted by fast-growing brands across USA, UK, UAE &amp; worldwide.
+          {/* Step 3: Subtitle & Feature Bullet Points */}
+          <motion.div variants={itemVariants} className="space-y-4 max-w-2xl">
+            <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
+              Bespoke Next.js web systems and enterprise SEO designed for sub-second speed and global organic revenue.
             </p>
-          </div>
-        </div>
 
-        {/* RIGHT COLUMN: Floating Glassmorphism Booking Enquiry Card */}
-        <div className="lg:col-span-5 flex justify-center lg:justify-end w-full">
-          <div className="w-full max-w-md bg-[#130E26]/95 border border-[#29204A] hover:border-[#7C3AED]/40 rounded-2xl p-6 sm:p-7 shadow-2xl shadow-purple-950/30 backdrop-blur-xl relative overflow-hidden transition-all">
-            
-            {/* Top Accent Gradient Border */}
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#7C3AED] via-[#A78BFA] to-[#3B82F6]" />
-
-            {/* Form Title & Subtitle */}
-            <div className="mb-5">
-              <div className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-widest text-emerald-300 bg-emerald-950/60 border border-emerald-500/40 px-2.5 py-0.5 rounded-full mb-2">
-                <Clock className="w-3 h-3 text-emerald-400" />
-                <span>🎁 Free $499 Audit Included</span>
+            <div className="space-y-2.5 pt-1">
+              <div className="flex items-center gap-2.5 text-sm text-slate-200 font-medium">
+                <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                </div>
+                <span>Sub-second page loads (Core Web Vitals optimized)</span>
               </div>
-              <h3 className="text-xl font-extrabold text-white tracking-tight">
-                Book a 15-Min Strategy Call
-              </h3>
-              <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-                Fill in the details below to claim your free 20+ page Website &amp; SEO Audit report.
+
+              <div className="flex items-center gap-2.5 text-sm text-slate-200 font-medium">
+                <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                </div>
+                <span>Enterprise-grade search architectures</span>
+              </div>
+
+              <div className="flex items-center gap-2.5 text-sm text-emerald-300 font-bold">
+                <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-400/50 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                </div>
+                <span>Includes 100% Free 20+ Page Website &amp; SEO Audit Report</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Step 4: Left CTA Button & Social Proof */}
+          <motion.div variants={itemVariants} className="space-y-6 pt-2 w-full max-w-xl">
+            <div>
+              <a
+                href="#case-studies"
+                onClick={handleExploreCaseStudies}
+                className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-[#17122B] hover:bg-[#20193B] border border-[#2B2346] hover:border-[#7C3AED]/50 text-white text-sm font-bold transition-all shadow-lg group cursor-pointer"
+              >
+                <span>Explore Case Studies</span>
+                <ArrowRight className="w-4 h-4 text-[#A78BFA] group-hover:translate-x-1 transition-transform duration-300" />
+              </a>
+            </div>
+
+            <div className="pt-5 border-t border-[#1F1938] w-full">
+              <p className="text-xs text-slate-400 font-medium">
+                Trusted by fast-growing brands across USA, UK, UAE &amp; worldwide.
               </p>
             </div>
+          </motion.div>
+        </motion.div>
 
-            {/* Booking Form */}
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
+        {/* RIGHT COLUMN: Step 5 - Interactive Consultation Form Card with Conic Glowing Border */}
+        <motion.div
+          className="lg:col-span-5 flex justify-center lg:justify-end w-full"
+          variants={cardVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <div className="w-full max-w-md relative rounded-2xl p-[1px] overflow-hidden group">
+            
+            {/* Animated Conic Glowing Border Beam */}
+            <div className="absolute inset-[-100%] bg-[conic-gradient(from_0deg_at_50%_50%,#7C3AED_0%,#3B82F6_50%,#7C3AED_100%)] opacity-40 group-hover:opacity-80 transition-opacity duration-500 animate-border-beam pointer-events-none" />
+
+            {/* Inner Glassmorphism Card */}
+            <div className="w-full bg-[#130E26]/95 border border-[#29204A] rounded-2xl p-6 sm:p-7 shadow-2xl shadow-purple-950/40 backdrop-blur-xl relative z-10 overflow-hidden">
               
-              {/* Field 1: Full Name */}
-              <div className="flex flex-col gap-1">
-                <label htmlFor="hero-name" className="text-[10px] font-extrabold text-slate-300 uppercase tracking-wider block">
-                  Full Name <span className="text-red-400">*</span>
-                </label>
-                <div className={`flex items-center gap-2 bg-[#1A1433] border rounded-xl px-3 py-2.5 transition-all ${
-                  errors.name ? "border-red-500/80 bg-red-950/10" : "border-[#2D2352] focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20"
-                }`}>
-                  <User className="w-4 h-4 text-slate-400 shrink-0" />
-                  <input
-                    type="text"
-                    id="hero-name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="John Doe"
-                    className="w-full text-xs bg-transparent outline-none text-white placeholder:text-slate-500 font-medium"
-                  />
+              {/* Form Header */}
+              <div className="mb-5">
+                <div className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-widest text-emerald-300 bg-emerald-950/60 border border-emerald-500/40 px-2.5 py-0.5 rounded-full mb-2">
+                  <Clock className="w-3 h-3 text-emerald-400" />
+                  <span>🎁 Free $499 Audit Included</span>
                 </div>
-                {errors.name && <span className="text-[10px] text-red-400 font-medium">{errors.name}</span>}
+                <h3 className="text-xl font-extrabold text-white tracking-tight">
+                  Book a 15-Min Strategy Call
+                </h3>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Fill in the details below to claim your free 20+ page Website &amp; SEO Audit report.
+                </p>
               </div>
 
-              {/* Field 2: Work Email */}
-              <div className="flex flex-col gap-1">
-                <label htmlFor="hero-email" className="text-[10px] font-extrabold text-slate-300 uppercase tracking-wider block">
-                  Work Email <span className="text-red-400">*</span>
-                </label>
-                <div className={`flex items-center gap-2 bg-[#1A1433] border rounded-xl px-3 py-2.5 transition-all ${
-                  errors.email ? "border-red-500/80 bg-red-950/10" : "border-[#2D2352] focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20"
-                }`}>
-                  <Mail className="w-4 h-4 text-slate-400 shrink-0" />
-                  <input
-                    type="email"
-                    id="hero-email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="name@company.com"
-                    className="w-full text-xs bg-transparent outline-none text-white placeholder:text-slate-500 font-medium"
-                  />
-                </div>
-                {errors.email && <span className="text-[10px] text-red-400 font-medium">{errors.email}</span>}
-              </div>
-
-              {/* Field 3: Phone / WhatsApp Number */}
-              <div className="flex flex-col gap-1">
-                <label htmlFor="hero-mobile" className="text-[10px] font-extrabold text-slate-300 uppercase tracking-wider block">
-                  Phone / WhatsApp Number <span className="text-red-400">*</span>
-                </label>
-                <div className="flex gap-2 relative">
-                  {/* Country Selector Dropdown */}
-                  <div className="relative" ref={countryDropdownRef}>
-                    <button
-                      type="button"
-                      onClick={() => setIsCountryOpen(!isCountryOpen)}
-                      className="w-[95px] text-xs py-2.5 px-2.5 bg-[#1A1433] border border-[#2D2352] hover:border-[#7C3AED]/50 text-white rounded-xl flex items-center justify-between outline-none cursor-pointer font-semibold transition-all h-full"
-                    >
-                      <span className="flex items-center gap-1">
-                        <span>{selectedCountry?.flag}</span>
-                        <span>{selectedCountryCode}</span>
-                      </span>
-                      <ChevronDown className={`w-3 h-3 text-slate-400 transition-transform ${isCountryOpen ? "rotate-180" : ""}`} />
-                    </button>
-
-                    {isCountryOpen && (
-                      <div className="absolute z-30 left-0 top-[108%] w-60 max-h-56 overflow-y-auto bg-[#18132E] border border-[#2D244E] rounded-xl shadow-2xl py-1">
-                        <div className="p-2 border-b border-[#2D244E] bg-[#140F26] sticky top-0 z-10">
-                          <input
-                            type="text"
-                            placeholder="Search..."
-                            value={countrySearch}
-                            onChange={(e) => setCountrySearch(e.target.value)}
-                            className="w-full text-xs px-2.5 py-1.5 bg-[#1F193B] border border-[#352B5C] rounded-lg text-white outline-none"
-                            onClick={(e) => e.stopPropagation()}
-                          />
-                        </div>
-                        {filteredCountries.map((c) => (
-                          <button
-                            key={`${c.code}-${c.name}`}
-                            type="button"
-                            onClick={() => {
-                              setSelectedCountryCode(c.code);
-                              setIsCountryOpen(false);
-                              setCountrySearch("");
-                            }}
-                            className={`w-full flex items-center justify-between px-3.5 py-2 text-left text-xs hover:bg-[#231C42] ${
-                              selectedCountryCode === c.code ? "bg-[#7C3AED]/20 text-[#A78BFA] font-bold" : "text-slate-300"
-                            }`}
-                          >
-                            <span className="flex items-center gap-2">
-                              <span>{c.flag}</span>
-                              <span className="truncate max-w-[120px]">{c.name}</span>
-                            </span>
-                            <span className="text-slate-500 text-[10px]">{c.code}</span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className={`flex items-center gap-2 bg-[#1A1433] border rounded-xl px-3 py-2.5 flex-1 transition-all ${
-                    errors.mobile ? "border-red-500/80 bg-red-950/10" : "border-[#2D2352] focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20"
+              {/* Booking Form */}
+              <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
+                
+                {/* Field 1: Full Name */}
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="hero-name" className="text-[10px] font-extrabold text-slate-300 uppercase tracking-wider block">
+                    Full Name <span className="text-red-400">*</span>
+                  </label>
+                  <div className={`flex items-center gap-2 bg-[#1A1433] border rounded-xl px-3 py-2.5 transition-all duration-300 focus-within:bg-[#1E173C] focus-within:border-[#7C3AED] focus-within:ring-4 focus-within:ring-[#7C3AED]/20 focus-within:shadow-[0_0_15px_rgba(124,58,237,0.2)] ${
+                    errors.name ? "border-red-500/80 bg-red-950/10" : "border-[#2D2352]"
                   }`}>
-                    <Phone className="w-4 h-4 text-slate-400 shrink-0" />
+                    <User className="w-4 h-4 text-slate-400 shrink-0 transition-colors group-focus-within:text-[#A78BFA]" />
                     <input
-                      type="tel"
-                      id="hero-mobile"
-                      name="mobile"
-                      value={formData.mobile}
+                      type="text"
+                      id="hero-name"
+                      name="name"
+                      value={formData.name}
                       onChange={handleChange}
-                      placeholder="Phone / WhatsApp"
+                      placeholder="John Doe"
+                      className="w-full text-xs bg-transparent outline-none text-white placeholder:text-slate-500 font-medium"
+                    />
+                  </div>
+                  {errors.name && <span className="text-[10px] text-red-400 font-medium">{errors.name}</span>}
+                </div>
+
+                {/* Field 2: Work Email */}
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="hero-email" className="text-[10px] font-extrabold text-slate-300 uppercase tracking-wider block">
+                    Work Email <span className="text-red-400">*</span>
+                  </label>
+                  <div className={`flex items-center gap-2 bg-[#1A1433] border rounded-xl px-3 py-2.5 transition-all duration-300 focus-within:bg-[#1E173C] focus-within:border-[#7C3AED] focus-within:ring-4 focus-within:ring-[#7C3AED]/20 focus-within:shadow-[0_0_15px_rgba(124,58,237,0.2)] ${
+                    errors.email ? "border-red-500/80 bg-red-950/10" : "border-[#2D2352]"
+                  }`}>
+                    <Mail className="w-4 h-4 text-slate-400 shrink-0 transition-colors group-focus-within:text-[#A78BFA]" />
+                    <input
+                      type="email"
+                      id="hero-email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="name@company.com"
+                      className="w-full text-xs bg-transparent outline-none text-white placeholder:text-slate-500 font-medium"
+                    />
+                  </div>
+                  {errors.email && <span className="text-[10px] text-red-400 font-medium">{errors.email}</span>}
+                </div>
+
+                {/* Field 3: Phone / WhatsApp Number */}
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="hero-mobile" className="text-[10px] font-extrabold text-slate-300 uppercase tracking-wider block">
+                    Phone / WhatsApp Number <span className="text-red-400">*</span>
+                  </label>
+                  <div className="flex gap-2 relative">
+                    {/* Country Selector Dropdown */}
+                    <div className="relative" ref={countryDropdownRef}>
+                      <button
+                        type="button"
+                        onClick={() => setIsCountryOpen(!isCountryOpen)}
+                        className="w-[95px] text-xs py-2.5 px-2.5 bg-[#1A1433] border border-[#2D2352] hover:border-[#7C3AED]/50 text-white rounded-xl flex items-center justify-between outline-none cursor-pointer font-semibold transition-all h-full"
+                      >
+                        <span className="flex items-center gap-1">
+                          <span>{selectedCountry?.flag}</span>
+                          <span>{selectedCountryCode}</span>
+                        </span>
+                        <ChevronDown className={`w-3 h-3 text-slate-400 transition-transform ${isCountryOpen ? "rotate-180" : ""}`} />
+                      </button>
+
+                      {isCountryOpen && (
+                        <div className="absolute z-50 left-0 top-[108%] w-72 sm:w-80 max-h-64 overflow-y-auto bg-[#150F2E] border border-[#3B2D6B] rounded-xl shadow-2xl py-1 text-white">
+                          <div className="p-2 border-b border-[#2B2152] bg-[#0E0A21] sticky top-0 z-10">
+                            <input
+                              type="text"
+                              placeholder="Search country or code..."
+                              value={countrySearch}
+                              onChange={(e) => setCountrySearch(e.target.value)}
+                              className="w-full text-xs px-3 py-2 bg-[#1C153B] border border-[#3D306E] rounded-lg text-white placeholder:text-slate-400 outline-none focus:border-[#7C3AED]"
+                              onClick={(e) => e.stopPropagation()}
+                            />
+                          </div>
+                          {filteredCountries.map((c) => (
+                            <button
+                              key={`${c.code}-${c.name}`}
+                              type="button"
+                              onClick={() => {
+                                setSelectedCountryCode(c.code);
+                                setIsCountryOpen(false);
+                                setCountrySearch("");
+                              }}
+                              className={`w-full flex items-center justify-between px-3.5 py-2.5 text-left text-xs hover:bg-[#281D54] transition-colors cursor-pointer ${
+                                selectedCountryCode === c.code ? "bg-[#7C3AED]/30 text-white font-bold" : "text-slate-200"
+                              }`}
+                            >
+                              <span className="flex items-center gap-2.5 min-w-0">
+                                <span className="text-base select-none shrink-0">{c.flag}</span>
+                                <span className="font-semibold text-slate-100 truncate max-w-[170px]">{c.name}</span>
+                              </span>
+                              <span className="text-[#A78BFA] font-bold text-xs shrink-0">{c.code}</span>
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className={`flex items-center gap-2 bg-[#1A1433] border rounded-xl px-3 py-2.5 flex-1 transition-all duration-300 focus-within:bg-[#1E173C] focus-within:border-[#7C3AED] focus-within:ring-4 focus-within:ring-[#7C3AED]/20 focus-within:shadow-[0_0_15px_rgba(124,58,237,0.2)] ${
+                      errors.mobile ? "border-red-500/80 bg-red-950/10" : "border-[#2D2352]"
+                    }`}>
+                      <Phone className="w-4 h-4 text-slate-400 shrink-0" />
+                      <input
+                        type="tel"
+                        id="hero-mobile"
+                        name="mobile"
+                        value={formData.mobile}
+                        onChange={handleChange}
+                        placeholder="Phone / WhatsApp"
+                        className="w-full text-xs bg-transparent outline-none text-white placeholder:text-slate-500 font-medium"
+                      />
+                    </div>
+                  </div>
+                  {errors.mobile && <span className="text-[10px] text-red-400 font-medium">{errors.mobile}</span>}
+                </div>
+
+                {/* Field 4: Project Scope / Website URL (Optional) */}
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="hero-website" className="text-[10px] font-extrabold text-slate-300 uppercase tracking-wider flex items-center justify-between">
+                    <span>Project Scope / Website URL</span>
+                    <span className="text-[9px] text-slate-500 font-normal">Optional</span>
+                  </label>
+                  <div className="flex items-center gap-2 bg-[#1A1433] border border-[#2D2352] focus-within:bg-[#1E173C] focus-within:border-[#7C3AED] focus-within:ring-4 focus-within:ring-[#7C3AED]/20 focus-within:shadow-[0_0_15px_rgba(124,58,237,0.2)] rounded-xl px-3 py-2.5 transition-all duration-300">
+                    <Globe className="w-4 h-4 text-slate-400 shrink-0" />
+                    <input
+                      type="text"
+                      id="hero-website"
+                      name="website"
+                      value={formData.website}
+                      onChange={handleChange}
+                      placeholder="e.g. acme.com or Web Design / SEO"
                       className="w-full text-xs bg-transparent outline-none text-white placeholder:text-slate-500 font-medium"
                     />
                   </div>
                 </div>
-                {errors.mobile && <span className="text-[10px] text-red-400 font-medium">{errors.mobile}</span>}
-              </div>
 
-              {/* Field 4: Project Scope / Website URL (Optional) */}
-              <div className="flex flex-col gap-1">
-                <label htmlFor="hero-website" className="text-[10px] font-extrabold text-slate-300 uppercase tracking-wider flex items-center justify-between">
-                  <span>Project Scope / Website URL</span>
-                  <span className="text-[9px] text-slate-500 font-normal">Optional</span>
-                </label>
-                <div className="flex items-center gap-2 bg-[#1A1433] border border-[#2D2352] focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 rounded-xl px-3 py-2.5 transition-all">
-                  <Globe className="w-4 h-4 text-slate-400 shrink-0" />
-                  <input
-                    type="text"
-                    id="hero-website"
-                    name="website"
-                    value={formData.website}
-                    onChange={handleChange}
-                    placeholder="e.g. acme.com or Web Design / SEO"
-                    className="w-full text-xs bg-transparent outline-none text-white placeholder:text-slate-500 font-medium"
-                  />
+                {/* Primary CTA Button with Automated Shimmer Light Reflection & Hover Scale */}
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full mt-2 py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#7C3AED] via-[#6D28D9] to-[#3B82F6] hover:from-[#6D28D9] hover:to-[#2563EB] text-white font-extrabold text-sm shadow-xl shadow-purple-900/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden group"
+                >
+                  {/* Automated Subtle Shimmer-Sweep Reflection */}
+                  <span className="absolute inset-0 w-1/3 h-full bg-white/25 blur-sm transform -skew-x-12 animate-shimmer-sweep pointer-events-none" />
+
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-white" />
+                      <span>Scheduling Call...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Get Free Audit &amp; Strategy Call</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    </>
+                  )}
+                </button>
+
+                {/* Micro-trust footer */}
+                <div className="pt-2 text-center">
+                  <p className="text-[10px] font-medium text-slate-400 flex items-center justify-center gap-1.5">
+                    <ShieldCheck className="w-3 h-3 text-emerald-400 shrink-0" />
+                    <span>🎁 Free $499 Audit Included • Zero Commitment • 100% Confidential</span>
+                  </p>
                 </div>
-              </div>
-
-              {/* Full-width CTA Button */}
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full mt-2 py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#7C3AED] via-[#6D28D9] to-[#3B82F6] hover:from-[#6D28D9] hover:to-[#2563EB] text-white font-extrabold text-sm shadow-xl shadow-purple-900/30 hover:scale-[1.01] active:scale-[0.99] transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer group"
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin text-white" />
-                    <span>Scheduling Call...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Get Free Audit &amp; Strategy Call</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </>
-                )}
-              </button>
-
-              {/* Micro-trust footer */}
-              <div className="pt-2 text-center">
-                <p className="text-[10px] font-medium text-slate-400 flex items-center justify-center gap-1.5">
-                  <ShieldCheck className="w-3 h-3 text-emerald-400 shrink-0" />
-                  <span>🎁 Free $499 Audit Included • Zero Commitment • 100% Confidential</span>
-                </p>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </section>
