@@ -3,6 +3,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://joydigital.in"),
@@ -58,22 +60,43 @@ const TOOLS = [
 ];
 
 export default function FreeToolsLandingPage() {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Joy Digital Free Business Tools",
-    "url": "https://joydigital.in/free-tools",
-    "description": "Simple, fast and free tools to help you manage and grow your business.",
-    "applicationCategory": "BusinessApplication",
-    "operatingSystem": "All"
-  };
+  const canonicalUrl = "https://joydigital.in/free-tools";
+  const graphSchema = buildPageGraphSchema({
+    url: canonicalUrl,
+    title: "Free Business Tools & Generators | Joy Digital",
+    description: "Boost productivity with free online business tools. Calculate GST, create PDF invoices & quotes, build QR codes, and generate WhatsApp chat links.",
+    breadcrumbs: [
+      { name: "Home", item: "https://joydigital.in" },
+      { name: "Free Tools", item: canonicalUrl },
+    ],
+    webApp: {
+      name: "Joy Digital Free Business Tools",
+      description: "Simple, fast and free tools to help you manage and grow your business.",
+      applicationCategory: "BusinessApplication",
+    },
+    faqs: [
+      {
+        question: "Are these tools really free to use?",
+        answer: "Yes, absolutely. All of our business tools are 100% free with no registration, no subscription, and no hidden trial periods required."
+      },
+      {
+        question: "Is my data safe and private?",
+        answer: "Yes. We do not store any client details, financial amounts, uploads, or items you input into calculators, invoices, or QR generators. All calculations and PDF exports occur securely inside your browser."
+      },
+      {
+        question: "Can I download generated files?",
+        answer: "Yes, you can download Quotations and Invoices directly as standard PDFs, print them directly, and download QR codes as high-quality PNGs."
+      },
+      {
+        question: "How can I grow my business further?",
+        answer: "While our free tools assist in daily transactions, a premium custom business website can boost your lead generation. Contact Joy Digital for custom web designs and search optimizations."
+      }
+    ],
+  });
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
+      <JsonLd schema={graphSchema} />
       <Header />
       <main className="bg-[#FAF9FF] text-[#1F1B2D] min-h-screen pt-24 pb-16 flex flex-col justify-between">
         <div className="max-w-7xl mx-auto px-6 w-full flex-grow">

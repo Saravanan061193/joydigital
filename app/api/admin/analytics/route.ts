@@ -293,7 +293,7 @@ export async function GET() {
           id: log._id?.toString() || Math.random().toString(),
           path: log.path,
           slug: slug === "" ? "blog-hub" : slug,
-          city: log.city || "Chennai",
+          city: log.city || "Global Reader",
           country: log.country || "IN",
           timestamp: log.createdAt || new Date().toISOString(),
           referrer: log.referrer || "Google / Direct"

@@ -58,6 +58,61 @@ function CountUpNumber({ target, suffix = "" }: { target: number; suffix?: strin
   return <span ref={elementRef}>{count}{suffix}</span>;
 }
 
+export const HOME_FAQS = [
+  {
+    question: "How much does a website cost with Joy Digital?",
+    answer: "Our standard business layouts and landing page setups start from ₹15,000 ($250). Custom multipage e-commerce platforms, database directories, or advanced SaaS landing flows are quoted based on specific API needs and page count."
+  },
+  {
+    question: "How long does website development take?",
+    answer: "A standard landing page or corporate profile website takes 7 to 14 business days. Complex e-commerce systems, database directories, or custom web portals average 3 to 6 weeks."
+  },
+  {
+    question: "Do you work with international clients?",
+    answer: "Yes, our target market is global. We support growing companies, startups, and local businesses in India, the US, the UK, the UAE, Australia, and other countries through remote desks."
+  },
+  {
+    question: "Do you provide SEO services?",
+    answer: "Yes. Basic technical onsite SEO (correct title formats, descriptions, clean tag hierarchy, and structured JSON-LD schemas) is pre-configured on all our sites. We also offer dedicated global SEO campaigns and Map pack optimization."
+  },
+  {
+    question: "Do you provide website maintenance?",
+    answer: "Yes, we support our clients post-launch. We provide security configurations, hosting setups (Vercel/Netlify), backup schedules, content updates, and continuous speed tuning."
+  },
+  {
+    question: "Can you redesign my existing website?",
+    answer: "Absolutely. We migrate slow, legacy templates (like bloated WordPress builds) into high-performance, responsive Next.js storefronts or corporate profiles to increase page speed and capture conversions."
+  },
+  {
+    question: "Do you work with startups?",
+    answer: "Yes, startups are a core focus. We help early-stage ventures launch conversion-ready digital pages, configure lead capture fields, and connect trackers to validate their offerings."
+  },
+  {
+    question: "Can you build e-commerce websites?",
+    answer: "Yes. We build responsive e-commerce storefronts using Next.js. We integrate checkout funnels, secure payment links, catalog displays, and order management."
+  },
+  {
+    question: "How do I choose the right web developer near me or website designer near me?",
+    answer: "If you are searching for a qualified web developer near me or an experienced website designer near me, look for an agency that delivers custom, high-speed, and search-optimized solutions rather than rigid templates. At Joy Digital, we act as your dedicated web engineering team, building bespoke Next.js and React websites engineered for sub-second speeds, mobile responsiveness, and high Google search visibility."
+  },
+  {
+    question: "Why should I hire a professional website developer near me for my business?",
+    answer: "Partnering with an experienced website developer near me ensures your business website is custom-built to attract local customers, achieve 90+ Core Web Vitals scores, and capture organic leads. We specialize in custom web development, local SEO, and mobile-first responsive design, giving your business a distinct competitive edge."
+  },
+  {
+    question: "Why is Joy Digital a leading digital marketing company in India and search engine optimization agency?",
+    answer: "Joy Digital stands out among top search engine optimization companies in India and digital marketing firms in India by combining sub-second Next.js web engineering with technical SEO audits, Google Map pack optimization, and high-converting performance marketing. We help Indian startups and global brands scale organic revenue."
+  },
+  {
+    question: "What should businesses look for when partnering with digital advertising companies in India?",
+    answer: "When hiring a digital marketing business in India or a digital advertising company in India, prioritize agencies with proven Core Web Vitals performance, transparent GA4 conversion tracking, and custom strategy execution rather than automated templates. Joy Digital provides end-to-end web development, technical search optimization, and lead funnels tailored to your growth goals."
+  },
+  {
+    question: "How do I start a project with Joy Digital?",
+    answer: "The easiest way is to fill out our Free Website Audit form on the homepage, or message us directly on WhatsApp at +91 90800 26133. We will analyze your inputs and present a flat-rate proposal."
+  }
+];
+
 interface HomePageComponentProps {
   country: string; // "us", "uk", "ae", "in", or "" (Global default)
 }
@@ -441,61 +496,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
     }
   ];
 
-  // 11. FAQ LIST
-  const HOME_FAQS = [
-    {
-      question: "How much does a website cost with Joy Digital?",
-      answer: "Our standard business layouts and landing page setups start from ₹15,000 ($250). Custom multipage e-commerce platforms, database directories, or advanced SaaS landing flows are quoted based on specific API needs and page count."
-    },
-    {
-      question: "How long does website development take?",
-      answer: "A standard landing page or corporate profile website takes 7 to 14 business days. Complex e-commerce systems, database directories, or custom web portals average 3 to 6 weeks."
-    },
-    {
-      question: "Do you work with international clients?",
-      answer: "Yes, our target market is global. We support growing companies, startups, and local businesses in India, the US, the UK, the UAE, Australia, and other countries through remote desks."
-    },
-    {
-      question: "Do you provide SEO services?",
-      answer: "Yes. Basic technical onsite SEO (correct title formats, descriptions, clean tag hierarchy, and structured JSON-LD schemas) is pre-configured on all our sites. We also offer dedicated global SEO campaigns and Map pack optimization."
-    },
-    {
-      question: "Do you provide website maintenance?",
-      answer: "Yes, we support our clients post-launch. We provide security configurations, hosting setups (Vercel/Netlify), backup schedules, content updates, and continuous speed tuning."
-    },
-    {
-      question: "Can you redesign my existing website?",
-      answer: "Absolutely. We migrate slow, legacy templates (like bloated WordPress builds) into high-performance, responsive Next.js storefronts or corporate profiles to increase page speed and capture conversions."
-    },
-    {
-      question: "Do you work with startups?",
-      answer: "Yes, startups are a core focus. We help early-stage ventures launch conversion-ready digital pages, configure lead capture fields, and connect trackers to validate their offerings."
-    },
-    {
-      question: "Can you build e-commerce websites?",
-      answer: "Yes. We build responsive e-commerce storefronts using Next.js. We integrate checkout funnels, secure payment links, catalog displays, and order management."
-    },
-    {
-      question: "How do I choose the right web developer near me or website designer near me?",
-      answer: "If you are searching for a qualified web developer near me or an experienced website designer near me, look for an agency that delivers custom, high-speed, and search-optimized solutions rather than rigid templates. At Joy Digital, we act as your dedicated web engineering team, building bespoke Next.js and React websites engineered for sub-second speeds, mobile responsiveness, and high Google search visibility."
-    },
-    {
-      question: "Why should I hire a professional website developer near me for my business?",
-      answer: "Partnering with an experienced website developer near me ensures your business website is custom-built to attract local customers, achieve 90+ Core Web Vitals scores, and capture organic leads. We specialize in custom web development, local SEO, and mobile-first responsive design, giving your business a distinct competitive edge."
-    },
-    {
-      question: "Why is Joy Digital a leading digital marketing company in India and search engine optimization agency?",
-      answer: "Joy Digital stands out among top search engine optimization companies in India and digital marketing firms in India by combining sub-second Next.js web engineering with technical SEO audits, Google Map pack optimization, and high-converting performance marketing. We help Indian startups and global brands scale organic revenue."
-    },
-    {
-      question: "What should businesses look for when partnering with digital advertising companies in India?",
-      answer: "When hiring a digital marketing business in India or a digital advertising company in India, prioritize agencies with proven Core Web Vitals performance, transparent GA4 conversion tracking, and custom strategy execution rather than automated templates. Joy Digital provides end-to-end web development, technical search optimization, and lead funnels tailored to your growth goals."
-    },
-    {
-      question: "How do I start a project with Joy Digital?",
-      answer: "The easiest way is to fill out our Free Website Audit form on the homepage, or message us directly on WhatsApp at +91 90800 26133. We will analyze your inputs and present a flat-rate proposal."
-    }
-  ];
+  // 11. FAQ LIST (uses HOME_FAQS from top level)
 
   const handleCtaEvent = (ctaName: string) => {
     if (typeof window !== "undefined") {
@@ -515,26 +516,8 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
     }
   };
 
-  // FAQ Schema JSON-LD structure
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": HOME_FAQS.map(faq => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer
-      }
-    }))
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
       <Header transparent={true} />
       
       <main className="bg-[#FAF9FF] text-[#1F1B2D] min-h-screen overflow-hidden">

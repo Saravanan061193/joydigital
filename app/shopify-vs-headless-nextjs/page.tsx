@@ -5,6 +5,8 @@ import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
 import LeadForm from "@/components/ui/LeadForm";
 import Link from "next/link";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: "Shopify vs Headless Next.js E-Commerce | Joy Digital",
@@ -15,25 +17,25 @@ export const metadata: Metadata = {
 };
 
 export default function ShopifyVsHeadlessNextjsPage() {
-  const schemaMarkup = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Headless E-Commerce Development",
-    "serviceType": "E-Commerce Web Development",
-    "provider": {
-      "@type": "Organization",
-      "name": "Joy Digital",
-      "url": "https://joydigital.in"
+  const canonicalUrl = "https://joydigital.in/shopify-vs-headless-nextjs";
+  const pageGraphSchema = buildPageGraphSchema({
+    url: canonicalUrl,
+    title: "Shopify vs Headless Next.js E-Commerce | Joy Digital",
+    description: "Compare Shopify Liquid vs Headless Next.js e-commerce storefronts. Learn how sub-second page loads reduce cart abandonment and increase revenue for scaling brands.",
+    breadcrumbs: [
+      { name: "Home", item: "https://joydigital.in" },
+      { name: "Shopify vs Headless Next.js", item: canonicalUrl },
+    ],
+    service: {
+      name: "Headless E-Commerce Development",
+      description: "Custom Headless Next.js e-commerce storefront engineering integrated with Shopify, Stripe, or custom checkout platforms.",
+      serviceType: "E-Commerce Web Development",
     },
-    "description": "Custom Headless Next.js e-commerce storefront engineering integrated with Shopify, Stripe, or custom checkout platforms."
-  };
+  });
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
-      />
+      <JsonLd schema={pageGraphSchema} />
       <Header />
       <main className="pt-24 lg:pt-32 bg-[#FAF9FF] text-[#1F1B2D]">
         

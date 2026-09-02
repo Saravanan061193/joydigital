@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions | Joy Digital",
@@ -21,8 +23,20 @@ export const metadata: Metadata = {
 };
 
 export default function TermsAndConditionsPage() {
+  const canonicalUrl = "https://joydigital.in/terms-and-conditions";
+  const graphSchema = buildPageGraphSchema({
+    url: canonicalUrl,
+    title: "Terms & Conditions | Joy Digital",
+    description: "Read the official Terms and Conditions of Joy Digital to understand the client agreement and rules for using our agency services and tools.",
+    breadcrumbs: [
+      { name: "Home", item: "https://joydigital.in" },
+      { name: "Terms & Conditions", item: canonicalUrl },
+    ],
+  });
+
   return (
     <>
+      <JsonLd schema={graphSchema} />
       <Header />
       <main className="pt-24 lg:pt-32 bg-light-bg min-h-screen">
         

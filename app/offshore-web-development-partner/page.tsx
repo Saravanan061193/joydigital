@@ -5,6 +5,8 @@ import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
 import LeadForm from "@/components/ui/LeadForm";
 import WorldwideServiceNetwork from "@/components/ui/WorldwideServiceNetwork";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: "Offshore Next.js Development Partner for US & UK Agencies | Joy Digital",
@@ -29,35 +31,25 @@ export const metadata: Metadata = {
 };
 
 export default function OffshoreWebDevelopmentPartnerPage() {
-  const schemaMarkup = {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "Joy Digital - Offshore Web Development Partner",
-    "serviceType": "White-Label Next.js Engineering & Technical SEO Subcontracting",
-    "url": "https://joydigital.in/offshore-web-development-partner",
-    "provider": {
-      "@type": "Organization",
-      "name": "Joy Digital",
-      "url": "https://joydigital.in"
-    },
-    "areaServed": [
-      "United States",
-      "United Kingdom",
-      "United Arab Emirates",
-      "Canada",
-      "Australia",
-      "India"
+  const canonicalUrl = "https://joydigital.in/offshore-web-development-partner";
+  const pageGraphSchema = buildPageGraphSchema({
+    url: canonicalUrl,
+    title: "Offshore Next.js Development Partner for US & UK Agencies | Joy Digital",
+    description: "White-label Next.js, React, and Technical SEO engineering partner for digital agencies and SMBs in the US, UK, UAE, and APAC.",
+    breadcrumbs: [
+      { name: "Home", item: "https://joydigital.in" },
+      { name: "Offshore Web Development Partner", item: canonicalUrl },
     ],
-    "description": "White-label Next.js, React, and Technical SEO engineering partner for digital agencies and SMBs in the US, UK, UAE, and APAC.",
-    "priceRange": "$$"
-  };
+    service: {
+      name: "Joy Digital - Offshore Web Development Partner",
+      description: "White-label Next.js, React, and Technical SEO engineering partner for digital agencies and SMBs in the US, UK, UAE, and APAC.",
+      serviceType: "White-Label Next.js Engineering & Technical SEO Subcontracting",
+    },
+  });
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
-      />
+      <JsonLd schema={pageGraphSchema} />
       <Header />
       <main className="pt-24 lg:pt-32 bg-[#FAF9FF] text-[#1F1B2D]">
         

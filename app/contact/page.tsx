@@ -4,6 +4,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
 import LeadForm from "@/components/ui/LeadForm";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: "Contact Us | Request a Free Consultation | Joy Digital",
@@ -29,8 +31,21 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
+  const canonicalUrl = "https://joydigital.in/contact";
+  const graphSchema = buildPageGraphSchema({
+    url: canonicalUrl,
+    title: "Contact Us | Request a Free Consultation | Joy Digital",
+    description: "Get in touch with our digital specialists. Request a free SEO audit, custom website quotes, or logo design consulting from our office.",
+    includeLocalBusiness: true,
+    breadcrumbs: [
+      { name: "Home", item: "https://joydigital.in" },
+      { name: "Contact Us", item: canonicalUrl },
+    ],
+  });
+
   return (
     <>
+      <JsonLd schema={graphSchema} />
       <Header />
       <main className="pt-24 lg:pt-32">
         

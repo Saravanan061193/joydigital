@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: "Website Disclaimer & Terms | Joy Digital",
@@ -21,8 +23,20 @@ export const metadata: Metadata = {
 };
 
 export default function DisclaimerPage() {
+  const canonicalUrl = "https://joydigital.in/disclaimer";
+  const graphSchema = buildPageGraphSchema({
+    url: canonicalUrl,
+    title: "Website Disclaimer & Terms | Joy Digital",
+    description: "Read the official website disclaimer, legal notices, and limitation of liability policy for Joy Digital web design & digital marketing services.",
+    breadcrumbs: [
+      { name: "Home", item: "https://joydigital.in" },
+      { name: "Disclaimer", item: canonicalUrl },
+    ],
+  });
+
   return (
     <>
+      <JsonLd schema={graphSchema} />
       <Header />
       <main className="pt-24 lg:pt-32 bg-light-bg min-h-screen">
         

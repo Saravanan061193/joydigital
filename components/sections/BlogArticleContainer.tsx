@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import ViewCounter from "@/components/ui/ViewCounter";
 import { BlogPost } from "@/lib/blog";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 interface BlogArticleContainerProps {
   post: BlogPost;
@@ -133,77 +135,33 @@ export default function BlogArticleContainer({ post, htmlContent, relatedPosts, 
 
   // Structured Data (JSON-LD)
   const canonicalUrl = post.canonicalUrl || `https://joydigital.in/blog/${slug}`;
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": canonicalUrl,
-    },
-    "headline": post.seoTitle || post.title,
-    "description": post.metaDescription || post.description,
-    "image": post.ogImage || post.image || "https://joydigital.in/assets/images/hero-banner.webp",
-    "datePublished": post.date,
-    "dateModified": post.lastUpdatedDate || post.date,
-    "author": {
-      "@type": "Person",
-      "name": post.authorName || post.author || "Saravanan L",
-      "jobTitle": post.authorRole || "Technical Web Specialist",
-      "url": post.authorProfileUrl || "https://joydigital.in/about",
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Joy Digital",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://joydigital.in/assets/images/logo.webp",
-      },
-    },
-  };
-
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://joydigital.in",
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Blog",
-        "item": "https://joydigital.in/blog",
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": post.category || "General",
-        "item": `https://joydigital.in/blog?category=${encodeURIComponent(post.category || "General")}`,
-      },
-      {
-        "@type": "ListItem",
-        "position": 4,
-        "name": post.title,
-        "item": canonicalUrl,
-      },
+  const articleGraph = buildPageGraphSchema({
+    url: canonicalUrl,
+    title: post.seoTitle || post.title,
+    description: post.metaDescription || post.description,
+    breadcrumbs: [
+      { name: "Home", item: "https://joydigital.in" },
+      { name: "Blog", item: "https://joydigital.in/blog" },
+      { name: post.category || "General", item: `https://joydigital.in/blog?category=${encodeURIComponent(post.category || "General")}` },
+      { name: post.title, item: canonicalUrl },
     ],
-  };
+    blogPosting: {
+      headline: post.seoTitle || post.title,
+      description: post.metaDescription || post.description,
+      image: post.ogImage || post.image || "https://joydigital.in/assets/images/hero-banner.webp",
+      datePublished: post.date,
+      dateModified: post.lastUpdatedDate || post.date,
+      authorName: post.authorName || post.author,
+      authorRole: post.authorRole || "Technical Web Specialist",
+    },
+    faqs: post.faqs && post.faqs.length > 0 ? post.faqs : undefined,
+  });
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-10 select-text">
       
       {/* Schema Injection */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
+      <JsonLd schema={articleGraph} />
 
       {/* Breadcrumbs Navigation */}
       <nav aria-label="Breadcrumb" className="text-[10px] sm:text-xs font-bold text-[#6B6478] uppercase tracking-wider mb-8 select-none animate-fade-in text-left">

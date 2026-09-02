@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: "Refund & Cancellation Policy | Joy Digital",
@@ -21,8 +23,20 @@ export const metadata: Metadata = {
 };
 
 export default function RefundPolicyPage() {
+  const canonicalUrl = "https://joydigital.in/refund-policy";
+  const graphSchema = buildPageGraphSchema({
+    url: canonicalUrl,
+    title: "Refund & Cancellation Policy | Joy Digital",
+    description: "Read the refund policy for website development, SEO, digital marketing, and custom software services provided by Joy Digital.",
+    breadcrumbs: [
+      { name: "Home", item: "https://joydigital.in" },
+      { name: "Refund Policy", item: canonicalUrl },
+    ],
+  });
+
   return (
     <>
+      <JsonLd schema={graphSchema} />
       <Header />
       <main className="pt-24 lg:pt-32 bg-light-bg min-h-screen">
         

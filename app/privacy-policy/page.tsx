@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: "Privacy Policy & Data Protection Terms | Joy Digital",
@@ -21,8 +23,20 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPolicyPage() {
+  const canonicalUrl = "https://joydigital.in/privacy-policy";
+  const graphSchema = buildPageGraphSchema({
+    url: canonicalUrl,
+    title: "Privacy Policy & Data Protection Terms | Joy Digital",
+    description: "Read the Privacy Policy of Joy Digital to understand how we collect, use, and protect your personal information.",
+    breadcrumbs: [
+      { name: "Home", item: "https://joydigital.in" },
+      { name: "Privacy Policy", item: canonicalUrl },
+    ],
+  });
+
   return (
     <>
+      <JsonLd schema={graphSchema} />
       <Header />
       <main className="pt-24 lg:pt-32 bg-light-bg min-h-screen">
         

@@ -5,6 +5,8 @@ import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
 import LeadForm from "@/components/ui/LeadForm";
 import Link from "next/link";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: "WordPress to Next.js Migration Agency | Joy Digital",
@@ -15,25 +17,25 @@ export const metadata: Metadata = {
 };
 
 export default function WordPressToNextjsMigrationPage() {
-  const schemaMarkup = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "WordPress to Next.js Migration",
-    "serviceType": "Web Development & Speed Optimization",
-    "provider": {
-      "@type": "Organization",
-      "name": "Joy Digital",
-      "url": "https://joydigital.in"
+  const canonicalUrl = "https://joydigital.in/wordpress-to-nextjs-migration";
+  const pageGraphSchema = buildPageGraphSchema({
+    url: canonicalUrl,
+    title: "WordPress to Next.js Migration Agency | Joy Digital",
+    description: "Migrate your slow WordPress website to high-speed serverless Next.js. Pass Core Web Vitals (95+ score), prevent plugin hacks, and preserve your 100% SEO rankings.",
+    breadcrumbs: [
+      { name: "Home", item: "https://joydigital.in" },
+      { name: "WordPress to Next.js Migration", item: canonicalUrl },
+    ],
+    service: {
+      name: "WordPress to Next.js Migration",
+      description: "Professional migration of legacy WordPress websites to high-performance, serverless Next.js and React architectures with 100% SEO redirect preservation.",
+      serviceType: "Web Development & Speed Optimization",
     },
-    "description": "Professional migration of legacy WordPress websites to high-performance, serverless Next.js and React architectures with 100% SEO redirect preservation."
-  };
+  });
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
-      />
+      <JsonLd schema={pageGraphSchema} />
       <Header />
       <main className="pt-24 lg:pt-32 bg-[#FAF9FF] text-[#1F1B2D]">
         

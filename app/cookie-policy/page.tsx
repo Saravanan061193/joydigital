@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: "Cookie Policy | Joy Digital",
@@ -21,8 +23,20 @@ export const metadata: Metadata = {
 };
 
 export default function CookiePolicyPage() {
+  const canonicalUrl = "https://joydigital.in/cookie-policy";
+  const graphSchema = buildPageGraphSchema({
+    url: canonicalUrl,
+    title: "Cookie Policy | Joy Digital",
+    description: "Read the official Cookie Policy for Joy Digital to understand how we use cookies and tracking technologies to optimize your browsing experience.",
+    breadcrumbs: [
+      { name: "Home", item: "https://joydigital.in" },
+      { name: "Cookie Policy", item: canonicalUrl },
+    ],
+  });
+
   return (
     <>
+      <JsonLd schema={graphSchema} />
       <Header />
       <main className="pt-24 lg:pt-32 bg-light-bg min-h-screen">
         

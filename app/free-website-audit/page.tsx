@@ -4,6 +4,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
 import AuditForm from "@/components/ui/AuditForm";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: "Claim Free Website Audit & SEO Check | Joy Digital",
@@ -37,8 +39,20 @@ const AUDIT_CHECKLIST = [
 ];
 
 export default function FreeWebsiteAuditPage() {
+  const canonicalUrl = "https://joydigital.in/free-website-audit";
+  const graphSchema = buildPageGraphSchema({
+    url: canonicalUrl,
+    title: "Claim Free Website Audit & SEO Check | Joy Digital",
+    description: "Claim your free website audit report from Joy Digital. Discover page speed bottlenecks, mobile layout errors, and SEO ranking opportunities.",
+    breadcrumbs: [
+      { name: "Home", item: "https://joydigital.in" },
+      { name: "Free Website Audit", item: canonicalUrl },
+    ],
+  });
+
   return (
     <>
+      <JsonLd schema={graphSchema} />
       <Header />
       <main className="pt-24 lg:pt-32">
         

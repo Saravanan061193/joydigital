@@ -1,6 +1,8 @@
 import React from "react";
-import HomePageComponent from "@/components/sections/HomePageComponent";
+import HomePageComponent, { HOME_FAQS } from "@/components/sections/HomePageComponent";
 import type { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://joydigital.in"),
@@ -79,25 +81,18 @@ export const metadata: Metadata = {
   },
 };
 
-const homeSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Joy Digital",
-  "url": "https://joydigital.in",
-  "logo": "https://joydigital.in/assets/images/logo.webp",
-  "sameAs": [
-    "https://www.facebook.com/profile.php?id=61590372457559",
-    "https://www.youtube.com/@Joydigital2026"
-  ]
-};
-
 export default function HomePage() {
+  const homeGraph = buildPageGraphSchema({
+    url: "https://joydigital.in/",
+    title: "Web Design, Next.js Development & SEO Agency | Joy Digital",
+    description: "Grow your business with Joy Digital. We build high-converting, fast Next.js websites and data-driven SEO solutions for global clients.",
+    isHomepage: true,
+    faqs: HOME_FAQS,
+  });
+
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }}
-      />
+      <JsonLd schema={homeGraph} />
       <HomePageComponent country="" />
     </>
   );

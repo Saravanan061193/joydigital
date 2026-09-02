@@ -4,6 +4,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
 import Link from "next/link";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: "Client Case Studies & Marketing Results | Joy Digital",
@@ -49,8 +51,20 @@ const CASE_STUDIES = [
 ];
 
 export default function CaseStudiesPage() {
+  const canonicalUrl = "https://joydigital.in/case-studies";
+  const graphSchema = buildPageGraphSchema({
+    url: canonicalUrl,
+    title: "Client Case Studies & Marketing Results | Joy Digital",
+    description: "Explore real success stories from Joy Digital. Read how our web design, SEO, and local maps campaigns drove appointments, sales, and ranking growth.",
+    breadcrumbs: [
+      { name: "Home", item: "https://joydigital.in" },
+      { name: "Case Studies", item: canonicalUrl },
+    ],
+  });
+
   return (
     <>
+      <JsonLd schema={graphSchema} />
       <Header />
       <main className="pt-24 lg:pt-32">
         

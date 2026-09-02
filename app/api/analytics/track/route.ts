@@ -13,26 +13,28 @@ export async function POST(request: Request) {
     const headers = request.headers;
     const userAgent = headers.get("user-agent") || "Unknown";
 
-    // Resolve Geolocation using Vercel Headers
-    let country = headers.get("x-vercel-ip-country") || "IN";
-    let region = headers.get("x-vercel-ip-country-region") || "TN";
-    let city = headers.get("x-vercel-ip-city") || "Chennai";
+    // Resolve Geolocation using Edge Headers
+    let country = headers.get("x-vercel-ip-country") || headers.get("cf-ipcountry") || "IN";
+    let region = headers.get("x-vercel-ip-country-region") || "";
+    let city = headers.get("x-vercel-ip-city") || headers.get("cf-ipcity") || "";
     let latStr = headers.get("x-vercel-ip-latitude");
     let lngStr = headers.get("x-vercel-ip-longitude");
 
     let lat = latStr ? parseFloat(latStr) : 13.0827;
     let lng = lngStr ? parseFloat(lngStr) : 80.2707;
 
+    const clientIp = headers.get("x-forwarded-for")?.split(",")[0] || headers.get("x-real-ip") || "";
+
     // Local development fallback
-    const isLocalhost = request.url.includes("localhost") || request.url.includes("127.0.0.1");
-    if (isLocalhost && !headers.get("x-vercel-ip-city")) {
-      // Mock some variation for local testing coordinates (e.g., Chennai area)
-      const offset = (Math.random() - 0.5) * 0.05;
-      lat = 13.0827 + offset;
-      lng = 80.2707 + offset;
-      city = "Chennai (Local Test)";
-      region = "Tamil Nadu";
-      country = "IN";
+    const isLocalhost = request.url.includes("localhost") || request.url.includes("127.0.0.1") || clientIp === "127.0.0.1" || clientIp === "::1";
+    if (!city) {
+      if (isLocalhost) {
+        city = "Local Dev Machine";
+        region = "Localhost";
+        country = "IN";
+      } else {
+        city = "Global Reader";
+      }
     }
 
     // Connect to MongoDB and save

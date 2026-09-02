@@ -162,21 +162,8 @@ export default function QrCodeGeneratorClient() {
     trackToolUsage({ toolName: "QR Code Generator", action: "cta_click" });
   };
 
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://joydigital.in" },
-      { "@type": "ListItem", "position": 2, "name": "QR Code Generator", "item": "https://joydigital.in/qr-code-generator" }
-    ]
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
       <Header />
 
       <main className="bg-[#FAF9FF] text-[#1F1B2D] min-h-screen pt-24 pb-16">

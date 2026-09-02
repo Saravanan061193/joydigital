@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { getSeoPageByPath, getAllKeywords, SeoPageMapping, SeoKeyword } from "./seoKeywords";
+import { buildPageGraphSchema, FaqItem } from "./seo/schema";
 
 export interface DynamicSeoResult {
   metadata: Metadata;
+  graphSchema: Record<string, unknown>;
   jsonLdSchemas: Record<string, unknown>[];
   pageMapping: SeoPageMapping | null;
   assignedKeywords: {
@@ -103,47 +105,27 @@ export async function generatePageSeo(pagePath: string, defaultTitle?: string, d
     },
   };
 
-  // Structured Data JSON-LD schemas
-  const jsonLdSchemas: Record<string, unknown>[] = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      "@id": `${canonical}#service`,
-      "name": pageMapping?.h1 || title,
-      "serviceType": primaryKw?.keyword || "Web Engineering",
-      "provider": {
-        "@type": "Organization",
-        "name": "Joy Digital",
-        "url": baseUrl,
-        "logo": `${baseUrl}/icon.png`
-      },
-      "url": canonical,
-      "description": description,
-      "areaServed": {
-        "@type": "Country",
-        "name": "Global"
-      }
-    }
-  ];
+  const isHomepage = pagePath === "/" || pagePath === "";
+  const faqs: FaqItem[] = pageMapping?.faq_schema ? pageMapping.faq_schema.map(f => ({ question: f.question, answer: f.answer })) : [];
 
-  if (pageMapping?.faq_schema && pageMapping.faq_schema.length > 0) {
-    jsonLdSchemas.push({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": pageMapping.faq_schema.map(item => ({
-        "@type": "Question",
-        "name": item.question,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": item.answer
-        }
-      }))
-    });
-  }
+  const graphSchema = buildPageGraphSchema({
+    url: canonical,
+    title,
+    description,
+    isHomepage,
+    includeLocalBusiness: true,
+    service: {
+      name: pageMapping?.h1 || title,
+      description: description,
+      serviceType: primaryKw?.keyword || "Web Engineering",
+    },
+    faqs: faqs.length > 0 ? faqs : undefined,
+  });
 
   return {
     metadata,
-    jsonLdSchemas,
+    graphSchema,
+    jsonLdSchemas: [graphSchema],
     pageMapping,
     assignedKeywords: {
       primary: primaryKw,

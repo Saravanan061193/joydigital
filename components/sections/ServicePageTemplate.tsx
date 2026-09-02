@@ -4,6 +4,8 @@ import React from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import Header from "@/components/layout/Header";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 // Dynamically imported below-the-fold components
 const Footer = dynamic(() => import("@/components/layout/Footer"));
@@ -57,7 +59,7 @@ interface ServicePageTemplateProps {
   pricingSubtitle: string;
   pricingTiers: PricingTier[];
   faqs: FAQItem[];
-  schemaMarkup: Record<string, unknown>;
+  schemaMarkup?: Record<string, unknown>;
   crossLinks: { href: string; label: string }[];
   canonicalUrl?: string;
   heroCtaText?: string;
@@ -126,59 +128,25 @@ export default function ServicePageTemplate({
   );
   const combinedFaqs = [...faqs, ...uniqueStandardFaqs];
 
-  // FAQ Schema JSON-LD
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": combinedFaqs.map(faq => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer
-      }
-    }))
-  };
-
-  // Breadcrumb Schema JSON-LD
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://joydigital.in"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": serviceName,
-        "item": canonicalUrl
-      }
-    ]
-  };
+  const pageGraphSchema = buildPageGraphSchema({
+    url: canonicalUrl,
+    title: `${serviceName} Services | Joy Digital`,
+    description: heroSubtitle,
+    breadcrumbs: [
+      { name: "Home", item: "https://joydigital.in" },
+      { name: serviceName, item: canonicalUrl },
+    ],
+    service: {
+      name: serviceName,
+      description: heroSubtitle,
+    },
+    faqs: combinedFaqs,
+  });
 
   return (
     <>
-      {/* Schema Injection */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
-      />
-      
-      {/* FAQ Schema Injection */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-
-      {/* Breadcrumb Schema Injection */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
+      {/* Unified Connected Schema Graph */}
+      <JsonLd schema={pageGraphSchema} />
 
       <Header />
       <main className="pt-24 lg:pt-32">

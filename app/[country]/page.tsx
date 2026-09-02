@@ -1,6 +1,8 @@
 import React from "react";
-import HomePageComponent from "@/components/sections/HomePageComponent";
+import HomePageComponent, { HOME_FAQS } from "@/components/sections/HomePageComponent";
 import { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 interface PageProps {
   params: Promise<{ country: string }>;
@@ -94,9 +96,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function CountryHomePage({ params }: PageProps) {
   const { country } = await params;
   const countryLower = country.toLowerCase();
-  
+  const data = METADATA_MAP[countryLower] || {
+    title: "Website Design & Global SEO Growth Agency | Joy Digital",
+    description: "Joy Digital is a results-oriented global agency engineering fast Next.js sites and search marketing campaigns.",
+  };
+
+  const countryUrl = `https://joydigital.in/${countryLower}`;
+  const graphSchema = buildPageGraphSchema({
+    url: countryUrl,
+    title: data.title,
+    description: data.description,
+    includeLocalBusiness: true,
+    faqs: HOME_FAQS,
+  });
+
   return (
     <>
+      <JsonLd schema={graphSchema} />
       <HomePageComponent country={countryLower} />
     </>
   );

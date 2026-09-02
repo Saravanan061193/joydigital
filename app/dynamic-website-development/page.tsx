@@ -15,29 +15,8 @@ export default async function DynamicWebDevPage() {
     "Build high-speed, database-driven dynamic websites with custom admin panels, real-time API sync, and secure PostgreSQL/Supabase backends."
   );
 
-  const pageSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Dynamic Website Development Services",
-    "serviceType": "Database-Driven Web Application Development",
-    "provider": {
-      "@type": "Organization",
-      "name": "Joy Digital",
-      "image": "https://joydigital.in/assets/images/logo.webp",
-      "telephone": "+919080026133"
-    },
-    "description": "Joy Digital is a dynamic website development company building database-driven web portals and custom CMS applications for global clients."
-  };
-
   return (
     <>
-      {seoData.jsonLdSchemas.map((schema, idx) => (
-        <script
-          key={idx}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
-      ))}
       <ServicePageTemplate
         serviceName="Dynamic Website Development"
         heroTitle={seoData.pageMapping?.h1 || "Dynamic Website Development Services with Custom Admin Controls"}
@@ -147,7 +126,6 @@ export default async function DynamicWebDevPage() {
             answer: "Dynamic website development builds database-driven web portals with admin controls allowing live content updates."
           }
         ]}
-        schemaMarkup={pageSchema}
         crossLinks={[
           { href: "/custom-website-development", label: "Custom Web Dev" },
           { href: "/website-development", label: "Web Services" },

@@ -15,29 +15,8 @@ export default async function CustomWebDevPage() {
     "Enterprise custom website development services. Sub-second Next.js page loads, 99+ Core Web Vitals, and 100% IP ownership."
   );
 
-  const pageSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Custom Website Development Services",
-    "serviceType": "Web Engineering & Next.js Development",
-    "provider": {
-      "@type": "Organization",
-      "name": "Joy Digital",
-      "image": "https://joydigital.in/assets/images/logo.webp",
-      "telephone": "+919080026133"
-    },
-    "description": "Joy Digital is a custom web development agency building high-speed Next.js web applications for global startups and enterprise teams."
-  };
-
   return (
     <>
-      {seoData.jsonLdSchemas.map((schema, idx) => (
-        <script
-          key={idx}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
-      ))}
       <ServicePageTemplate
         serviceName="Custom Website Development"
         heroTitle={seoData.pageMapping?.h1 || "Custom Website Development Services for Global Enterprises"}
@@ -162,7 +141,6 @@ export default async function CustomWebDevPage() {
             answer: "Custom Next.js web application development delivers sub-second page loads, zero plugin vulnerabilities, total design freedom, and 100% code ownership."
           }
         ]}
-        schemaMarkup={pageSchema}
         crossLinks={[
           { href: "/dynamic-website-development", label: "Dynamic Web Dev" },
           { href: "/website-development", label: "Web Engineering" },

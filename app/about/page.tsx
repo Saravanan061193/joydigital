@@ -5,7 +5,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
 import StrongCTA from "@/components/StrongCTA";
-
+import JsonLd from "@/components/seo/JsonLd";
+import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: "About Our Web Agency | Joy Digital",
@@ -24,8 +25,21 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
+  const canonicalUrl = "https://joydigital.in/about";
+  const graphSchema = buildPageGraphSchema({
+    url: canonicalUrl,
+    title: "About Our Web Agency | Joy Digital",
+    description: "Learn about Joy Digital, a growth agency building custom Next.js websites, local SEO campaigns, and digital solutions for companies worldwide.",
+    includeLocalBusiness: true,
+    breadcrumbs: [
+      { name: "Home", item: "https://joydigital.in" },
+      { name: "About Us", item: canonicalUrl },
+    ],
+  });
+
   return (
     <>
+      <JsonLd schema={graphSchema} />
       <Header />
       <main className="pt-24 lg:pt-32">
         

@@ -194,21 +194,8 @@ function ThankYouContent() {
 }
 
 export default function ThankYouClient() {
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://joydigital.in" },
-      { "@type": "ListItem", "position": 2, "name": "Thank You", "item": "https://joydigital.in/thank-you" }
-    ]
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
       <Header />
       <main className="bg-[#FAF9FF] min-h-screen pt-32 pb-24 flex items-center justify-center relative overflow-hidden">
         {/* Background ambient lighting */}

@@ -126,21 +126,8 @@ export default function SeoAuditToolClient() {
     }
   };
 
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://joydigital.in" },
-      { "@type": "ListItem", "position": 2, "name": "SEO Audit Tool", "item": "https://joydigital.in/seo-audit-tool" }
-    ]
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
       <Header />
 
       <main className="bg-[#FAF9FF] text-[#1F1B2D] min-h-screen pt-24 pb-16">

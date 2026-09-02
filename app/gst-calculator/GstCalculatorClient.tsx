@@ -229,57 +229,8 @@ export default function GstCalculatorClient() {
     trackToolUsage({ toolName: "GST Calculator", action: "cta_clicked" });
   };
 
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What is a GST Calculator?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "A GST Calculator is a free online tool to calculate Goods and Services Tax (GST) in India. It determines the base amount, tax rates, CGST, SGST, IGST, and final values instantly."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How is GST calculated?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "For GST Exclusive values, multiply the base amount by the tax rate: GST = Amount * (Rate/100). For GST Inclusive values, calculate tax using: GST = Amount - (Amount / (1 + Rate/100))."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is the difference between CGST, SGST and IGST?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "CGST (Central GST) and SGST (State GST) apply to trade within a single state (Intra-State). IGST (Integrated GST) applies to supply chains between different states (Inter-State)."
-        }
-      }
-    ]
-  };
-
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://joydigital.in" },
-      { "@type": "ListItem", "position": 2, "name": "GST Calculator", "item": "https://joydigital.in/gst-calculator" }
-    ]
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-
       <Header />
 
       <main className="bg-[#FAF9FF] text-[#1F1B2D] min-h-screen pt-24 pb-16">
