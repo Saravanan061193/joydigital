@@ -6,7 +6,7 @@ interface PageProps {
   params: Promise<{ country: string }>;
 }
 
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   return [
@@ -16,6 +16,13 @@ export async function generateStaticParams() {
     { country: "in" },
     { country: "ca" },
     { country: "au" },
+    { country: "es" },
+    { country: "de" },
+    { country: "fr" },
+    { country: "it" },
+    { country: "sg" },
+    { country: "mx" },
+    { country: "br" },
   ];
 }
 
