@@ -12,6 +12,7 @@ interface LeadFormProps {
   source?: string;
   showWebsiteField?: boolean;
   hideEmailField?: boolean;
+  simplified?: boolean;
 }
 
 const COUNTRY_CODES = [
@@ -37,6 +38,7 @@ const COUNTRY_CODES = [
 ];
 
 const SERVICE_OPTIONS = [
+  { value: "SEO Services", label: "SEO Services & Google Ranking", desc: "Organic search optimization & Map pack rankings", icon: "fa-solid fa-magnifying-glass-chart" },
   { value: "Website Design & Development", label: "Next.js Web Design & Development", desc: "Speed-optimized custom React business sites", icon: "fa-solid fa-laptop-code" },
   { value: "Corporate Multipage Site", label: "Corporate Business Website", desc: "Multipage company profiles & lead funnels", icon: "fa-solid fa-building" },
   { value: "Headless E-commerce Store", label: "Headless E-commerce Store", desc: "Ultra-fast headless WooCommerce/Shopify storefronts", icon: "fa-solid fa-cart-shopping" },
@@ -61,12 +63,13 @@ const TIMELINE_OPTIONS = [
 
 export default function LeadForm({
   layout = "vertical",
-  title = "Get a Free Growth Consultation",
-  subtitle = "Our digital experts will analyze your needs and reach out within 24 hours.",
-  ctaText = "Submit Request",
+  title = "Claim Free Consultation",
+  subtitle = "Fill in 3 quick fields below. Our experts will call you in 15 mins.",
+  ctaText = "Get Free Quote in 15 Mins 🚀",
   source = "General Lead Funnel",
   showWebsiteField = true,
   hideEmailField = false,
+  simplified = true,
 }: LeadFormProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -145,7 +148,7 @@ export default function LeadForm({
       tempErrors.name = "Full Name is required.";
     }
 
-    if (!hideEmailField) {
+    if (!simplified && !hideEmailField) {
       if (!formData.email.trim()) {
         tempErrors.email = "Email Address is required.";
       } else {
@@ -193,18 +196,18 @@ export default function LeadForm({
         Name: formData.name.trim(),
         CompanyName: formData.companyName.trim() || "N/A",
         Website: formData.website.trim() || "N/A",
-        Email: hideEmailField ? "N/A" : formData.email.trim(),
+        Email: formData.email.trim() || "provided-on-call@joydigital.in",
         Mobile: formData.mobile.trim().startsWith("+")
           ? formData.mobile.trim()
           : `${selectedCountryCode} ${formData.mobile.trim()}`,
         Service: formData.service,
         Budget: formData.budget || "N/A",
         Timeline: formData.timeline || "N/A",
-        Message: formData.message.trim() || "No extra details provided.",
+        Message: formData.message.trim() || "Ultra-lean 3-field quick lead submission.",
         Source: source,
         TargetRegion: formData.region.toUpperCase(),
         utmParams: utm || undefined,
-        _subject: `🔥 Simplified Lead [${formData.region.toUpperCase()}] - Joy Digital`,
+        _subject: `🔥 Ultra-Lean 3-Field Lead [${formData.region.toUpperCase()}] - Joy Digital`,
         _captcha: "false",
         _template: "table",
       };
@@ -308,65 +311,62 @@ export default function LeadForm({
           {subtitle && <p className="text-[11px] text-text-secondary leading-relaxed">{subtitle}</p>}
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
           
-          {/* Row 1: Name and Email */}
-          <div className={`grid grid-cols-1 ${layout === "horizontal" ? "md:grid-cols-2" : "sm:grid-cols-2"} gap-3`}>
-            {/* Full Name */}
+          {/* 1. Full Name */}
+          <div className="flex flex-col gap-1">
+            <label htmlFor="name" className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-wider mb-0.5 block">
+              Full Name <span className="text-error-red font-normal">*</span>
+            </label>
+            <div className={`flex items-center gap-2 bg-[#FAF9FF] rounded-lg border px-3 py-2.5 group transition-all duration-300 focus-within:bg-white focus-within:border-[#7C3AED] focus-within:ring-4 focus-within:ring-[#7C3AED]/10 ${
+              errors.name ? "border-[#ef4444] bg-red-50/10" : "border-[#E9E4F2] hover:border-[#7C3AED]/20"
+            }`}>
+              <span className={`text-[11px] transition-colors duration-300 shrink-0 ${errors.name ? "text-error-red" : "text-text-muted group-focus-within:text-[#7C3AED]"}`}>
+                <i className="fa-solid fa-user" />
+              </span>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Enter your name"
+                className="w-full text-xs bg-transparent outline-none border-none text-text-primary placeholder:text-text-muted font-semibold"
+              />
+            </div>
+            {errors.name && <span className="text-[9px] font-semibold text-[#ef4444] mt-0.5">{errors.name}</span>}
+          </div>
+
+          {/* Email Address (Only if NOT simplified) */}
+          {!simplified && !hideEmailField && (
             <div className="flex flex-col gap-1">
-              <label htmlFor="name" className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-wider mb-0.5 block">
-                Full Name <span className="text-error-red font-normal">*</span>
+              <label htmlFor="email" className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-wider mb-0.5 block">
+                Email ID <span className="text-error-red">*</span>
               </label>
-              <div className={`flex items-center gap-2 bg-[#FAF9FF] rounded-lg border px-3 py-2 group transition-all duration-300 focus-within:bg-white focus-within:border-[#7C3AED] focus-within:ring-4 focus-within:ring-[#7C3AED]/10 ${
-                errors.name ? "border-[#ef4444] bg-red-50/10" : "border-[#E9E4F2] hover:border-[#7C3AED]/20"
+              <div className={`flex items-center gap-2 bg-[#FAF9FF] rounded-lg border px-3 py-2.5 group transition-all duration-300 focus-within:bg-white focus-within:border-[#7C3AED] focus-within:ring-4 focus-within:ring-[#7C3AED]/10 ${
+                errors.email ? "border-[#ef4444] bg-red-50/10" : "border-[#E9E4F2] hover:border-[#7C3AED]/20"
               }`}>
-                <span className={`text-[11px] transition-colors duration-300 shrink-0 ${errors.name ? "text-error-red" : "text-text-muted group-focus-within:text-[#7C3AED]"}`}>
-                  <i className="fa-solid fa-user" />
+                <span className={`text-[11px] transition-colors duration-300 shrink-0 ${errors.email ? "text-error-red" : "text-text-muted group-focus-within:text-[#7C3AED]"}`}>
+                  <i className="fa-solid fa-envelope" />
                 </span>
                 <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
                   onChange={handleChange}
-                  placeholder="Your Name"
+                  placeholder="you@example.com"
                   className="w-full text-xs bg-transparent outline-none border-none text-text-primary placeholder:text-text-muted font-semibold"
                 />
               </div>
-              {errors.name && <span className="text-[9px] font-semibold text-[#ef4444] mt-0.5">{errors.name}</span>}
+              {errors.email && <span className="text-[9px] font-semibold text-[#ef4444] mt-0.5">{errors.email}</span>}
             </div>
+          )}
 
-            {/* Email Address */}
-            {!hideEmailField && (
-              <div className="flex flex-col gap-1">
-                <label htmlFor="email" className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-wider mb-0.5 block">
-                  Email ID <span className="text-error-red">*</span>
-                </label>
-                <div className={`flex items-center gap-2 bg-[#FAF9FF] rounded-lg border px-3 py-2 group transition-all duration-300 focus-within:bg-white focus-within:border-[#7C3AED] focus-within:ring-4 focus-within:ring-[#7C3AED]/10 ${
-                  errors.email ? "border-[#ef4444] bg-red-50/10" : "border-[#E9E4F2] hover:border-[#7C3AED]/20"
-                }`}>
-                  <span className={`text-[11px] transition-colors duration-300 shrink-0 ${errors.email ? "text-error-red" : "text-text-muted group-focus-within:text-[#7C3AED]"}`}>
-                    <i className="fa-solid fa-envelope" />
-                  </span>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="you@example.com"
-                    className="w-full text-xs bg-transparent outline-none border-none text-text-primary placeholder:text-text-muted font-semibold"
-                  />
-                </div>
-                {errors.email && <span className="text-[9px] font-semibold text-[#ef4444] mt-0.5">{errors.email}</span>}
-              </div>
-            )}
-          </div>
-
-          {/* Row 2: Contact Number */}
+          {/* 2. Contact Number */}
           <div className="flex flex-col gap-1">
             <label htmlFor="mobile" className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-wider mb-0.5 block">
-              Contact Number <span className="text-error-red">*</span>
+              Contact Number (Mobile / WhatsApp) <span className="text-error-red">*</span>
             </label>
             <div className="flex gap-2 relative">
               {/* Custom Country Selector Dropdown Container */}
@@ -374,7 +374,7 @@ export default function LeadForm({
                 <button
                   type="button"
                   onClick={() => setIsCountryOpen(!isCountryOpen)}
-                  className="w-[100px] text-xs py-2 px-3 bg-[#FAF9FF] rounded-lg border border-[#E9E4F2] hover:border-gray-300 hover:bg-white text-left flex items-center justify-between outline-none cursor-pointer font-bold text-text-primary transition-all focus:ring-4 focus:ring-[#7C3AED]/10 focus:border-[#7C3AED] focus:bg-white h-full"
+                  className="w-[100px] text-xs py-2.5 px-3 bg-[#FAF9FF] rounded-lg border border-[#E9E4F2] hover:border-gray-300 hover:bg-white text-left flex items-center justify-between outline-none cursor-pointer font-bold text-text-primary transition-all focus:ring-4 focus:ring-[#7C3AED]/10 focus:border-[#7C3AED] focus:bg-white h-full"
                 >
                   <span className="flex items-center gap-1.5 select-none">
                     <span>{selectedCountry?.flag}</span>
@@ -432,7 +432,7 @@ export default function LeadForm({
               </div>
 
               {/* Phone input wrapper */}
-              <div className={`flex items-center gap-2 bg-[#FAF9FF] rounded-lg border px-3 py-2 flex-1 group transition-all duration-300 focus-within:bg-white focus-within:border-[#7C3AED] focus-within:ring-4 focus-within:ring-[#7C3AED]/10 ${
+              <div className={`flex items-center gap-2 bg-[#FAF9FF] rounded-lg border px-3 py-2.5 flex-1 group transition-all duration-300 focus-within:bg-white focus-within:border-[#7C3AED] focus-within:ring-4 focus-within:ring-[#7C3AED]/10 ${
                 errors.mobile ? "border-[#ef4444] bg-red-50/10" : "border-[#E9E4F2] hover:border-[#7C3AED]/20"
               }`}>
                 <span className={`text-[11px] transition-colors duration-300 shrink-0 ${errors.mobile ? "text-error-red" : "text-text-muted group-focus-within:text-[#7C3AED]"}`}>
@@ -444,7 +444,7 @@ export default function LeadForm({
                   name="mobile"
                   value={formData.mobile}
                   onChange={handleChange}
-                  placeholder="Mobile / WhatsApp"
+                  placeholder="Enter phone or WhatsApp"
                   className="w-full text-xs bg-transparent outline-none border-none text-text-primary placeholder:text-text-muted font-semibold"
                 />
               </div>
@@ -452,197 +452,170 @@ export default function LeadForm({
             {errors.mobile && <span className="text-[9px] font-semibold text-[#ef4444] mt-0.5">{errors.mobile}</span>}
           </div>
 
-          {/* Row 3: Required Services & Budget Range */}
-          <div className={`grid grid-cols-1 ${layout === "horizontal" ? "md:grid-cols-2" : "sm:grid-cols-2"} gap-3`}>
-            {/* Required Services */}
-            <div className="flex flex-col gap-1">
-              <label htmlFor="service" className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-wider mb-0.5 block">
-                Required Services <span className="text-error-red">*</span>
-              </label>
-              <div className="relative" ref={serviceDropdownRef}>
-                <button
-                  type="button"
-                  onClick={() => setIsServiceOpen(!isServiceOpen)}
-                  className={`w-full flex items-center justify-between bg-[#FAF9FF] rounded-lg border px-3 py-2 group transition-all duration-300 focus:bg-white focus:border-[#7C3AED] focus:ring-4 focus:ring-[#7C3AED]/10 ${
-                    errors.service ? "border-[#ef4444] bg-red-50/10" : "border-[#E9E4F2] hover:border-[#7C3AED]/20"
-                  }`}
-                >
-                  <span className="flex items-center gap-2 text-left w-full overflow-hidden">
-                    <span className={`text-[11px] transition-colors duration-300 shrink-0 ${errors.service ? "text-error-red" : "text-text-muted group-focus-within:text-[#7C3AED]"}`}>
-                      {getSelectedServiceIcon(formData.service)}
-                    </span>
-                    <span className={`text-xs font-semibold truncate ${formData.service ? "text-text-primary" : "text-text-muted"}`}>
-                      {formData.service ? SERVICE_OPTIONS.find(o => o.value === formData.service)?.label : "Select a Service"}
-                    </span>
+          {/* 3. Required Service Selection */}
+          <div className="flex flex-col gap-1">
+            <label htmlFor="service" className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-wider mb-0.5 block">
+              Required Service <span className="text-error-red">*</span>
+            </label>
+            <div className="relative" ref={serviceDropdownRef}>
+              <button
+                type="button"
+                onClick={() => setIsServiceOpen(!isServiceOpen)}
+                className={`w-full flex items-center justify-between bg-[#FAF9FF] rounded-lg border px-3 py-2.5 group transition-all duration-300 focus:bg-white focus:border-[#7C3AED] focus:ring-4 focus:ring-[#7C3AED]/10 ${
+                  errors.service ? "border-[#ef4444] bg-red-50/10" : "border-[#E9E4F2] hover:border-[#7C3AED]/20"
+                }`}
+              >
+                <span className="flex items-center gap-2 text-left w-full overflow-hidden">
+                  <span className={`text-[11px] transition-colors duration-300 shrink-0 ${errors.service ? "text-error-red" : "text-text-muted group-focus-within:text-[#7C3AED]"}`}>
+                    {getSelectedServiceIcon(formData.service)}
                   </span>
-                  <span className={`text-[8px] text-text-muted transition-transform duration-300 shrink-0 ${isServiceOpen ? "rotate-180" : ""}`}>
-                    <i className="fa-solid fa-chevron-down" />
+                  <span className={`text-xs font-semibold truncate ${formData.service ? "text-text-primary" : "text-text-muted"}`}>
+                    {formData.service ? SERVICE_OPTIONS.find(o => o.value === formData.service)?.label : "Select a Service"}
                   </span>
-                </button>
+                </span>
+                <span className={`text-[8px] text-text-muted transition-transform duration-300 shrink-0 ${isServiceOpen ? "rotate-180" : ""}`}>
+                  <i className="fa-solid fa-chevron-down" />
+                </span>
+              </button>
 
-                {isServiceOpen && (
-                  <div 
-                    className="absolute z-20 left-0 top-[108%] w-full bg-white border border-[#E9E4F2] rounded-lg shadow-xl py-1 max-h-72 overflow-y-auto"
-                    style={{ animation: "fadeInSlideDown 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards" }}
-                  >
-                    {SERVICE_OPTIONS.map((opt) => (
-                      <button
-                        key={opt.value}
-                        type="button"
-                        onClick={() => {
-                          setFormData(prev => ({ ...prev, service: opt.value }));
-                          setIsServiceOpen(false);
-                          if (errors.service) setErrors(prev => ({ ...prev, service: "" }));
-                        }}
-                        className={`w-full flex items-start gap-3 px-3 py-2 text-left transition-colors hover:bg-[#FAF9FF] ${
-                          formData.service === opt.value ? "bg-[#7C3AED]/5 text-[#7C3AED]" : "text-text-primary"
-                        }`}
-                      >
-                        <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs shrink-0 mt-0.5 transition-colors ${
-                          formData.service === opt.value ? "bg-[#7C3AED] text-white" : "bg-[#FAF9FF] text-text-secondary"
-                        }`}>
-                          <i className={opt.icon} />
+              {isServiceOpen && (
+                <div 
+                  className="absolute z-20 left-0 top-[108%] w-full bg-white border border-[#E9E4F2] rounded-lg shadow-xl py-1 max-h-72 overflow-y-auto"
+                  style={{ animation: "fadeInSlideDown 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards" }}
+                >
+                  {SERVICE_OPTIONS.map((opt) => (
+                    <button
+                      key={opt.value}
+                      type="button"
+                      onClick={() => {
+                        setFormData(prev => ({ ...prev, service: opt.value }));
+                        setIsServiceOpen(false);
+                        if (errors.service) setErrors(prev => ({ ...prev, service: "" }));
+                      }}
+                      className={`w-full flex items-start gap-3 px-3 py-2 text-left transition-colors hover:bg-[#FAF9FF] ${
+                        formData.service === opt.value ? "bg-[#7C3AED]/5 text-[#7C3AED]" : "text-text-primary"
+                      }`}
+                    >
+                      <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs shrink-0 mt-0.5 transition-colors ${
+                        formData.service === opt.value ? "bg-[#7C3AED] text-white" : "bg-[#FAF9FF] text-text-secondary"
+                      }`}>
+                        <i className={opt.icon} />
+                      </span>
+                      <div className="flex flex-col gap-0.5 overflow-hidden">
+                        <span className={`text-xs font-bold ${formData.service === opt.value ? "text-[#7C3AED]" : "text-text-primary"}`}>
+                          {opt.label}
                         </span>
-                        <div className="flex flex-col gap-0.5 overflow-hidden">
-                          <span className={`text-xs font-bold ${formData.service === opt.value ? "text-[#7C3AED]" : "text-text-primary"}`}>
-                            {opt.label}
-                          </span>
-                          <span className="text-[9px] text-text-muted truncate">{opt.desc}</span>
-                        </div>
-                      </button>
-                    ))}
+                        <span className="text-[9px] text-text-muted truncate">{opt.desc}</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            {errors.service && <span className="text-[9px] font-semibold text-[#ef4444] mt-0.5">{errors.service}</span>}
+          </div>
+
+          {/* Full Detailed Mode Extra Fields (Only if simplified is FALSE) */}
+          {!simplified && (
+            <>
+              {/* Budget Range & Company */}
+              <div className={`grid grid-cols-1 ${layout === "horizontal" ? "md:grid-cols-2" : "sm:grid-cols-2"} gap-3`}>
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="companyName" className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-wider mb-0.5 block">
+                    Company Name
+                  </label>
+                  <div className="flex items-center gap-2 bg-[#FAF9FF] rounded-lg border border-[#E9E4F2] px-3 py-2 hover:border-[#7C3AED]/20 transition-all duration-300 focus-within:bg-white focus-within:border-[#7C3AED]">
+                    <span className="text-[11px] text-text-muted shrink-0"><i className="fa-solid fa-building" /></span>
+                    <input
+                      type="text"
+                      id="companyName"
+                      name="companyName"
+                      value={formData.companyName}
+                      onChange={handleChange}
+                      placeholder="e.g. Acme Corp"
+                      className="w-full text-xs bg-transparent outline-none border-none text-text-primary font-semibold"
+                    />
+                  </div>
+                </div>
+
+                {showWebsiteField && (
+                  <div className="flex flex-col gap-1">
+                    <label htmlFor="website" className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-wider mb-0.5 block">
+                      Website Link
+                    </label>
+                    <div className="flex items-center gap-2 bg-[#FAF9FF] rounded-lg border border-[#E9E4F2] px-3 py-2 hover:border-[#7C3AED]/20 transition-all duration-300 focus-within:bg-white focus-within:border-[#7C3AED]">
+                      <span className="text-[11px] text-text-muted shrink-0"><i className="fa-solid fa-globe" /></span>
+                      <input
+                        type="text"
+                        id="website"
+                        name="website"
+                        value={formData.website}
+                        onChange={handleChange}
+                        placeholder="e.g. acme.com"
+                        className="w-full text-xs bg-transparent outline-none border-none text-text-primary font-semibold"
+                      />
+                    </div>
                   </div>
                 )}
               </div>
-              {errors.service && <span className="text-[9px] font-semibold text-[#ef4444] mt-0.5">{errors.service}</span>}
-            </div>
 
-            {/* Budget Range */}
-            <div className="flex flex-col gap-1">
-              <label htmlFor="budget" className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-wider mb-0.5 block">
-                Budget Range
-              </label>
-              <div className="flex items-center gap-2 bg-[#FAF9FF] rounded-lg border border-[#E9E4F2] px-3 py-2 hover:border-[#7C3AED]/20 transition-all duration-300 focus-within:bg-white focus-within:border-[#7C3AED] focus-within:ring-4 focus-within:ring-[#7C3AED]/10">
-                <span className="text-[11px] text-text-muted shrink-0">
-                  <i className="fa-solid fa-coins" />
-                </span>
-                <select
-                  id="budget"
-                  name="budget"
-                  value={formData.budget}
-                  onChange={handleChange}
-                  className="w-full text-xs bg-transparent outline-none border-none text-text-primary font-semibold cursor-pointer"
-                >
-                  <option value="">Select Budget Range</option>
-                  {BUDGET_OPTIONS.map(opt => (
-                    <option key={opt.value} value={opt.value}>{opt.label}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
-
-          {/* Row 4: Company Name & Website Link */}
-          <div className={`grid grid-cols-1 ${layout === "horizontal" ? "md:grid-cols-2" : "sm:grid-cols-2"} gap-3`}>
-            {/* Company Name */}
-            <div className="flex flex-col gap-1">
-              <label htmlFor="companyName" className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-wider mb-0.5 block">
-                Company Name
-              </label>
-              <div className="flex items-center gap-2 bg-[#FAF9FF] rounded-lg border border-[#E9E4F2] px-3 py-2 hover:border-[#7C3AED]/20 transition-all duration-300 focus-within:bg-white focus-within:border-[#7C3AED] focus-within:ring-4 focus-within:ring-[#7C3AED]/10">
-                <span className="text-[11px] text-text-muted transition-colors duration-300 shrink-0">
-                  <i className="fa-solid fa-building" />
-                </span>
-                <input
-                  type="text"
-                  id="companyName"
-                  name="companyName"
-                  value={formData.companyName}
-                  onChange={handleChange}
-                  placeholder="e.g. Acme Corp"
-                  className="w-full text-xs bg-transparent outline-none border-none text-text-primary placeholder:text-text-muted font-semibold"
-                />
-              </div>
-            </div>
-
-            {/* Website Link */}
-            {showWebsiteField && (
+              {/* Budget */}
               <div className="flex flex-col gap-1">
-                <label htmlFor="website" className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-wider mb-0.5 block">
-                  Website Link
+                <label htmlFor="budget" className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-wider mb-0.5 block">
+                  Budget Range
                 </label>
-                <div className="flex items-center gap-2 bg-[#FAF9FF] rounded-lg border border-[#E9E4F2] px-3 py-2 hover:border-[#7C3AED]/20 transition-all duration-300 focus-within:bg-white focus-within:border-[#7C3AED] focus-within:ring-4 focus-within:ring-[#7C3AED]/10">
-                  <span className="text-[11px] text-text-muted transition-colors duration-300 shrink-0">
-                    <i className="fa-solid fa-globe" />
-                  </span>
-                  <input
-                    type="text"
-                    id="website"
-                    name="website"
-                    value={formData.website}
+                <div className="flex items-center gap-2 bg-[#FAF9FF] rounded-lg border border-[#E9E4F2] px-3 py-2 hover:border-[#7C3AED]/20 transition-all duration-300 focus-within:bg-white focus-within:border-[#7C3AED]">
+                  <span className="text-[11px] text-text-muted shrink-0"><i className="fa-solid fa-coins" /></span>
+                  <select
+                    id="budget"
+                    name="budget"
+                    value={formData.budget}
                     onChange={handleChange}
-                    placeholder="e.g. acme.com"
-                    className="w-full text-xs bg-transparent outline-none border-none text-text-primary placeholder:text-text-muted font-semibold"
+                    className="w-full text-xs bg-transparent outline-none border-none text-text-primary font-semibold cursor-pointer"
+                  >
+                    <option value="">Select Budget Range</option>
+                    {BUDGET_OPTIONS.map(opt => (
+                      <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Requirement Details */}
+              <div className="flex flex-col gap-1">
+                <label htmlFor="message" className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-wider mb-0.5 block">
+                  Requirement Details
+                </label>
+                <div className="flex bg-[#FAF9FF] rounded-lg border border-[#E9E4F2] hover:border-[#7C3AED]/20 p-2.5 transition-all duration-300 focus-within:bg-white focus-within:border-[#7C3AED]">
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={2}
+                    placeholder="Describe your requirements (pages, features, timeline, etc.)..."
+                    className="w-full text-xs bg-transparent outline-none border-none text-text-primary font-semibold resize-none"
                   />
                 </div>
               </div>
-            )}
-          </div>
-
-          {/* Row 5: Project Timeline */}
-          <div className="flex flex-col gap-1">
-            <label htmlFor="timeline" className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-wider mb-0.5 block">
-              Project Timeline
-            </label>
-            <div className="flex items-center gap-2 bg-[#FAF9FF] rounded-lg border border-[#E9E4F2] px-3 py-2 hover:border-[#7C3AED]/20 transition-all duration-300 focus-within:bg-white focus-within:border-[#7C3AED] focus-within:ring-4 focus-within:ring-[#7C3AED]/10">
-              <span className="text-[11px] text-text-muted shrink-0">
-                <i className="fa-solid fa-calendar-days" />
-              </span>
-              <select
-                id="timeline"
-                name="timeline"
-                value={formData.timeline}
-                onChange={handleChange}
-                className="w-full text-xs bg-transparent outline-none border-none text-text-primary font-semibold cursor-pointer"
-              >
-                <option value="">Select Timeline</option>
-                {TIMELINE_OPTIONS.map(opt => (
-                  <option key={opt.value} value={opt.value}>{opt.label}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {/* Row 6: Details / Message */}
-          <div className="flex flex-col gap-1">
-            <label htmlFor="message" className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-wider mb-0.5 block">
-              Requirement Details
-            </label>
-            <div className="flex bg-[#FAF9FF] rounded-lg border border-[#E9E4F2] hover:border-[#7C3AED]/20 p-2.5 group transition-all duration-300 focus-within:bg-white focus-within:border-[#7C3AED] focus-within:ring-4 focus-within:ring-[#7C3AED]/10">
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                rows={2}
-                placeholder="Describe your requirements (pages, features, timeline, etc.)..."
-                className="w-full text-xs bg-transparent outline-none border-none text-text-primary placeholder:text-text-muted font-semibold resize-none"
-              />
-            </div>
-          </div>
+            </>
+          )}
 
           {/* Submit Button */}
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-extrabold text-xs py-3 rounded-lg shadow-md shadow-[#7C3AED]/10 hover:shadow-[#7C3AED]/20 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-1 cursor-pointer"
+            className="w-full bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-extrabold text-xs py-3.5 rounded-xl shadow-lg shadow-[#7C3AED]/20 hover:shadow-[#7C3AED]/30 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-1 cursor-pointer"
           >
             {isLoading ? (
               <>
                 <i className="fa-solid fa-spinner animate-spin" /> Submitting...
               </>
             ) : (
-              ctaText
+              <>
+                <span>{ctaText}</span>
+                <i className="fa-solid fa-paper-plane text-[10px]" />
+              </>
             )}
           </button>
         </form>
