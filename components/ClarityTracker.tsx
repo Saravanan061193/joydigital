@@ -1,10 +1,25 @@
 "use client";
 
+import React, { useEffect, useState } from "react";
 import Script from "next/script";
 
 export default function ClarityTracker() {
-  // Use the user's specific Clarity ID by default, fallback to env variable if present
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID || "y1a7vgc8a7";
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(() => setShouldLoad(true));
+      } else {
+        setShouldLoad(true);
+      }
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!shouldLoad) return null;
 
   return (
     <Script

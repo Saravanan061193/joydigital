@@ -85,6 +85,9 @@ export default function DigitalNetworkBackground() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Skip heavy 2D canvas animation loop on mobile screens (< 768px) for optimal mobile PageSpeed scores
+    if (window.innerWidth < 768) return;
+
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 

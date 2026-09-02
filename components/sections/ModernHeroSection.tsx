@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import {
   ArrowRight,
   Sparkles,
@@ -51,67 +50,37 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
           
           {/* Top Pill Badges */}
           <div className="flex flex-wrap items-center gap-2">
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18132E] border border-[#2D244E] text-[#A78BFA] text-xs font-semibold"
-            >
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18132E] border border-[#2D244E] text-[#A78BFA] text-xs font-semibold">
               <Sparkles className="w-3.5 h-3.5 text-[#A78BFA]" />
               <span>Custom Tech Stack</span>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18132E] border border-[#2D244E] text-[#A78BFA] text-xs font-semibold"
-            >
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18132E] border border-[#2D244E] text-[#A78BFA] text-xs font-semibold">
               <TrendingUp className="w-3.5 h-3.5 text-[#A78BFA]" />
               <span>Enterprise SEO</span>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18132E] border border-[#2D244E] text-[#A78BFA] text-xs font-semibold"
-            >
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18132E] border border-[#2D244E] text-[#A78BFA] text-xs font-semibold">
               <Zap className="w-3.5 h-3.5 text-emerald-400" />
               <span>Sub-second Load Times</span>
-            </motion.div>
+            </div>
           </div>
 
           {/* Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]"
-          >
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
             High-Performance Websites & SEO Engineered to{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-violet-300 to-indigo-300">
               Scale Your Business Globally.
             </span>
-          </motion.h1>
+          </h1>
 
           {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-            className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal"
-          >
+          <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal">
             JoyDigital engineers bespoke Next.js web systems and enterprise search architectures built for sub-second speeds, maximum conversion rates, and high organic pipeline growth.
-          </motion.p>
+          </p>
 
           {/* Lead Capture Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.3 }}
-            className="w-full max-w-xl space-y-3"
-          >
+          <div className="w-full max-w-xl space-y-3">
             <form onSubmit={handleLeadCaptureSubmit} className="flex flex-col sm:flex-row gap-3">
               <div className="relative flex-1">
                 <input
@@ -148,15 +117,10 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
                 <span>Flat-Rate Proposal</span>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Secondary Actions */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.4 }}
-            className="flex flex-wrap items-center gap-3 pt-1"
-          >
+          <div className="flex flex-wrap items-center gap-3 pt-1">
             <a
               href="#case-studies"
               onClick={handleExploreCaseStudies}
@@ -173,15 +137,10 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
               <Calculator className="w-4 h-4 text-[#A78BFA]" />
               <span>Calculate Your ROI</span>
             </button>
-          </motion.div>
+          </div>
 
           {/* Clean Trust / Value Strip */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.5 }}
-            className="pt-5 border-t border-[#231C3D] w-full max-w-xl space-y-3"
-          >
+          <div className="pt-5 border-t border-[#231C3D] w-full max-w-xl space-y-3">
             <div className="flex flex-col gap-2.5 text-xs text-slate-400">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-bold text-white uppercase tracking-wider text-[11px]">
@@ -207,17 +166,12 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
                 <span className="text-[#A78BFA] font-medium">Digital Growth</span>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* RIGHT COLUMN: Large Authentic Google Search Console Performance Screenshot */}
         <div className="lg:col-span-6 relative flex justify-center w-full">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.97, y: 15 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="w-full max-w-2xl bg-[#130E26]/90 border border-[#271F42] hover:border-[#7C3AED]/50 rounded-2xl p-1.5 shadow-2xl backdrop-blur-xl relative overflow-hidden transition-all"
-          >
+          <div className="w-full max-w-2xl bg-[#130E26]/90 border border-[#271F42] hover:border-[#7C3AED]/50 rounded-2xl p-1.5 shadow-2xl backdrop-blur-xl relative overflow-hidden transition-all">
             {/* User Image Display - High Resolution & High Prominence */}
             <div className="relative rounded-xl overflow-hidden border border-[#2B2346] shadow-2xl bg-black w-full">
               <Image
@@ -225,12 +179,13 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
                 alt="Google Search Console Performance Metrics - JoyDigital SEO Results"
                 width={1024}
                 height={683}
-                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 550px"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 550px"
                 className="w-full h-auto object-cover rounded-xl"
                 priority
+                fetchPriority="high"
               />
             </div>
-          </motion.div>
+          </div>
         </div>
 
       </div>

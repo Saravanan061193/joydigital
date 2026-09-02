@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Script from "next/script";
 
 export default function GoogleAnalytics() {
   const measurementId = process.env.NEXT_PUBLIC_GA_ID || "G-EPE4YHGXYF";
+  const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
     // Define window.trackJoyDigitalEvent globally on component mount
@@ -30,7 +31,20 @@ export default function GoogleAnalytics() {
         }
       };
     }
+
+    // Defer loading GA script until after main thread idle window
+    const timer = setTimeout(() => {
+      if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(() => setShouldLoad(true));
+      } else {
+        setShouldLoad(true);
+      }
+    }, 2500);
+
+    return () => clearTimeout(timer);
   }, []);
+
+  if (!shouldLoad) return null;
 
   return (
     <>
