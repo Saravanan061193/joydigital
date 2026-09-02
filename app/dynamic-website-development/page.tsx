@@ -28,10 +28,10 @@ export default async function DynamicWebDevPage() {
         overviewContent={
           <div className="space-y-6">
             <p>
-              Modern businesses require web platforms that adapt instantly to customer interactions, inventory shifts, and content updates. Joy Digital builds custom dynamic websites and database-driven web portals using PostgreSQL, Supabase, Prisma ORM, Node.js, and Next.js static/dynamic rendering.
+              Modern businesses require web platforms that adapt instantly to customer interactions, inventory shifts, and content updates. As a <strong>best website company in india</strong>, Joy Digital provides specialized <strong>cms website development services</strong>, database-driven web portals, and custom web applications built with Next.js, React, Node.js, and Supabase backends.
             </p>
             <p>
-              Whether you need a custom admin control panel to manage blog content, a multi-tenant client portal, or an automated lead management engine, our dynamic web solutions give you total control without bloated CMS software.
+              If you are researching the <strong>cms website meaning</strong>, a Content Management System empowers non-technical teams to publish and edit digital pages effortlessly. However, traditional, bloated <strong>cms website templates</strong> can severely degrade page load speeds. Our modern headless <strong>cms website systems</strong> decouple content administration from frontend rendering, giving you instant editor workflows alongside 95+ Core Web Vitals performance.
             </p>
           </div>
         }

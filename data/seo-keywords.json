@@ -702,5 +702,60 @@
     "status": "Active",
     "assigned_page_id": "page-web-dev-services",
     "created_at": "2026-08-31T00:00:00.000Z"
+  },
+  {
+    "id": "kw-cms-01",
+    "keyword": "best website company in india",
+    "type": "Primary",
+    "search_intent": "Commercial",
+    "target_audience": "Startups & Enterprises in India & Worldwide",
+    "notes": "Top tier agency ranking query for India.",
+    "status": "Active",
+    "assigned_page_id": "page-dynamic-web-dev",
+    "created_at": "2026-09-02T00:00:00.000Z"
+  },
+  {
+    "id": "kw-cms-02",
+    "keyword": "cms website systems",
+    "type": "Secondary",
+    "search_intent": "Informational",
+    "target_audience": "Content Managers & Business Owners",
+    "notes": "CMS architecture search term.",
+    "status": "Active",
+    "assigned_page_id": "page-dynamic-web-dev",
+    "created_at": "2026-09-02T00:00:00.000Z"
+  },
+  {
+    "id": "kw-cms-03",
+    "keyword": "cms website meaning",
+    "type": "Informational",
+    "search_intent": "Informational",
+    "target_audience": "Entrepreneurs & Business Owners learning about CMS",
+    "notes": "Definitional search intent.",
+    "status": "Active",
+    "assigned_page_id": "page-dynamic-web-dev",
+    "created_at": "2026-09-02T00:00:00.000Z"
+  },
+  {
+    "id": "kw-cms-04",
+    "keyword": "cms website templates",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Businesses evaluating CMS options vs custom builds",
+    "notes": "Template comparison query.",
+    "status": "Active",
+    "assigned_page_id": "page-dynamic-web-dev",
+    "created_at": "2026-09-02T00:00:00.000Z"
+  },
+  {
+    "id": "kw-cms-05",
+    "keyword": "cms website development services",
+    "type": "Primary",
+    "search_intent": "Transactional",
+    "target_audience": "Businesses needing custom CMS web application development",
+    "notes": "Primary commercial term for CMS web development.",
+    "status": "Active",
+    "assigned_page_id": "page-dynamic-web-dev",
+    "created_at": "2026-09-02T00:00:00.000Z"
   }
 ]

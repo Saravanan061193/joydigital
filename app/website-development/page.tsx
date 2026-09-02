@@ -50,10 +50,10 @@ export default function WebDevPage() {
       overviewContent={
         <div className="space-y-6">
           <p>
-            In today&apos;s highly competitive digital landscape, your website serves as the operational engine of your entire company. It functions as your primary brand builder, your digital front office, and your most valuable lead acquisition funnel. Standard drag-and-drop website builders or bloated templates often bundle massive, unused Javascript files. This results in slow load speeds, poor core web vitals, and frustrating user experiences that push prospective customers straight to your competitors.
+            In today&apos;s highly competitive digital landscape, your website serves as the operational engine of your entire company. As a <strong>best website company in india</strong>, Joy Digital provides full-stack web engineering, custom web applications, and specialized <strong>cms website development services</strong> designed to scale organic traffic and customer leads.
           </p>
           <p>
-            At Joy Digital, a leading <strong>custom web development agency</strong> delivering <strong>professional website development india</strong> services, we believe that premium web engineering should be both affordable and results-oriented. We design and develop custom web portals using next-generation frameworks like Next.js, React, and optimized HTML5/Tailwind architectures. This guarantees that your platforms load in less than 1.5 seconds, achieve perfect PageSpeed scores, and rank highly on search engine results pages.
+            If you are exploring the <strong>cms website meaning</strong>, a Content Management System allows non-technical editors to update content seamlessly. However, using generic, bloated <strong>cms website templates</strong> can severely impair your Core Web Vitals. We engineer modern, decoupled <strong>cms website systems</strong> using Next.js and React, giving you seamless content controls with sub-second page loads.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Why Code Quality and Architecture Impact Search Rankings</h3>
           <p>

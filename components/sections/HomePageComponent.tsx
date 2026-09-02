@@ -108,6 +108,14 @@ export const HOME_FAQS = [
     answer: "When hiring a digital marketing business in India or a digital advertising company in India, prioritize agencies with proven Core Web Vitals performance, transparent GA4 conversion tracking, and custom strategy execution rather than automated templates. Joy Digital provides end-to-end web development, technical search optimization, and lead funnels tailored to your growth goals."
   },
   {
+    question: "Why is Joy Digital considered a best website company in india for custom web development?",
+    answer: "Joy Digital is recognized as a best website company in india because we engineer high-speed Next.js and React web applications tailored to business growth goals. Unlike agencies using heavy plugins or slow page builders, we deliver sub-second page loads, 95+ Core Web Vitals, and dedicated technical SEO architectures."
+  },
+  {
+    question: "What is the cms website meaning and do you provide custom cms website development services?",
+    answer: "The cms website meaning refers to Content Management Systems that enable businesses to easily update text, images, and services. While traditional cms website templates often cause code bloat, Joy Digital delivers modern headless cms website development services. Our decoupled cms website systems combine user-friendly admin control dashboards with lightning-fast page speeds."
+  },
+  {
     question: "How do I start a project with Joy Digital?",
     answer: "The easiest way is to fill out our Free Website Audit form on the homepage, or message us directly on WhatsApp at +91 90800 26133. We will analyze your inputs and present a flat-rate proposal."
   }
