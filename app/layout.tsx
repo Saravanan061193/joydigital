@@ -11,6 +11,7 @@ import NavigationLoadingBar from "@/components/ui/NavigationLoadingBar";
 import GoogleTranslateLoader from "@/components/GoogleTranslateLoader";
 
 const ChatbotWidget = dynamic(() => import("@/components/ui/ChatbotWidget"));
+const OfferModalPopup = dynamic(() => import("@/components/ui/OfferModalPopup"));
 import "./globals.css";
 
 const inter = Inter({
@@ -116,6 +117,7 @@ export default function RootLayout({
         <GoogleTranslateLoader />
         {children}
         <ChatbotWidget />
+        <OfferModalPopup />
       </body>
     </html>
   );

@@ -364,8 +364,6 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
             </div>
           </motion.div>
         </motion.div>
-
-        {/* RIGHT COLUMN: Step 5 - Interactive Consultation Form Card with Conic Glowing Border */}
         <motion.div
           className="lg:col-span-5 flex justify-center lg:justify-end w-full"
           variants={cardVariants}
@@ -567,6 +565,33 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
               </form>
             </div>
           </div>
+        </motion.div>
+
+        {/* Step 6: Scroll Down Indicator Button (Centered at Bottom for Desktop & Mobile) */}
+        <motion.div
+          className="lg:col-span-12 flex justify-center pt-8 sm:pt-10 z-20"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.6 }}
+        >
+          <button
+            type="button"
+            onClick={() => {
+              const target = document.getElementById("trust-overview") || document.getElementById("case-studies");
+              if (target) {
+                target.scrollIntoView({ behavior: "smooth" });
+              } else {
+                window.scrollBy({ top: window.innerHeight * 0.8, behavior: "smooth" });
+              }
+            }}
+            aria-label="Scroll down to explore website features"
+            className="group flex items-center gap-2.5 text-xs font-bold text-slate-300 hover:text-white transition-all cursor-pointer bg-[#140F2D]/90 hover:bg-[#1B143B] border border-[#2D2352] hover:border-[#7C3AED]/60 px-5 py-2.5 rounded-full shadow-lg hover:shadow-purple-900/30 hover:scale-105 active:scale-95"
+          >
+            <span className="uppercase tracking-widest text-[11px] font-bold text-slate-300 group-hover:text-white">Scroll Down</span>
+            <div className="w-6 h-6 rounded-full bg-[#7C3AED]/20 group-hover:bg-[#7C3AED] flex items-center justify-center transition-colors">
+              <ChevronDown className="w-3.5 h-3.5 text-[#A78BFA] group-hover:text-white animate-bounce" />
+            </div>
+          </button>
         </motion.div>
 
       </div>
