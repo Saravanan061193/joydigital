@@ -9,9 +9,7 @@ import {
   Mail,
   User,
   Globe,
-  Sparkles,
   ShieldCheck,
-  CheckCircle2,
   Loader2,
   ArrowRight,
   ChevronDown,
@@ -42,12 +40,12 @@ export default function OfferModalPopup() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
 
-  // Country Dropdown
+  // Country Dropdown State
   const [isCountryOpen, setIsCountryOpen] = useState(false);
   const countryDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Show popup after 2.5 seconds if not dismissed in current session
+    // Auto open after 2.5s if not dismissed in current session
     const timer = setTimeout(() => {
       const dismissed = sessionStorage.getItem("joydigital_offer_popup_dismissed");
       if (!dismissed) {
@@ -176,61 +174,63 @@ export default function OfferModalPopup() {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto select-none">
-      {/* Dark Glass Backdrop with Blur */}
+      {/* Dark Backdrop with Subtle Blur */}
       <div
-        className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity duration-300 animate-fade-in"
+        className="fixed inset-0 bg-black/85 backdrop-blur-md transition-opacity duration-300 animate-fade-in"
         onClick={handleClose}
       />
 
-      {/* Modal Card Container */}
-      <div className="relative w-full max-w-lg bg-[#0F0B24] border border-[#2D2354] rounded-2xl shadow-2xl shadow-purple-950/80 overflow-hidden z-10 animate-scale-up text-white">
+      {/* Refined Glassmorphism Modal Card */}
+      <div className="relative w-full max-w-lg bg-[#110E20]/95 border border-[#2B2347] rounded-2xl shadow-2xl backdrop-blur-xl overflow-hidden z-10 animate-scale-up text-white">
         
-        {/* Animated Gradient Header Banner */}
-        <div className="relative bg-gradient-to-r from-[#7C3AED] via-[#6D28D9] to-[#3B82F6] p-5 sm:p-6 text-white overflow-hidden">
-          {/* Shimmer overlay */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.2),transparent_60%)] pointer-events-none" />
-
-          {/* Close Button */}
+        {/* Soft Dark Gray Header Section */}
+        <div className="relative bg-[#161329] border-b border-[#2B2347] p-5 sm:p-6 text-white">
+          
+          {/* Subtle Close Button */}
           <button
             type="button"
             onClick={handleClose}
             aria-label="Close offer popup"
-            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/30 hover:bg-black/60 text-white flex items-center justify-center transition-colors cursor-pointer border border-white/20 z-20"
+            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#201C3A] hover:bg-[#2C274F] text-slate-300 hover:text-white flex items-center justify-center transition-colors cursor-pointer border border-[#372E5C] z-20"
           >
-            <X className="w-4 h-4 text-white" />
+            <X className="w-4 h-4" />
           </button>
 
-          <div className="flex items-center gap-2 mb-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-400 text-slate-950 text-[10px] font-black uppercase tracking-wider shadow-md">
-              <Gift className="w-3.5 h-3.5" />
+          {/* Offer Badge with Subtle Emerald Accent */}
+          <div className="flex items-center gap-2 mb-2.5">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-extrabold uppercase tracking-wider">
+              <Gift className="w-3.5 h-3.5 text-emerald-400" />
               <span>Limited Time Offer</span>
             </span>
           </div>
 
-          <h2 className="text-xl sm:text-2xl font-black tracking-tight leading-tight text-white">
+          {/* Crisp Headline */}
+          <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight leading-tight text-white">
             Get Free Domain, Hosting &amp; Business Email Account!
           </h2>
 
-          <p className="text-xs text-purple-100 mt-1.5 font-medium leading-relaxed">
-            Apply now to get your complete website setup package with Next.js speed &amp; 95+ Core Web Vitals performance.
+          <p className="text-xs text-slate-300 mt-2 font-normal leading-relaxed">
+            Apply now to claim your complete website setup package with Next.js sub-second speed &amp; 95+ Core Web Vitals performance.
           </p>
 
-          <div className="mt-3 inline-flex items-center gap-2 text-xs font-bold bg-white/10 border border-white/20 px-3 py-1.5 rounded-lg text-white">
-            <Phone className="w-3.5 h-3.5 text-emerald-300" />
-            <span>Call / WhatsApp: <a href="https://wa.me/919080026133" target="_blank" rel="noopener noreferrer" className="underline hover:text-emerald-300">+91 90800 26133</a></span>
+          {/* Phone Call Pill */}
+          <div className="mt-3.5 inline-flex items-center gap-2 text-xs font-semibold bg-[#1F1B38] border border-[#332A5B] px-3.5 py-1.5 rounded-lg text-slate-200">
+            <Phone className="w-3.5 h-3.5 text-[#A78BFA]" />
+            <span>Call / WhatsApp: <a href="https://wa.me/919080026133" target="_blank" rel="noopener noreferrer" className="text-white hover:text-emerald-400 font-bold transition-colors">+91 90800 26133</a></span>
           </div>
         </div>
 
         {/* Modal Form Body */}
-        <div className="p-5 sm:p-6 bg-[#0F0B24]">
+        <div className="p-5 sm:p-6 bg-[#110E20]">
           <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
-            {/* Name */}
+            
+            {/* Field 1: Name */}
             <div className="flex flex-col gap-1">
               <label htmlFor="popup-name" className="text-[10px] font-extrabold text-slate-300 uppercase tracking-wider block">
                 Full Name <span className="text-red-400">*</span>
               </label>
-              <div className={`flex items-center gap-2 bg-[#1A1433] border rounded-xl px-3 py-2.5 transition-all duration-300 focus-within:bg-[#1E173C] focus-within:border-[#7C3AED] ${
-                errors.name ? "border-red-500/80 bg-red-950/10" : "border-[#2D2352]"
+              <div className={`flex items-center gap-2 bg-[#17132B] border rounded-xl px-3 py-2.5 transition-all duration-300 focus-within:bg-[#1C1834] focus-within:border-[#7C3AED] ${
+                errors.name ? "border-red-500/80 bg-red-950/10" : "border-[#2B2347]"
               }`}>
                 <User className="w-4 h-4 text-slate-400 shrink-0" />
                 <input
@@ -246,13 +246,13 @@ export default function OfferModalPopup() {
               {errors.name && <span className="text-[10px] text-red-400 font-medium">{errors.name}</span>}
             </div>
 
-            {/* Email */}
+            {/* Field 2: Email */}
             <div className="flex flex-col gap-1">
               <label htmlFor="popup-email" className="text-[10px] font-extrabold text-slate-300 uppercase tracking-wider block">
                 Work Email <span className="text-red-400">*</span>
               </label>
-              <div className={`flex items-center gap-2 bg-[#1A1433] border rounded-xl px-3 py-2.5 transition-all duration-300 focus-within:bg-[#1E173C] focus-within:border-[#7C3AED] ${
-                errors.email ? "border-red-500/80 bg-red-950/10" : "border-[#2D2352]"
+              <div className={`flex items-center gap-2 bg-[#17132B] border rounded-xl px-3 py-2.5 transition-all duration-300 focus-within:bg-[#1C1834] focus-within:border-[#7C3AED] ${
+                errors.email ? "border-red-500/80 bg-red-950/10" : "border-[#2B2347]"
               }`}>
                 <Mail className="w-4 h-4 text-slate-400 shrink-0" />
                 <input
@@ -268,7 +268,7 @@ export default function OfferModalPopup() {
               {errors.email && <span className="text-[10px] text-red-400 font-medium">{errors.email}</span>}
             </div>
 
-            {/* Phone */}
+            {/* Field 3: Phone / WhatsApp */}
             <div className="flex flex-col gap-1">
               <label htmlFor="popup-mobile" className="text-[10px] font-extrabold text-slate-300 uppercase tracking-wider block">
                 Phone / WhatsApp Number <span className="text-red-400">*</span>
@@ -278,7 +278,7 @@ export default function OfferModalPopup() {
                   <button
                     type="button"
                     onClick={() => setIsCountryOpen(!isCountryOpen)}
-                    className="w-[95px] text-xs py-2.5 px-2.5 bg-[#1A1433] border border-[#2D2352] hover:border-[#7C3AED]/50 text-white rounded-xl flex items-center justify-between outline-none cursor-pointer font-semibold transition-all h-full"
+                    className="w-[95px] text-xs py-2.5 px-2.5 bg-[#17132B] border border-[#2B2347] hover:border-[#7C3AED]/60 text-white rounded-xl flex items-center justify-between outline-none cursor-pointer font-semibold transition-all h-full"
                   >
                     <span className="flex items-center gap-1">
                       <span>{selectedCountry?.flag}</span>
@@ -288,7 +288,7 @@ export default function OfferModalPopup() {
                   </button>
 
                   {isCountryOpen && (
-                    <div className="absolute z-50 left-0 top-[108%] w-64 max-h-48 overflow-y-auto bg-[#150F2E] border border-[#3B2D6B] rounded-xl shadow-2xl py-1 text-white">
+                    <div className="absolute z-50 left-0 top-[108%] w-64 max-h-48 overflow-y-auto bg-[#16122B] border border-[#352B57] rounded-xl shadow-2xl py-1 text-white">
                       {COUNTRY_CODES.map((c) => (
                         <button
                           key={`${c.code}-${c.name}`}
@@ -297,7 +297,7 @@ export default function OfferModalPopup() {
                             setSelectedCountryCode(c.code);
                             setIsCountryOpen(false);
                           }}
-                          className={`w-full flex items-center justify-between px-3.5 py-2 text-left text-xs hover:bg-[#281D54] transition-colors cursor-pointer ${
+                          className={`w-full flex items-center justify-between px-3.5 py-2 text-left text-xs hover:bg-[#271E47] transition-colors cursor-pointer ${
                             selectedCountryCode === c.code ? "bg-[#7C3AED]/30 text-white font-bold" : "text-slate-200"
                           }`}
                         >
@@ -312,8 +312,8 @@ export default function OfferModalPopup() {
                   )}
                 </div>
 
-                <div className={`flex items-center gap-2 bg-[#1A1433] border rounded-xl px-3 py-2.5 flex-1 transition-all duration-300 focus-within:bg-[#1E173C] focus-within:border-[#7C3AED] ${
-                  errors.mobile ? "border-red-500/80 bg-red-950/10" : "border-[#2D2352]"
+                <div className={`flex items-center gap-2 bg-[#17132B] border rounded-xl px-3 py-2.5 flex-1 transition-all duration-300 focus-within:bg-[#1C1834] focus-within:border-[#7C3AED] ${
+                  errors.mobile ? "border-red-500/80 bg-red-950/10" : "border-[#2B2347]"
                 }`}>
                   <Phone className="w-4 h-4 text-slate-400 shrink-0" />
                   <input
@@ -330,13 +330,13 @@ export default function OfferModalPopup() {
               {errors.mobile && <span className="text-[10px] text-red-400 font-medium">{errors.mobile}</span>}
             </div>
 
-            {/* Requirement / Scope */}
+            {/* Field 4: Requirement / Scope */}
             <div className="flex flex-col gap-1">
               <label htmlFor="popup-website" className="text-[10px] font-extrabold text-slate-300 uppercase tracking-wider flex items-center justify-between">
                 <span>Website Requirement / Scope</span>
                 <span className="text-[9px] text-slate-500 font-normal">Optional</span>
               </label>
-              <div className="flex items-center gap-2 bg-[#1A1433] border border-[#2D2352] focus-within:bg-[#1E173C] focus-within:border-[#7C3AED] rounded-xl px-3 py-2.5 transition-all duration-300">
+              <div className="flex items-center gap-2 bg-[#17132B] border border-[#2B2347] focus-within:bg-[#1C1834] focus-within:border-[#7C3AED] rounded-xl px-3 py-2.5 transition-all duration-300">
                 <Globe className="w-4 h-4 text-slate-400 shrink-0" />
                 <input
                   type="text"
@@ -350,16 +350,16 @@ export default function OfferModalPopup() {
               </div>
             </div>
 
-            {/* Submit Button */}
+            {/* Refined Solid Button (No Neon Glow) */}
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full mt-2 py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#7C3AED] via-[#6D28D9] to-[#3B82F6] hover:from-[#6D28D9] hover:to-[#2563EB] text-white font-extrabold text-sm shadow-xl shadow-purple-900/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full mt-2 py-3.5 px-6 rounded-xl bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-extrabold text-sm transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-[#7C3AED]/25 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
             >
               {isLoading ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin text-white" />
-                  <span>Submitting Offer Claim...</span>
+                  <span>Submitting Application...</span>
                 </>
               ) : (
                 <>
@@ -370,9 +370,9 @@ export default function OfferModalPopup() {
             </button>
 
             {/* Micro Trust badges */}
-            <div className="pt-2 text-center border-t border-[#1F183C]">
-              <p className="text-[10px] text-slate-400 font-medium flex items-center justify-center gap-1.5 flex-wrap">
-                <span className="flex items-center gap-1"><ShieldCheck className="w-3 h-3 text-emerald-400" /> Free Domain &amp; Hosting</span>
+            <div className="pt-2 text-center border-t border-[#201A38]">
+              <p className="text-[10px] text-slate-400 font-medium flex items-center justify-center gap-2 flex-wrap">
+                <span className="flex items-center gap-1"><ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Free Domain &amp; Hosting</span>
                 <span>•</span>
                 <span>Zero Hidden Fees</span>
                 <span>•</span>
