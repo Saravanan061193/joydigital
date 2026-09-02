@@ -301,9 +301,9 @@ export default function LeadForm({
         }
       ` }} />
 
-      <div className={`bg-white border border-[#E9E4F2] p-5 sm:p-6 rounded-2xl shadow-2xl w-full ${layout === "horizontal" ? "max-w-4xl" : "max-w-md"} relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-gray-200`}>
+      <div className={`bg-white border border-[#E9E4F2] p-5 sm:p-6 rounded-2xl shadow-2xl w-full ${layout === "horizontal" ? "max-w-4xl" : "max-w-md"} relative transition-all duration-300 hover:shadow-2xl hover:border-gray-200`}>
         {/* Top Accent Gradient Border */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#7C3AED] via-[#A78BFA] to-[#F97316]" />
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#7C3AED] via-[#A78BFA] to-[#F97316] rounded-t-2xl" />
 
         {/* Title Zone */}
         <div className="mb-4 mt-1">
@@ -457,7 +457,7 @@ export default function LeadForm({
             <label htmlFor="service" className="text-[9px] font-extrabold text-[#6B6478] uppercase tracking-wider mb-0.5 block">
               Required Service <span className="text-error-red">*</span>
             </label>
-            <div className="relative" ref={serviceDropdownRef}>
+            <div className="relative z-20" ref={serviceDropdownRef}>
               <button
                 type="button"
                 onClick={() => setIsServiceOpen(!isServiceOpen)}
@@ -480,7 +480,7 @@ export default function LeadForm({
 
               {isServiceOpen && (
                 <div 
-                  className="absolute z-20 left-0 top-[108%] w-full bg-white border border-[#E9E4F2] rounded-lg shadow-xl py-1 max-h-72 overflow-y-auto"
+                  className="absolute z-50 left-0 top-[108%] w-full bg-white border border-[#E9E4F2] rounded-xl shadow-2xl py-1 max-h-64 overflow-y-auto"
                   style={{ animation: "fadeInSlideDown 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards" }}
                 >
                   {SERVICE_OPTIONS.map((opt) => (
