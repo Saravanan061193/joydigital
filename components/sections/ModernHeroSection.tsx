@@ -195,10 +195,17 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
         {/* LEFT COLUMN: Hero Copy & Actions */}
         <div className="lg:col-span-7 flex flex-col items-start text-left space-y-6">
           
-          {/* Top Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#18132E] border border-[#2D244E] text-[#A78BFA] text-xs font-semibold shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-[#A78BFA]" />
-            <span>Next.js &amp; Enterprise SEO Engineering</span>
+          {/* Top Pill Badges */}
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#18132E] border border-[#2D244E] text-[#A78BFA] text-xs font-semibold shadow-sm">
+              <Sparkles className="w-3.5 h-3.5 text-[#A78BFA]" />
+              <span>Next.js &amp; Enterprise SEO Engineering</span>
+            </div>
+
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-500/40 text-emerald-300 text-xs font-bold shadow-sm">
+              <Zap className="w-3.5 h-3.5 text-emerald-400" />
+              <span>🎁 Free Website &amp; SEO Audit ($499 Value)</span>
+            </div>
           </div>
 
           {/* Main Headline */}
@@ -214,7 +221,7 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
             Bespoke Next.js web systems and enterprise SEO designed for sub-second speed and global organic revenue.
           </p>
 
-          {/* Minimal Checkmark Bullet Points */}
+          {/* Checkmark Bullet Points */}
           <div className="space-y-2.5 pt-1">
             <div className="flex items-center gap-2.5 text-sm text-slate-200 font-medium">
               <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0">
@@ -228,6 +235,13 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
               </div>
               <span>Enterprise-grade search architectures</span>
+            </div>
+
+            <div className="flex items-center gap-2.5 text-sm text-emerald-300 font-bold">
+              <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-400/50 flex items-center justify-center shrink-0">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+              </div>
+              <span>Includes 100% Free 20+ Page Website &amp; SEO Audit Report</span>
             </div>
           </div>
 
@@ -260,15 +274,15 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
 
             {/* Form Title & Subtitle */}
             <div className="mb-5">
-              <div className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-widest text-[#A78BFA] bg-[#1E1738] border border-[#33285C] px-2.5 py-0.5 rounded-full mb-2">
-                <Clock className="w-3 h-3 text-[#A78BFA]" />
-                <span>Free Strategy Session</span>
+              <div className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-widest text-emerald-300 bg-emerald-950/60 border border-emerald-500/40 px-2.5 py-0.5 rounded-full mb-2">
+                <Clock className="w-3 h-3 text-emerald-400" />
+                <span>🎁 Free $499 Audit Included</span>
               </div>
               <h3 className="text-xl font-extrabold text-white tracking-tight">
                 Book a 15-Min Strategy Call
               </h3>
               <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-                Fill in the details below to claim your free website &amp; SEO roadmap.
+                Fill in the details below to claim your free 20+ page Website &amp; SEO Audit report.
               </p>
             </div>
 
@@ -426,7 +440,7 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
                   </>
                 ) : (
                   <>
-                    <span>Schedule Free Consultation</span>
+                    <span>Get Free Audit &amp; Strategy Call</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </>
                 )}
@@ -436,7 +450,7 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
               <div className="pt-2 text-center">
                 <p className="text-[10px] font-medium text-slate-400 flex items-center justify-center gap-1.5">
                   <ShieldCheck className="w-3 h-3 text-emerald-400 shrink-0" />
-                  <span>Zero Commitment • 100% Confidential • Fast Turnaround</span>
+                  <span>🎁 Free $499 Audit Included • Zero Commitment • 100% Confidential</span>
                 </p>
               </div>
             </form>
