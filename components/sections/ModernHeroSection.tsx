@@ -275,11 +275,21 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
   return (
     <section className="relative pt-24 lg:pt-32 pb-20 overflow-hidden bg-[#0B0914] text-white border-b border-[#1E1838] select-none">
       
-      {/* Embedded CSS Keyframes for GPU-Accelerated Micro-Animations */}
+      {/* Embedded CSS Keyframes for GPU-Accelerated Micro-Animations & Moving Aurora Orbs */}
       <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes ambientBreathing {
-          0%, 100% { transform: scale(1) translateY(0); opacity: 0.14; }
-          50% { transform: scale(1.18) translateY(-12px); opacity: 0.26; }
+        @keyframes auroraDrift1 {
+          0%, 100% { transform: translate3d(0px, 0px, 0) scale(1); opacity: 0.22; }
+          33% { transform: translate3d(50px, -40px, 0) scale(1.12); opacity: 0.32; }
+          66% { transform: translate3d(-35px, 25px, 0) scale(0.92); opacity: 0.18; }
+        }
+        @keyframes auroraDrift2 {
+          0%, 100% { transform: translate3d(0px, 0px, 0) scale(1); opacity: 0.20; }
+          40% { transform: translate3d(-55px, 35px, 0) scale(1.18); opacity: 0.30; }
+          75% { transform: translate3d(45px, -25px, 0) scale(0.88); opacity: 0.16; }
+        }
+        @keyframes auroraDrift3 {
+          0%, 100% { transform: translate3d(0px, 0px, 0) scale(1); opacity: 0.16; }
+          50% { transform: translate3d(35px, 50px, 0) scale(1.15); opacity: 0.28; }
         }
         @keyframes gradientShimmer {
           0% { background-position: 0% 50%; }
@@ -294,12 +304,16 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
           0% { transform: translateX(-120%) rotate(25deg); }
           30%, 100% { transform: translateX(260%) rotate(25deg); }
         }
-        .animate-ambient-glow-1 {
-          animation: ambientBreathing 9s ease-in-out infinite;
+        .animate-aurora-1 {
+          animation: auroraDrift1 16s ease-in-out infinite;
           will-change: transform, opacity;
         }
-        .animate-ambient-glow-2 {
-          animation: ambientBreathing 12s ease-in-out infinite 2s;
+        .animate-aurora-2 {
+          animation: auroraDrift2 20s ease-in-out infinite 2s;
+          will-change: transform, opacity;
+        }
+        .animate-aurora-3 {
+          animation: auroraDrift3 24s ease-in-out infinite 4s;
           will-change: transform, opacity;
         }
         .animate-gradient-shimmer {
@@ -314,9 +328,10 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
         }
       ` }} />
 
-      {/* 1. Ambient Background Glow (Organic Breathing Animation) */}
-      <div className="absolute top-0 right-1/4 w-[650px] h-[650px] bg-purple-600/20 rounded-full blur-[170px] pointer-events-none animate-ambient-glow-1" />
-      <div className="absolute bottom-0 left-0 w-[550px] h-[550px] bg-indigo-900/20 rounded-full blur-[150px] pointer-events-none animate-ambient-glow-2" />
+      {/* Moving Aurora / Blurred Gradient Orbs (z-0, pointer-events-none) */}
+      <div className="absolute -top-28 right-10 sm:right-1/4 w-[600px] sm:w-[750px] h-[600px] sm:h-[750px] bg-gradient-to-tr from-purple-700/30 via-purple-600/25 to-indigo-600/20 rounded-full blur-[150px] sm:blur-[180px] pointer-events-none z-0 animate-aurora-1" />
+      <div className="absolute -bottom-24 -left-20 w-[500px] sm:w-[650px] h-[500px] sm:h-[650px] bg-gradient-to-br from-blue-700/25 via-indigo-900/30 to-purple-900/20 rounded-full blur-[140px] sm:blur-[170px] pointer-events-none z-0 animate-aurora-2" />
+      <div className="absolute top-1/3 left-1/3 w-[450px] sm:w-[550px] h-[450px] sm:h-[550px] bg-gradient-to-r from-violet-600/20 to-purple-800/15 rounded-full blur-[130px] sm:blur-[160px] pointer-events-none z-0 animate-aurora-3" />
 
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
         
