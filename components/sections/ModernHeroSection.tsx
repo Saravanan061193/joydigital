@@ -55,6 +55,9 @@ const COUNTRY_CODES = [
   { code: "+45", flag: "🇩🇰", name: "Denmark" },
 ];
 
+const heroMainWords = ["High-Performance", "Websites", "&", "SEO", "Engineered", "to"];
+const heroGradientWords = ["Scale", "Your", "Business", "Globally."];
+
 // Framer Motion Variants for Staggered Orchestration
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -63,6 +66,38 @@ const containerVariants: Variants = {
     transition: {
       staggerChildren: 0.12,
       delayChildren: 0.05,
+    },
+  },
+};
+
+const antiGravityHeaderVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.07,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const antiGravityWordVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 28,
+    rotateX: -20,
+    filter: "blur(6px)",
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    filter: "blur(0px)",
+    transition: {
+      type: "spring",
+      damping: 18,
+      stiffness: 90,
+      mass: 0.75,
     },
   },
 };
@@ -306,12 +341,31 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
             </div>
           </motion.div>
 
-          {/* Step 2: Main Headline with Animated Gradient Shimmer */}
-          <motion.h1 variants={itemVariants} className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
-            High-Performance Websites &amp; SEO Engineered to{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-violet-300 to-indigo-300 animate-gradient-shimmer">
-              Scale Your Business Globally.
-            </span>
+          {/* Step 2: Main Headline with Anti-Gravity Staggered Word Reveal */}
+          <motion.h1
+            variants={antiGravityHeaderVariants}
+            initial="hidden"
+            animate="visible"
+            className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.14] flex flex-wrap gap-x-[0.28em] gap-y-1 sm:gap-y-2 select-none"
+          >
+            {heroMainWords.map((word, idx) => (
+              <motion.span
+                key={`main-w-${idx}`}
+                variants={antiGravityWordVariants}
+                className="inline-block will-change-transform"
+              >
+                {word}
+              </motion.span>
+            ))}
+            {heroGradientWords.map((word, idx) => (
+              <motion.span
+                key={`grad-w-${idx}`}
+                variants={antiGravityWordVariants}
+                className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-violet-300 to-indigo-300 animate-gradient-shimmer will-change-transform"
+              >
+                {word}
+              </motion.span>
+            ))}
           </motion.h1>
 
           {/* Step 3: Subtitle & Feature Bullet Points */}
