@@ -198,6 +198,15 @@ function getLocalPostBySlug(slug: string): BlogPost | null {
   }
 }
 
+function withTimeout<T>(promise: Promise<T>, timeoutMs = 1500): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) =>
+      setTimeout(() => reject(new Error("MongoDB query timeout")), timeoutMs)
+    ),
+  ]);
+}
+
 // GET all posts: Merge MongoDB posts and local posts
 export async function getAllPosts(): Promise<BlogPost[]> {
   const localPosts = getLocalPosts();
@@ -206,16 +215,16 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 
   if (process.env.MONGODB_URI) {
     try {
-      const db = await getDb();
+      const db = await withTimeout(getDb(), 1500);
       const blogsCol = db.collection("blogs");
 
-      const dbRecords = await blogsCol.find({ isDeleted: { $ne: true } }).toArray();
+      const dbRecords = await withTimeout(blogsCol.find({ isDeleted: { $ne: true } }).toArray(), 1500);
       dbPosts = dbRecords.map((r) => normalizePostData(r.slug, r, r.content));
 
-      const deletedRecords = await blogsCol.find({ isDeleted: true }, { projection: { slug: 1 } }).toArray();
+      const deletedRecords = await withTimeout(blogsCol.find({ isDeleted: true }, { projection: { slug: 1 } }).toArray(), 1500);
       deletedSlugs = new Set(deletedRecords.map((r) => r.slug));
     } catch (err) {
-      console.error("Failed to fetch blog posts from MongoDB, falling back to local files:", err);
+      console.error("Failed to fetch blog posts from MongoDB within timeout, falling back to local files:", err);
     }
   }
 
@@ -240,10 +249,10 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   if (process.env.MONGODB_URI) {
     try {
-      const db = await getDb();
+      const db = await withTimeout(getDb(), 1500);
       const blogsCol = db.collection("blogs");
 
-      const dbRecord = await blogsCol.findOne({ slug });
+      const dbRecord = await withTimeout(blogsCol.findOne({ slug }), 1500);
       if (dbRecord) {
         if (dbRecord.isDeleted === true) {
           return null;

@@ -8,7 +8,7 @@ import { notFound } from "next/navigation";
 import { marked } from "marked";
 import BlogArticleContainer from "@/components/sections/BlogArticleContainer";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 interface PageProps {
   params: Promise<{ slug: string }>;

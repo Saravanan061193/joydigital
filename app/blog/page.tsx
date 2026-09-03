@@ -7,7 +7,7 @@ import { getAllPosts } from "@/lib/blog";
 import StrongCTA from "@/components/StrongCTA";
 import BlogListingContainer from "@/components/sections/BlogListingContainer";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Agency Growth Blog | Marketing & SEO Tips | Joy Digital",
