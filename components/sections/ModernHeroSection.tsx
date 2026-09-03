@@ -25,7 +25,7 @@ interface ModernHeroSectionProps {
   country?: string;
 }
 
-const heroMainWords = ["Custom", "Website", "Development", "Company", "Engineered", "for"];
+const heroMainWords = ["Custom", "Software", "&", "Web", "Engineering", "Company", "Engineered", "for"];
 const heroGradientWords = ["Scale", "&", "Speed."];
 
 // Framer Motion Variants for Staggered Orchestration
@@ -172,11 +172,9 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
     }
 
     const mobileVal = formData.mobile.trim();
-    if (!mobileVal) {
-      tempErrors.mobile = "Phone / WhatsApp is required.";
-    } else {
+    if (mobileVal) {
       const numbersOnly = mobileVal.replace(/\D/g, "");
-      if (numbersOnly.length < 7) {
+      if (numbersOnly.length < 6) {
         tempErrors.mobile = "Enter a valid contact number.";
       }
     }
@@ -368,7 +366,7 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
           {/* Step 3: Subtitle & Feature Bullet Points */}
           <motion.div variants={itemVariants} className="space-y-4 max-w-2xl">
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
-              Bespoke Next.js web systems and enterprise SEO designed for sub-second speed and global organic revenue.
+              Bespoke Next.js web applications, SaaS platforms, and enterprise SEO engineered for sub-second speed and global organic revenue.
             </p>
 
             <div className="space-y-2.5 pt-1">
@@ -493,7 +491,7 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
                 {/* Field 3: Phone / WhatsApp Number */}
                 <div className="flex flex-col gap-1">
                   <label htmlFor="hero-mobile" className="text-[10px] font-extrabold text-slate-300 uppercase tracking-wider block">
-                    Phone / WhatsApp Number <span className="text-red-400">*</span>
+                    Phone / WhatsApp Number <span className="text-slate-400 font-normal text-[9px] lowercase">(optional)</span>
                   </label>
                   <div className="flex gap-2 relative">
                     {/* Country Selector Dropdown */}

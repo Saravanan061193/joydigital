@@ -60,8 +60,8 @@ function CountUpNumber({ target, suffix = "" }: { target: number; suffix?: strin
 
 export const HOME_FAQS = [
   {
-    question: "How much does a website cost with Joy Digital?",
-    answer: "Our standard business layouts and landing page setups start from ₹15,000 ($250). Custom multipage e-commerce platforms, database directories, or advanced SaaS landing flows are quoted based on specific API needs and page count."
+    question: "How much does a website or custom software cost with Joy Digital?",
+    answer: "Our custom web applications and business portals are quoted transparently based on project scope, with starter layouts beginning at $1,200 (₹25,000 for India-based clients). Enterprise platforms and complex SaaS workflows receive bespoke milestone proposals."
   },
   {
     question: "How long does website development take?",
@@ -117,7 +117,7 @@ export const HOME_FAQS = [
   },
   {
     question: "What is the cost of website development in India?",
-    answer: "The cost of website development in India generally ranges from ₹15,000 to ₹35,000 for standard business starter sites, and ₹45,000 to ₹1,500,000+ for enterprise e-commerce portals or custom SaaS platforms. At Joy Digital, we provide transparent, flat-rate pricing starting at ₹15,000 with zero hidden fees."
+    answer: "The cost of website development ranges from $1,200 to $5,000+ for global B2B custom web platforms (and ₹25,000 to ₹1,50,000+ in India for local SMBs). At Joy Digital, we provide transparent milestone pricing with zero hidden fees."
   },
   {
     question: "Which language is best for website development, and which AI is best for website development?",
@@ -1388,8 +1388,12 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   <p className="text-xs text-[#6B6478] leading-relaxed mb-6 font-semibold">Perfect for new local service businesses wanting to establish professional authority online.</p>
                   
                   <div className="mb-6 flex items-baseline gap-1">
-                    <span className="text-3xl font-black text-[#171126]">₹15,000</span>
-                    <span className="text-xs text-[#6B6478] font-semibold">One-time (approx. $200)</span>
+                    <span className="text-3xl font-black text-[#171126]">
+                      {country === "in" ? "₹25,000" : "$1,200"}
+                    </span>
+                    <span className="text-xs text-[#6B6478] font-semibold">
+                      {country === "in" ? "One-time" : "One-time ($1,200 USD)"}
+                    </span>
                   </div>
 
                   <ul className="flex flex-col gap-3 text-xs text-[#6B6478] font-semibold border-t border-[#E9E4F2] pt-6 mb-8">
@@ -1428,8 +1432,12 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
                   <p className="text-xs text-[#6B6478] leading-relaxed mb-6 font-semibold">Recommended for companies targeting local search rankings and active online client acquisition.</p>
                   
                   <div className="mb-6 flex items-baseline gap-1">
-                    <span className="text-3xl font-black text-[#171126]">₹35,000</span>
-                    <span className="text-xs text-[#6B6478] font-semibold">Starting rate (approx. $450)</span>
+                    <span className="text-3xl font-black text-[#171126]">
+                      {country === "in" ? "₹45,000" : "$2,800"}
+                    </span>
+                    <span className="text-xs text-[#6B6478] font-semibold">
+                      {country === "in" ? "Starting rate" : "Starting rate ($2,800 USD)"}
+                    </span>
                   </div>
 
                   <ul className="flex flex-col gap-3 text-xs text-[#6B6478] font-semibold border-t border-[#E9E4F2] pt-6 mb-8">

@@ -108,29 +108,22 @@ export default function ExitIntentPopup() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Only mobile / WhatsApp number is mandatory
+    if (!email.trim()) {
+      setError("Work Email address is required.");
+      return;
+    }
+
+    const emailReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailReg.test(email.trim())) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
     const mobileVal = mobile.trim();
-    let fullMobile = mobileVal;
-    if (fullMobile && !fullMobile.startsWith("+")) {
-      fullMobile = selectedCountryCode + fullMobile;
-    }
-
-    if (!mobileVal) {
-      setError("WhatsApp number is required.");
-      return;
-    }
-
-    const numbersOnly = fullMobile.replace(/\D/g, "");
-    if (numbersOnly.length < 7) {
-      setError("Please enter a valid WhatsApp number.");
-      return;
-    }
-
-    // Email is optional, but must be valid if provided
-    if (email.trim()) {
-      const emailReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!emailReg.test(email.trim())) {
-        setError("Please enter a valid email address.");
+    if (mobileVal) {
+      const numbersOnly = mobileVal.replace(/\D/g, "");
+      if (numbersOnly.length < 6) {
+        setError("Please enter a valid contact number.");
         return;
       }
     }
@@ -257,7 +250,7 @@ export default function ExitIntentPopup() {
 
               {/* Email */}
               <div className="flex flex-col gap-1">
-                <label htmlFor="popup-email" className="text-[9px] font-bold text-text-primary uppercase tracking-wider">Email Address</label>
+                <label htmlFor="popup-email" className="text-[9px] font-bold text-text-primary uppercase tracking-wider">Email Address <span className="text-error-red">*</span></label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xs"><i className="fa-solid fa-envelope" /></span>
                   <input
@@ -274,7 +267,7 @@ export default function ExitIntentPopup() {
 
               {/* Mobile / WhatsApp */}
               <div className="flex flex-col gap-1">
-                <label htmlFor="popup-mobile" className="text-[9px] font-bold text-text-primary uppercase tracking-wider">WhatsApp Number <span className="text-error-red">*</span></label>
+                <label htmlFor="popup-mobile" className="text-[9px] font-bold text-text-primary uppercase tracking-wider">WhatsApp Number <span className="text-gray-400 font-normal lowercase">(optional)</span></label>
                 <div className="flex gap-2">
                   {/* Country Code Select Dropdown */}
                   <div className="relative w-[110px] shrink-0">
