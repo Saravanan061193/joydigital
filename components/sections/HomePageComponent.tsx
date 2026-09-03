@@ -108,12 +108,24 @@ export const HOME_FAQS = [
     answer: "When hiring a digital marketing business in India or a digital advertising company in India, prioritize agencies with proven Core Web Vitals performance, transparent GA4 conversion tracking, and custom strategy execution rather than automated templates. Joy Digital provides end-to-end web development, technical search optimization, and lead funnels tailored to your growth goals."
   },
   {
-    question: "Why is Joy Digital considered a best website company in india for custom web development?",
-    answer: "Joy Digital is recognized as a best website company in india because we engineer high-speed Next.js and React web applications tailored to business growth goals. Unlike agencies using heavy plugins or slow page builders, we deliver sub-second page loads, 95+ Core Web Vitals, and dedicated technical SEO architectures."
+    question: "Why is Joy Digital considered a top website development company in India for website development services?",
+    answer: "Joy Digital is a full-service website development company in India specializing in custom Next.js and React website development services. We engineer custom, lightning-fast platforms designed to rank on Google search engines, load under 1.5 seconds, and generate consistent high-intent client inquiries."
   },
   {
-    question: "What is the cms website meaning and do you provide custom cms website development services?",
-    answer: "The cms website meaning refers to Content Management Systems that enable businesses to easily update text, images, and services. While traditional cms website templates often cause code bloat, Joy Digital delivers modern headless cms website development services. Our decoupled cms website systems combine user-friendly admin control dashboards with lightning-fast page speeds."
+    question: "What is website design and development, and why website development is important for business growth?",
+    answer: "Website design focuses on the visual layout, typography, UI/UX structure, and brand aesthetics, while website development involves writing clean, semantic code (HTML, CSS, JavaScript, React, Next.js) to turn designs into dynamic, fast-loading platforms. Website development is critical because your site acts as your 24/7 digital storefront, establishing trust, ranking on search engines, and converting visitors into active paying clients."
+  },
+  {
+    question: "What is the cost of website development in India?",
+    answer: "The cost of website development in India generally ranges from ₹15,000 to ₹35,000 for standard business starter sites, and ₹45,000 to ₹1,500,000+ for enterprise e-commerce portals or custom SaaS platforms. At Joy Digital, we provide transparent, flat-rate pricing starting at ₹15,000 with zero hidden fees."
+  },
+  {
+    question: "Which language is best for website development, and which AI is best for website development?",
+    answer: "JavaScript and TypeScript (powered by frameworks like Next.js and React) are widely recognized as the best programming languages for modern web development due to their unmatched speed, SEO capabilities, and scalability. For AI tools, ChatGPT (GPT-4o), Claude 3.5 Sonnet, Cursor AI, and v0.dev are considered the best AI tools for accelerating web development, generating component code, and optimizing SEO metadata."
+  },
+  {
+    question: "How to get clients for website development and foreign projects?",
+    answer: "To get clients for website development and secure foreign projects from the US, UK, or UAE, web agencies and developers should combine technical SEO landing pages, targeted LinkedIn cold outreach, Upwork/Fiverr pro listings, and white-label partnerships with foreign marketing agencies. Providing sub-second Next.js site performance is key to retaining international clients."
   },
   {
     question: "How do I start a project with Joy Digital?",

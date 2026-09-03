@@ -20,10 +20,9 @@ seoTitle: How Much Does a Website Cost in India in 2026? A Practical Pricing Gui
 metaDescription: >-
   How much does a website cost in India in 2026? Explore practical pricing for
   business, e-commerce, and custom website packages.
-focusKeyword: Website Cost
+focusKeyword: what is the cost of website development in india
 secondaryKeywords: >-
-  Web Development, Joy Digital, Search Engine Optimization, SEO Strategy, 2026
-  Digital Trends
+  website development company in india, website development services, website cost in india 2026, Joy Digital, Web Development Pricing
 canonicalUrl: 'https://joydigital.in/blog/website-cost-in-india-2026'
 robots: 'Index, Follow'
 internalLinks:

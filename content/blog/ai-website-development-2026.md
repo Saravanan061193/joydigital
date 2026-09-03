@@ -18,8 +18,8 @@ showFeaturedImage: true
 seoTitle: 'AI Website Development in 2026: How AI Is Changing Business Websites'
 metaDescription: >-
   Discover how AI website development in 2026 is transforming business websites into intelligent sales assistants, lead qualification systems, and automated customer engines.
-focusKeyword: AI Website Development
-secondaryKeywords: 'Web Development, AI Chatbots, Intelligent Search, E-commerce AI, Lead Qualification'
+focusKeyword: which ai is best for website development
+secondaryKeywords: 'which is the best ai for website development, Web Development AI Tools, ChatGPT for Web Dev, Claude Sonnet, Cursor AI, v0.dev'
 canonicalUrl: 'https://joydigital.in/blog/ai-website-development-2026'
 robots: 'Index, Follow'
 internalLinks:

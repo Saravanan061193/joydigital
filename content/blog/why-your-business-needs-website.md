@@ -22,10 +22,9 @@ metaDescription: >-
   Discover why relying solely on social media pages is a risky marketing
   strategy, and how a custom business website builds authority and generates
   leads.
-focusKeyword: Business Needs a Website
+focusKeyword: why website development is important
 secondaryKeywords: >-
-  Web Development, Joy Digital, Search Engine Optimization, SEO Strategy, 2026
-  Digital Trends
+  what is website design and development, website development company, Joy Digital, Business Website Guide
 canonicalUrl: 'https://joydigital.in/blog/why-your-business-needs-website'
 robots: 'Index, Follow'
 internalLinks:
