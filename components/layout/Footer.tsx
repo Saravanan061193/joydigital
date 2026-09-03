@@ -309,6 +309,9 @@ export default function Footer() {
             <li>
               <Link href="/website-for-luxury-brands" className="hover:text-accent hover:pl-1 transition-all font-semibold text-accent">Website for Luxury Brands</Link>
             </li>
+            <li>
+              <Link href="/website-for-pest-control" className="hover:text-accent hover:pl-1 transition-all">Website for Pest Control</Link>
+            </li>
           </ul>
         </div>
 
