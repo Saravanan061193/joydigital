@@ -3,24 +3,17 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Top Website Development Agency & Company in India | Joy Digital",
-  description: "Joy Digital is a top website development agency and premier website development company in India. We engineer fast, mobile-responsive Next.js & React websites built to rank.",
+  title: "Custom Web Development Services & Engineering | Joy Digital",
+  description: "Full-stack custom web development services. We engineer Next.js web applications, React front-ends, scalable web apps, and high-performance modern web stacks.",
   keywords: [
-    "top website development agency",
-    "top website development company",
-    "website development company",
-    "website development services",
-    "website development company in india",
-    "what is website design and development",
-    "how to find clients for website development",
-    "which ai is best for website development",
-    "how to get clients for website development",
-    "what is the cost of website development in india",
-    "how to get foreign clients for website development",
-    "why website development is important",
-    "which language is best for website development",
-    "how to get leads for website development",
-    "which is the best ai for website development"
+    "Custom Web Development Services",
+    "Next.js Web Development",
+    "React Web Development",
+    "Scalable Web Apps",
+    "High-Performance Web Development",
+    "Full-Stack Web Engineering",
+    "Modern Web Architecture",
+    "Joy Digital"
   ],
   alternates: {
     canonical: "https://joydigital.in/website-development",
@@ -37,15 +30,15 @@ export const metadata: Metadata = {
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Top Website Development Agency & Company in India",
-  "serviceType": "Website Development Services",
+  "name": "Custom Web Development Services & Engineering",
+  "serviceType": "Custom Web Development Services",
   "provider": {
     "@type": "Organization",
     "name": "Joy Digital",
     "image": "https://joydigital.in/assets/images/logo.webp",
     "telephone": "+919080026133"
   },
-  "description": "Joy Digital is a top website development agency and website development company in India delivering full-stack website development services, Next.js engineering, and organic SEO architecture.",
+  "description": "Joy Digital delivers full-stack custom web development services, Next.js web engineering, React applications, and scalable high-performance web systems.",
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
@@ -59,8 +52,8 @@ export default function WebDevPage() {
   return (
     <ServicePageTemplate
       serviceName="Website Development"
-      heroTitle="Top Website Development Agency & Company in India"
-      heroSubtitle="Professional Website Development Services Starting from ₹15,000. Partner with a top website development agency to build a custom, high-speed website engineered to rank on Google."
+      heroTitle="Custom Web Development Services & Next.js Engineering"
+      heroSubtitle="Full-stack custom web development services powered by Next.js, React, and Node.js. Build scalable web apps and high-performance web platforms engineered for speed."
       leadSource="Website Development Landing Page"
       heroCtaText="Get My Website Quote"
       overviewTitle="Professional Services from a Top Website Development Agency"

@@ -3,45 +3,44 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Headless E-commerce Web Development | Joy Digital",
-  description: "Joy Digital is the premier e-commerce website development agency. We build fast, responsive Next.js headless e-commerce sites that increase sales.",
+  title: "Custom Ecommerce Website Development Services | Joy Digital",
+  description: "Joy Digital delivers custom ecommerce website development. We engineer headless Next.js ecommerce storefronts, B2B e-commerce applications, and high-converting checkouts.",
+  keywords: [
+    "Custom Ecommerce Website Development",
+    "Headless Ecommerce Development",
+    "Next.js Ecommerce",
+    "B2B Ecommerce Development",
+    "Headless Storefront Engineering",
+    "Joy Digital"
+  ],
   alternates: {
     canonical: "https://joydigital.in/ecommerce-website-development",
   },
   openGraph: {
-    title: "Ecommerce Website Development | Custom Headless E-commerce - Joy Digital",
-    description: "Joy Digital is the premier e-commerce website development agency. We build fast, responsive Next.js headless e-commerce sites that increase sales.",
+    title: "Custom Ecommerce Website Development Services | Joy Digital",
+    description: "Joy Digital delivers custom ecommerce website development. We engineer headless Next.js ecommerce storefronts, B2B e-commerce applications, and high-converting checkouts.",
     url: "https://joydigital.in/ecommerce-website-development",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ecommerce Website Development | Custom Headless E-commerce - Joy Digital",
-    description: "Joy Digital is the premier e-commerce website development agency. We build fast, responsive Next.js headless e-commerce sites that increase sales.",
+    title: "Custom Ecommerce Website Development Services | Joy Digital",
+    description: "Joy Digital delivers custom ecommerce website development. We engineer headless Next.js ecommerce storefronts, B2B e-commerce applications, and high-converting checkouts.",
   }
 };
 
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Ecommerce Website Development",
-  "serviceType": "Web Development Services",
+  "name": "Custom Ecommerce Website Development Services",
+  "serviceType": "Custom Ecommerce Website Development",
   "provider": {
-    "@type": "LocalBusiness",
+    "@type": "Organization",
     "name": "Joy Digital",
     "image": "https://joydigital.in/assets/images/logo.webp",
-    "telephone": "+919080026133",
-    "priceRange": "₹₹",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Old Perungalathur",
-      "addressLocality": "Chennai",
-      "addressRegion": "Tamil Nadu",
-      "postalCode": "600063",
-      "addressCountry": "IN"
-    }
+    "telephone": "+919080026133"
   },
-  "description": "Custom headless e-commerce development services. We build fast Next.js stores, configure payment gateways, list product feeds, and optimize checkout funnels.",
+  "description": "Custom ecommerce website development services. We build high-speed Next.js headless storefronts, B2B e-commerce portals, and conversion-optimized payment funnels.",
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
@@ -55,8 +54,8 @@ export default function EcommerceWebDevPage() {
   return (
     <ServicePageTemplate
       serviceName="Ecommerce Website Development"
-      heroTitle="Ecommerce Website Development Services"
-      heroSubtitle="Convert mobile visitors into paying customers with fast, responsive, and secure e-commerce platforms. We build custom Next.js headless storefronts that load instantly and decrease checkout abandonment."
+      heroTitle="Custom Ecommerce Website Development & Headless Storefronts"
+      heroSubtitle="Convert mobile visitors into paying customers with custom ecommerce website development. We build headless Next.js storefronts, B2B e-commerce platforms, and ultra-fast checkout funnels."
       leadSource="Ecommerce Website Development Landing Page"
       canonicalUrl="https://joydigital.in/ecommerce-website-development"
       overviewTitle="Headless E-commerce: Blazing Speeds, Zero DB Downtime & High Security"

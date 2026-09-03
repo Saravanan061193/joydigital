@@ -22,7 +22,9 @@ secondaryKeywords: "top website development agency, top website development comp
 canonicalUrl: "https://joydigital.in/blog/what-is-website-design-and-development"
 robots: "Index, Follow"
 internalLinks:
-  - anchorText: Custom Website Development Services
+  - anchorText: Custom Website Development
+    targetUrl: /custom-website-development
+  - anchorText: Custom Web Development Services
     targetUrl: /website-development
   - anchorText: Web Design Services
     targetUrl: /web-design-services

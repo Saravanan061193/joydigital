@@ -92,12 +92,12 @@ export const HOME_FAQS = [
     answer: "Yes. We build responsive e-commerce storefronts using Next.js. We integrate checkout funnels, secure payment links, catalog displays, and order management."
   },
   {
-    question: "How do I choose the right web developer near me or website designer near me?",
-    answer: "If you are searching for a qualified web developer near me or an experienced website designer near me, look for an agency that delivers custom, high-speed, and search-optimized solutions rather than rigid templates. At Joy Digital, we act as your dedicated web engineering team, building bespoke Next.js and React websites engineered for sub-second speeds, mobile responsiveness, and high Google search visibility."
+    question: "How do I choose the right custom website development company for my business?",
+    answer: "When selecting a custom website development company, look for an agency that delivers custom, high-speed, and search-optimized Next.js/React solutions rather than rigid off-the-shelf templates. At Joy Digital, we act as your dedicated web engineering team, building bespoke web platforms engineered for sub-second speeds, mobile responsiveness, and enterprise Google search visibility."
   },
   {
-    question: "Why should I hire a professional website developer near me for my business?",
-    answer: "Partnering with an experienced website developer near me ensures your business website is custom-built to attract local customers, achieve 90+ Core Web Vitals scores, and capture organic leads. We specialize in custom web development, local SEO, and mobile-first responsive design, giving your business a distinct competitive edge."
+    question: "Why should I hire a bespoke custom website development company rather than using rigid templates?",
+    answer: "Partnering with a custom website development company ensures your business website is custom-engineered to achieve 95+ Core Web Vitals scores, maintain 100% code IP ownership, and capture organic leads. We specialize in custom web development, Next.js server-side rendering, and dynamic web application architecture."
   },
   {
     question: "Why is Joy Digital a leading digital marketing company in India and search engine optimization agency?",
@@ -290,6 +290,14 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
   // 3. SERVICES LIST
   const SERVICES = [
+    {
+      icon: "fa-solid fa-[#7C3AED] fa-cubes",
+      title: "Custom Website Development",
+      description: "Bespoke Next.js and React web applications engineered for sub-second page loads, enterprise security, and 100% IP code ownership.",
+      benefits: ["Sub-second Edge latency", "Zero plugin security vulnerabilities", "100% IP & code ownership"],
+      href: "/custom-website-development",
+      cta: "Explore Custom Web Dev"
+    },
     {
       icon: "fa-solid fa-laptop-code",
       title: "Website Design",

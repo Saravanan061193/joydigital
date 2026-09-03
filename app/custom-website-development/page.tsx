@@ -24,15 +24,49 @@ export default async function CustomWebDevPage() {
         leadSource="Custom Website Development Page"
         heroCtaText="Book a Free Architecture Call"
         canonicalUrl="https://joydigital.in/custom-website-development"
-        overviewTitle="Decoupled Architectures & Enterprise Web Performance"
+        overviewTitle="High-Intent Custom Website Development for Global Businesses"
         overviewContent={
           <div className="space-y-6">
             <p>
-              Joy Digital delivers an end-to-end <strong>custom website development service</strong> and engineering framework designed for sub-second page loads, flawless conversion paths, and enterprise-grade security. No rigid page builders. No plugin vulnerability chains. Just pure, scalable Next.js & React code built for your unique business goals.
+              Joy Digital is an enterprise <strong>custom website development</strong> agency delivering tailored digital platforms, high-speed applications, and <strong>custom website development services</strong>. We eliminate the vulnerabilities, slow load times, and bloated codebase of legacy page builders by engineering modern, decoupled Next.js & React solutions.
             </p>
             <p>
-              Whether you need a brand-new digital platform or a <strong>custom website redesign</strong> for a slow legacy site, we decouple your front-end user experience from back-end content stores. Content creators get intuitive editorial workflows (Sanity, Strapi, Contentful) while engineers retain total freedom over presentation, state management, and performance.
+              If your company requires <strong>bespoke web development</strong> or <strong>custom business websites</strong> built to capture organic traffic and scale seamlessly, our full-stack engineering team builds scalable <strong>dynamic web development</strong> platforms tailored to your exact business objectives.
             </p>
+            <h3 className="text-xl font-extrabold text-primary-dark mt-8 mb-4">Custom Code (Next.js / React) vs. Off-the-Shelf Templates (WordPress / Wix)</h3>
+            <div className="overflow-x-auto my-6">
+              <table className="w-full text-left text-xs border-collapse border border-[#E9E4F2]">
+                <thead>
+                  <tr className="bg-[#1F1B2D] text-white">
+                    <th className="p-3 border border-[#3D306E]">Architecture Feature</th>
+                    <th className="p-3 border border-[#3D306E] bg-[#7C3AED]/20 text-[#A78BFA]">Custom Next.js & React Build</th>
+                    <th className="p-3 border border-[#3D306E]">Generic WordPress / Wix Template</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#E9E4F2] text-[#1F1B2D]">
+                  <tr className="bg-white">
+                    <td className="p-3 border border-[#E9E4F2] font-bold">Mobile Page Speed & Core Web Vitals</td>
+                    <td className="p-3 border border-[#E9E4F2] font-semibold text-emerald-600">Sub-second (&lt; 1.2s), 95+ Score</td>
+                    <td className="p-3 border border-[#E9E4F2] text-rose-600">Slow (3.5s - 6s), heavy plugin bloat</td>
+                  </tr>
+                  <tr className="bg-[#FAF9FF]">
+                    <td className="p-3 border border-[#E9E4F2] font-bold">Security & Vulnerabilities</td>
+                    <td className="p-3 border border-[#E9E4F2] font-semibold text-emerald-600">Decoupled serverless static rendering (Zero database attack vector)</td>
+                    <td className="p-3 border border-[#E9E4F2] text-rose-600">High risk of plugin hacks, SQL injections, and outdated core scripts</td>
+                  </tr>
+                  <tr className="bg-white">
+                    <td className="p-3 border border-[#E9E4F2] font-bold">Code & IP Ownership</td>
+                    <td className="p-3 border border-[#E9E4F2] font-semibold text-emerald-600">100% full IP code ownership handed to client</td>
+                    <td className="p-3 border border-[#E9E4F2] text-rose-600">Vendor lock-in on proprietary builder platforms</td>
+                  </tr>
+                  <tr className="bg-[#FAF9FF]">
+                    <td className="p-3 border border-[#E9E4F2] font-bold">SEO & Indexing Control</td>
+                    <td className="p-3 border border-[#E9E4F2] font-semibold text-emerald-600">Automated JSON-LD schemas, SSR, and clean semantic markup</td>
+                    <td className="p-3 border border-[#E9E4F2] text-rose-600">Cluttered DOM nodes and inline style overrides blocking crawlers</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Serverless & Edge Compute Execution</h3>
             <p>
               We leverage modern edge distribution (Vercel Edge, AWS CloudFront) to execute compute logic physically closer to your international site visitors across North America, Europe, Australia, and APAC.
@@ -139,12 +173,16 @@ export default async function CustomWebDevPage() {
           {
             question: "Why choose custom website development with Next.js?",
             answer: "Custom Next.js web application development delivers sub-second page loads, zero plugin vulnerabilities, total design freedom, and 100% code ownership."
+          },
+          {
+            question: "What is the difference between custom website development and off-the-shelf templates?",
+            answer: "Custom website development builds bespoke, clean, typed code tailored to your exact workflows and security requirements, whereas templates use bloated generic page builders that slow down mobile page loads and expose sites to plugin vulnerabilities."
           }
         ]}
         crossLinks={[
-          { href: "/dynamic-website-development", label: "Dynamic Web Dev" },
-          { href: "/website-development", label: "Web Engineering" },
-          { href: "/industries/ecommerce", label: "Ecommerce Solutions" },
+          { href: "/website-development", label: "Custom Web Development Services" },
+          { href: "/web-design-services", label: "Custom Website Design" },
+          { href: "/ecommerce-website-development", label: "Custom Ecommerce Website Development" },
         ]}
       />
     </>

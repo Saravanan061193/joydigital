@@ -55,8 +55,8 @@ const COUNTRY_CODES = [
   { code: "+45", flag: "🇩🇰", name: "Denmark" },
 ];
 
-const heroMainWords = ["High-Performance", "Websites", "&", "SEO", "Engineered", "to"];
-const heroGradientWords = ["Scale", "Your", "Business", "Globally."];
+const heroMainWords = ["Custom", "Website", "Development", "Company", "Engineered", "for"];
+const heroGradientWords = ["Scale", "&", "Speed."];
 
 // Framer Motion Variants for Staggered Orchestration
 const containerVariants: Variants = {

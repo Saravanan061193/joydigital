@@ -3,8 +3,18 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Website Design Company & Services | Joy Digital",
-  description: "Joy Digital is a leading website design company. We craft stunning, mobile-responsive, conversion-focused UI/UX layouts and corporate brand portals.",
+  title: "Custom Website Design & Professional UI/UX Services | Joy Digital",
+  description: "Joy Digital offers custom website design services. We craft responsive web design, conversion-focused UI/UX layouts, and intuitive brand design systems.",
+  keywords: [
+    "Custom Website Design",
+    "Responsive Web Design",
+    "Professional UI/UX Design",
+    "Conversion-Focused Web Design",
+    "User Interface Architecture",
+    "Figma UI UX Design",
+    "Brand Layout Design",
+    "Joy Digital"
+  ],
   alternates: {
     canonical: "https://joydigital.in/web-design-services",
   },
@@ -13,24 +23,15 @@ export const metadata: Metadata = {
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Creative Web Design & UI/UX Services",
-  "serviceType": "Web Design",
+  "name": "Custom Website Design & Professional UI/UX Services",
+  "serviceType": "Custom Website Design",
   "provider": {
-    "@type": "LocalBusiness",
+    "@type": "Organization",
     "name": "Joy Digital",
     "image": "https://joydigital.in/assets/images/logo.webp",
-    "telephone": "+919080026133",
-    "priceRange": "₹₹",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Old Perungalathur",
-      "addressLocality": "Chennai",
-      "addressRegion": "Tamil Nadu",
-      "postalCode": "600063",
-      "addressCountry": "IN"
-    }
+    "telephone": "+919080026133"
   },
-  "description": "Joy Digital provides UI/UX web design, corporate branding, landing page layouts, and mobile interfaces built to drive high user conversion rates in India.",
+  "description": "Joy Digital provides custom website design, responsive web design, professional UI/UX design systems, and conversion-focused landing page architectures.",
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
@@ -44,8 +45,8 @@ export default function WebDesignPage() {
   return (
     <ServicePageTemplate
       serviceName="Web Design"
-      heroTitle="Stunning, Conversion-Focused Website Design Company in Chennai"
-      heroSubtitle="Engage your target audience, communicate your core value proposition clearly, and improve customer trust. As a premium website design company in Chennai, we design custom digital interfaces that merge elegant layout systems with high-converting calls-to-action."
+      heroTitle="Custom Website Design & Conversion-Focused UI/UX Systems"
+      heroSubtitle="Engage your target audience with custom website design. We craft responsive web design systems, intuitive visual hierarchies, and conversion-focused user interfaces."
       leadSource="Web Design Landing Page"
       overviewTitle="Merging Premium Aesthetics with Intuitive User Experiences"
       overviewContent={

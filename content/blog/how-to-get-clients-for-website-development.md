@@ -22,7 +22,9 @@ secondaryKeywords: "how to find clients for website development, how to get fore
 canonicalUrl: "https://joydigital.in/blog/how-to-get-clients-for-website-development"
 robots: "Index, Follow"
 internalLinks:
-  - anchorText: Custom Web Development
+  - anchorText: Custom Website Development
+    targetUrl: /custom-website-development
+  - anchorText: Custom Web Development Services
     targetUrl: /website-development
   - anchorText: Offshore Web Development Partner
     targetUrl: /offshore-web-development-partner
