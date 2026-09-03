@@ -2,28 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-
-const COUNTRY_CODES = [
-  { code: "+91", flag: "🇮🇳", name: "India" },
-  { code: "+1", flag: "🇺🇸", name: "USA" },
-  { code: "+44", flag: "🇬🇧", name: "UK" },
-  { code: "+971", flag: "🇦🇪", name: "UAE" },
-  { code: "+61", flag: "🇦🇺", name: "Australia" },
-  { code: "+65", flag: "🇸🇬", name: "Singapore" },
-  { code: "+1", flag: "🇨🇦", name: "Canada" },
-  { code: "+60", flag: "🇲🇾", name: "Malaysia" },
-  { code: "+94", flag: "🇱🇰", name: "Sri Lanka" },
-  { code: "+49", flag: "🇩🇪", name: "Germany" },
-  { code: "+33", flag: "🇫🇷", name: "France" },
-  { code: "+966", flag: "🇸🇦", name: "Saudi Arabia" },
-  { code: "+974", flag: "🇶🇦", name: "Qatar" },
-  { code: "+965", flag: "🇰🇼", name: "Kuwait" },
-  { code: "+968", flag: "🇴🇲", name: "Oman" },
-  { code: "+973", flag: "🇧🇭", name: "Bahrain" },
-  { code: "+64", flag: "🇳🇿", name: "New Zealand" },
-  { code: "+353", flag: "🇮🇪", name: "Ireland" },
-  { code: "+27", flag: "🇿🇦", name: "South Africa" },
-];
+import { ALL_COUNTRY_CODES } from "@/lib/countryCodes";
 
 export default function ExitIntentPopup() {
   const pathname = usePathname();
@@ -305,7 +284,7 @@ export default function ExitIntentPopup() {
                       disabled={isLoading}
                       className="w-full text-xs py-3 pl-3 pr-7 bg-light-bg rounded-lg border border-gray-200 focus:border-accent outline-none appearance-none transition-all cursor-pointer font-medium text-text-primary"
                     >
-                      {COUNTRY_CODES.map((c) => (
+                      {ALL_COUNTRY_CODES.map((c) => (
                         <option key={`${c.code}-${c.name}`} value={c.code}>
                           {c.flag} {c.code}
                         </option>

@@ -19,41 +19,11 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { getUtmParameters } from "@/lib/utmTracker";
+import { ALL_COUNTRY_CODES, POPULAR_COUNTRY_CODES, getFilteredCountries } from "@/lib/countryCodes";
 
 interface ModernHeroSectionProps {
   country?: string;
 }
-
-const COUNTRY_CODES = [
-  { code: "+91", flag: "🇮🇳", name: "India" },
-  { code: "+1", flag: "🇺🇸", name: "United States" },
-  { code: "+44", flag: "🇬🇧", name: "United Kingdom" },
-  { code: "+971", flag: "🇦🇪", name: "United Arab Emirates" },
-  { code: "+1", flag: "🇨🇦", name: "Canada" },
-  { code: "+61", flag: "🇦🇺", name: "Australia" },
-  { code: "+65", flag: "🇸🇬", name: "Singapore" },
-  { code: "+49", flag: "🇩🇪", name: "Germany" },
-  { code: "+33", flag: "🇫🇷", name: "France" },
-  { code: "+966", flag: "🇸🇦", name: "Saudi Arabia" },
-  { code: "+974", flag: "🇶🇦", name: "Qatar" },
-  { code: "+965", flag: "🇰🇼", name: "Kuwait" },
-  { code: "+968", flag: "🇴🇲", name: "Oman" },
-  { code: "+973", flag: "🇧🇭", name: "Bahrain" },
-  { code: "+60", flag: "🇲🇾", name: "Malaysia" },
-  { code: "+81", flag: "🇯🇵", name: "Japan" },
-  { code: "+82", flag: "🇰🇷", name: "South Korea" },
-  { code: "+39", flag: "🇮🇹", name: "Italy" },
-  { code: "+34", flag: "🇪🇸", name: "Spain" },
-  { code: "+55", flag: "🇧🇷", name: "Brazil" },
-  { code: "+27", flag: "🇿🇦", name: "South Africa" },
-  { code: "+64", flag: "🇳🇿", name: "New Zealand" },
-  { code: "+353", flag: "🇮🇪", name: "Ireland" },
-  { code: "+41", flag: "🇨🇭", name: "Switzerland" },
-  { code: "+31", flag: "🇳🇱", name: "Netherlands" },
-  { code: "+46", flag: "🇸🇪", name: "Sweden" },
-  { code: "+47", flag: "🇳🇴", name: "Norway" },
-  { code: "+45", flag: "🇩🇰", name: "Denmark" },
-];
 
 const heroMainWords = ["Custom", "Website", "Development", "Company", "Engineered", "for"];
 const heroGradientWords = ["Scale", "&", "Speed."];
@@ -138,7 +108,19 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
     mobile: "",
     website: "",
   });
-  const [selectedCountryCode, setSelectedCountryCode] = useState("+91");
+
+  const getDefaultCountryCode = (c: string) => {
+    switch (c) {
+      case "us": return "+1";
+      case "uk": return "+44";
+      case "ae": return "+971";
+      case "ca": return "+1";
+      case "au": return "+61";
+      default: return "+91";
+    }
+  };
+
+  const [selectedCountryCode, setSelectedCountryCode] = useState(() => getDefaultCountryCode(country));
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -146,6 +128,13 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
   const [isCountryOpen, setIsCountryOpen] = useState(false);
   const [countrySearch, setCountrySearch] = useState("");
   const countryDropdownRef = useRef<HTMLDivElement>(null);
+
+  const filteredCountries = getFilteredCountries(countrySearch);
+  const displayCountries = countrySearch.trim()
+    ? filteredCountries
+    : [...POPULAR_COUNTRY_CODES, ...ALL_COUNTRY_CODES.filter((c) => !POPULAR_COUNTRY_CODES.some((p) => p.name === c.name))];
+
+  const selectedCountry = ALL_COUNTRY_CODES.find((c) => c.code === selectedCountryCode) || ALL_COUNTRY_CODES[0];
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -264,13 +253,6 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
       router.push("/case-studies");
     }
   };
-
-  const selectedCountry = COUNTRY_CODES.find((c) => c.code === selectedCountryCode);
-  const filteredCountries = COUNTRY_CODES.filter(
-    (c) =>
-      c.name.toLowerCase().includes(countrySearch.toLowerCase()) ||
-      c.code.includes(countrySearch)
-  );
 
   return (
     <section className="relative pt-24 lg:pt-32 pb-20 overflow-hidden bg-[#0B0914] text-white border-b border-[#1E1838] select-none">
@@ -540,7 +522,7 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
                               onClick={(e) => e.stopPropagation()}
                             />
                           </div>
-                          {filteredCountries.map((c) => (
+                          {displayCountries.map((c) => (
                             <button
                               key={`${c.code}-${c.name}`}
                               type="button"
