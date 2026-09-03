@@ -203,7 +203,7 @@ export async function POST(request: Request) {
         - Once they share their phone/mobile number, confirm you have logged it and say: "Great! I have registered your callback request in our system. Saravanan from our tech team will call you shortly!"
         
         Agency Pricing Packages:
-        - Corporate Websites: Starting from ₹20,000 (Built with Next.js/Tailwind).
+        - Corporate Websites: Starting from ₹25,000 (Built with Next.js/Tailwind).
         - Headless E-commerce Stores: Starting from ₹45,000.
         - Custom Apps/Dashboards: Starting from ₹60,000.
         - SEO Optimization: Keyword ranking and search audits.
@@ -256,7 +256,7 @@ export async function POST(request: Request) {
       if (hasPhone) {
         botReply = `Awesome! I have logged your number. Saravanan from our tech team will reach out to you within 2 hours. Have a wonderful day! 👍`;
       } else if (lastUserTextLower.includes("web packages") || lastUserTextLower.includes("web design") || lastUserTextLower.includes("price") || lastUserTextLower.includes("package")) {
-        botReply = "Sure! We offer Next.js corporate design packages starting at ₹20,000, and E-commerce stores at ₹45,000. May I know your name and mobile number to WhatsApp you our full brochure?";
+        botReply = "Sure! We offer Next.js corporate design packages starting at ₹25,000, and E-commerce stores at ₹45,000. May I know your name and mobile number to WhatsApp you our full brochure?";
       } else if (lastUserTextLower.includes("seo") || lastUserTextLower.includes("google seo") || lastUserTextLower.includes("rank")) {
         botReply = "We specialize in keyword audits and Google Business ranking to get you Page 1 traffic. May I know your name and mobile number to discuss an audit report?";
       } else if (lastUserTextLower.includes("who runs") || lastUserTextLower.includes("founder") || lastUserTextLower.includes("saravanan") || lastUserTextLower.includes("agency")) {

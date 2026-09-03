@@ -45,7 +45,7 @@ const pageSchema = {
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
-    "lowPrice": "15000",
+    "lowPrice": "25000",
     "highPrice": "45000",
     "offerCount": "3"
   }
@@ -141,7 +141,7 @@ export default function WebsiteDesignChennai() {
       pricingTiers={[
         {
           name: "Starter Design",
-          price: "₹15,000",
+          price: "₹25,000",
           period: "one-time",
           description: "Perfect for local service providers, small business portfolios, and LIC advisors.",
           features: [
@@ -156,7 +156,7 @@ export default function WebsiteDesignChennai() {
         },
         {
           name: "Professional Design",
-          price: "₹25,000",
+          price: "₹35,000",
           period: "one-time",
           description: "Best for medical clinics, local hotels, educational hubs, and growing companies.",
           isPopular: true,

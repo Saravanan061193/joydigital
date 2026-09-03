@@ -39,7 +39,7 @@ const pageSchema = {
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
-    "lowPrice": "15000",
+    "lowPrice": "25000",
     "highPrice": "65000",
     "offerCount": "3"
   }
@@ -141,7 +141,7 @@ export default function ToursTravelsWebPage() {
       pricingTiers={[
         {
           name: "Standard Agency Profile",
-          price: "₹15,000",
+          price: "₹25,000",
           period: "one-time",
           description: "Perfect for local travel agents aiming for a professional profile and featured packages grid.",
           features: [

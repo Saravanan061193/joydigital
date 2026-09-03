@@ -32,7 +32,7 @@ const pageSchema = {
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
-    "lowPrice": "15000",
+    "lowPrice": "25000",
     "highPrice": "75000",
     "offerCount": "3"
   }
@@ -125,7 +125,7 @@ export default function WebDevMadurai() {
       pricingTiers={[
         {
           name: "Starter Site",
-          price: "₹15,000",
+          price: "₹25,000",
           period: "one-time",
           description: "Ideal for local advisors, growing retail shops, and professional business portfolios.",
           features: [

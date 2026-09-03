@@ -46,8 +46,8 @@ const pageSchema = {
       "offers": {
         "@type": "AggregateOffer",
         "priceCurrency": "INR",
-        "lowPrice": "12000",
-        "highPrice": "30000",
+        "lowPrice": "25000",
+        "highPrice": "45000",
         "offerCount": "2"
       }
     }
@@ -204,7 +204,7 @@ export default function SmallBusinessWebPage() {
       pricingTiers={[
         {
           name: "Small Business Starter",
-          price: "₹12,000",
+          price: "₹25,000",
           period: "one-time ($600 USD)",
           description: "Perfect for single-service professionals, local tradesmen, and new micro-businesses.",
           features: [
@@ -219,7 +219,7 @@ export default function SmallBusinessWebPage() {
         },
         {
           name: "Small Business Growth Plan",
-          price: "₹30,000",
+          price: "₹45,000",
           period: "one-time ($1,400 USD)",
           description: "Recommended for growing service companies, local shops, and multi-service vendors.",
           isPopular: true,
@@ -238,7 +238,7 @@ export default function SmallBusinessWebPage() {
       faqs={[
         {
           question: "How much does a website for a small business cost?",
-          answer: "Our small business website packages start from ₹12,000 ($600 USD) for starter sites up to ₹30,000 ($1,400 USD) for multi-page growth portals.",
+          answer: "Our small business website packages start from ₹25,000 ($600 USD) for starter sites up to ₹45,000 ($1,400 USD) for multi-page growth portals.",
         },
         {
           question: "How long does it take to build a small business website?",

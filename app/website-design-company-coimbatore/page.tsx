@@ -33,7 +33,7 @@ const pageSchema = {
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
-    "lowPrice": "15000",
+    "lowPrice": "25000",
     "highPrice": "35000",
     "offerCount": "2"
   }
@@ -126,7 +126,7 @@ export default function WebDesignCoimbatore() {
       pricingTiers={[
         {
           name: "Standard Plan",
-          price: "₹15,000",
+          price: "₹25,000",
           period: "one-time",
           description: "Perfect for local service providers, freelancers, and small shops.",
           features: [

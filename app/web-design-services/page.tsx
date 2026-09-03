@@ -35,7 +35,7 @@ const pageSchema = {
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
-    "lowPrice": "12000",
+    "lowPrice": "25000",
     "highPrice": "65000",
     "offerCount": "3"
   }
@@ -63,10 +63,6 @@ export default function WebDesignPage() {
           </p>
           <p>
             Additionally, we build clear visual hierarchies. We draw attention to your primary offers using high-contrast colors, open whitespace, and clear headings. Our designs balance aesthetics with performance, ensuring your brand stands out while maintaining fast load speeds. Whether you are a local shop in Chennai or a large corporate entity in India, we deliver designs that convey professional trust.
-          </p>
-          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Searching for a Creative Website Designer Near Me?</h3>
-          <p>
-            When searching for an experienced <strong>website designer near me</strong> or a professional <strong>web designer near me</strong>, Joy Digital provides bespoke digital UI/UX solutions engineered to make your business stand out. We combine modern aesthetics, mobile-first responsiveness, and conversion-focused design to ensure your website captures attention and turns visitors into loyal customers.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">The Importance of User-Centric Design in Digital Branding</h3>
           <p>
@@ -141,7 +137,7 @@ export default function WebDesignPage() {
       pricingTiers={[
         {
           name: "Startup Design UI",
-          price: "₹12,000",
+          price: "₹25,000",
           description: "Best for small companies that need a clean layout to start their marketing campaigns.",
           features: [
             "Up to 5 Pages Custom UI Design",

@@ -43,7 +43,7 @@ const pageSchema = {
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
-    "lowPrice": "15000",
+    "lowPrice": "25000",
     "highPrice": "75000",
     "offerCount": "3"
   }
@@ -147,7 +147,7 @@ export default function WebDevChennai() {
       pricingTiers={[
         {
           name: "Startup Website",
-          price: "₹15,000",
+          price: "₹25,000",
           period: "one-time",
           description: "Perfect for local service providers, LIC agents, and small business portfolios.",
           features: [

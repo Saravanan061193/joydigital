@@ -42,7 +42,7 @@ const pageSchema = {
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
-    "lowPrice": "15000",
+    "lowPrice": "25000",
     "highPrice": "95000",
     "offerCount": "3"
   }
@@ -72,7 +72,7 @@ export default function WebDevPage() {
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">What is the Cost of Website Development in India?</h3>
           <p>
-            When evaluating <strong>what is the cost of website development in india</strong>, basic starter sites generally cost between ₹15,000 and ₹35,000. Advanced business portals with headless CMS options cost ₹35,000 to ₹75,000, while enterprise custom SaaS or e-commerce platforms range higher based on feature complexity. Joy Digital offers transparent flat-rate pricing starting at ₹15,000 with no hidden maintenance fees.
+            When evaluating <strong>what is the cost of website development in india</strong>, basic starter sites generally cost between ₹25,000 and ₹45,000. Advanced business portals with headless CMS options cost ₹45,000 to ₹75,000, while enterprise custom SaaS or e-commerce platforms range higher based on feature complexity. Joy Digital offers transparent flat-rate pricing starting at ₹25,000 with no hidden maintenance fees.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Which Language and AI Tools are Best for Website Development?</h3>
           <p>
@@ -84,75 +84,60 @@ export default function WebDevPage() {
           </p>
         </div>
       }
-      benefitsTitle="Why Modern Businesses Partner with Joy Digital"
-      benefitsSubtitle="We don't just build sites; we construct high-converting lead pipelines that combine beautiful visuals with fast-loading frameworks."
+      benefitsTitle="Why Choose Our Custom Web Engineering Team?"
+      benefitsSubtitle="We construct fast loading websites designed to capture enterprise leads."
       benefits={[
         {
-          icon: "fa-solid fa-palette",
-          title: "Custom UX Design (No Templates)",
-          description: "We design tailored interfaces specifically for your brand identity and audience, avoiding generic and bloated templates.",
+          icon: "fa-solid fa-code",
+          title: "Custom React/Next.js Architecture",
+          description: "Clean, modular front-end component engineering with zero layout shifts or bloated page builder dependencies.",
         },
         {
-          icon: "fa-solid fa-bolt",
-          title: "Fast Performance (Under 1.5s)",
-          description: "Engineered using clean Next.js/React code structure to load under 1.5 seconds, satisfying Core Web Vitals.",
+          icon: "fa-solid fa-gauge-high",
+          title: "Sub-Second Load Times",
+          description: "Serverless static generation ensuring site speeds under 1.5 seconds for instant user engagement.",
         },
         {
-          icon: "fa-solid fa-funnel-dollar",
-          title: "Conversion-Focused Structure",
-          description: "Layouts organized strategically to capture attention, build brand trust, and guide visitors towards inquiry.",
+          icon: "fa-solid fa-mobile-screen-button",
+          title: "100% Mobile Responsiveness",
+          description: "Fluid design tested across smart devices, ensuring grids and forms scale on all screen viewports.",
         },
         {
-          icon: "fa-solid fa-mobile-screen",
-          title: "Mobile-Responsive Layout",
-          description: "A seamless viewport adaptation that works perfectly on smartphones, tablets, and desktops alike.",
+          icon: "fa-solid fa-magnifying-glass-chart",
+          title: "Built-In Technical SEO",
+          description: "Pre-configured sitemaps, dynamic metadata, alt properties, canonical tags, and JSON-LD schema markup.",
         },
         {
-          icon: "fa-brands fa-whatsapp",
-          title: "WhatsApp Lead Integration",
-          description: "Contextual, pre-filled WhatsApp click-to-chat features that make contacting you instant and simple.",
+          icon: "fa-solid fa-lock",
+          title: "Enterprise Web Security",
+          description: "Static pre-rendering protecting customer datasets from traditional database attack vectors.",
         },
         {
-          icon: "fa-solid fa-gears",
-          title: "Admin Panel / CMS Option",
-          description: "Clean content management systems allowing you to update your blog, change services, and manage leads.",
-        },
-        {
-          icon: "fa-solid fa-magnifying-glass",
-          title: "GSC & Sitemap Integration",
-          description: "Full configuration of Google Search Console, tracking scripts, and auto-updating sitemaps for SEO indexing.",
-        },
-        {
-          icon: "fa-solid fa-shield-halved",
-          title: "Standard Security & SSL",
-          description: "Fully configured HTTPS/SSL certificates, vulnerability scanning, and secure API form handshakes.",
-        },
-        {
-          icon: "fa-solid fa-server",
-          title: "1-Year Hosting Setup Support",
-          description: "We set up, configure, and monitor your cloud hosting (e.g. Vercel or CDN servers) free for 1 year.",
+          icon: "fa-solid fa-file-contract",
+          title: "Full Code & IP Ownership",
+          description: "Clean TypeScript codebase handed over directly to your team upon launch with zero vendor lock-in.",
         },
       ]}
-      processTitle="Our Growth-Focused Development Workflow"
-      processSubtitle="We leverage a systematic 4-step workflow to plan, build, test, and deploy your custom web project successfully."
+      processTitle="Our Agile Development Workflow"
+      processSubtitle="How we systematically plan, design, code, and deploy your custom web platform."
       processSteps={[
         {
           step: "1",
-          icon: "fa-solid fa-comments",
-          title: "Discovery & Planning",
-          description: "We align on your brand identity, service catalog, target keywords, user journeys, and conversion objectives before writing a single line of code.",
+          icon: "fa-solid fa-clipboard-list",
+          title: "Discovery & Blueprint",
+          description: "We analyze your business goals, target keywords, user journeys, and competitive landscape to draft a site blueprint.",
         },
         {
           step: "2",
-          icon: "fa-solid fa-bezier-curve",
-          title: "Visual Design & Prototyping",
-          description: "Our UI/UX designers create custom layout mockups showcasing typography, color schemes, and visual hierarchies in Figma for your review and approval.",
+          icon: "fa-solid fa-border-all",
+          title: "UI/UX & Wireframing",
+          description: "We build intuitive Figma layout wireframes for mobile and desktop screens to align visual hierarchy before coding.",
         },
         {
           step: "3",
           icon: "fa-solid fa-code",
-          title: "Development & Coding",
-          description: "We build responsive interfaces using clean code, semantic structures, metadata variables, schema integrations, and interactive React states for optimal speed.",
+          title: "Next.js Engineering",
+          description: "We write clean, modular React/TypeScript code, integrating components, APIs, and optimizing image assets.",
         },
         {
           step: "4",
@@ -166,7 +151,7 @@ export default function WebDevPage() {
       pricingTiers={[
         {
           name: "Starter Website",
-          price: "₹15,000",
+          price: "₹25,000",
           description: "Perfect for new local service businesses wanting to establish professional authority online.",
           features: [
             "Custom responsive website",
@@ -182,7 +167,7 @@ export default function WebDevPage() {
         },
         {
           name: "Business Growth Website",
-          price: "₹35,000",
+          price: "₹45,000",
           description: "Recommended for growing companies targeting local search rankings and active online client acquisition.",
           isPopular: true,
           features: [
@@ -229,7 +214,7 @@ export default function WebDevPage() {
         },
         {
           question: "What is the cost of website development in India?",
-          answer: "The cost of website development in India with Joy Digital starts at ₹15,000 for standard business sites. Custom multi-page growth sites average ₹35,000, while complex enterprise platforms or e-commerce stores are quoted dynamically.",
+          answer: "The cost of website development in India with Joy Digital starts at ₹25,000 for standard business sites. Custom multi-page growth sites average ₹45,000, while complex enterprise platforms or e-commerce stores are quoted dynamically.",
         },
         {
           question: "Which language is best for website development?",
