@@ -3,8 +3,22 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Tour Booking & Travel Agent Website Design | Joy Digital",
-  description: "Get a custom travel agency website. Showcase tour packages, itineraries, and capture package bookings with instant WhatsApp leads integration.",
+  title: "Tour Operator & Travel Agency Website Development | Joy Digital",
+  description: "Joy Digital is a leading tourism website development company. We offer custom website development for tour operators, travel booking website development, and travel agency website redesign.",
+  keywords: [
+    "custom website development for tour operators",
+    "travel agency website development",
+    "tour operator website design",
+    "custom travel website development",
+    "tourism website development company",
+    "website development for travel companies",
+    "travel booking website development",
+    "safari tour operator website development",
+    "tour package website development",
+    "travel agency website redesign",
+    "Joy Digital",
+    "Travel Web Engineering"
+  ],
   alternates: {
     canonical: "https://joydigital.in/website-for-tours-and-travels",
   },
@@ -13,30 +27,21 @@ export const metadata: Metadata = {
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Tours & Travels Website Design",
-  "serviceType": "Travel Web Development",
+  "name": "Custom Travel Agency & Tour Operator Website Development",
+  "serviceType": "Travel Web Development Services",
   "provider": {
-    "@type": "LocalBusiness",
+    "@type": "Organization",
     "name": "Joy Digital",
     "image": "https://joydigital.in/assets/images/logo.webp",
-    "telephone": "+919080026133",
-    "priceRange": "₹₹",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Old Perungalathur",
-      "addressLocality": "Chennai",
-      "addressRegion": "Tamil Nadu",
-      "postalCode": "600063",
-      "addressCountry": "IN"
-    }
+    "telephone": "+919080026133"
   },
-  "description": "Professional web design and development services for tour operators, travel agents, and trip planners. Showcase package itineraries and drive bookings.",
+  "description": "Joy Digital is a leading tourism website development company providing custom website development for tour operators, safari tour operator website development, and travel booking website development.",
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "INR",
     "lowPrice": "15000",
-    "highPrice": "35000",
-    "offerCount": "2"
+    "highPrice": "65000",
+    "offerCount": "3"
   }
 };
 
@@ -44,22 +49,28 @@ export default function ToursTravelsWebPage() {
   return (
     <ServicePageTemplate
       serviceName="Website for Tours & Travels"
-      heroTitle="Custom Travel Agency & Tour Operator Website Design"
-      heroSubtitle="Stop relying strictly on third-party aggregators. Showcase your tour itineraries, structure clear package details, and capture trip inquiries directly on WhatsApp."
+      heroTitle="Custom Website Development for Tour Operators & Travel Agencies"
+      heroSubtitle="Partner with a premier tourism website development company. Build custom travel website development systems, tour package website development portals, and travel booking website setups."
       leadSource="Website for Tours and Travels Landing Page"
       heroCtaText="Get Travel Website Quote"
-      overviewTitle="Itinerary Showcases & Direct Trip Bookings Online"
+      canonicalUrl="https://joydigital.in/website-for-tours-and-travels"
+      overviewTitle="Custom Travel Agency Website Development Services"
       overviewContent={
         <div className="space-y-6">
           <p>
-            In the travel industry, booking speed and trust are everything. When travelers search for holiday packages, they expect professional, clear day-by-day itineraries, high-resolution location photos, and direct booking options.
+            In the competitive travel and hospitality market, partnering with an experienced <strong>tourism website development company</strong> is crucial to capturing direct tourist bookings. As specialists in <strong>website development for travel companies</strong>, Joy Digital delivers full-stack <strong>travel agency website development</strong>, high-converting <strong>tour operator website design</strong>, and modern Next.js web applications.
           </p>
+          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Custom Website Development for Tour Operators & Safari Organizers</h3>
           <p>
-            At Joy Digital, we build premium, speed-optimized website layouts for **travel agents, tour operators, trekking clubs, and transport providers**. Each website features direct WhatsApp booking links, downloadable travel guides, and local neighborhood SEO setups.
+            Whether you manage domestic package tours or international wildlife expeditions, our <strong>custom website development for tour operators</strong> and specialized <strong>safari tour operator website development</strong> allows you to showcase day-by-day itineraries, high-resolution destination galleries, inclusions, and downloadable travel guides.
           </p>
-          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Responsive Packages & Dynamic Trip Planners</h3>
+          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Travel Booking Website Development & Tour Package Portals</h3>
           <p>
-            We optimize photo sizes so your destination and activities galleries load in under 1.5 seconds on mobile devices. Travelers can select holiday categories, view available dates, and request custom quotes instantly.
+            Our <strong>custom travel website development</strong> and <strong>travel booking website development</strong> solutions feature direct WhatsApp click-to-chat links, interactive query forms, and automated itinerary downloads. We build specialized <strong>tour package website development</strong> engines designed to load in under 1.5s on mobile networks.
+          </p>
+          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Looking for a Professional Travel Agency Website Redesign?</h3>
+          <p>
+            If your current travel website is slow, outdated, or failing to convert visitors, our <strong>travel agency website redesign</strong> service transforms slow templates into fast-loading, mobile-responsive Next.js portals that increase direct inquiries and reduce dependency on expensive third-party booking aggregators.
           </p>
         </div>
       }
@@ -162,19 +173,27 @@ export default function ToursTravelsWebPage() {
       ]}
       faqs={[
         {
-          question: "Can guests request custom holiday plans?",
-          answer: "Yes! We integrate secure interactive forms where travelers submit destination preferences, budgets, and dates, routing details directly to your staff.",
+          question: "Why choose Joy Digital as your tourism website development company?",
+          answer: "Joy Digital is a specialized tourism website development company. We engineer custom travel agency website development systems, safari tour operator website development platforms, and travel booking website setups built to load under 1.5s.",
         },
         {
-          question: "Do I need to pay monthly charges?",
-          answer: "No. We build on serverless architectures, so there are zero recurring hosting fees. You only pay for your annual domain name renewal.",
+          question: "Do you offer custom website development for tour operators and safari operators?",
+          answer: "Yes! We specialize in custom website development for tour operators and safari tour operator website development. We design custom package displays, day-wise itineraries, inclusion lists, and direct WhatsApp inquiry buttons.",
+        },
+        {
+          question: "Can you assist with a travel agency website redesign?",
+          answer: "Absolutely. Our travel agency website redesign service upgrades slow, outdated websites into fast Next.js & React travel portals designed to rank on Google search and capture more package inquiries.",
+        },
+        {
+          question: "Can guests request custom holiday plans?",
+          answer: "Yes! We integrate secure interactive forms where travelers submit destination preferences, budgets, and dates, routing details directly to your staff.",
         },
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
-        { href: "/website-development-company-chennai", label: "website development in Chennai" },
-        { href: "/portfolio", label: "View Portfolio" },
-        { href: "/contact", label: "Contact Us" },
+        { href: "/custom-website-development", label: "Custom Website Development" },
+        { href: "/website-development", label: "Custom Web Development Services" },
+        { href: "/web-design-services", label: "Custom Website Design" },
       ]}
     />
   );
