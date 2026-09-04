@@ -294,21 +294,22 @@ export default function BlogArticleContainer({ post, htmlContent, relatedPosts, 
             dangerouslySetInnerHTML={{ __html: htmlContent }}
           />
 
-          {/* Internal Links Box (if specified by CMS) */}
+          {/* Internal Links Box (Recommended Related Services & Resources) */}
           {post.internalLinks && post.internalLinks.length > 0 && (
-            <div className="mt-10 p-6 bg-slate-50 border border-slate-200 rounded-2xl select-none">
-              <h4 className="text-xs font-black uppercase tracking-wider text-slate-900 mb-3 flex items-center gap-2">
-                <i className="fa-solid fa-link text-primary" /> Recommended Related Resources
+            <div className="mt-10 p-6 bg-gradient-to-br from-slate-50 to-purple-50/40 border border-primary/20 rounded-2xl select-none shadow-sm">
+              <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                <i className="fa-solid fa-compass text-primary" /> Recommended Services &amp; Solutions
               </h4>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-bold">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-bold">
                 {post.internalLinks.map((link, idx) => (
                   <li key={idx}>
                     <Link
                       href={link.targetUrl}
-                      className="text-primary hover:underline flex items-center gap-1.5 p-2 bg-white rounded-xl border border-slate-200/80 shadow-2xs transition-transform hover:translate-x-1"
+                      className="text-slate-800 hover:text-primary flex items-center justify-between p-3 bg-white rounded-xl border border-slate-200/90 shadow-xs hover:border-primary/40 hover:shadow-md transition-all duration-200 group"
                     >
-                      <i className="fa-solid fa-chevron-right text-[10px] text-slate-400" />
-                      <span>{link.anchorText}</span>
+                      <span className="truncate pr-2 font-bold">{link.anchorText}</span>
+                      <i className="fa-solid fa-arrow-right text-[10px] text-primary group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </li>
                 ))}

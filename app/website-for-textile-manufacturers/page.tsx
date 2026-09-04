@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 import Link from "next/link";
+import { getPostBySlug } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "Global Textile Manufacturer Website Design & B2B SEO | Joy Digital",
@@ -54,7 +55,12 @@ const pageSchema = {
   ]
 };
 
-export default function TextileWebPage() {
+export default async function TextileWebPage() {
+  const post1 = await getPostBySlug("textile-manufacturing-website-features-2026");
+  const post2 = await getPostBySlug("custom-website-development-requirements-guide");
+  const post3 = await getPostBySlug("why-ai-built-websites-fail-b2b-web-architecture");
+  const relatedBlogPosts = [post1, post2, post3].filter((p): p is NonNullable<typeof p> => p !== null);
+
   return (
     <ServicePageTemplate
       serviceName="Website for Textile Manufacturers"
@@ -290,6 +296,8 @@ export default function TextileWebPage() {
         { href: "/portfolio", label: "View Portfolio" },
         { href: "/contact", label: "Contact Sales Team" },
       ]}
+      relatedBlogPosts={relatedBlogPosts}
     />
   );
 }
+

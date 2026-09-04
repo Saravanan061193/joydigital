@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 import Link from "next/link";
+import { getPostBySlug } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "Real Estate Website Design & Property Lead SEO | Joy Digital",
@@ -54,7 +55,12 @@ const pageSchema = {
   ]
 };
 
-export default function RealEstateWebPage() {
+export default async function RealEstateWebPage() {
+  const post1 = await getPostBySlug("real-estate-website-design-features");
+  const post2 = await getPostBySlug("ai-agents-real-estate-property-hunting-trends");
+  const post3 = await getPostBySlug("how-dubai-real-estate-brokers-capture-hnw-buyers-ai-seo");
+  const relatedBlogPosts = [post1, post2, post3].filter((p): p is NonNullable<typeof p> => p !== null);
+
   return (
     <ServicePageTemplate
       serviceName="Website for Real Estate"
@@ -269,6 +275,8 @@ export default function RealEstateWebPage() {
         { href: "/portfolio", label: "View Portfolio" },
         { href: "/contact", label: "Contact Sales Desk" },
       ]}
+      relatedBlogPosts={relatedBlogPosts}
     />
   );
 }
+

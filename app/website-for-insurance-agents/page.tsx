@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 import Link from "next/link";
+import { getPostBySlug } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "Insurance Agent Website Design & Lead Generation SEO | Joy Digital",
@@ -54,7 +55,12 @@ const pageSchema = {
   ]
 };
 
-export default function InsuranceWebPage() {
+export default async function InsuranceWebPage() {
+  const post1 = await getPostBySlug("insurance-agent-website-ai-lead-generation");
+  const post2 = await getPostBySlug("digital-marketing-strategy-small-businesses");
+  const post3 = await getPostBySlug("local-seo-tips-for-small-businesses");
+  const relatedBlogPosts = [post1, post2, post3].filter((p): p is NonNullable<typeof p> => p !== null);
+
   return (
     <ServicePageTemplate
       serviceName="Website for Insurance Agents"
@@ -269,6 +275,8 @@ export default function InsuranceWebPage() {
         { href: "/portfolio", label: "View Portfolio" },
         { href: "/contact", label: "Contact Us" },
       ]}
+      relatedBlogPosts={relatedBlogPosts}
     />
   );
 }
+

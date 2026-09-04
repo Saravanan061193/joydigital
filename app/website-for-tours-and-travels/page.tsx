@@ -1,6 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
+import { getPostBySlug } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "Tour Operator & Travel Agency Website Development | Joy Digital",
@@ -45,7 +46,13 @@ const pageSchema = {
   }
 };
 
-export default function ToursTravelsWebPage() {
+export default async function ToursTravelsWebPage() {
+  const post1 = await getPostBySlug("travel-website-features-tour-operators-2026");
+  const post2 = await getPostBySlug("5-must-have-website-features-tour-operators-safari-taxi");
+  const post3 = await getPostBySlug("why-safari-business-needs-professional-website");
+
+  const relatedBlogPosts = [post1, post2, post3].filter((p): p is NonNullable<typeof p> => p !== null);
+
   return (
     <ServicePageTemplate
       serviceName="Website for Tours & Travels"
@@ -195,6 +202,8 @@ export default function ToursTravelsWebPage() {
         { href: "/website-development", label: "Custom Web Development Services" },
         { href: "/web-design-services", label: "Custom Website Design" },
       ]}
+      relatedBlogPosts={relatedBlogPosts}
     />
   );
 }
+

@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 import Link from "next/link";
+import { getPostBySlug } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "Pest Control Website Design & Exterminator SEO | Joy Digital",
@@ -54,7 +55,10 @@ const pageSchema = {
   ]
 };
 
-export default function PestControlWebPage() {
+export default async function PestControlWebPage() {
+  const post1 = await getPostBySlug("5-website-features-pest-control-companies-leads");
+  const relatedBlogPosts = [post1].filter((p): p is NonNullable<typeof p> => p !== null);
+
   return (
     <ServicePageTemplate
       serviceName="Website for Pest Control"
@@ -268,6 +272,8 @@ export default function PestControlWebPage() {
         { href: "/portfolio", label: "View Portfolio" },
         { href: "/contact", label: "Contact Sales Team" },
       ]}
+      relatedBlogPosts={relatedBlogPosts}
     />
   );
 }
+

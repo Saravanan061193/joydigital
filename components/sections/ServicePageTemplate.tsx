@@ -2,10 +2,12 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import Header from "@/components/layout/Header";
 import JsonLd from "@/components/seo/JsonLd";
 import { buildPageGraphSchema } from "@/lib/seo/schema";
+import { BlogPost } from "@/lib/blog";
 
 // Dynamically imported below-the-fold components
 const Footer = dynamic(() => import("@/components/layout/Footer"));
@@ -63,6 +65,7 @@ interface ServicePageTemplateProps {
   crossLinks: { href: string; label: string }[];
   canonicalUrl?: string;
   heroCtaText?: string;
+  relatedBlogPosts?: BlogPost[];
 }
 
 export default function ServicePageTemplate({
@@ -86,6 +89,7 @@ export default function ServicePageTemplate({
   crossLinks,
   canonicalUrl = "https://joydigital.in",
   heroCtaText,
+  relatedBlogPosts,
 }: ServicePageTemplateProps) {
   const STANDARD_FAQS = [
     {
@@ -409,6 +413,74 @@ export default function ServicePageTemplate({
             </div>
           </div>
         </section>
+
+        {/* Related Blog Posts Section */}
+        {relatedBlogPosts && relatedBlogPosts.length > 0 && (
+          <section className="py-16 lg:py-24 bg-white border-t border-gray-100">
+            <div className="max-w-7xl mx-auto px-6">
+              <div className="text-center max-w-3xl mx-auto mb-16">
+                <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
+                  Industry Insights &amp; Growth Guides
+                </span>
+                <h2 className="text-2xl md:text-4xl font-extrabold text-primary-dark mb-4">
+                  Related Guides &amp; Articles
+                </h2>
+                <p className="text-sm text-text-secondary">
+                  Explore expert articles, website strategies, and lead-generation guides for {serviceName}.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {relatedBlogPosts.map((post) => (
+                  <div
+                    key={post.slug}
+                    className="bg-white border border-[#E5E7EB] rounded-[24px] overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="relative w-full h-44 bg-slate-50 border-b border-[#E9E4F2] overflow-hidden">
+                        <Image
+                          src={post.image || "/assets/images/hero-banner.webp"}
+                          alt={post.imageAlt || post.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute top-4 left-4 z-10">
+                          <span className="bg-primary text-white font-extrabold text-[9px] uppercase tracking-wider px-2.5 py-1 rounded-md shadow-sm">
+                            {post.category || "Guide"}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="p-6">
+                        <h3 className="text-base font-extrabold text-primary-dark leading-snug group-hover:text-accent transition-colors mb-2 line-clamp-2">
+                          <Link href={`/blog/${post.slug}`} title={post.title}>
+                            {post.title}
+                          </Link>
+                        </h3>
+                        <p className="text-xs text-text-secondary leading-relaxed line-clamp-2 font-medium">
+                          {post.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="px-6 py-4 border-t border-gray-100 bg-slate-50/50 flex items-center justify-between">
+                      <span className="text-[10px] text-text-muted font-semibold">
+                        By {post.authorName || post.author || "Joy Digital"}
+                      </span>
+                      <Link
+                        href={`/blog/${post.slug}`}
+                        className="text-xs font-bold text-accent hover:text-accent-dark flex items-center gap-1.5"
+                      >
+                        Read Guide &rarr;
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Dynamic CTA Banner */}
         <CTABanner

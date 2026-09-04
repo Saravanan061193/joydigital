@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 import Link from "next/link";
+import { getPostBySlug } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "Hotel Website Design & Direct Booking SEO Services | Joy Digital",
@@ -54,7 +55,12 @@ const pageSchema = {
   ]
 };
 
-export default function HotelWebPage() {
+export default async function HotelWebPage() {
+  const post1 = await getPostBySlug("how-independent-resorts-can-increase-direct-bookings");
+  const post2 = await getPostBySlug("agentic-ai-booking-future-of-travel");
+  const post3 = await getPostBySlug("travel-website-features-tour-operators-2026");
+  const relatedBlogPosts = [post1, post2, post3].filter((p): p is NonNullable<typeof p> => p !== null);
+
   return (
     <ServicePageTemplate
       serviceName="Website for Hotels"
@@ -269,6 +275,8 @@ export default function HotelWebPage() {
         { href: "/portfolio", label: "View Portfolio" },
         { href: "/contact", label: "Contact Front Desk" },
       ]}
+      relatedBlogPosts={relatedBlogPosts}
     />
   );
 }
+
