@@ -28,14 +28,14 @@ interface ModernHeroSectionProps {
 const heroMainWords = ["Custom", "Software", "&", "Web", "Engineering", "Company", "Engineered", "for"];
 const heroGradientWords = ["Scale", "&", "Speed."];
 
-// Framer Motion Variants for Staggered Orchestration
+// Framer Motion Variants for Staggered Orchestration (Optimized for Mobile Speed)
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.05,
+      staggerChildren: 0.08,
+      delayChildren: 0.02,
     },
   },
 };
@@ -45,8 +45,8 @@ const antiGravityHeaderVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.07,
-      delayChildren: 0.1,
+      staggerChildren: 0.04,
+      delayChildren: 0.05,
     },
   },
 };
@@ -54,45 +54,38 @@ const antiGravityHeaderVariants: Variants = {
 const antiGravityWordVariants: Variants = {
   hidden: {
     opacity: 0,
-    y: 28,
-    rotateX: -20,
-    filter: "blur(6px)",
+    y: 14,
   },
   visible: {
     opacity: 1,
     y: 0,
-    rotateX: 0,
-    filter: "blur(0px)",
     transition: {
-      type: "spring",
-      damping: 18,
-      stiffness: 90,
-      mass: 0.75,
+      duration: 0.35,
+      ease: [0.16, 1, 0.3, 1],
     },
   },
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 22 },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.6,
+      duration: 0.4,
       ease: [0.16, 1, 0.3, 1],
     },
   },
 };
 
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 30, scale: 0.97 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    scale: 1,
     transition: {
-      duration: 0.7,
-      delay: 0.45,
+      duration: 0.5,
+      delay: 0.2,
       ease: [0.16, 1, 0.3, 1],
     },
   },
@@ -255,21 +248,35 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
   return (
     <section className="relative pt-24 lg:pt-32 pb-20 overflow-hidden bg-[#0B0914] text-white border-b border-[#1E1838] select-none">
       
-      {/* Embedded CSS Keyframes for GPU-Accelerated Micro-Animations & Moving Aurora Orbs */}
+      {/* Embedded CSS Keyframes for GPU-Accelerated Micro-Animations */}
       <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes auroraDrift1 {
-          0%, 100% { transform: translate3d(0px, 0px, 0) scale(1); opacity: 0.22; }
-          33% { transform: translate3d(50px, -40px, 0) scale(1.12); opacity: 0.32; }
-          66% { transform: translate3d(-35px, 25px, 0) scale(0.92); opacity: 0.18; }
-        }
-        @keyframes auroraDrift2 {
-          0%, 100% { transform: translate3d(0px, 0px, 0) scale(1); opacity: 0.20; }
-          40% { transform: translate3d(-55px, 35px, 0) scale(1.18); opacity: 0.30; }
-          75% { transform: translate3d(45px, -25px, 0) scale(0.88); opacity: 0.16; }
-        }
-        @keyframes auroraDrift3 {
-          0%, 100% { transform: translate3d(0px, 0px, 0) scale(1); opacity: 0.16; }
-          50% { transform: translate3d(35px, 50px, 0) scale(1.15); opacity: 0.28; }
+        @media (min-width: 768px) {
+          @keyframes auroraDrift1 {
+            0%, 100% { transform: translate3d(0px, 0px, 0) scale(1); opacity: 0.22; }
+            33% { transform: translate3d(50px, -40px, 0) scale(1.12); opacity: 0.32; }
+            66% { transform: translate3d(-35px, 25px, 0) scale(0.92); opacity: 0.18; }
+          }
+          @keyframes auroraDrift2 {
+            0%, 100% { transform: translate3d(0px, 0px, 0) scale(1); opacity: 0.20; }
+            40% { transform: translate3d(-55px, 35px, 0) scale(1.18); opacity: 0.30; }
+            75% { transform: translate3d(45px, -25px, 0) scale(0.88); opacity: 0.16; }
+          }
+          @keyframes auroraDrift3 {
+            0%, 100% { transform: translate3d(0px, 0px, 0) scale(1); opacity: 0.16; }
+            50% { transform: translate3d(35px, 50px, 0) scale(1.15); opacity: 0.28; }
+          }
+          .animate-aurora-1 {
+            animation: auroraDrift1 16s ease-in-out infinite;
+            will-change: transform, opacity;
+          }
+          .animate-aurora-2 {
+            animation: auroraDrift2 20s ease-in-out infinite 2s;
+            will-change: transform, opacity;
+          }
+          .animate-aurora-3 {
+            animation: auroraDrift3 24s ease-in-out infinite 4s;
+            will-change: transform, opacity;
+          }
         }
         @keyframes gradientShimmer {
           0% { background-position: 0% 50%; }
@@ -284,18 +291,6 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
           0% { transform: translateX(-120%) rotate(25deg); }
           30%, 100% { transform: translateX(260%) rotate(25deg); }
         }
-        .animate-aurora-1 {
-          animation: auroraDrift1 16s ease-in-out infinite;
-          will-change: transform, opacity;
-        }
-        .animate-aurora-2 {
-          animation: auroraDrift2 20s ease-in-out infinite 2s;
-          will-change: transform, opacity;
-        }
-        .animate-aurora-3 {
-          animation: auroraDrift3 24s ease-in-out infinite 4s;
-          will-change: transform, opacity;
-        }
         .animate-gradient-shimmer {
           background-size: 200% 200%;
           animation: gradientShimmer 6s ease infinite;
@@ -308,10 +303,10 @@ export default function ModernHeroSection({ country = "" }: ModernHeroSectionPro
         }
       ` }} />
 
-      {/* Moving Aurora / Blurred Gradient Orbs (z-0, pointer-events-none) */}
-      <div className="absolute -top-28 right-10 sm:right-1/4 w-[600px] sm:w-[750px] h-[600px] sm:h-[750px] bg-gradient-to-tr from-purple-700/30 via-purple-600/25 to-indigo-600/20 rounded-full blur-[150px] sm:blur-[180px] pointer-events-none z-0 animate-aurora-1" />
-      <div className="absolute -bottom-24 -left-20 w-[500px] sm:w-[650px] h-[500px] sm:h-[650px] bg-gradient-to-br from-blue-700/25 via-indigo-900/30 to-purple-900/20 rounded-full blur-[140px] sm:blur-[170px] pointer-events-none z-0 animate-aurora-2" />
-      <div className="absolute top-1/3 left-1/3 w-[450px] sm:w-[550px] h-[450px] sm:h-[550px] bg-gradient-to-r from-violet-600/20 to-purple-800/15 rounded-full blur-[130px] sm:blur-[160px] pointer-events-none z-0 animate-aurora-3" />
+      {/* Moving Aurora Orbs (Optimized for Mobile: Hidden on small screens, desktop-only ambient lighting) */}
+      <div className="hidden md:block absolute -top-28 right-1/4 w-[600px] lg:w-[750px] h-[600px] lg:h-[750px] bg-gradient-to-tr from-purple-700/25 via-purple-600/20 to-indigo-600/15 rounded-full blur-[140px] pointer-events-none z-0 animate-aurora-1" />
+      <div className="hidden md:block absolute -bottom-24 -left-20 w-[500px] lg:w-[650px] h-[500px] lg:h-[650px] bg-gradient-to-br from-blue-700/20 via-indigo-900/25 to-purple-900/15 rounded-full blur-[130px] pointer-events-none z-0 animate-aurora-2" />
+      <div className="hidden md:block absolute top-1/3 left-1/3 w-[450px] lg:w-[550px] h-[450px] lg:h-[550px] bg-gradient-to-r from-violet-600/15 to-purple-800/10 rounded-full blur-[120px] pointer-events-none z-0 animate-aurora-3" />
 
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
         

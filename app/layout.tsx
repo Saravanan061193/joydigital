@@ -10,8 +10,8 @@ import NavigationLoadingBar from "@/components/ui/NavigationLoadingBar";
 
 import GoogleTranslateLoader from "@/components/GoogleTranslateLoader";
 
-const ChatbotWidget = dynamic(() => import("@/components/ui/ChatbotWidget"));
-const OfferModalPopup = dynamic(() => import("@/components/ui/OfferModalPopup"));
+const ChatbotWidget = dynamic(() => import("@/components/ui/ChatbotWidget"), { ssr: false });
+const OfferModalPopup = dynamic(() => import("@/components/ui/OfferModalPopup"), { ssr: false });
 import "./globals.css";
 
 const inter = Inter({
