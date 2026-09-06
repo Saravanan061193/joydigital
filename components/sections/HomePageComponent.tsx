@@ -307,6 +307,30 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
       cta: "Explore Web Design"
     },
     {
+      icon: "fa-solid fa-bolt",
+      title: "Static Website Development",
+      description: "Sub-second pre-rendered static sites built with Next.js & React. Zero database bottlenecks, 100% serverless security, and top Core Web Vitals.",
+      benefits: ["Sub-second page loads", "Zero database maintenance", "100% serverless security"],
+      href: "/static-website-development",
+      cta: "Explore Static Web Dev"
+    },
+    {
+      icon: "fa-solid fa-id-card",
+      title: "Portfolio Website Development",
+      description: "High-impact custom portfolio websites for consultants, executives, agency owners, architects, and creative professionals.",
+      benefits: ["Personal brand authority", "Filterable work galleries", "Direct WhatsApp triggers"],
+      href: "/portfolio-website-development",
+      cta: "Explore Portfolio Web Dev"
+    },
+    {
+      icon: "fa-solid fa-[#7C3AED] fa-bullseye",
+      title: "Landing Page Development",
+      description: "Distraction-free PPC & campaign landing pages engineered to convert Google/Meta ad clicks into qualified leads.",
+      benefits: ["High ROAS conversion funnels", "Frictionless form fields", "A/B test ready layouts"],
+      href: "/landing-page-development",
+      cta: "Explore Landing Page Dev"
+    },
+    {
       icon: "fa-solid fa-code",
       title: "Web Development",
       description: "Premium Next.js, React, and TypeScript development. We compile semantic, light, and modular code structures.",

@@ -241,6 +241,21 @@ export default function Footer() {
               </Link>
             </li>
             <li>
+              <Link href="/static-website-development" className="hover:text-accent hover:pl-1 transition-all">
+                Static Website Development
+              </Link>
+            </li>
+            <li>
+              <Link href="/portfolio-website-development" className="hover:text-accent hover:pl-1 transition-all">
+                Portfolio Website Development
+              </Link>
+            </li>
+            <li>
+              <Link href="/landing-page-development" className="hover:text-accent hover:pl-1 transition-all">
+                Landing Page Development
+              </Link>
+            </li>
+            <li>
               <Link href="/wordpress-to-nextjs-migration" className="hover:text-accent hover:pl-1 transition-all">
                 WordPress to Next.js Migration
               </Link>

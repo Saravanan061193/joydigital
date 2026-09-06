@@ -8,7 +8,14 @@ import { usePathname, useRouter } from "next/navigation";
 const SERVICES_LINKS = [
   { href: "/website-development", label: "Web Development", localized: true },
   { href: "/web-design-services", label: "Web Design", localized: false },
+  { href: "/static-website-development", label: "Static Website Development", localized: false },
+  { href: "/portfolio-website-development", label: "Portfolio Website Development", localized: false },
+  { href: "/landing-page-development", label: "Landing Page Development", localized: false },
+  { href: "/custom-website-development", label: "Custom Web Systems", localized: false },
+  { href: "/dynamic-website-development", label: "Dynamic Web Applications", localized: false },
   { href: "/ecommerce-website-development", label: "E-commerce Development", localized: false },
+  { href: "/seo-services", label: "SEO Services", localized: true },
+  { href: "/local-seo-services", label: "Local SEO Services", localized: false },
 ];
 
 const REGIONS = [
