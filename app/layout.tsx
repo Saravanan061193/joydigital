@@ -9,9 +9,7 @@ import GoogleAnalytics from "@/components/GoogleAnalytics";
 import NavigationLoadingBar from "@/components/ui/NavigationLoadingBar";
 
 import GoogleTranslateLoader from "@/components/GoogleTranslateLoader";
-
-const ChatbotWidget = dynamic(() => import("@/components/ui/ChatbotWidget"), { ssr: false });
-const OfferModalPopup = dynamic(() => import("@/components/ui/OfferModalPopup"), { ssr: false });
+import ClientWidgets from "@/components/ui/ClientWidgets";
 import "./globals.css";
 
 const inter = Inter({
@@ -116,8 +114,7 @@ export default function RootLayout({
         <ClarityTracker />
         <GoogleTranslateLoader />
         {children}
-        <ChatbotWidget />
-        <OfferModalPopup />
+        <ClientWidgets />
       </body>
     </html>
   );
