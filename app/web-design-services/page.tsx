@@ -151,7 +151,7 @@ export default function WebDesignPage() {
         },
         {
           name: "Business UI/UX Package",
-          price: "₹28,000",
+          price: "₹35,000",
           description: "Perfect for growing brands wanting to redesign their site for better conversions.",
           isPopular: true,
           features: [
