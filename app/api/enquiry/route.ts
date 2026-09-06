@@ -2,13 +2,29 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import { sendWhatsAppLeadAlert } from "@/lib/whatsappAlert";
+import { checkRateLimit, getClientIp } from "@/lib/security/rateLimit";
+import { sanitizeObject } from "@/lib/security/sanitizer";
 
 const DATA_DIR = path.join(process.cwd(), "data");
 const DATA_FILE = path.join(DATA_DIR, "enquiries.json");
 
 export async function POST(request: Request) {
+  const ip = getClientIp(request);
+  const rateLimitResult = checkRateLimit(`enquiry_pub:${ip}`, {
+    windowMs: 60 * 1000,
+    max: 10,
+  });
+
+  if (!rateLimitResult.success) {
+    return NextResponse.json(
+      { error: "Too many submission attempts. Please wait a minute and try again." },
+      { status: 429 }
+    );
+  }
+
   try {
-    const body = await request.json();
+    const rawBody = await request.json();
+    const body = sanitizeObject(rawBody);
     
     // Construct new lead record
     const newEnquiry = {

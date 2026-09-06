@@ -441,22 +441,57 @@ export default function AdminPage() {
     return () => clearInterval(interval);
   }, []);
 
-  // Load auth state from sessionStorage & Theme
+  // Check active server session on load
   useEffect(() => {
-    const auth = sessionStorage.getItem("joy_admin_auth");
-    if (auth === "true") {
-      setIsAuthenticated(true);
-      fetchEnquiries();
-      fetchAnalytics();
-      fetchChatSessions();
-      fetchSettings();
-    } else {
-      setLoading(false);
-    }
+    const checkSession = async () => {
+      try {
+        const res = await fetch("/api/admin/auth/me");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.authenticated) {
+            setIsAuthenticated(true);
+            if (data.user?.role) setCurrentRole(data.user.role);
+            fetchEnquiries();
+            fetchAnalytics();
+            fetchChatSessions();
+            fetchSettings();
+          } else {
+            setIsAuthenticated(false);
+          }
+        } else {
+          setIsAuthenticated(false);
+        }
+      } catch (err) {
+        setIsAuthenticated(false);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    // Default to Zoho/HubSpot Light Mode and clear any cached dark theme
+    checkSession();
+
+    // Inactivity Auto-Logout Timer (30 mins)
+    let idleTimer: NodeJS.Timeout;
+    const resetIdleTimer = () => {
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => {
+        handleLogout();
+      }, 30 * 60 * 1000);
+    };
+
+    window.addEventListener("mousemove", resetIdleTimer);
+    window.addEventListener("keydown", resetIdleTimer);
+    resetIdleTimer();
+
+    // Default to Light Mode
     localStorage.removeItem("joy_admin_theme");
     setIsDarkMode(false);
+
+    return () => {
+      clearTimeout(idleTimer);
+      window.removeEventListener("mousemove", resetIdleTimer);
+      window.removeEventListener("keydown", resetIdleTimer);
+    };
   }, []);
 
   // Fetch enquiries list
@@ -651,23 +686,37 @@ export default function AdminPage() {
     }
   };
 
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (pin === "2613" || pin === "JoyAdmin2026") {
-      setIsAuthenticated(true);
-      sessionStorage.setItem("joy_admin_auth", "true");
-      setLoginError("");
-      fetchEnquiries();
-      fetchAnalytics();
-      fetchChatSessions();
-      fetchSettings();
-    } else {
-      setLoginError("Incorrect access credentials. Please try again.");
+    setLoginError("");
+    try {
+      const res = await fetch("/api/admin/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pin }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setIsAuthenticated(true);
+        if (data.user?.role) setCurrentRole(data.user.role);
+        fetchEnquiries();
+        fetchAnalytics();
+        fetchChatSessions();
+        fetchSettings();
+      } else {
+        setLoginError(data.error || "Incorrect access credentials. Please try again.");
+      }
+    } catch (err) {
+      setLoginError("Connection error during login. Please try again.");
     }
   };
 
-  const handleLogout = () => {
-    sessionStorage.removeItem("joy_admin_auth");
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/admin/auth/logout", { method: "POST" });
+    } catch (e) {
+      // Ignore
+    }
     setIsAuthenticated(false);
     setPin("");
   };

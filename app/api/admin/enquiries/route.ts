@@ -1,8 +1,32 @@
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import { cookies } from "next/headers";
+import { SESSION_COOKIE_NAME, verifySessionToken } from "@/lib/security/auth";
+import { hasPermission } from "@/lib/security/rbac";
+import { checkRateLimit, getClientIp } from "@/lib/security/rateLimit";
+import { logAuditEvent } from "@/lib/security/auditLog";
+import { sanitizeObject } from "@/lib/security/sanitizer";
+import { EnquiryUpdateSchema } from "@/lib/security/validation";
 
 const DATA_FILE = path.join(process.cwd(), "data", "enquiries.json");
+
+// Helper to authenticate request
+async function authenticateAdminRequest(request: Request, requiredPermission: any) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
+  const session = verifySessionToken(token);
+
+  if (!session) {
+    return { authenticated: false, session: null, response: NextResponse.json({ error: "Unauthorized" }, { status: 401 }) };
+  }
+
+  if (requiredPermission && !hasPermission(session.role, requiredPermission)) {
+    return { authenticated: false, session, response: NextResponse.json({ error: "Access Denied" }, { status: 403 }) };
+  }
+
+  return { authenticated: true, session, response: null };
+}
 
 // Helper to read enquiries
 function readEnquiries() {
@@ -27,7 +51,10 @@ function writeEnquiries(data: any) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), "utf-8");
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const auth = await authenticateAdminRequest(request, "enquiries.view");
+  if (!auth.authenticated) return auth.response!;
+
   const MONGODB_URI = process.env.MONGODB_URI;
 
   if (MONGODB_URI) {
@@ -97,12 +124,19 @@ export async function GET() {
 }
 
 export async function PATCH(request: Request) {
+  const auth = await authenticateAdminRequest(request, "enquiries.update");
+  if (!auth.authenticated) return auth.response!;
+
   try {
-    const body = await request.json();
-    const { id, status, notes, followUpDate, pipelineStage, assignedTo, activities, proposals, irrelevantReason, chatSessionId } = body;
-    if (!id) {
-      return NextResponse.json({ error: "Missing enquiry ID" }, { status: 400 });
+    const rawBody = await request.json();
+    const parseResult = EnquiryUpdateSchema.safeParse(rawBody);
+
+    if (!parseResult.success) {
+      return NextResponse.json({ error: "Invalid enquiry update payload" }, { status: 400 });
     }
+
+    const body = sanitizeObject(parseResult.data);
+    const { id, status, notes, followUpDate, pipelineStage, assignedTo, activities, proposals, irrelevantReason, chatSessionId } = body;
 
     const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -169,12 +203,26 @@ export async function PATCH(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const auth = await authenticateAdminRequest(request, "enquiries.delete");
+  if (!auth.authenticated) return auth.response!;
+
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
     if (!id) {
       return NextResponse.json({ error: "Missing ID" }, { status: 400 });
     }
+
+    await logAuditEvent({
+      userId: auth.session!.userId,
+      username: auth.session!.username,
+      role: auth.session!.role,
+      action: "DELETE_ENQUIRY",
+      resource: "enquiry",
+      resourceId: id,
+      status: "SUCCESS",
+      ipAddress: getClientIp(request),
+    });
 
     const MONGODB_URI = process.env.MONGODB_URI;
 

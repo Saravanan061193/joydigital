@@ -1,9 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import { cookies } from "next/headers";
 import { getAllPosts } from "@/lib/blog";
 import { getDb } from "@/lib/mongodb";
 import { v2 as cloudinary } from "cloudinary";
+import { SESSION_COOKIE_NAME, verifySessionToken } from "@/lib/security/auth";
+import { hasPermission } from "@/lib/security/rbac";
+import { logAuditEvent } from "@/lib/security/auditLog";
+import { getClientIp } from "@/lib/security/rateLimit";
+import { sanitizeHtmlContent, sanitizeString } from "@/lib/security/sanitizer";
+
+async function authenticateAdminRequest(request: Request, requiredPermission: any) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
+  const session = verifySessionToken(token);
+
+  if (!session) {
+    return { authenticated: false, session: null, response: NextResponse.json({ error: "Unauthorized" }, { status: 401 }) };
+  }
+
+  if (requiredPermission && !hasPermission(session.role, requiredPermission)) {
+    return { authenticated: false, session, response: NextResponse.json({ error: "Access Denied" }, { status: 403 }) };
+  }
+
+  return { authenticated: true, session, response: null };
+}
 
 if (
   process.env.CLOUDINARY_CLOUD_NAME &&
@@ -21,6 +43,9 @@ const BLOG_DIR = path.join(process.cwd(), "content/blog");
 
 // GET: List all blog posts with aggregated pageviews
 export async function GET(req: NextRequest) {
+  const auth = await authenticateAdminRequest(req, "blog.view");
+  if (!auth.authenticated) return auth.response!;
+
   try {
     const posts = await getAllPosts();
 
@@ -63,6 +88,9 @@ export async function GET(req: NextRequest) {
 
 // POST: Add or edit a blog post with full SEO & CMS fields
 export async function POST(req: NextRequest) {
+  const auth = await authenticateAdminRequest(req, "blog.create");
+  if (!auth.authenticated) return auth.response!;
+
   try {
     const formData = await req.formData();
     const title = formData.get("title") as string;
