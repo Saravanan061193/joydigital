@@ -1010,5 +1010,104 @@
     "status": "Active",
     "assigned_page_id": "page-ai-search-opt",
     "created_at": "2026-09-07T00:00:00.000Z"
+  },
+  {
+    "id": "kw-seo-chennai-01",
+    "keyword": "seo company in chennai",
+    "type": "Primary",
+    "search_intent": "Transactional",
+    "target_audience": "Chennai local businesses & regional enterprises",
+    "notes": "Primary local search keyword.",
+    "status": "Active",
+    "assigned_page_id": "page-seo-company-chennai",
+    "created_at": "2026-09-07T00:00:00.000Z"
+  },
+  {
+    "id": "kw-seo-chennai-02",
+    "keyword": "seo expert in chennai",
+    "type": "Primary",
+    "search_intent": "Commercial",
+    "target_audience": "Business owners hiring SEO specialists in Chennai",
+    "notes": "High intent SEO expert query.",
+    "status": "Active",
+    "assigned_page_id": "page-seo-company-chennai",
+    "created_at": "2026-09-07T00:00:00.000Z"
+  },
+  {
+    "id": "kw-seo-chennai-03",
+    "keyword": "seo website company",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Businesses seeking integrated web design and SEO agency",
+    "notes": "General SEO website company query.",
+    "status": "Active",
+    "assigned_page_id": "page-seo-company-chennai",
+    "created_at": "2026-09-07T00:00:00.000Z"
+  },
+  {
+    "id": "kw-seo-chennai-04",
+    "keyword": "seo website company in india",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Global & Indian companies seeking offshore SEO agency",
+    "notes": "India SEO website company query.",
+    "status": "Active",
+    "assigned_page_id": "page-seo-company-chennai",
+    "created_at": "2026-09-07T00:00:00.000Z"
+  },
+  {
+    "id": "kw-seo-chennai-05",
+    "keyword": "seo company in india",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Enterprises hiring Indian SEO agencies",
+    "notes": "Broad India SEO agency query.",
+    "status": "Active",
+    "assigned_page_id": "page-seo-company-chennai",
+    "created_at": "2026-09-07T00:00:00.000Z"
+  },
+  {
+    "id": "kw-seo-chennai-06",
+    "keyword": "best seo website company",
+    "type": "Long-tail",
+    "search_intent": "Commercial",
+    "target_audience": "Decision makers looking for top-rated SEO firms",
+    "notes": "Best SEO website company search query.",
+    "status": "Active",
+    "assigned_page_id": "page-seo-company-chennai",
+    "created_at": "2026-09-07T00:00:00.000Z"
+  },
+  {
+    "id": "kw-seo-chennai-07",
+    "keyword": "seo website company list",
+    "type": "Long-tail",
+    "search_intent": "Informational",
+    "target_audience": "Users comparing top SEO companies in India",
+    "notes": "List search intent.",
+    "status": "Active",
+    "assigned_page_id": "page-seo-company-chennai",
+    "created_at": "2026-09-07T00:00:00.000Z"
+  },
+  {
+    "id": "kw-seo-chennai-08",
+    "keyword": "seo website checker",
+    "type": "Long-tail",
+    "search_intent": "Informational",
+    "target_audience": "Webmasters looking for website audit tools",
+    "notes": "SEO website checker tool query.",
+    "status": "Active",
+    "assigned_page_id": "page-seo-company-chennai",
+    "created_at": "2026-09-07T00:00:00.000Z"
+  },
+  {
+    "id": "kw-seo-chennai-09",
+    "keyword": "google seo checker",
+    "type": "Long-tail",
+    "search_intent": "Informational",
+    "target_audience": "Site owners searching for Google audit tools",
+    "notes": "Google SEO checker query.",
+    "status": "Active",
+    "assigned_page_id": "page-seo-company-chennai",
+    "created_at": "2026-09-07T00:00:00.000Z"
   }
 ]

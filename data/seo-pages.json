@@ -372,5 +372,51 @@
       }
     ],
     "updated_at": "2026-09-07T00:00:00.000Z"
+  },
+  {
+    "id": "page-seo-company-chennai",
+    "path": "/seo-company-chennai",
+    "category": "Core Service",
+    "title_template": "Best SEO Website Company in Chennai & India | Joy Digital",
+    "meta_description": "Looking for the best SEO website company in Chennai & India? Joy Digital provides expert SEO services, Google SEO checker tools, and local Map Pack optimization.",
+    "h1": "Top SEO Company in Chennai & Premier SEO Website Company in India",
+    "h2_tags": [
+      "Why Work with an Experienced SEO Expert in Chennai?",
+      "Ranked Top on Any Leading SEO Website Company List in India",
+      "Free SEO Website Checker & Instant Google SEO Checker Tools",
+      "Local Google Map Pack & Enterprise Search Optimization"
+    ],
+    "h3_tags": [
+      "Sub-Second Core Web Vitals & Technical Schema Audit",
+      "Keyword Focus Mapping & Organic Lead Funnels"
+    ],
+    "primary_keyword_id": "kw-seo-chennai-01",
+    "secondary_keyword_ids": ["kw-seo-chennai-02", "kw-seo-chennai-03", "kw-seo-chennai-04", "kw-seo-chennai-05"],
+    "longtail_keyword_ids": ["kw-seo-chennai-06", "kw-seo-chennai-07", "kw-seo-chennai-08", "kw-seo-chennai-09"],
+    "faq_schema": [
+      {
+        "question": "Why choose Joy Digital as your preferred SEO company in Chennai?",
+        "answer": "Joy Digital is a premier SEO company in Chennai led by a dedicated SEO expert in Chennai. We combine sub-second Next.js web engineering with local Google Map Pack rankings and high-intent keyword strategies."
+      },
+      {
+        "question": "What makes Joy Digital the best SEO website company in India?",
+        "answer": "As the best SEO website company in India, we deliver clean technical schemas, zero plugin bloat, transparent monthly ranking reports, and organic search growth without locking clients into long-term contracts."
+      },
+      {
+        "question": "Where can I find an SEO website checker or Google SEO checker tool?",
+        "answer": "You can use our free online SEO website checker and Google SEO checker tool to instantly evaluate your website's performance scores, mobile usability, heading hierarchy, and meta tags."
+      },
+      {
+        "question": "How do I choose the right provider from an SEO website company list?",
+        "answer": "When reviewing an SEO website company list, look for an agency that delivers custom web engineering, verifiable local rankings, transparent pricing, and comprehensive technical audits."
+      }
+    ],
+    "alt_texts": [
+      {
+        "image_url": "/assets/images/hero-banner.webp",
+        "alt_text": "SEO company in Chennai dashboard showing local Google ranking growth."
+      }
+    ],
+    "updated_at": "2026-09-07T00:00:00.000Z"
   }
 ]
