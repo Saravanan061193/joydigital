@@ -427,14 +427,14 @@ export default function Footer() {
           </ul>
           <div className="w-full h-44 rounded-xl overflow-hidden border border-[#E5E7EB] shadow-sm mt-1">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7777.443250431031!2d80.08850594066773!3d12.925604899541957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52f58f958eb23d%3A0xff0979a4a8ce5768!2sRUBY%20SHOBHA%20CASTLE%2C%2010D%2C%20Old%20Perungalathur%2C%20Tambaram%2C%20Tamil%20Nadu%20600063!5e0!3m2!1sen!2sin!4v1788103977912!5m2!1sen!2sin"
+              src="https://maps.google.com/maps?q=Old%20Perungalathur,%20Chennai,%20Tamil%20Nadu,%20India&t=&z=15&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}
               allowFullScreen={true}
               loading="lazy"
               referrerPolicy="strict-origin-when-cross-origin"
-              title="Joy Digital Office Location - Ruby Shobha Castle, Tambaram, Chennai"
+              title="Joy Digital Office Location Map - Tambaram, Chennai"
             />
           </div>
         </div>
