@@ -711,6 +711,78 @@ export default function BlogAdminPanel() {
             </div>
           </div>
 
+          {/* Top 3 Most Viewed Articles Leaderboard Card */}
+          {(() => {
+            const top3Posts = [...posts]
+              .sort((a, b) => {
+                const diff = (b.views || 0) - (a.views || 0);
+                if (diff !== 0) return diff;
+                return new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime();
+              })
+              .slice(0, 3);
+
+            if (top3Posts.length === 0) return null;
+
+            return (
+              <div className="bg-gradient-to-r from-slate-900 via-slate-850 to-indigo-950 text-white border border-slate-800 rounded-[24px] p-5 shadow-md select-none">
+                <div className="flex items-center justify-between mb-3.5 pb-2.5 border-b border-slate-800">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-400 font-bold text-sm">
+                      🏆
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-black uppercase tracking-wider text-white">Top 3 Most Viewed Articles</h4>
+                      <p className="text-[10px] text-slate-400 font-semibold">Highest performing blog posts by total reader views</p>
+                    </div>
+                  </div>
+                  <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                    Live Leaderboard
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  {top3Posts.map((post, index) => {
+                    const medals = ["🥇", "🥈", "🥉"];
+                    const medalColors = [
+                      "bg-amber-500/20 text-amber-300 border-amber-400/40",
+                      "bg-slate-300/20 text-slate-200 border-slate-300/40",
+                      "bg-orange-500/20 text-orange-300 border-orange-400/40",
+                    ];
+                    return (
+                      <div
+                        key={post.slug}
+                        onClick={() => handleEditClick(post)}
+                        className="bg-slate-800/60 hover:bg-slate-800 border border-slate-700/80 hover:border-indigo-500/50 rounded-xl p-3.5 transition-all duration-200 cursor-pointer flex flex-col justify-between group"
+                      >
+                        <div className="space-y-1.5">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className={`text-[10px] font-black px-2 py-0.5 rounded-lg border ${medalColors[index]}`}>
+                              {medals[index]} #{index + 1}
+                            </span>
+                            <span className="text-[9.5px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 truncate max-w-[120px]">
+                              {post.category}
+                            </span>
+                          </div>
+                          <h5 className="text-xs font-extrabold text-white line-clamp-2 leading-snug group-hover:text-indigo-300 transition-colors" title={post.title}>
+                            {post.title}
+                          </h5>
+                        </div>
+
+                        <div className="mt-3 pt-2 border-t border-slate-700/60 flex items-center justify-between text-[11px]">
+                          <span className="text-slate-400 font-mono text-[10px] truncate max-w-[140px]">/blog/{post.slug}</span>
+                          <span className="font-black text-amber-300 bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded-md flex items-center gap-1 shrink-0">
+                            <i className="fa-regular fa-eye text-[10px]" /> {(post.views || 0).toLocaleString()} Views
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })()}
+
           {/* 1. SEO-OPTIMIZED BLOG ARTICLES TABLE (Top) */}
           <div className="bg-white border border-slate-200/80 rounded-[20px] p-6 shadow-sm">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
