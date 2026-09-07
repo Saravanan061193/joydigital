@@ -37,7 +37,7 @@ export async function GET() {
   const todayStr = new Date().toISOString().split('T')[0];
 
   // Target country codes for localized routes
-  const countries = ['us', 'uk', 'ae', 'in', 'ca', 'au'];
+  const countries = ['us', 'uk', 'ae', 'in', 'ca', 'au', 'es', 'de', 'fr', 'it', 'sg', 'mx', 'br'];
 
   // Localized route paths
   const localizedPaths = ['', '/seo-services', '/website-development', '/contact'];
@@ -103,14 +103,12 @@ export async function GET() {
     '/digital-marketing-agency-madurai',
     '/local-seo-madurai',
     '/website-design-company-chennai',
-    '/website-design-company-in-chennai',
     '/web-development-company-chennai',
     '/website-development-company-chennai',
     '/affordable-web-design-agency-chennai',
     '/digital-marketing-agency-in-chennai',
     '/seo-company-chennai',
     '/seo-services-chennai',
-    '/seo-services-in-chennai',
     '/website-design-company-coimbatore',
     '/seo-company-coimbatore',
   ];
@@ -126,6 +124,13 @@ export async function GET() {
     'en-in': `${baseUrl}/in${routePath}`,
     'en-ca': `${baseUrl}/ca${routePath}`,
     'en-au': `${baseUrl}/au${routePath}`,
+    'es-es': `${baseUrl}/es${routePath}`,
+    'de-de': `${baseUrl}/de${routePath}`,
+    'fr-fr': `${baseUrl}/fr${routePath}`,
+    'it-it': `${baseUrl}/it${routePath}`,
+    'en-sg': `${baseUrl}/sg${routePath}`,
+    'es-mx': `${baseUrl}/mx${routePath}`,
+    'pt-br': `${baseUrl}/br${routePath}`,
   });
 
   // 1. Regional & Localized Routes (Homepage + Core Services across countries)

@@ -123,6 +123,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         "en-in": "https://joydigital.in/in/contact",
         "en-ca": "https://joydigital.in/ca/contact",
         "en-au": "https://joydigital.in/au/contact",
+        "es-es": "https://joydigital.in/es/contact",
+        "de-de": "https://joydigital.in/de/contact",
+        "fr-fr": "https://joydigital.in/fr/contact",
+        "it-it": "https://joydigital.in/it/contact",
+        "en-sg": "https://joydigital.in/sg/contact",
+        "es-mx": "https://joydigital.in/mx/contact",
+        "pt-br": "https://joydigital.in/br/contact",
       },
     },
   };

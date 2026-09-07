@@ -121,6 +121,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         "en-in": "https://joydigital.in/in/seo-services",
         "en-ca": "https://joydigital.in/ca/seo-services",
         "en-au": "https://joydigital.in/au/seo-services",
+        "es-es": "https://joydigital.in/es/seo-services",
+        "de-de": "https://joydigital.in/de/seo-services",
+        "fr-fr": "https://joydigital.in/fr/seo-services",
+        "it-it": "https://joydigital.in/it/seo-services",
+        "en-sg": "https://joydigital.in/sg/seo-services",
+        "es-mx": "https://joydigital.in/mx/seo-services",
+        "pt-br": "https://joydigital.in/br/seo-services",
       },
     },
   };

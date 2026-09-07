@@ -3,12 +3,15 @@ import type { NextRequest } from "next/server";
 import { SESSION_COOKIE_NAME, verifySessionToken } from "@/lib/security/auth";
 
 export function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  const host = request.headers.get("host");
+  const { pathname, search } = request.nextUrl;
+  const host = request.headers.get("host") || "";
 
-  // 1. Domain Redirect
-  if (host === "joydigital.vercel.app") {
-    return NextResponse.redirect(`https://joydigital.in${pathname}${request.nextUrl.search}`, 301);
+  // 1. WWW and Vercel Domain Redirect to Canonical (https://joydigital.in)
+  if (host.startsWith("www.") || host === "joydigital.vercel.app") {
+    const canonicalHost = host.startsWith("www.")
+      ? host.replace(/^www\./i, "")
+      : "joydigital.in";
+    return NextResponse.redirect(`https://${canonicalHost}${pathname}${search}`, 301);
   }
 
   const response = NextResponse.next();

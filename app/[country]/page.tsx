@@ -88,6 +88,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         "en-in": "https://joydigital.in/in",
         "en-ca": "https://joydigital.in/ca",
         "en-au": "https://joydigital.in/au",
+        "es-es": "https://joydigital.in/es",
+        "de-de": "https://joydigital.in/de",
+        "fr-fr": "https://joydigital.in/fr",
+        "it-it": "https://joydigital.in/it",
+        "en-sg": "https://joydigital.in/sg",
+        "es-mx": "https://joydigital.in/mx",
+        "pt-br": "https://joydigital.in/br",
       },
     },
   };
