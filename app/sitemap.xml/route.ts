@@ -37,7 +37,7 @@ export async function GET() {
   const todayStr = new Date().toISOString().split('T')[0];
 
   // Target country codes for localized routes
-  const countries = ['us', 'uk', 'ae', 'in', 'ca', 'au', 'es', 'de', 'fr', 'it', 'sg', 'mx', 'br'];
+  const countries = ['us', 'uk', 'ae', 'ca', 'au', 'es', 'de', 'fr', 'it', 'sg', 'mx', 'br'];
 
   // Localized route paths
   const localizedPaths = ['', '/seo-services', '/website-development', '/contact'];
@@ -118,10 +118,10 @@ export async function GET() {
   // Helper to generate hreflang map for localized route paths
   const getAlternates = (routePath: string) => ({
     'x-default': `${baseUrl}${routePath}`,
+    'en-in': `${baseUrl}${routePath}`,
     'en-us': `${baseUrl}/us${routePath}`,
     'en-gb': `${baseUrl}/uk${routePath}`,
     'en-ae': `${baseUrl}/ae${routePath}`,
-    'en-in': `${baseUrl}/in${routePath}`,
     'en-ca': `${baseUrl}/ca${routePath}`,
     'en-au': `${baseUrl}/au${routePath}`,
     'es-es': `${baseUrl}/es${routePath}`,

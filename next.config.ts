@@ -33,6 +33,16 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/in",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/in/:path*",
+        destination: "/:path*",
+        permanent: true,
+      },
+      {
         source: "/free-tools/gst-calculator",
         destination: "/gst-calculator",
         permanent: true,

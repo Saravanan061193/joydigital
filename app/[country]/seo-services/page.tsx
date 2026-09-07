@@ -115,10 +115,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       canonical: `https://joydigital.in/${countryLower}/seo-services`,
       languages: {
         "x-default": "https://joydigital.in/seo-services",
+        "en-in": "https://joydigital.in/seo-services",
         "en-us": "https://joydigital.in/us/seo-services",
         "en-gb": "https://joydigital.in/uk/seo-services",
         "en-ae": "https://joydigital.in/ae/seo-services",
-        "en-in": "https://joydigital.in/in/seo-services",
         "en-ca": "https://joydigital.in/ca/seo-services",
         "en-au": "https://joydigital.in/au/seo-services",
         "es-es": "https://joydigital.in/es/seo-services",

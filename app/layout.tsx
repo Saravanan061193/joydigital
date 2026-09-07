@@ -47,10 +47,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://joydigital.in",
     languages: {
+      "en-IN": "https://joydigital.in",
       "en-US": "https://joydigital.in/us",
       "en-GB": "https://joydigital.in/uk",
       "en-AE": "https://joydigital.in/ae",
-      "en-IN": "https://joydigital.in/in",
       "en-CA": "https://joydigital.in/ca",
       "en-AU": "https://joydigital.in/au",
       "es-ES": "https://joydigital.in/es",

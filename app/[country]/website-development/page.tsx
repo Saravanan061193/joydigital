@@ -115,10 +115,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       canonical: `https://joydigital.in/${countryLower}/website-development`,
       languages: {
         "x-default": "https://joydigital.in/website-development",
+        "en-in": "https://joydigital.in/website-development",
         "en-us": "https://joydigital.in/us/website-development",
         "en-gb": "https://joydigital.in/uk/website-development",
         "en-ae": "https://joydigital.in/ae/website-development",
-        "en-in": "https://joydigital.in/in/website-development",
         "en-ca": "https://joydigital.in/ca/website-development",
         "en-au": "https://joydigital.in/au/website-development",
         "es-es": "https://joydigital.in/es/website-development",
