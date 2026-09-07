@@ -26,31 +26,81 @@ export default function VisitorMap({ markers }: VisitorMapProps) {
       return;
     }
 
-    // 2. Load Leaflet CSS
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-    link.integrity = "sha255-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";
-    link.crossOrigin = "";
-    document.head.appendChild(link);
+    let isMounted = true;
 
-    // 3. Load Leaflet Script
-    const script = document.createElement("script");
-    script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-    script.integrity = "sha255-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";
-    script.crossOrigin = "";
-    script.onload = () => {
-      setLeafletLoaded(true);
+    // Helper to load Leaflet with CDN fallback
+    const loadLeaflet = async () => {
+      const cdnSources = [
+        {
+          css: "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
+          js: "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
+          jsIntegrity: "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=",
+          cssIntegrity: "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=",
+        },
+        {
+          css: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css",
+          js: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js",
+          jsIntegrity: "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=",
+          cssIntegrity: "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=",
+        },
+        {
+          css: "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css",
+          js: "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js",
+          jsIntegrity: "",
+          cssIntegrity: "",
+        },
+      ];
+
+      for (const cdn of cdnSources) {
+        try {
+          await new Promise<void>((resolve, reject) => {
+            // Load CSS if not loaded
+            if (!document.querySelector(`link[href="${cdn.css}"]`)) {
+              const link = document.createElement("link");
+              link.rel = "stylesheet";
+              link.href = cdn.css;
+              if (cdn.cssIntegrity) {
+                link.integrity = cdn.cssIntegrity;
+                link.crossOrigin = "";
+              }
+              document.head.appendChild(link);
+            }
+
+            // Load JS if not loaded
+            if ((window as any).L) {
+              resolve();
+              return;
+            }
+
+            const script = document.createElement("script");
+            script.src = cdn.js;
+            if (cdn.jsIntegrity) {
+              script.integrity = cdn.jsIntegrity;
+              script.crossOrigin = "";
+            }
+            script.onload = () => resolve();
+            script.onerror = () => reject(new Error(`Failed to load ${cdn.js}`));
+            document.body.appendChild(script);
+          });
+
+          if (isMounted && (window as any).L) {
+            setLeafletLoaded(true);
+            return;
+          }
+        } catch (e) {
+          console.warn("CDN load failed, trying next source:", e);
+        }
+      }
+
+      if (isMounted && !(window as any).L) {
+        setError("Failed to load map engine from CDN. Please check network connection or adblocker.");
+      }
     };
-    script.onerror = () => {
-      setError("Failed to load Leaflet Map script from CDN.");
-    };
-    document.body.appendChild(script);
+
+    loadLeaflet();
 
     return () => {
-      // Cleanup loaded tags if component unmounts before loading completes
-      if (document.head.contains(link)) document.head.removeChild(link);
-      if (document.body.contains(script)) document.body.removeChild(script);
+      isMounted = false;
     };
   }, []);
 
