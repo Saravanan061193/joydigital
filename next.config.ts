@@ -93,6 +93,16 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/website-development-coimbatore",
+        destination: "/website-design-company-coimbatore",
+        permanent: true,
+      },
+      {
+        source: "/web-development-company-coimbatore",
+        destination: "/website-design-company-coimbatore",
+        permanent: true,
+      },
+      {
         source: "/web-development-company-in-chennai",
         destination: "/website-development-company-chennai",
         permanent: true,
