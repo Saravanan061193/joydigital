@@ -5,7 +5,7 @@ date: '2026-09-07'
 lastUpdatedDate: '2026-09-07'
 category: SEO
 author: Saravanan L
-image: /assets/images/hero-banner.webp
+image: /assets/images/blog/china-manufacture.png
 imageAlt: How Chinese Manufacturers Can Generate More B2B Enquiries Through Their Website
 imageCaption: Comprehensive guide for Chinese manufacturers and OEM/ODM suppliers to reach global B2B buyers and capture international trade enquiries.
 tags:
@@ -55,11 +55,11 @@ faqs:
 ogTitle: 'How Chinese Manufacturers Can Generate B2B Enquiries Online | Joy Digital'
 ogDescription: >-
   Learn how Chinese manufacturers of electronics, hardware, machinery, and B2B products can build professional export websites, optimize for international SEO, showcase OEM/ODM capabilities, and generate qualified global B2B enquiries.
-ogImage: /assets/images/hero-banner.webp
+ogImage: /assets/images/blog/china-manufacture.png
 twitterTitle: 'How Chinese Manufacturers Can Generate B2B Enquiries Online | Joy Digital'
 twitterDescription: >-
   Learn how Chinese manufacturers of electronics, hardware, machinery, and B2B products can build professional export websites, optimize for international SEO, showcase OEM/ODM capabilities, and generate qualified global B2B enquiries.
-twitterImage: /assets/images/hero-banner.webp
+twitterImage: /assets/images/blog/china-manufacture.png
 status: Published
 seoScore: 99
 ---

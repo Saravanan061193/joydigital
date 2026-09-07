@@ -5,7 +5,7 @@ date: '2026-09-07'
 lastUpdatedDate: '2026-09-07'
 category: SEO
 author: Saravanan L
-image: /assets/images/hero-banner.webp
+image: /assets/images/blog/food-spice-export.png
 imageAlt: How Food & Spice Exporters Can Find More International Buyers Online in 2026
 imageCaption: Complete guide for food and spice exporters to build online visibility, attract global B2B buyers, and generate qualified export enquiries.
 tags:
@@ -55,11 +55,11 @@ faqs:
 ogTitle: 'How Food & Spice Exporters Can Find International Buyers Online | Joy Digital'
 ogDescription: >-
   Discover how food and spice exporters can attract international buyers online in 2026. Learn key strategies for export websites, product pages, international SEO, trust signals, and lead generation.
-ogImage: /assets/images/hero-banner.webp
+ogImage: /assets/images/blog/food-spice-export.png
 twitterTitle: 'How Food & Spice Exporters Can Find International Buyers Online | Joy Digital'
 twitterDescription: >-
   Discover how food and spice exporters can attract international buyers online in 2026. Learn key strategies for export websites, product pages, international SEO, trust signals, and lead generation.
-twitterImage: /assets/images/hero-banner.webp
+twitterImage: /assets/images/blog/food-spice-export.png
 status: Published
 seoScore: 99
 ---
