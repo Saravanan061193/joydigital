@@ -723,57 +723,98 @@ export default function BlogAdminPanel() {
 
             if (top3Posts.length === 0) return null;
 
+            const maxViews = Math.max(...top3Posts.map((p) => p.views || 0), 1);
+
             return (
-              <div className="bg-gradient-to-r from-slate-900 via-slate-850 to-indigo-950 text-white border border-slate-800 rounded-[24px] p-5 shadow-md select-none">
-                <div className="flex items-center justify-between mb-3.5 pb-2.5 border-b border-slate-800">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-400 font-bold text-sm">
+              <div className="bg-white border border-slate-200/90 rounded-[24px] p-5 shadow-sm shadow-slate-100 select-none">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-100">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-600 flex items-center justify-center text-lg font-bold shadow-xs">
                       🏆
                     </div>
                     <div>
-                      <h4 className="text-xs font-black uppercase tracking-wider text-white">Top 3 Most Viewed Articles</h4>
-                      <p className="text-[10px] text-slate-400 font-semibold">Highest performing blog posts by total reader views</p>
+                      <h4 className="text-sm font-black text-slate-900 tracking-tight flex items-center gap-2">
+                        Top 3 Most Viewed Articles
+                      </h4>
+                      <p className="text-[11px] text-slate-500 font-medium">Highest performing blog posts by reader traffic</p>
                     </div>
                   </div>
-                  <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                  <span className="self-start sm:self-center text-[10px] font-black px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-250 flex items-center gap-1.5 shadow-2xs">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                     Live Leaderboard
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {top3Posts.map((post, index) => {
-                    const medals = ["🥇", "🥈", "🥉"];
-                    const medalColors = [
-                      "bg-amber-500/20 text-amber-300 border-amber-400/40",
-                      "bg-slate-300/20 text-slate-200 border-slate-300/40",
-                      "bg-orange-500/20 text-orange-300 border-orange-400/40",
+                    const rankLabels = ["🥇 #1 Top", "🥈 #2 Rank", "🥉 #3 Rank"];
+                    const medalBadges = [
+                      "bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-sm shadow-amber-500/30 border-amber-400/50",
+                      "bg-gradient-to-r from-slate-700 to-slate-800 text-white shadow-sm shadow-slate-700/30 border-slate-600/50",
+                      "bg-gradient-to-r from-amber-800 to-amber-900 text-white shadow-sm shadow-amber-800/30 border-amber-700/50",
                     ];
+                    const viewPct = Math.max(Math.round(((post.views || 0) / maxViews) * 100), 12);
+
                     return (
                       <div
                         key={post.slug}
                         onClick={() => handleEditClick(post)}
-                        className="bg-slate-800/60 hover:bg-slate-800 border border-slate-700/80 hover:border-indigo-500/50 rounded-xl p-3.5 transition-all duration-200 cursor-pointer flex flex-col justify-between group"
+                        className="bg-slate-50/70 hover:bg-white border border-slate-200/90 hover:border-indigo-400 hover:shadow-xl hover:shadow-indigo-500/10 rounded-2xl p-3.5 transition-all duration-200 cursor-pointer flex flex-col justify-between group relative overflow-hidden"
                       >
-                        <div className="space-y-1.5">
-                          <div className="flex items-center justify-between gap-2">
-                            <span className={`text-[10px] font-black px-2 py-0.5 rounded-lg border ${medalColors[index]}`}>
-                              {medals[index]} #{index + 1}
+                        {/* Top Cover Thumbnail Image & Badges */}
+                        <div>
+                          <div className="relative w-full h-28 rounded-xl overflow-hidden mb-3 bg-slate-200 border border-slate-200/70">
+                            {post.image ? (
+                              <img
+                                src={post.image}
+                                alt={post.title}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-gradient-to-br from-indigo-900 to-slate-900 flex items-center justify-center text-white/40">
+                                <i className="fa-solid fa-newspaper text-3xl" />
+                              </div>
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+
+                            {/* Rank Badge */}
+                            <span className={`absolute top-2 left-2 text-[10px] font-black px-2.5 py-1 rounded-lg border backdrop-blur-md ${medalBadges[index]}`}>
+                              {rankLabels[index]}
                             </span>
-                            <span className="text-[9.5px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 truncate max-w-[120px]">
+
+                            {/* Category Badge */}
+                            <span className="absolute top-2 right-2 text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-md bg-white/90 text-slate-800 backdrop-blur-md border border-white/40 shadow-xs max-w-[110px] truncate">
                               {post.category}
                             </span>
+
+                            {/* Views Count Pill Overlaid on Thumbnail */}
+                            <div className="absolute bottom-2 right-2 bg-slate-950/80 backdrop-blur-md text-amber-300 border border-amber-400/30 text-[10.5px] font-black px-2.5 py-0.5 rounded-md flex items-center gap-1.5 shadow-sm">
+                              <i className="fa-solid fa-fire text-amber-400 text-[10px]" />
+                              <span>{(post.views || 0).toLocaleString()} Views</span>
+                            </div>
                           </div>
-                          <h5 className="text-xs font-extrabold text-white line-clamp-2 leading-snug group-hover:text-indigo-300 transition-colors" title={post.title}>
+
+                          <h5
+                            className="text-xs font-black text-slate-900 line-clamp-2 leading-snug group-hover:text-indigo-600 transition-colors"
+                            title={post.title}
+                          >
                             {post.title}
                           </h5>
                         </div>
 
-                        <div className="mt-3 pt-2 border-t border-slate-700/60 flex items-center justify-between text-[11px]">
-                          <span className="text-slate-400 font-mono text-[10px] truncate max-w-[140px]">/blog/{post.slug}</span>
-                          <span className="font-black text-amber-300 bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded-md flex items-center gap-1 shrink-0">
-                            <i className="fa-regular fa-eye text-[10px]" /> {(post.views || 0).toLocaleString()} Views
-                          </span>
+                        {/* Footer Analytics & Relative Popularity Bar */}
+                        <div className="mt-3 pt-2.5 border-t border-slate-200/80">
+                          <div className="flex items-center justify-between text-[10px] text-slate-500 font-semibold mb-1">
+                            <span className="font-mono text-slate-400 truncate max-w-[130px]">/blog/{post.slug}</span>
+                            <span className="text-amber-600 font-black">{viewPct}% of Top</span>
+                          </div>
+                          {/* Relative Traffic Fill Bar */}
+                          <div className="w-full bg-slate-200/80 rounded-full h-1.5 overflow-hidden">
+                            <div
+                              className="bg-gradient-to-r from-amber-400 via-amber-500 to-indigo-500 h-full rounded-full transition-all duration-500"
+                              style={{ width: `${viewPct}%` }}
+                            />
+                          </div>
                         </div>
                       </div>
                     );
