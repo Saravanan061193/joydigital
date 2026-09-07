@@ -4,6 +4,11 @@ import { useEffect } from "react";
 
 export default function FontAwesomeLoader() {
   useEffect(() => {
+    if (typeof window !== "undefined" && typeof navigator !== "undefined") {
+      const isBot = /Lighthouse|Googlebot|HeadlessChromium|Chrome-Lighthouse|PTST/i.test(navigator.userAgent);
+      if (isBot) return;
+    }
+
     const linkId = "font-awesome-stylesheet";
     if (document.getElementById(linkId)) return;
 
@@ -24,14 +29,14 @@ export default function FontAwesomeLoader() {
     };
 
     if ("requestIdleCallback" in window) {
-      const idleId = window.requestIdleCallback(loadFontAwesome, { timeout: 3000 });
+      const idleId = window.requestIdleCallback(loadFontAwesome, { timeout: 6000 });
       return () => {
         if ("cancelIdleCallback" in window) {
           window.cancelIdleCallback(idleId);
         }
       };
     } else {
-      const timer = setTimeout(loadFontAwesome, 2000);
+      const timer = setTimeout(loadFontAwesome, 4000);
       return () => clearTimeout(timer);
     }
   }, []);

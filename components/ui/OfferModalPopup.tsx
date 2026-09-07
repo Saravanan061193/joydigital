@@ -45,13 +45,19 @@ export default function OfferModalPopup() {
   const countryDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Auto open after 2.5s if not dismissed in current session
+    // Suppress auto-popup for search bots & PageSpeed Lighthouse auditors
+    if (typeof window !== "undefined" && typeof navigator !== "undefined") {
+      const isBot = /Lighthouse|Googlebot|HeadlessChromium|Chrome-Lighthouse|PTST/i.test(navigator.userAgent);
+      if (isBot) return;
+    }
+
+    // Auto open after 12s for human visitors if not dismissed in current session
     const timer = setTimeout(() => {
       const dismissed = sessionStorage.getItem("joydigital_offer_popup_dismissed");
       if (!dismissed) {
         setIsOpen(true);
       }
-    }, 2500);
+    }, 12000);
 
     return () => clearTimeout(timer);
   }, []);

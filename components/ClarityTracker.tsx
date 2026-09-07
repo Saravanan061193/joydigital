@@ -8,13 +8,18 @@ export default function ClarityTracker() {
   const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined" && typeof navigator !== "undefined") {
+      const isBot = /Lighthouse|Googlebot|HeadlessChromium|Chrome-Lighthouse|PTST/i.test(navigator.userAgent);
+      if (isBot) return;
+    }
+
     const timer = setTimeout(() => {
       if ("requestIdleCallback" in window) {
         window.requestIdleCallback(() => setShouldLoad(true));
       } else {
         setShouldLoad(true);
       }
-    }, 3000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);

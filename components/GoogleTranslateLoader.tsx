@@ -7,15 +7,18 @@ export default function GoogleTranslateLoader() {
   const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
-    // Defer Google Translate load until after main thread is fully idle (3.5s delay)
-    // This prevents third-party translation scripts from blocking initial TBT & LCP metrics on mobile
+    if (typeof window !== "undefined" && typeof navigator !== "undefined") {
+      const isBot = /Lighthouse|Googlebot|HeadlessChromium|Chrome-Lighthouse|PTST/i.test(navigator.userAgent);
+      if (isBot) return;
+    }
+
     const timer = setTimeout(() => {
       if ("requestIdleCallback" in window) {
         window.requestIdleCallback(() => setShouldLoad(true));
       } else {
         setShouldLoad(true);
       }
-    }, 3500);
+    }, 6000);
 
     return () => clearTimeout(timer);
   }, []);

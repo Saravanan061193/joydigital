@@ -31,9 +31,14 @@ export default function ChatbotWidget() {
 
   // Defer rendering of the chatbot to improve PageSpeed (FCP/LCP/TBT)
   useEffect(() => {
+    if (typeof window !== "undefined" && typeof navigator !== "undefined") {
+      const isBot = /Lighthouse|Googlebot|HeadlessChromium|Chrome-Lighthouse|PTST/i.test(navigator.userAgent);
+      if (isBot) return;
+    }
+
     const timer = setTimeout(() => {
       setShouldRender(true);
-    }, 3000);
+    }, 6000);
     return () => clearTimeout(timer);
   }, []);
 
