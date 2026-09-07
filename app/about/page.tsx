@@ -1,12 +1,15 @@
 import React from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyWidgets from "@/components/ui/StickyWidgets";
 import StrongCTA from "@/components/StrongCTA";
 import JsonLd from "@/components/seo/JsonLd";
 import { buildPageGraphSchema } from "@/lib/seo/schema";
+
+const Accordion = dynamic(() => import("@/components/ui/Accordion"));
 
 export const metadata: Metadata = {
   title: "About Our Web Agency | Joy Digital",
@@ -24,6 +27,29 @@ export const metadata: Metadata = {
   },
 };
 
+const aboutFaqs = [
+  {
+    question: "What services does Joy Digital specialize in?",
+    answer: "Joy Digital specializes in custom Next.js website development, Generative Engine Optimization (GEO/AI search optimization), local SEO, and performance web engineering for startups and expanding businesses."
+  },
+  {
+    question: "Where is Joy Digital located and do you serve international clients?",
+    answer: "Joy Digital is based in Perungalathur, Chennai, Tamil Nadu, India. We serve local businesses across Chennai and India, as well as global clients in the US, UK, UAE, Europe, and Australia."
+  },
+  {
+    question: "Why choose custom web engineering over legacy CMS platforms like WordPress?",
+    answer: "Custom Next.js web engineering delivers sub-second global page load speeds, 100% serverless security against SQL injections, 95+ Core Web Vitals scores, and full source code ownership."
+  },
+  {
+    question: "What is your approach to project timelines and pricing?",
+    answer: "We operate with 100% transparent flat-rate proposals, zero hidden recurring fees, 2-week sprint milestones, and direct founder-led communication throughout your project."
+  },
+  {
+    question: "How can I request a quote or get started with Joy Digital?",
+    answer: "You can request a free consultation or website audit using our contact forms, call us directly at +91 90800 26133, or message us on WhatsApp for an instant growth strategy."
+  }
+];
+
 export default function AboutPage() {
   const canonicalUrl = "https://joydigital.in/about";
   const graphSchema = buildPageGraphSchema({
@@ -35,6 +61,7 @@ export default function AboutPage() {
       { name: "Home", item: "https://joydigital.in" },
       { name: "About Us", item: canonicalUrl },
     ],
+    faqs: aboutFaqs,
   });
 
   return (
@@ -162,6 +189,25 @@ export default function AboutPage() {
                 </a>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="py-16 lg:py-24 bg-light-bg border-t border-gray-100">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">
+                Common Questions
+              </span>
+              <h2 className="text-2xl md:text-4xl font-extrabold text-primary-dark mb-4">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-sm text-text-secondary">
+                Have questions about Joy Digital, our web engineering process, or how we help businesses grow? Find answers below.
+              </p>
+            </div>
+
+            <Accordion items={aboutFaqs} />
           </div>
         </section>
 
