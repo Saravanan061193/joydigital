@@ -16,6 +16,7 @@ const SERVICES_LINKS = [
   { href: "/ecommerce-website-development", label: "E-commerce Development", localized: false },
   { href: "/seo-services", label: "SEO Services", localized: true },
   { href: "/local-seo-services", label: "Local SEO Services", localized: false },
+  { href: "/ai-search-optimization", label: "AI Search Optimization (GEO)", localized: false },
 ];
 
 const REGIONS = [

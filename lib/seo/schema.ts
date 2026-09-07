@@ -42,11 +42,38 @@ export const BUSINESS_INFO = {
     "Website Design",
     "Web Development",
     "SEO Services",
+    "AI Search Optimization (GEO)",
+    "Generative Engine Optimization",
     "Local SEO",
     "Digital Marketing",
     "Logo Design"
   ]
 };
+
+export const PERSON_SARAVANAN_ID = `${SITE_URL}/author/saravanan#person`;
+
+export function getPersonEntity() {
+  return {
+    "@type": "Person",
+    "@id": PERSON_SARAVANAN_ID,
+    "name": "Saravanan L",
+    "jobTitle": "Technical Web Specialist & Founder",
+    "worksFor": { "@id": ORGANIZATION_ID },
+    "url": `${SITE_URL}/author/saravanan`,
+    "image": `${SITE_URL}/assets/images/logo.webp`,
+    "sameAs": [
+      "https://www.linkedin.com/in/saravanan-l-34a861154/"
+    ],
+    "knowsAbout": [
+      "Next.js Web Development",
+      "Search Engine Optimization (SEO)",
+      "Generative Engine Optimization (GEO)",
+      "Web Engineering & Core Web Vitals",
+      "Technical PageSpeed Optimization",
+      "Custom Web Architecture"
+    ]
+  };
+}
 
 export interface BreadcrumbItem {
   name: string;
@@ -194,9 +221,10 @@ export function getBlogPostingEntity(params: {
     "dateModified": params.dateModified || params.datePublished,
     "author": {
       "@type": "Person",
+      "@id": PERSON_SARAVANAN_ID,
       "name": params.authorName || "Saravanan L",
       "jobTitle": params.authorRole || "Technical Web Specialist",
-      "url": params.authorUrl || `${SITE_URL}/about`
+      "url": params.authorUrl || `${SITE_URL}/author/saravanan`
     },
     "publisher": { "@id": ORGANIZATION_ID },
     "url": params.url

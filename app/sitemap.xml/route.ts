@@ -45,6 +45,8 @@ export async function GET() {
   // Global static routes (unified, non-country specific)
   const unifiedStaticPaths = [
     '/about',
+    '/ai-search-optimization',
+    '/author/saravanan',
     '/custom-website-development',
     '/dynamic-website-development',
     '/portfolio',

@@ -217,7 +217,7 @@ export default function BlogArticleContainer({ post, htmlContent, relatedPosts, 
           </div>
           <div>
             <span className="text-xs font-black text-slate-900 block leading-none mb-1">
-              By {post.authorName || post.author}
+              By <Link href="/author/saravanan" className="hover:text-primary transition-colors">{post.authorName || post.author}</Link>
             </span>
             <span className="text-[10px] text-[#64748B] font-semibold block">
               {post.authorRole || "Technical Web & Search Marketing Specialist"}

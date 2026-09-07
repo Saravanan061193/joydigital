@@ -191,6 +191,11 @@ export default function Footer() {
               </Link>
             </li>
             <li>
+              <Link href="/ai-search-optimization" className="hover:text-accent hover:pl-1 transition-all font-semibold text-accent">
+                AI Search Optimization (GEO)
+              </Link>
+            </li>
+            <li>
               <Link href="/web-design-services" className="hover:text-accent hover:pl-1 transition-all">
                 Website Design Services
               </Link>
@@ -338,6 +343,9 @@ export default function Footer() {
           <ul className="flex flex-col gap-3.5 text-xs text-text-secondary">
             <li>
               <Link href="/about" className="hover:text-accent hover:pl-1 transition-all">About Our Agency</Link>
+            </li>
+            <li>
+              <Link href="/author/saravanan" className="hover:text-accent hover:pl-1 transition-all font-semibold text-accent">Author: Saravanan L</Link>
             </li>
             <li>
               <Link href={getRegionalHref("/contact")} className="hover:text-accent hover:pl-1 transition-all">Contact Us</Link>
