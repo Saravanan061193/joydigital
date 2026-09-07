@@ -814,6 +814,50 @@
     "created_at": "2026-09-07T00:00:00.000Z"
   },
   {
+    "id": "kw-static-web-06",
+    "keyword": "static site development agency",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Global Businesses",
+    "notes": "Secondary keyword for static web dev.",
+    "status": "Active",
+    "assigned_page_id": "page-static-web-dev",
+    "created_at": "2026-09-07T00:00:00.000Z"
+  },
+  {
+    "id": "kw-static-web-07",
+    "keyword": "jamstack website development company",
+    "type": "Secondary",
+    "search_intent": "Commercial",
+    "target_audience": "Tech Companies & Startups",
+    "notes": "Jamstack & SSG agency search query.",
+    "status": "Active",
+    "assigned_page_id": "page-static-web-dev",
+    "created_at": "2026-09-07T00:00:00.000Z"
+  },
+  {
+    "id": "kw-static-web-08",
+    "keyword": "fast static website development for small business",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "Small Business Owners",
+    "notes": "Long-tail keyword for static website page.",
+    "status": "Active",
+    "assigned_page_id": "page-static-web-dev",
+    "created_at": "2026-09-07T00:00:00.000Z"
+  },
+  {
+    "id": "kw-static-web-09",
+    "keyword": "static website generator for enterprise performance",
+    "type": "Long-tail",
+    "search_intent": "Transactional",
+    "target_audience": "Enterprise CTOs",
+    "notes": "Enterprise long-tail keyword for static site page.",
+    "status": "Active",
+    "assigned_page_id": "page-static-web-dev",
+    "created_at": "2026-09-07T00:00:00.000Z"
+  },
+  {
     "id": "kw-portfolio-01",
     "keyword": "portfolio website",
     "type": "Primary",

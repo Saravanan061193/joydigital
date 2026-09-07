@@ -55,7 +55,7 @@
       "Role-Based Access Control (RBAC)"
     ],
     "primary_keyword_id": "kw-dynamic-web-01",
-    "secondary_keyword_ids": ["kw-dynamic-web-03", "kw-dynamic-web-04", "kw-dynamic-web-07", "kw-cms-01", "kw-cms-02", "kw-cms-04", "kw-cms-05"],
+    "secondary_keyword_ids": ["kw-dynamic-web-03", "kw-dynamic-web-04", "kw-dynamic-web-07", "kw-cms-02", "kw-cms-04"],
     "longtail_keyword_ids": ["kw-dynamic-web-05", "kw-dynamic-web-06", "kw-dynamic-web-08", "kw-cms-03"],
     "faq_schema": [
       {
@@ -253,8 +253,8 @@
       "Sub-Second Global Page Speed & Core Web Vitals"
     ],
     "primary_keyword_id": "kw-static-web-01",
-    "secondary_keyword_ids": ["kw-static-web-02", "kw-static-web-03"],
-    "longtail_keyword_ids": ["kw-static-web-04", "kw-static-web-05"],
+    "secondary_keyword_ids": ["kw-static-web-02", "kw-static-web-03", "kw-static-web-06", "kw-static-web-07"],
+    "longtail_keyword_ids": ["kw-static-web-04", "kw-static-web-05", "kw-static-web-08", "kw-static-web-09"],
     "faq_schema": [
       {
         "question": "What is a static website and how does it work?",
