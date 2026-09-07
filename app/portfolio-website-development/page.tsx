@@ -6,8 +6,8 @@ import { generatePageSeo } from "@/lib/seoEngine";
 export async function generateMetadata(): Promise<Metadata> {
   const seoData = await generatePageSeo(
     "/portfolio-website-development",
-    "Portfolio Website Development Services for Professionals & Creatives | Joy Digital",
-    "Build high-impact, custom portfolio websites for consultants, executives, agency owners, architects, and freelancers. Showcase your work, land high-paying clients, and build your digital brand."
+    "Portfolio Website Development, Templates & AI Design | Joy Digital",
+    "Build a custom portfolio website for web developers, executives & agency owners. Explore portfolio website templates, GitHub hosting, and Pinterest design trends."
   );
   return seoData.metadata;
 }
@@ -15,28 +15,49 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function PortfolioWebDevPage() {
   const seoData = await generatePageSeo(
     "/portfolio-website-development",
-    "Portfolio Website Development Services for Professionals & Creatives | Joy Digital",
-    "Build high-impact, custom portfolio websites for consultants, executives, agency owners, architects, and freelancers. Showcase your work, land high-paying clients, and build your digital brand."
+    "Portfolio Website Development, Templates & AI Design | Joy Digital",
+    "Build a custom portfolio website for web developers, executives & agency owners. Explore portfolio website templates, GitHub hosting, and Pinterest design trends."
   );
 
   return (
     <>
       <ServicePageTemplate
         serviceName="Portfolio Website Development"
-        heroTitle={seoData.pageMapping?.h1 || "Portfolio Website Development Services to Showcase Your Work & Brand"}
-        heroSubtitle="Build stunning, modern portfolio websites tailored for consultants, executives, freelancers, agency owners, and creative professionals. Stand out from competitors and convert visitors into high-paying clients."
+        heroTitle={seoData.pageMapping?.h1 || "Custom Portfolio Website Development & Personal Branding Architecture"}
+        heroSubtitle="Build stunning, modern portfolio websites tailored for consultants, executives, web developers, agency owners, and creative professionals. Stand out from competitors and convert visitors into high-paying clients."
         leadSource="Portfolio Website Development Page"
         heroCtaText="Request a Portfolio Web Quote"
         canonicalUrl="https://joydigital.in/portfolio-website-development"
         overviewTitle="High-Impact Digital Showcase & Personal Brand Architecture"
         overviewContent={
           <div className="space-y-6">
-            <p>
-              Your portfolio is often the single most critical asset in establishing authority, attracting premium clients, and closing high-value deals. A generic social profile or basic resume PDF doesn&apos;t convey the depth of your achievements. Custom <strong>portfolio website development</strong> gives you a dedicated 24/7 digital showcase designed around your personal brand.
-            </p>
-            <p>
-              At Joy Digital, we build bespoke <strong>portfolio website templates</strong> and custom Next.js showcases featuring interactive project galleries, case study deep dives, client testimonials, and 1-tap booking triggers. Whether you are an independent consultant, executive leader, architect, designer, or agency founder, we craft websites engineered for prestige and conversion.
-            </p>
+            <div>
+              <h2 className="text-xl font-bold text-white mb-2">Elevate Your Personal Brand with Custom Portfolio Website Development</h2>
+              <p>
+                A high-converting <strong>portfolio website</strong> is your most powerful personal asset for building authority, attracting high-ticket clients, and landing premium career opportunities. While generic <strong>portfolio website templates</strong> or no-code <strong>portfolio website maker</strong> tools often restrict layout customization and slow down page speed, our custom Next.js engineering gives you complete design control and 95+ Core Web Vitals performance.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-xl font-bold text-white mb-2">Tailored Portfolio Website for Web Developer Professionals & Engineers</h2>
+              <p>
+                Engineering a specialized <strong>portfolio website for web developer</strong> profiles requires more than static images. We build interactive technical showcases featuring live code preview embeds, dark/light mode toggles, micro-animations, and automated deployment integrations. Whether you prefer hosting your <strong>portfolio website github</strong> workflow on GitHub Pages or Vercel Edge, we ensure zero maintenance overhead.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-xl font-bold text-white mb-2">Creative Portfolio Website Design Inspired by Pinterest Trends & AI Tools</h2>
+              <p>
+                Our design team crafts bespoke <strong>portfolio website design</strong> layouts drawing visual inspiration from top <strong>portfolio website pinterest</strong> mood boards, Behance showcases, and modern UI trends. If you are comparing automated <strong>portfolio website ai</strong> builders against custom engineering, our bespoke builds guarantee 100% unique brand identity without rigid template footprints.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-xl font-bold text-white mb-2">Free Hosting Options & Enterprise Performance</h2>
+              <p>
+                Want to keep hosting expenses low? You can host your pre-rendered <strong>portfolio website free</strong> using modern cloud platforms like GitHub Pages, Vercel, or Netlify while retaining custom domain SSL and global CDN distribution.
+              </p>
+            </div>
           </div>
         }
         benefitsTitle="Why Choose Custom Portfolio Website Development?"
@@ -68,7 +89,7 @@ export default async function PortfolioWebDevPage() {
         processSteps={[
           {
             step: "1",
-            icon: "fa-solid fa-[#7C3AED] fa-[#7C3AED] fa-comments",
+            icon: "fa-solid fa-[#7C3AED] fa-comments",
             title: "Brand & Work Audit",
             description: "We review your key projects, target client profile, and brand positioning.",
           },
@@ -126,12 +147,20 @@ export default async function PortfolioWebDevPage() {
         ]}
         faqs={seoData.pageMapping?.faq_schema || [
           {
-            question: "Why do I need a custom portfolio website?",
-            answer: "A custom portfolio website establishes strong personal brand authority, showcases your work professionally, and generates high-intent client inquiries."
+            question: "What is the advantage of a custom portfolio website over a generic portfolio website maker or template?",
+            answer: "While an automated portfolio website maker or basic portfolio website templates rely on standard layouts, custom portfolio website development delivers sub-second speeds, bespoke UI, zero recurring software fees, and 100% source code ownership."
           },
           {
-            question: "Can I update my projects on the portfolio site easily?",
-            answer: "Yes! We can configure simple admin controls or markdown files so you can add new projects, images, and achievements anytime."
+            question: "How do you engineer a high-performing portfolio website for web developer candidates?",
+            answer: "A portfolio website for web developer candidates features live project links, interactive code snippets, GitHub activity integrations, and sub-second Next.js page rendering."
+          },
+          {
+            question: "Can I publish a portfolio website free using GitHub Pages?",
+            answer: "Yes! We can configure your Next.js build to deploy a portfolio website github workflow, allowing you to host your static portfolio website free on GitHub Pages or Vercel with automated CI/CD."
+          },
+          {
+            question: "Do you design portfolios inspired by modern trends like portfolio website pinterest boards or AI tools?",
+            answer: "Yes! Our design process integrates aesthetic trends from portfolio website pinterest collections, Behance features, and modern portfolio website ai prototyping tools to craft unique, high-converting visual showcases."
           }
         ]}
         crossLinks={[

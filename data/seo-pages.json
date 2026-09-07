@@ -234,5 +234,143 @@
     ],
     "alt_texts": [],
     "updated_at": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "page-static-web-dev",
+    "path": "/static-website-development",
+    "category": "Core Service",
+    "title_template": "Static Website Development Services, Examples & SSG Architecture | Joy Digital",
+    "meta_description": "What is a static website? Explore static website examples, static website generator tech (Next.js), and dynamic website vs static website performance.",
+    "h1": "Static Website Development Services, Examples & Edge Architecture",
+    "h2_tags": [
+      "What is a Static Website & How Does It Work?",
+      "Dynamic Website vs Static Website: Comprehensive Comparison",
+      "Modern Static Website Generator Technologies",
+      "Real-World Static Website Examples for Growing Businesses"
+    ],
+    "h3_tags": [
+      "Next.js, React & Edge CDN Workflows",
+      "Sub-Second Global Page Speed & Core Web Vitals"
+    ],
+    "primary_keyword_id": "kw-static-web-01",
+    "secondary_keyword_ids": ["kw-static-web-02", "kw-static-web-03"],
+    "longtail_keyword_ids": ["kw-static-web-04", "kw-static-web-05"],
+    "faq_schema": [
+      {
+        "question": "What is a static website and how does it work?",
+        "answer": "What is a static website? A static website consists of pre-rendered HTML, CSS, and JavaScript files delivered directly to visitors via global CDN edge nodes without database query delays."
+      },
+      {
+        "question": "What is the key difference between a dynamic website vs static website?",
+        "answer": "In a dynamic website vs static website comparison, dynamic sites compile content dynamically per user request using server databases, whereas static websites pre-build pages upfront using a static website generator for sub-second speeds and zero database security risks."
+      },
+      {
+        "question": "What is a static website generator and which one do you use?",
+        "answer": "A static website generator (SSG) is a modern build tool like Next.js, Astro, or Hugo that pre-compiles source code and markup into fast static pages. Joy Digital leverages Next.js and React for enterprise static web applications."
+      },
+      {
+        "question": "Can you provide a real-world static website example for businesses?",
+        "answer": "A classic static website example includes corporate brand sites, product landing pages, documentation platforms, and agency portfolio showcases. High-performing static website examples load in under 1 second worldwide."
+      }
+    ],
+    "alt_texts": [
+      {
+        "image_url": "/assets/images/hero-banner.webp",
+        "alt_text": "Static website development architecture showing Next.js static website generator performance."
+      }
+    ],
+    "updated_at": "2026-09-07T00:00:00.000Z"
+  },
+  {
+    "id": "page-portfolio-web-dev",
+    "path": "/portfolio-website-development",
+    "category": "Core Service",
+    "title_template": "Portfolio Website Development, Templates & AI Design | Joy Digital",
+    "meta_description": "Build a custom portfolio website for web developers, executives & agency owners. Explore portfolio website templates, GitHub hosting, and Pinterest design trends.",
+    "h1": "Custom Portfolio Website Development & Personal Branding Architecture",
+    "h2_tags": [
+      "Custom Portfolio Website vs Automated Portfolio Website Maker Tools",
+      "Tailored Portfolio Website for Web Developer Professionals & Engineers",
+      "High-Converting Portfolio Website Design Inspired by Pinterest & Behance",
+      "Hosting Your Portfolio Website Free on GitHub Pages & Vercel Edge"
+    ],
+    "h3_tags": [
+      "Interactive Case Studies & Lightbox Galleries",
+      "1-Tap Booking & WhatsApp Enquiry Triggers"
+    ],
+    "primary_keyword_id": "kw-portfolio-01",
+    "secondary_keyword_ids": ["kw-portfolio-02", "kw-portfolio-03", "kw-portfolio-04", "kw-portfolio-05"],
+    "longtail_keyword_ids": ["kw-portfolio-06", "kw-portfolio-07", "kw-portfolio-08", "kw-portfolio-09"],
+    "faq_schema": [
+      {
+        "question": "What is the benefit of a custom portfolio website over a generic portfolio website maker?",
+        "answer": "While an automated portfolio website maker or basic portfolio website templates use rigid structures, custom portfolio website development delivers sub-second speeds, tailored personal branding, zero recurring software fees, and 100% IP code ownership."
+      },
+      {
+        "question": "How do you build a portfolio website for web developer candidates?",
+        "answer": "A portfolio website for web developer profiles features live project embeds, clean source code showcases, dark mode options, and automated GitHub sync."
+      },
+      {
+        "question": "Can I host my portfolio website free on GitHub?",
+        "answer": "Yes! We engineer modern Next.js static portfolios that can be hosted as a portfolio website free using GitHub Pages or Vercel Edge networks with automated CI/CD deployments."
+      },
+      {
+        "question": "Are your portfolio website designs inspired by platforms like Pinterest?",
+        "answer": "Yes! Our design team draws visual inspiration from top portfolio website pinterest boards, Behance award winners, and Awwwards sites to create aesthetic, premium user experiences."
+      }
+    ],
+    "alt_texts": [
+      {
+        "image_url": "/assets/images/hero-banner.webp",
+        "alt_text": "Custom portfolio website design layout for web developers and agency leaders."
+      }
+    ],
+    "updated_at": "2026-09-07T00:00:00.000Z"
+  },
+  {
+    "id": "page-ai-search-opt",
+    "path": "/ai-search-optimization",
+    "category": "Core Service",
+    "title_template": "AI Search Optimization (GEO/AIO) Services | Joy Digital",
+    "meta_description": "Learn how to optimize website for AI search. Discover AI search optimization tools, tutorials, GEO acronym meanings, and ASO strategies for AI engines.",
+    "h1": "AI Search Optimization & Generative Engine Services",
+    "h2_tags": [
+      "What is AI Search Optimization Called? Understanding GEO & AIO",
+      "How to Optimize Website for AI Search & Generative Engines",
+      "AI Search Optimization Tools, Schemas & Entity Architecture",
+      "AI Search Optimization ASO & Technical Crawlability"
+    ],
+    "h3_tags": [
+      "ChatGPT, Gemini & Perplexity Citation Strategies",
+      "Structured Q&A Formats & JSON-LD Entity Graphs"
+    ],
+    "primary_keyword_id": "kw-ai-seo-01",
+    "secondary_keyword_ids": ["kw-ai-seo-02", "kw-ai-seo-03", "kw-ai-seo-04", "kw-ai-seo-05"],
+    "longtail_keyword_ids": ["kw-ai-seo-06", "kw-ai-seo-07", "kw-ai-seo-08", "kw-ai-seo-09"],
+    "faq_schema": [
+      {
+        "question": "What is AI search optimization called and what is the AI search optimization acronym?",
+        "answer": "What is AI search optimization called? It is known as Generative Engine Optimization (GEO) or Artificial Intelligence Optimization (AIO). The AI search optimization acronym is GEO (Generative Engine Optimization)."
+      },
+      {
+        "question": "How do you optimize website for AI search systems?",
+        "answer": "To optimize website for AI search systems, you structure machine-readable JSON-LD schemas, publish direct question-and-answer content clusters, build strong author E-E-A-T entity signals, and ensure sub-second HTML pre-rendering."
+      },
+      {
+        "question": "What is an AI search optimization tool or software?",
+        "answer": "An AI search optimization tool includes schema validators, entity extractors, semantic analyzers, and LLM web crawler simulators that audit how ChatGPT, Gemini, and Perplexity parse web content."
+      },
+      {
+        "question": "Do you offer an AI search optimization tutorial, course, or certification guide?",
+        "answer": "Yes! Our team provides an in-depth AI search optimization tutorial and strategic GEO framework to help brands achieve machine-readable entity authority without needing a complex AI search optimization course or certification."
+      }
+    ],
+    "alt_texts": [
+      {
+        "image_url": "/assets/images/hero-banner.webp",
+        "alt_text": "AI search optimization schema architecture graph for generative engines."
+      }
+    ],
+    "updated_at": "2026-09-07T00:00:00.000Z"
   }
 ]
