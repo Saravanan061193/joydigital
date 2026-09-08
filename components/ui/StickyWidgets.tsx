@@ -68,7 +68,7 @@ export default function StickyWidgets() {
 
       {/* Floating WhatsApp Tooltip Message */}
       {showTooltip && (
-        <div className="fixed bottom-[88px] lg:bottom-[40px] left-24 bg-white border border-gray-100 p-3.5 rounded-2xl shadow-xl text-left w-44 z-40 animate-fade-in flex flex-col gap-0.5 pointer-events-auto">
+        <div className="fixed bottom-[88px] lg:bottom-[40px] right-24 bg-white border border-gray-100 p-3.5 rounded-2xl shadow-xl text-left w-44 z-40 animate-fade-in flex flex-col gap-0.5 pointer-events-auto">
           <button 
             onClick={() => setShowTooltip(false)} 
             className="absolute top-2.5 right-2.5 text-text-muted hover:text-primary-dark text-[10px] cursor-pointer"
@@ -78,8 +78,8 @@ export default function StickyWidgets() {
           </button>
           <span className="text-[9px] font-bold text-accent uppercase tracking-wider">Need help?</span>
           <span className="text-[11px] font-bold text-primary-dark leading-tight">Chat with an SEO Expert</span>
-          {/* Arrow pointing to WhatsApp button on the left */}
-          <div className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white border-l border-b border-gray-100/80 rotate-45" />
+          {/* Arrow pointing to WhatsApp button on the right */}
+          <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white border-r border-t border-gray-100/80 rotate-45" />
         </div>
       )}
 
@@ -92,7 +92,7 @@ export default function StickyWidgets() {
             tracker("call_click", { location: "floating button" });
           }
         }}
-        className="fixed bottom-36 lg:bottom-22 left-6 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl shadow-lg hover:scale-110 transition-all duration-300 z-40"
+        className="fixed bottom-36 lg:bottom-22 right-6 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl shadow-lg hover:scale-110 transition-all duration-300 z-40"
         aria-label="Call Us Now"
         title="Call Us Now"
         data-call-location="floating button"
@@ -101,7 +101,7 @@ export default function StickyWidgets() {
         <i className="fa-solid fa-phone relative z-10" />
       </a>
 
-      {/* Floating WhatsApp Pulse Button (Bottom Left) */}
+      {/* Floating WhatsApp Pulse Button (Bottom Right) */}
       <a
         href="https://wa.me/919080026133?text=Hello%20Joy%20Digital,%20I'd%20like%20to%20get%20a%20free%20consultation%20for%20my%20business."
         target="_blank"
@@ -112,14 +112,14 @@ export default function StickyWidgets() {
             tracker("whatsapp_click", { location: "floating button" });
           }
         }}
-        className={`fixed bottom-20 lg:bottom-6 left-6 w-14 h-14 bg-whatsapp-green text-white rounded-full flex items-center justify-center text-3xl shadow-lg hover:scale-110 hover:rotate-[-5deg] transition-all duration-300 z-40 group`}
+        className={`fixed bottom-20 lg:bottom-6 right-6 w-14 h-14 bg-whatsapp-green text-white rounded-full flex items-center justify-center text-3xl shadow-lg hover:scale-110 hover:rotate-[5deg] transition-all duration-300 z-40 group`}
         aria-label="Chat on WhatsApp"
         title="Chat on WhatsApp"
         data-wa-location="floating button"
       >
         <span className="absolute top-0 left-0 w-full h-full bg-whatsapp-green rounded-full -z-1 opacity-70 animate-pulse-ring"></span>
         <i className="fa-brands fa-whatsapp relative z-10" />
-        <span className="absolute left-16 top-1/2 -translate-y-1/2 bg-slate-900 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 -translate-x-2 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-md whitespace-nowrap hidden lg:block border border-slate-800">
+        <span className="absolute right-16 top-1/2 -translate-y-1/2 bg-slate-900 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg opacity-0 translate-x-2 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-md whitespace-nowrap hidden lg:block border border-slate-800">
           Chat on WhatsApp
         </span>
       </a>
@@ -127,7 +127,7 @@ export default function StickyWidgets() {
       {/* Scroll to Top Button */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className={`fixed bottom-52 lg:bottom-38 left-6 w-9 h-9 bg-primary-dark text-white rounded-full flex items-center justify-center text-xs shadow-md hover:bg-accent transition-all duration-300 z-40 ${
+        className={`fixed bottom-52 lg:bottom-38 right-6 w-9 h-9 bg-primary-dark text-white rounded-full flex items-center justify-center text-xs shadow-md hover:bg-accent transition-all duration-300 z-40 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
         }`}
         aria-label="Scroll to top"

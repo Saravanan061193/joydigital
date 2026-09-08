@@ -355,10 +355,10 @@ export default function ChatbotWidget() {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 font-sans select-none">
+    <div className="fixed bottom-20 left-4 sm:bottom-6 sm:left-6 z-50 font-sans select-none">
       {/* 1. Proactive Tooltip (Shows after 10s) */}
       {!isOpen && showTooltip && (
-        <div className="absolute bottom-16 right-0 mb-2 w-64 bg-white dark:bg-slate-900 border border-purple-100 dark:border-slate-800 p-3.5 rounded-2xl shadow-2xl animate-fade-in text-xs z-50">
+        <div className="absolute bottom-16 left-0 mb-2 w-64 bg-white dark:bg-slate-900 border border-purple-100 dark:border-slate-800 p-3.5 rounded-2xl shadow-2xl animate-fade-in text-xs z-50">
           <div className="flex justify-between items-start">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span>
@@ -421,7 +421,7 @@ export default function ChatbotWidget() {
 
       {/* 3. Main Chat Window Panel */}
       {isOpen && (
-        <div className="fixed inset-0 sm:inset-auto sm:bottom-24 sm:right-6 w-full sm:w-[380px] h-full sm:h-[600px] bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-none sm:rounded-[24px] shadow-2xl flex flex-col overflow-hidden animate-fade-in transition-all z-50">
+        <div className="fixed inset-0 sm:inset-auto sm:bottom-24 sm:left-6 w-full sm:w-[380px] h-full sm:h-[600px] bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-none sm:rounded-[24px] shadow-2xl flex flex-col overflow-hidden animate-fade-in transition-all z-50">
           {/* Header */}
           <div className="bg-gradient-to-r from-purple-600 to-indigo-650 p-4 text-white flex items-center justify-between shrink-0 shadow-md">
             <div className="flex items-center gap-3">
