@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
+import { sendEmailLeadAlert } from "@/lib/emailAlert";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, mobile, email, service, website, message, source, subject } = body;
+    const { name, mobile, email, service, website, message, source, subject, companyName, budget } = body;
 
     // Validate inputs
     if (!name || !mobile || !email || !service) {
@@ -13,39 +14,42 @@ export async function POST(request: Request) {
       );
     }
 
-    // Prepare payload formatted for email tables
-    const payload = {
-      Name: name,
-      Mobile: mobile,
-      Email: email,
-      Service: service,
-      Website: website || "N/A",
-      Message: message || "No details provided.",
-      Source: source || "Standard Form",
-      _subject: subject || "New Lead - Joy Digital",
-      _captcha: "false",
-      _template: "table"
-    };
-
-    // Forward to FormSubmit.co service
-    const recipientEmail = process.env.CONTACT_EMAIL || "saravanan061193@gmail.com";
-    const response = await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify(payload)
+    const emailResult = await sendEmailLeadAlert({
+      name,
+      mobile,
+      email,
+      service,
+      website,
+      companyName,
+      budget,
+      message,
+      source: source || "Standard Form",
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("FormSubmit API returned error status:", response.status, errorText);
-      throw new Error("FormSubmit delivery failure");
+    if (!emailResult.success) {
+      // Fallback to FormSubmit if Gmail SMTP fails or is unconfigured
+      const recipientEmail = process.env.CONTACT_EMAIL || "saravanan061193@gmail.com";
+      const payload = {
+        Name: name,
+        Mobile: mobile,
+        Email: email,
+        Service: service,
+        Website: website || "N/A",
+        Message: message || "No details provided.",
+        Source: source || "Standard Form",
+        _subject: subject || "New Lead - Joy Digital",
+        _captcha: "false",
+        _template: "table"
+      };
+
+      await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(payload)
+      });
     }
 
-    const result = await response.json();
-    return NextResponse.json({ success: true, result });
+    return NextResponse.json({ success: true, emailResult });
   } catch (error) {
     const err = error as Error;
     console.error("API Lead Handler Error:", err);

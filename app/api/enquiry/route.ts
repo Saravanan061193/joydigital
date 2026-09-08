@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import { sendWhatsAppLeadAlert } from "@/lib/whatsappAlert";
+import { sendEmailLeadAlert } from "@/lib/emailAlert";
 import { checkRateLimit, getClientIp } from "@/lib/security/rateLimit";
 import { sanitizeObject } from "@/lib/security/sanitizer";
 
@@ -123,41 +124,33 @@ export async function POST(request: Request) {
       }
     }
     
-    // 3. Forward to FormSubmit.co server-side so owner receives immediate detailed email alert
-    const recipientEmail = process.env.CONTACT_EMAIL || "saravanan061193@gmail.com";
+    // 3. Send immediate email alert to owner via Gmail SMTP
     try {
-      const formattedPayload = {
-        _subject: `🚨 NEW LEAD INBOUND [${newEnquiry.region}] - ${newEnquiry.name} (${newEnquiry.service})`,
-        "Lead Name": newEnquiry.name,
-        "Mobile / WhatsApp": newEnquiry.mobile,
-        "Email Address": newEnquiry.email,
-        "Required Service": newEnquiry.service,
-        "Company Name": newEnquiry.companyName,
-        "Lead Source": newEnquiry.source,
-        "UTM Source": newEnquiry.utmParams?.source || "Direct / Organic",
-        "UTM Medium": newEnquiry.utmParams?.medium || "None",
-        "UTM Campaign": newEnquiry.utmParams?.campaign || "None",
-        "Landing Page": newEnquiry.utmParams?.landingPage || "N/A",
-        "Referrer": newEnquiry.utmParams?.referrer || "Direct",
-        "Submitted At": newEnquiry.createdAt,
-        _captcha: "false",
-        _template: "table"
-      };
-
-      const emailRes = await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify(formattedPayload),
-      });
-      if (!emailRes.ok) {
-        const errorText = await emailRes.text();
-        console.warn("FormSubmit response was not ok:", emailRes.status, errorText);
+      const emailResult = await sendEmailLeadAlert(newEnquiry);
+      if (!emailResult.success) {
+        console.warn("Gmail SMTP lead email failed or skipped, falling back to FormSubmit:", emailResult);
+        const recipientEmail = process.env.CONTACT_EMAIL || "saravanan061193@gmail.com";
+        const formattedPayload = {
+          _subject: `🚨 NEW LEAD INBOUND [${newEnquiry.region}] - ${newEnquiry.name} (${newEnquiry.service})`,
+          "Lead Name": newEnquiry.name,
+          "Mobile / WhatsApp": newEnquiry.mobile,
+          "Email Address": newEnquiry.email,
+          "Required Service": newEnquiry.service,
+          "Company Name": newEnquiry.companyName,
+          "Lead Source": newEnquiry.source,
+          "UTM Source": newEnquiry.utmParams?.source || "Direct / Organic",
+          "Submitted At": newEnquiry.createdAt,
+          _captcha: "false",
+          _template: "table"
+        };
+        await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify(formattedPayload),
+        });
       }
-    } catch (formSubmitError) {
-      console.error("Error forwarding submission to FormSubmit.co:", formSubmitError);
+    } catch (emailError) {
+      console.error("Error sending lead email alert:", emailError);
     }
     
     // 4. Trigger automated WhatsApp lead alert
