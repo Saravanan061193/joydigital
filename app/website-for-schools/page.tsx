@@ -265,7 +265,7 @@ export default function SchoolWebPage() {
         { href: "/seo-services", label: "Education SEO Services" },
         { href: "/local-seo-services", label: "Local Map SEO" },
         { href: "/google-business-profile-setup", label: "Google Business Setup" },
-        { href: "/portfolio", label: "View Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
         { href: "/contact", label: "Contact Admission Desk" },
       ]}
     />

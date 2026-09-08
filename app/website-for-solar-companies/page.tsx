@@ -266,7 +266,7 @@ export default function SolarWebPage() {
         { href: "/seo-services", label: "Solar SEO Services" },
         { href: "/local-seo-services", label: "Local SEO Solutions" },
         { href: "/google-business-profile-setup", label: "Google Business Profile Setup" },
-        { href: "/portfolio", label: "View Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
         { href: "/contact", label: "Contact Sales Team" },
       ]}
     />

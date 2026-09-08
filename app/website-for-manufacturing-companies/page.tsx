@@ -282,7 +282,7 @@ export default function ManufacturingWebPage() {
         { href: "/seo-services", label: "Industrial B2B SEO" },
         { href: "/website-for-textile-manufacturers", label: "Textile Manufacturing" },
         { href: "/offshore-web-development-partner", label: "Global Web Partner" },
-        { href: "/portfolio", label: "View Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
         { href: "/contact", label: "Contact Sales Engineering" },
       ]}
     />

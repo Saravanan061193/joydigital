@@ -266,7 +266,7 @@ export default function ConsultingWebPage() {
         { href: "/seo-services", label: "Corporate B2B SEO" },
         { href: "/website-for-law-firms", label: "Website for Law Firms" },
         { href: "/offshore-web-development-partner", label: "Global Web Partner" },
-        { href: "/portfolio", label: "View Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
         { href: "/contact", label: "Contact Advisory Team" },
       ]}
     />

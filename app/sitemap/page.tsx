@@ -13,7 +13,6 @@ const SECTIONS = [
     links: [
       { href: "/", label: "Homepage" },
       { href: "/about", label: "About Us" },
-      { href: "/portfolio", label: "Portfolio" },
       { href: "/case-studies", label: "Case Studies" },
       { href: "/blog", label: "Blog" },
       { href: "/contact", label: "Contact Us" },

@@ -225,7 +225,7 @@ export default function AISearchOptimizationPage() {
       crossLinks={[
         { href: "/seo-services", label: "SEO Services" },
         { href: "/website-development", label: "Website Development" },
-        { href: "/portfolio", label: "Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
         { href: "/contact", label: "Contact Us" },
       ]}
     />

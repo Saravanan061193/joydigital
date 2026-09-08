@@ -266,7 +266,7 @@ export default function ExportImportWebPage() {
         { href: "/seo-services", label: "International B2B SEO" },
         { href: "/website-for-textile-manufacturers", label: "Textile Exporter Web Dev" },
         { href: "/website-for-logistics-and-shipping", label: "Logistics & Freight Web Dev" },
-        { href: "/portfolio", label: "View Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
         { href: "/contact", label: "Contact Export Desk" },
       ]}
     />

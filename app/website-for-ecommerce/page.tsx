@@ -265,7 +265,7 @@ export default function EcommerceWebPage() {
         { href: "/seo-services", label: "E-Commerce SEO Services" },
         { href: "/website-for-luxury-brands", label: "Luxury Brand Web Dev" },
         { href: "/website-for-export-and-import", label: "Export-Import Web Dev" },
-        { href: "/portfolio", label: "View Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
         { href: "/contact", label: "Contact Us" },
       ]}
     />

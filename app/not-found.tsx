@@ -71,8 +71,6 @@ export default function NotFound() {
               <span className="text-slate-600">•</span>
               <Link href="/web-design-services" className="hover:underline">Web Design</Link>
               <span className="text-slate-600">•</span>
-              <Link href="/portfolio" className="hover:underline">Portfolio</Link>
-              <span className="text-slate-600">•</span>
               <Link href="/blog" className="hover:underline">Blog</Link>
               <span className="text-slate-600">•</span>
               <Link href="/contact" className="hover:underline">Contact Us</Link>

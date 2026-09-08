@@ -202,7 +202,7 @@ export default function CustomSoftwarePage() {
       crossLinks={[
         { href: "/website-development-company-chennai", label: "website development in Chennai" },
         { href: "/ecommerce-website-development", label: "eCommerce Web Dev" },
-        { href: "/portfolio", label: "Our Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
       ]}
     />
   );

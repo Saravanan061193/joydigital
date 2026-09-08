@@ -199,7 +199,7 @@ export default function WebsiteDesignChennai() {
       crossLinks={[
         { href: "/website-development-company-chennai", label: "website development in Chennai" },
         { href: "/seo-services-in-chennai", label: "SEO Services Chennai" },
-        { href: "/portfolio", label: "Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
       ]}
     />
   );

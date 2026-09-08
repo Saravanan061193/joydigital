@@ -169,7 +169,7 @@ export default function WebDesignCoimbatore() {
       schemaMarkup={pageSchema}
       crossLinks={[
         { href: "/seo-company-coimbatore", label: "SEO Company Coimbatore" },
-        { href: "/portfolio", label: "View Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
       ]}
     />
   );

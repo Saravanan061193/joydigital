@@ -266,7 +266,7 @@ export default function LogisticsWebPage() {
         { href: "/seo-services", label: "Logistics B2B SEO" },
         { href: "/website-for-export-and-import", label: "Export & Import Web Dev" },
         { href: "/website-for-manufacturing-companies", label: "Manufacturing Web Dev" },
-        { href: "/portfolio", label: "View Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
         { href: "/contact", label: "Contact Booking Desk" },
       ]}
     />

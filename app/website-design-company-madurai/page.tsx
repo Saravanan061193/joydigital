@@ -169,7 +169,7 @@ export default function WebDesignMadurai() {
       crossLinks={[
         { href: "/website-development-company-madurai", label: "Web Development Madurai" },
         { href: "/seo-company-madurai", label: "SEO Company Madurai" },
-        { href: "/portfolio", label: "View Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
       ]}
     />
   );

@@ -269,7 +269,7 @@ export default async function PestControlWebPage() {
         { href: "/website-development", label: "Web Development Services" },
         { href: "/local-seo-services", label: "Local SEO Solutions" },
         { href: "/google-business-profile-setup", label: "Google Business Setup" },
-        { href: "/portfolio", label: "View Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
         { href: "/contact", label: "Contact Sales Team" },
       ]}
       relatedBlogPosts={relatedBlogPosts}

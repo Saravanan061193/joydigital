@@ -49,7 +49,6 @@ export async function GET() {
     '/author/saravanan',
     '/custom-website-development',
     '/dynamic-website-development',
-    '/portfolio',
     '/case-studies',
     '/case-studies/chennai-clinic-leads',
     '/case-studies/ecommerce-sales-increase',

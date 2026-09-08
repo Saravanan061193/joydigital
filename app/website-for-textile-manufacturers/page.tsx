@@ -293,7 +293,7 @@ export default async function TextileWebPage() {
         { href: "/seo-services", label: "International B2B SEO" },
         { href: "/ecommerce-website-development", label: "E-Commerce Solutions" },
         { href: "/offshore-web-development-partner", label: "Global Web Partner" },
-        { href: "/portfolio", label: "View Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
         { href: "/contact", label: "Contact Sales Team" },
       ]}
       relatedBlogPosts={relatedBlogPosts}

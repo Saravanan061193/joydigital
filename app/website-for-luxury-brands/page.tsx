@@ -266,7 +266,7 @@ export default function LuxuryBrandWebPage() {
         { href: "/seo-services", label: "Prestige SEO Services" },
         { href: "/ecommerce-website-development", label: "Headless E-Commerce" },
         { href: "/logo-design-services", label: "Luxury Brand Identity" },
-        { href: "/portfolio", label: "View Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
         { href: "/contact", label: "Contact VIP Concierge" },
       ]}
     />

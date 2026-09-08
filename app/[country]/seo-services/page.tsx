@@ -315,7 +315,7 @@ export default async function CountrySEOPage({ params }: PageProps) {
       schemaMarkup={pageSchema}
       crossLinks={[
         { href: getRegionalHref("/website-development"), label: "Website Development" },
-        { href: "/portfolio", label: "Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
         { href: getRegionalHref("/contact"), label: "Contact Us" },
       ]}
     />

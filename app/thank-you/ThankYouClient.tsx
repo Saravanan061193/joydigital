@@ -177,10 +177,10 @@ function ThankYouContent() {
           Return to Homepage
         </Link>
         <Link
-          href="/portfolio"
+          href="/case-studies"
           className="bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 font-extrabold text-xs px-6 py-3 rounded-xl shadow-xs hover:-translate-y-0.5 transition-all duration-300"
         >
-          View Case Studies & Portfolio
+          View Case Studies
         </Link>
         <Link
           href="/free-tools"

@@ -1067,6 +1067,7 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
 
 
+
         {/* 6. HOW WE WORK PROCESS WITH AN ANIMATED CONNECTING LINE */}
         <section id="process-section" className="py-20 bg-white border-b border-[#E9E4F2]">
           <div className="max-w-7xl mx-auto px-6">

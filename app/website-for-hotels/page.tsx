@@ -272,7 +272,7 @@ export default async function HotelWebPage() {
         { href: "/seo-services", label: "Hotel SEO Services" },
         { href: "/website-for-tours-and-travels", label: "Tours & Travels Web Dev" },
         { href: "/local-seo-services", label: "Local Map SEO" },
-        { href: "/portfolio", label: "View Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
         { href: "/contact", label: "Contact Front Desk" },
       ]}
       relatedBlogPosts={relatedBlogPosts}

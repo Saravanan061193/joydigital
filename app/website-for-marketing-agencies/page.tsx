@@ -266,7 +266,7 @@ export default function MarketingAgencyWebPage() {
         { href: "/seo-services", label: "Agency SEO Services" },
         { href: "/social-media-marketing", label: "Social Media Marketing" },
         { href: "/logo-design-services", label: "Branding & Design" },
-        { href: "/portfolio", label: "View Portfolio" },
+        { href: "/case-studies", label: "Case Studies" },
         { href: "/contact", label: "Contact Us" },
       ]}
     />
