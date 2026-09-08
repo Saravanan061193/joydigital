@@ -316,19 +316,6 @@ export default function Header({ transparent = false }: { transparent?: boolean 
               About Us
             </Link>
 
-            <Link
-              href="/portfolio"
-              title="Portfolio"
-              className={`font-semibold text-sm transition-colors nav-link-underline ${
-                isScrolled ? "hover:text-accent" : "hover:text-primary-light"
-              } ${
-                isActive("/portfolio") 
-                  ? (isScrolled ? "text-accent" : "text-primary-light") 
-                  : (isScrolled ? "text-text-primary" : "text-slate-100")
-              }`}
-            >
-              Portfolio
-            </Link>
 
             <Link
               href="/blog"
@@ -627,15 +614,6 @@ export default function Header({ transparent = false }: { transparent?: boolean 
             About Us
           </Link>
 
-          <Link
-            href="/portfolio"
-            title="Portfolio"
-            className={`font-semibold text-lg border-b border-[#E5E7EB] pb-2 ${
-              isActive("/portfolio") ? "text-accent" : "text-primary-dark"
-            }`}
-          >
-            Portfolio
-          </Link>
 
           <Link
             href="/blog"

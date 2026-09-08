@@ -350,9 +350,7 @@ export default function Footer() {
             <li>
               <Link href={getRegionalHref("/contact")} className="hover:text-accent hover:pl-1 transition-all">Contact Us</Link>
             </li>
-            <li>
-              <Link href="/portfolio" className="hover:text-accent hover:pl-1 transition-all">Portfolio</Link>
-            </li>
+
             <li>
               <Link href="/case-studies" className="hover:text-accent hover:pl-1 transition-all">Case Studies</Link>
             </li>
