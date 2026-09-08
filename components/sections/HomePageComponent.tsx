@@ -9,7 +9,6 @@ import DigitalNetworkBackground from "@/components/ui/DigitalNetworkBackground";
 
 const WorldwideServiceNetwork = dynamic(() => import("@/components/ui/WorldwideServiceNetwork"), { ssr: false });
 const Footer = dynamic(() => import("@/components/layout/Footer"));
-const UnifiedFloatingWidget = dynamic(() => import("@/components/ui/UnifiedFloatingWidget"), { ssr: false });
 const LeadForm = dynamic(() => import("@/components/ui/LeadForm"));
 const Accordion = dynamic(() => import("@/components/ui/Accordion"));
 const ModernHeroSection = dynamic(() => import("@/components/sections/ModernHeroSection"));
@@ -1506,9 +1505,8 @@ export default function HomePageComponent({ country }: HomePageComponentProps) {
 
       </main>
 
-      {/* 14. FOOTER & UNIFIED FLOATING WIDGET */}
+      {/* 14. FOOTER */}
       <Footer />
-      <UnifiedFloatingWidget />
     </>
   );
 }
