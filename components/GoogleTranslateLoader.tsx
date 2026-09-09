@@ -1,70 +1,49 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Script from "next/script";
+import React, { useEffect } from "react";
 
 export default function GoogleTranslateLoader() {
-  const [shouldLoad, setShouldLoad] = useState(false);
-
   useEffect(() => {
-    if (typeof window !== "undefined" && typeof navigator !== "undefined") {
-      const isBot = /Lighthouse|Googlebot|HeadlessChromium|Chrome-Lighthouse|PTST/i.test(navigator.userAgent);
-      if (isBot) return;
-    }
+    if (typeof window === "undefined") return;
 
-    const getCookie = (name: string) => {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop()?.split(";").shift();
-      return null;
+    // Check if bot / crawler
+    const isBot = /Lighthouse|Googlebot|HeadlessChromium|Chrome-Lighthouse|PTST/i.test(navigator.userAgent);
+    if (isBot) return;
+
+    // Define global callback function for Google Translate
+    (window as any).googleTranslateElementInit = function () {
+      if ((window as any).google && (window as any).google.translate) {
+        new (window as any).google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,ta,hi,ar,es,de,fr,te,kn,ml,bn,mr,gu,pa,it,pt,ru,zh-CN,ja,ko,tr,nl,vi,th",
+            layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: true,
+          },
+          "google_translate_element"
+        );
+      }
     };
 
-    const googtrans = getCookie("googtrans");
-    const joyLang = typeof window !== "undefined" ? localStorage.getItem("joy_lang") : null;
-
-    // Load immediately if user previously selected a language
-    if ((googtrans && googtrans !== "/en/en") || (joyLang && joyLang !== "en")) {
-      setShouldLoad(true);
-      return;
+    // Load Google Translate script dynamically if not already loaded
+    if (!document.getElementById("google-translate-script")) {
+      const script = document.createElement("script");
+      script.id = "google-translate-script";
+      script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      script.async = true;
+      document.body.appendChild(script);
     }
 
-    const triggerLoad = () => setShouldLoad(true);
-
-    window.addEventListener("scroll", triggerLoad, { once: true, passive: true });
-    window.addEventListener("touchstart", triggerLoad, { once: true, passive: true });
-    window.addEventListener("mousemove", triggerLoad, { once: true, passive: true });
-
-    if ("requestIdleCallback" in window) {
-      const idleId = window.requestIdleCallback(triggerLoad, { timeout: 1500 });
-      return () => {
-        window.removeEventListener("scroll", triggerLoad);
-        window.removeEventListener("touchstart", triggerLoad);
-        window.removeEventListener("mousemove", triggerLoad);
-        if ("cancelIdleCallback" in window) window.cancelIdleCallback(idleId);
-      };
-    } else {
-      const timer = setTimeout(triggerLoad, 1500);
-      return () => {
-        window.removeEventListener("scroll", triggerLoad);
-        window.removeEventListener("touchstart", triggerLoad);
-        window.removeEventListener("mousemove", triggerLoad);
-        clearTimeout(timer);
-      };
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!shouldLoad) return;
-
-    // Sync select element if language cookie/storage is present
-    const syncTranslateWidget = () => {
-      const joyLang = localStorage.getItem("joy_lang");
+    // Function to check and force select element to match selected language
+    const checkAndSyncLanguage = () => {
       const getCookie = (name: string) => {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
         if (parts.length === 2) return parts.pop()?.split(";").shift();
         return null;
       };
+
+      const joyLang = localStorage.getItem("joy_lang");
       const googtrans = getCookie("googtrans");
       let targetLang = joyLang;
       if (!targetLang && googtrans) {
@@ -80,48 +59,28 @@ export default function GoogleTranslateLoader() {
           if (selectElem) {
             if (selectElem.value !== targetLang) {
               selectElem.value = targetLang;
-              selectElem.dispatchEvent(new Event("change"));
+              selectElem.dispatchEvent(new Event("change", { bubbles: true }));
+              selectElem.dispatchEvent(new Event("input", { bubbles: true }));
             }
             clearInterval(interval);
           }
-          if (attempts > 30) {
+          if (attempts > 40) {
             clearInterval(interval);
           }
-        }, 150);
+        }, 200);
       }
     };
 
-    const timer = setTimeout(syncTranslateWidget, 300);
+    // Run sync check after script loads
+    const timer = setTimeout(checkAndSyncLanguage, 500);
     return () => clearTimeout(timer);
-  }, [shouldLoad]);
-
-  if (!shouldLoad) return null;
+  }, []);
 
   return (
-    <>
-      <div id="google_translate_element" style={{ display: "none" }} className="hidden"></div>
-      <Script
-        id="google-translate-init"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            function googleTranslateElementInit() {
-              if (window.google && window.google.translate) {
-                new window.google.translate.TranslateElement({
-                  pageLanguage: 'en',
-                  includedLanguages: 'en,ta,hi,ar,es,de,fr,te,kn,ml,bn,mr,gu,pa,it,pt,ru,zh-CN,ja,ko,tr,nl,vi,th',
-                  layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-                  autoDisplay: true
-                }, 'google_translate_element');
-              }
-            }
-          `,
-        }}
-      />
-      <Script
-        src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-        strategy="afterInteractive"
-      />
-    </>
+    <div
+      id="google_translate_element"
+      style={{ display: "none", position: "absolute", top: "-9999px", left: "-9999px" }}
+      aria-hidden="true"
+    />
   );
 }

@@ -158,15 +158,22 @@ export default function Header({ transparent = false }: { transparent?: boolean 
     clearCookie();
     clearCookie(domain);
     if (domain.includes(".")) {
-      const baseDomain = domain.substring(domain.indexOf("."));
-      clearCookie(baseDomain);
+      const parts = domain.split(".");
+      if (parts.length >= 2) {
+        const rootDomain = "." + parts.slice(-2).join(".");
+        clearCookie(rootDomain);
+      }
     }
     
     if (langCode !== "en") {
       document.cookie = `googtrans=${cookieValue}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+      document.cookie = `googtrans=${cookieValue}; path=/; domain=${domain}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
       if (domain.includes(".")) {
-        const baseDomain = domain.substring(domain.indexOf("."));
-        document.cookie = `googtrans=${cookieValue}; path=/; domain=${baseDomain}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+        const parts = domain.split(".");
+        if (parts.length >= 2) {
+          const rootDomain = "." + parts.slice(-2).join(".");
+          document.cookie = `googtrans=${cookieValue}; path=/; domain=${rootDomain}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+        }
       }
     }
     
@@ -180,12 +187,13 @@ export default function Header({ transparent = false }: { transparent?: boolean 
     const selectElem = document.querySelector(".goog-te-combo") as HTMLSelectElement | null;
     if (selectElem) {
       selectElem.value = langCode === "en" ? "" : langCode;
-      selectElem.dispatchEvent(new Event("change"));
+      selectElem.dispatchEvent(new Event("change", { bubbles: true }));
+      selectElem.dispatchEvent(new Event("input", { bubbles: true }));
     }
 
     setTimeout(() => {
       window.location.reload();
-    }, 120);
+    }, 150);
   };
 
   const isActive = (path: string) => {
