@@ -59,6 +59,7 @@ const SECTIONS = [
       { href: "/website-for-hospitals", label: "Website for Hospitals" },
       { href: "/website-for-real-estate", label: "Website for Real Estate" },
       { href: "/website-for-tours-and-travels", label: "Website for Tours & Travels" },
+      { href: "/africa/tourism-website-development", label: "Africa Tourism Website Development" },
       { href: "/website-for-schools", label: "Website for Schools" },
       { href: "/website-for-small-business", label: "Website for Small Business" },
       { href: "/website-for-ecommerce", label: "Website for E-commerce Stores" },

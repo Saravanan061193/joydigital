@@ -84,6 +84,7 @@ export async function GET() {
     '/website-for-hotels',
     '/website-for-real-estate',
     '/website-for-tours-and-travels',
+    '/africa/tourism-website-development',
     '/website-for-schools',
     '/website-for-ecommerce',
     '/website-for-small-business',
