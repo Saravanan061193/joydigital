@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "AI Search Optimization (GEO/AIO) Services & Tutorial | Joy Digital",
+  title: "AI Search Optimization (GEO/AIO) Services | Joy Digital",
   description: "Learn how to optimize website for AI search. Explore AI search optimization tools, tutorials, GEO acronym definitions, and ASO frameworks for AI engines.",
   keywords: [
     "AI Search Optimization",

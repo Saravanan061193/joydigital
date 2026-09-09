@@ -15,7 +15,7 @@ tags:
 showTableOfContents: true
 showAuthorInfo: true
 showFeaturedImage: true
-seoTitle: 'AI Website Development in 2026: How AI Is Changing Business Websites'
+seoTitle: 'AI Website Development Guide for 2026'
 metaDescription: >-
   Discover how AI website development in 2026 is transforming business websites into intelligent sales assistants, lead qualification systems, and automated customer engines.
 focusKeyword: which ai is best for website development

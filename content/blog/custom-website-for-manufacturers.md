@@ -17,7 +17,7 @@ tags:
 showTableOfContents: true
 showAuthorInfo: true
 showFeaturedImage: true
-seoTitle: 'Why Manufacturers Need a Custom Website to Win More B2B Customers in 2026'
+seoTitle: 'Why Manufacturers Need Custom Web Design'
 metaDescription: 'Discover how a custom manufacturing website can help manufacturers generate B2B leads, reach international buyers, improve SEO, showcase products, and grow their business in 2026.'
 focusKeyword: custom website for manufacturers
 secondaryKeywords: >-

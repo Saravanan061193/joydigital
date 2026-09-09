@@ -26,14 +26,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const post = await getPostBySlug(resolvedParams.slug);
   if (!post) return {};
 
-  const title = post.seoTitle || post.title;
+  const rawTitle = (post.seoTitle || post.title || "")
+    .replace(/\s*\|\s*Joy\s*Digital.*$/i, "")
+    .trim();
+  const title = `${rawTitle} | Joy Digital`;
   const description = post.metaDescription || post.description;
   const canonical = post.canonicalUrl || `https://joydigital.in/blog/${resolvedParams.slug}`;
   const isNoindex = post.robots?.toLowerCase().includes("noindex");
   const isNofollow = post.robots?.toLowerCase().includes("nofollow");
 
   return {
-    title: `${title} | Joy Digital`,
+    title: title,
     description: description,
     alternates: {
       canonical: canonical,
@@ -46,20 +49,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: "article",
       url: canonical,
       siteName: "Joy Digital Agency",
-      title: post.ogTitle || `${title} | Joy Digital`,
+      title: post.ogTitle ? (post.ogTitle.includes("Joy Digital") ? post.ogTitle : `${post.ogTitle} | Joy Digital`) : title,
       description: post.ogDescription || description,
       images: [
         {
           url: post.ogImage || post.image || "https://joydigital.in/assets/images/hero-banner.webp",
           width: 1200,
           height: 630,
-          alt: post.imageAlt || title,
+          alt: post.imageAlt || rawTitle,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: post.twitterTitle || post.ogTitle || `${title} | Joy Digital`,
+      title: post.twitterTitle ? (post.twitterTitle.includes("Joy Digital") ? post.twitterTitle : `${post.twitterTitle} | Joy Digital`) : title,
       description: post.twitterDescription || post.ogDescription || description,
       images: [post.twitterImage || post.ogImage || post.image || "https://joydigital.in/assets/images/hero-banner.webp"],
     },

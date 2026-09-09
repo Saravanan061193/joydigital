@@ -90,6 +90,69 @@ const REGIONAL_CONFIGS: Record<string, {
     highPrice: "2,599",
     targetMarket: "Australia",
   },
+  es: {
+    heroTitle: "Desarrollo Web Next.js y React de Alto Rendimiento en España",
+    heroSubtitle: "Transforma tu presencia digital con sitios web corporativos a medida, diseñados para máxima velocidad, seguridad y SEO en España.",
+    currency: "€",
+    lowPrice: "499",
+    medPrice: "999",
+    highPrice: "1,999",
+    targetMarket: "Spain",
+  },
+  de: {
+    heroTitle: "Next.js & React Webentwicklung Agentur Deutschland",
+    heroSubtitle: "Erstellen Sie ultraschnelle, DSGVO-konforme und SEO-optimierte Websites für Unternehmen in Deutschland.",
+    currency: "€",
+    lowPrice: "499",
+    medPrice: "999",
+    highPrice: "1,999",
+    targetMarket: "Germany",
+  },
+  fr: {
+    heroTitle: "Agence de Développement Web Next.js sur Mesure en France",
+    heroSubtitle: "Créez des sites web ultra-rapides, sécurisés et optimisés pour le référencement naturel pour le marché français.",
+    currency: "€",
+    lowPrice: "499",
+    medPrice: "999",
+    highPrice: "1,999",
+    targetMarket: "France",
+  },
+  it: {
+    heroTitle: "Sviluppo Web Next.js e React su Misura in Italia",
+    heroSubtitle: "Realizza siti web aziendali ad alte prestazioni, veloci e ottimizzati per i motori di ricerca in Italia.",
+    currency: "€",
+    lowPrice: "499",
+    medPrice: "999",
+    highPrice: "1,999",
+    targetMarket: "Italy",
+  },
+  sg: {
+    heroTitle: "Custom Next.js & React Web Development Agency Singapore",
+    heroSubtitle: "Build ultra-fast, Core Web Vitals compliant web platforms designed to rank high and generate qualified leads in Singapore.",
+    currency: "S$",
+    lowPrice: "699",
+    medPrice: "1,399",
+    highPrice: "2,799",
+    targetMarket: "Singapore",
+  },
+  mx: {
+    heroTitle: "Desarrollo Web Next.js y Diseño de Páginas Web en México",
+    heroSubtitle: "Construimos sitios web veloces, seguros y enfocados en la conversión de clientes para empresas en México y Latinoamérica.",
+    currency: "MX$",
+    lowPrice: "8,999",
+    medPrice: "17,999",
+    highPrice: "35,999",
+    targetMarket: "Mexico",
+  },
+  br: {
+    heroTitle: "Desenvolvimento Web Next.js e React de Alta Performance no Brasil",
+    heroSubtitle: "Desenvolvemos sites corporativos modernos, rápidos e otimizados para SEO para empresas no Brasil.",
+    currency: "R$",
+    lowPrice: "2,499",
+    medPrice: "4,999",
+    highPrice: "9,999",
+    targetMarket: "Brazil",
+  },
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -104,8 +167,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     in: "India",
     ca: "Canada",
     au: "Australia",
+    es: "Spain",
+    de: "Germany",
+    fr: "France",
+    it: "Italy",
+    sg: "Singapore",
+    mx: "Mexico",
+    br: "Brazil",
   };
-  const countryName = countryNames[countryLower] || "US";
+  const countryName = countryNames[countryLower] || countryLower.toUpperCase();
   const title = `Custom Next.js Web Development ${countryName} | Joy Digital`;
 
   return {

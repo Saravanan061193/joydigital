@@ -19,7 +19,7 @@ tags:
 showTableOfContents: true
 showAuthorInfo: true
 showFeaturedImage: true
-seoTitle: '5 Must-Have Website Features for Tour Operators, Safari & Taxi Services | Joy Digital'
+seoTitle: '5 Website Features for Tour & Taxi Sites'
 metaDescription: >-
   Discover the 5 essential website features tour operators, safari companies, and taxi services need to generate enquiries, build trust, and boost bookings.
 focusKeyword: website features for tour operators safari taxi services

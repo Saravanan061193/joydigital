@@ -92,6 +92,69 @@ const REGIONAL_CONTACTS: Record<string, {
     showMap: false,
     marketName: "Australia",
   },
+  es: {
+    title: "Spain Business & Digital Consultation Desk",
+    description: "Connect with our Next.js designers and SEO strategists serving clients across Spain and Europe. Request localized quotes and consultation.",
+    phone: "+16508990122",
+    phoneFormatted: "+1 (650) 899-0122",
+    address: "European Client Relations, Madrid, Spain",
+    showMap: false,
+    marketName: "Spain",
+  },
+  de: {
+    title: "Germany Digital Consultation Desk",
+    description: "Connect with our web design and search engine optimization team serving businesses in Germany. Receive localized project proposals.",
+    phone: "+16508990122",
+    phoneFormatted: "+1 (650) 899-0122",
+    address: "DACH Region Client Desk, Berlin, Germany",
+    showMap: false,
+    marketName: "Germany",
+  },
+  fr: {
+    title: "France Business Consultation Desk",
+    description: "Connect with our custom website development and SEO strategy team serving enterprise and startup clients across France.",
+    phone: "+16508990122",
+    phoneFormatted: "+1 (650) 899-0122",
+    address: "France Regional Desk, Paris, France",
+    showMap: false,
+    marketName: "France",
+  },
+  it: {
+    title: "Italy Digital Consultation Desk",
+    description: "Connect with our custom Next.js development and SEO optimization specialists serving clients in Italy.",
+    phone: "+16508990122",
+    phoneFormatted: "+1 (650) 899-0122",
+    address: "Southern Europe Desk, Milan, Italy",
+    showMap: false,
+    marketName: "Italy",
+  },
+  sg: {
+    title: "Singapore Digital Consultation Desk",
+    description: "Connect with our high-speed website development and SEO agency team serving Singapore and Southeast Asian markets.",
+    phone: "+16508990122",
+    phoneFormatted: "+1 (650) 899-0122",
+    address: "SE Asia Regional Desk, Singapore",
+    showMap: false,
+    marketName: "Singapore",
+  },
+  mx: {
+    title: "Mexico Business Consultation Desk",
+    description: "Connect with our website design and search marketing specialists serving enterprise brands in Mexico and Latin America.",
+    phone: "+16508990122",
+    phoneFormatted: "+1 (650) 899-0122",
+    address: "Latin America Desk, Mexico City, Mexico",
+    showMap: false,
+    marketName: "Mexico",
+  },
+  br: {
+    title: "Brazil Digital Consultation Desk",
+    description: "Connect with our Next.js web development and organic search optimization team serving businesses across Brazil.",
+    phone: "+16508990122",
+    phoneFormatted: "+1 (650) 899-0122",
+    address: "South America Desk, São Paulo, Brazil",
+    showMap: false,
+    marketName: "Brazil",
+  },
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -106,8 +169,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     in: "India",
     ca: "Canada",
     au: "Australia",
+    es: "Spain",
+    de: "Germany",
+    fr: "France",
+    it: "Italy",
+    sg: "Singapore",
+    mx: "Mexico",
+    br: "Brazil",
   };
-  const countryName = countryNames[countryLower] || "US";
+  const countryName = countryNames[countryLower] || countryLower.toUpperCase();
   const title = `Contact Joy Digital ${countryName} | Custom Web & SEO Solutions`;
 
   return {

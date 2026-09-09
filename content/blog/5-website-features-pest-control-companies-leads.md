@@ -18,7 +18,7 @@ tags:
 showTableOfContents: true
 showAuthorInfo: true
 showFeaturedImage: true
-seoTitle: '5 Website Features for Pest Control Companies to Get Leads | Joy Digital'
+seoTitle: '5 Website Features for Pest Control Leads'
 metaDescription: >-
   Discover 5 essential website features pest control companies need to attract more leads, build customer trust, rank on Google, and convert visitors into calls.
 focusKeyword: pest control website features leads

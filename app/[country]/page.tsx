@@ -65,13 +65,29 @@ const METADATA_MAP: Record<string, { title: string; description: string }> = {
     title: "Agence de Création Web Next.js & Référencement SEO | Joy Digital France",
     description: "Développez votre entreprise avec Joy Digital. Nous créons des sites web Next.js ultra-rapides et des solutions SEO sur mesure pour le marché français.",
   },
+  it: {
+    title: "Sviluppo Web Next.js e Agenzia SEO Italia | Joy Digital",
+    description: "Siti web ultra-veloci e posizionamento SEO per aziende in Italia. Aumenta il tuo fatturato con la presenza digitale di Joy Digital.",
+  },
+  sg: {
+    title: "Next.js Web Development & SEO Agency Singapore | Joy Digital",
+    description: "Scale organic revenue. Joy Digital builds high-performance Next.js websites and data-driven SEO campaigns for businesses in Singapore.",
+  },
+  mx: {
+    title: "Agencia de Desarrollo Web Next.js y SEO México | Joy Digital",
+    description: "Diseño web moderno en Next.js y estrategias de SEO enfocadas en resultados para empresas en México y Latinoamérica.",
+  },
+  br: {
+    title: "Desenvolvimento Web Next.js e Agência de SEO Brasil | Joy Digital",
+    description: "Desenvolvimento de sites ultra-rápidos e otimização SEO para empresas no Brasil com a Joy Digital.",
+  },
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { country } = await params;
   const countryLower = country.toLowerCase();
   const data = METADATA_MAP[countryLower] || {
-    title: "Website Design & Global SEO Growth Agency | Joy Digital",
+    title: `Website Design & SEO Growth Agency ${countryLower.toUpperCase()} | Joy Digital`,
     description: "Joy Digital is a results-oriented global agency engineering fast Next.js sites and search marketing campaigns.",
   };
 
@@ -104,7 +120,7 @@ export default async function CountryHomePage({ params }: PageProps) {
   const { country } = await params;
   const countryLower = country.toLowerCase();
   const data = METADATA_MAP[countryLower] || {
-    title: "Website Design & Global SEO Growth Agency | Joy Digital",
+    title: `Website Design & SEO Growth Agency ${countryLower.toUpperCase()} | Joy Digital`,
     description: "Joy Digital is a results-oriented global agency engineering fast Next.js sites and search marketing campaigns.",
   };
 

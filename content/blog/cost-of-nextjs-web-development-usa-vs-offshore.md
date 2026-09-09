@@ -16,7 +16,7 @@ tags:
 showTableOfContents: true
 showAuthorInfo: true
 showFeaturedImage: true
-seoTitle: 'Cost of Next.js Web Development USA vs Offshore India (2026 Guide)'
+seoTitle: 'Next.js Web Dev Cost: USA vs Offshore'
 metaDescription: >-
   Compare Next.js web development costs: US agencies ($15k-$50k) vs offshore engineering in India ($2k-$8k). Learn how to scale leads and save 60% on technical budget.
 focusKeyword: Next.js Web Development Cost USA

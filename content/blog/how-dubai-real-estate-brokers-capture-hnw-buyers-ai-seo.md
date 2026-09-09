@@ -16,7 +16,7 @@ tags:
 showTableOfContents: true
 showAuthorInfo: true
 showFeaturedImage: true
-seoTitle: 'Dubai Real Estate Web Design & AI SEO Guide 2026 | Joy Digital'
+seoTitle: 'Dubai Real Estate Web Design & AI SEO'
 metaDescription: >-
   Learn how Dubai real estate brokers capture High-Net-Worth (HNW) property buyers using Next.js portals, AI-powered search, and GEO rankings on ChatGPT and Perplexity.
 focusKeyword: Dubai Real Estate Web Design & AI SEO

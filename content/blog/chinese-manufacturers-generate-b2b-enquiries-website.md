@@ -17,7 +17,7 @@ tags:
 showTableOfContents: true
 showAuthorInfo: true
 showFeaturedImage: true
-seoTitle: 'How Chinese Manufacturers Can Generate B2B Enquiries Online | Joy Digital'
+seoTitle: 'B2B Web Leads for Chinese Manufacturers'
 metaDescription: 'Learn how Chinese manufacturers of electronics, hardware, machinery, and B2B products can build professional export websites, optimize for international SEO, showcase OEM/ODM capabilities, and generate qualified global B2B enquiries.'
 focusKeyword: chinese manufacturers generate b2b enquiries
 secondaryKeywords: >-

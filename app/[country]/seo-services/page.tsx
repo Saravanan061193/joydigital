@@ -90,6 +90,69 @@ const REGIONAL_CONFIGS: Record<string, {
     highPrice: "1,899",
     targetMarket: "Australia",
   },
+  es: {
+    heroTitle: "Agencia de Servicios SEO en España | Joy Digital",
+    heroSubtitle: "Mejora el posicionamiento en Google, atrae clientes potenciales de alta intención y supera a tus competidores en España.",
+    currency: "€",
+    lowPrice: "299",
+    medPrice: "699",
+    highPrice: "1,299",
+    targetMarket: "Spain",
+  },
+  de: {
+    heroTitle: "Professionelle SEO Services & Suchmaschinenoptimierung Deutschland",
+    heroSubtitle: "Steigern Sie Ihre Sichtbarkeit bei Google, gewinnen Sie qualifizierte Kundenanfragen und überholen Sie Mitbewerber in Deutschland.",
+    currency: "€",
+    lowPrice: "299",
+    medPrice: "699",
+    highPrice: "1,299",
+    targetMarket: "Germany",
+  },
+  fr: {
+    heroTitle: "Services de Référencement SEO Professionnel en France",
+    heroSubtitle: "Améliorez votre visibilité sur Google, attirez des prospects qualifiés et surpassez vos concurrents sur le marché français.",
+    currency: "€",
+    lowPrice: "299",
+    medPrice: "699",
+    highPrice: "1,299",
+    targetMarket: "France",
+  },
+  it: {
+    heroTitle: "Servizi SEO Professionali e Posizionamento Google in Italia",
+    heroSubtitle: "Migliora la tua visibilità sui motori di ricerca, acquisisci contatti qualificati e supera la concorrenza in Italia.",
+    currency: "€",
+    lowPrice: "299",
+    medPrice: "699",
+    highPrice: "1,299",
+    targetMarket: "Italy",
+  },
+  sg: {
+    heroTitle: "Expert SEO Services & Organic Growth Agency Singapore",
+    heroSubtitle: "Improve your Singapore search visibility, acquire high-intent business leads, and dominate Google search results.",
+    currency: "S$",
+    lowPrice: "399",
+    medPrice: "899",
+    highPrice: "1,699",
+    targetMarket: "Singapore",
+  },
+  mx: {
+    heroTitle: "Servicios SEO Profesionales y Posicionamiento Web en México",
+    heroSubtitle: "Aumenta el tráfico orgánico, genera prospectos calificados y domina las búsquedas en Google para tu negocio en México.",
+    currency: "MX$",
+    lowPrice: "5,500",
+    medPrice: "12,500",
+    highPrice: "23,500",
+    targetMarket: "Mexico",
+  },
+  br: {
+    heroTitle: "Serviços de SEO Profissional e Otimização de Sites no Brasil",
+    heroSubtitle: "Aumente sua visibilidade no Google, atraia leads qualificados e supere a concorrência com estratégias de SEO no Brasil.",
+    currency: "R$",
+    lowPrice: "1,499",
+    medPrice: "3,499",
+    highPrice: "6,499",
+    targetMarket: "Brazil",
+  },
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -104,8 +167,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     in: "India",
     ca: "Canada",
     au: "Australia",
+    es: "Spain",
+    de: "Germany",
+    fr: "France",
+    it: "Italy",
+    sg: "Singapore",
+    mx: "Mexico",
+    br: "Brazil",
   };
-  const countryName = countryNames[countryLower] || "US";
+  const countryName = countryNames[countryLower] || countryLower.toUpperCase();
   const title = `SEO Services in ${countryName} | Drive Organic Growth - Joy Digital`;
   
   return {
