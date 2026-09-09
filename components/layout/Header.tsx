@@ -99,7 +99,7 @@ export default function Header({ transparent = false }: { transparent?: boolean 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Detect current language cookie on mount
+  // Detect current language cookie / local storage on mount
   useEffect(() => {
     const getCookie = (name: string) => {
       const value = `; ${document.cookie}`;
@@ -108,11 +108,17 @@ export default function Header({ transparent = false }: { transparent?: boolean 
       return null;
     };
     
+    const joyLang = typeof window !== "undefined" ? localStorage.getItem("joy_lang") : null;
+    if (joyLang) {
+      setCurrentLang(joyLang);
+      return;
+    }
+
     const googtrans = getCookie("googtrans");
     if (googtrans) {
       const parts = googtrans.split("/");
       const lang = parts[parts.length - 1];
-      if (lang) {
+      if (lang && lang !== "en") {
         setCurrentLang(lang);
       }
     }
@@ -143,28 +149,43 @@ export default function Header({ transparent = false }: { transparent?: boolean 
     const domain = window.location.hostname;
     const cookieValue = `/en/${langCode}`;
     
-    // Set cookie for all subdomains and paths
-    document.cookie = `googtrans=${cookieValue}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
-    document.cookie = `googtrans=${cookieValue}; path=/; domain=${domain}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
-    
+    // Clear old duplicate cookies first
+    const clearCookie = (dom?: string) => {
+      const dAttr = dom ? `; domain=${dom}` : "";
+      document.cookie = `googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT${dAttr}`;
+    };
+
+    clearCookie();
+    clearCookie(domain);
     if (domain.includes(".")) {
       const baseDomain = domain.substring(domain.indexOf("."));
-      document.cookie = `googtrans=${cookieValue}; path=/; domain=${baseDomain}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+      clearCookie(baseDomain);
     }
     
-    // If it's English, clear the cookie entirely as well to be safe
-    if (langCode === "en") {
-      document.cookie = "googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-      document.cookie = `googtrans=; path=/; domain=${domain}; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+    if (langCode !== "en") {
+      document.cookie = `googtrans=${cookieValue}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
       if (domain.includes(".")) {
         const baseDomain = domain.substring(domain.indexOf("."));
-        document.cookie = `googtrans=; path=/; domain=${baseDomain}; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+        document.cookie = `googtrans=${cookieValue}; path=/; domain=${baseDomain}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
       }
     }
     
+    if (typeof window !== "undefined") {
+      localStorage.setItem("joy_lang", langCode);
+    }
     setCurrentLang(langCode);
     setIsLangDropdownOpen(false);
-    window.location.reload();
+
+    // Try to trigger live translation on select element if present
+    const selectElem = document.querySelector(".goog-te-combo") as HTMLSelectElement | null;
+    if (selectElem) {
+      selectElem.value = langCode === "en" ? "" : langCode;
+      selectElem.dispatchEvent(new Event("change"));
+    }
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 120);
   };
 
   const isActive = (path: string) => {

@@ -171,6 +171,16 @@ export default function AboutPage() {
               </p>
               <div className="flex items-center gap-4">
                 <a
+                  href="https://share.google/BSniheS2qnzwqUKXU"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-light-bg flex items-center justify-center text-[#4285F4] hover:bg-[#4285F4] hover:text-white transition-all duration-300"
+                  aria-label="Google Business Profile"
+                  title="Joy Digital Google Business Profile"
+                >
+                  <i className="fa-brands fa-google" />
+                </a>
+                <a
                   href="tel:+919080026133"
                   className="w-10 h-10 rounded-full bg-light-bg flex items-center justify-center text-primary hover:bg-accent hover:text-white transition-all duration-300"
                   aria-label="Call Direct"

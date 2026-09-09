@@ -322,6 +322,30 @@ export default async function CountryContactPage({ params }: PageProps) {
                     <i className="fa-solid fa-arrow-right-long" />
                   </span>
                 </a>
+
+                {/* Google Business Profile Card */}
+                <a
+                  href="https://share.google/BSniheS2qnzwqUKXU"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white border border-gray-100 rounded-xl p-6 shadow-sm flex items-center justify-between group hover:border-[#4285F4]/40 transition-all duration-300"
+                  title="Google Business Profile & Reviews"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center text-[#4285F4] text-xl flex-shrink-0">
+                      <i className="fa-brands fa-google" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[10px] font-bold text-text-muted uppercase">Google Business Profile</span>
+                      <span className="text-sm font-bold text-primary-dark mt-0.5 group-hover:text-[#4285F4] transition-colors">
+                        View Profile & Customer Reviews
+                      </span>
+                    </div>
+                  </div>
+                  <span className="text-text-muted group-hover:translate-x-1 transition-transform">
+                    <i className="fa-solid fa-arrow-right-long" />
+                  </span>
+                </a>
               </div>
 
               {/* Map Embed Card (India headquarters only) */}

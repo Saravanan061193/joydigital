@@ -66,6 +66,16 @@ export default function Footer() {
               <i className="fa-brands fa-whatsapp"></i>
             </a>
             <a
+              href="https://share.google/BSniheS2qnzwqUKXU"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded bg-[#E5E7EB]/50 border border-[#E5E7EB] flex items-center justify-center text-text-secondary hover:bg-[#4285F4] hover:text-white transition-all duration-300"
+              aria-label="Google Business Profile"
+              title="Joy Digital Google Business Profile & Reviews"
+            >
+              <i className="fa-brands fa-google"></i>
+            </a>
+            <a
               href="https://www.facebook.com/profile.php?id=61590372457559"
               target="_blank"
               rel="noopener noreferrer"
@@ -435,6 +445,15 @@ export default function Footer() {
               title="Joy Digital Office Location Map - Tambaram, Chennai"
             />
           </div>
+          <a
+            href="https://share.google/BSniheS2qnzwqUKXU"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 w-full py-2.5 px-3 bg-white border border-[#E5E7EB] rounded-xl text-xs font-bold text-[#111827] hover:border-[#4285F4] hover:text-[#4285F4] transition-all shadow-xs"
+          >
+            <i className="fa-brands fa-google text-[#4285F4] text-sm" />
+            <span>Google Business Profile & Reviews</span>
+          </a>
         </div>
 
       </div>
