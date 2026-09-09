@@ -13,15 +13,29 @@ export default function ClarityTracker() {
       if (isBot) return;
     }
 
-    const timer = setTimeout(() => {
-      if ("requestIdleCallback" in window) {
-        window.requestIdleCallback(() => setShouldLoad(true));
-      } else {
-        setShouldLoad(true);
-      }
-    }, 5000);
+    const triggerLoad = () => setShouldLoad(true);
 
-    return () => clearTimeout(timer);
+    window.addEventListener("scroll", triggerLoad, { once: true, passive: true });
+    window.addEventListener("touchstart", triggerLoad, { once: true, passive: true });
+    window.addEventListener("mousemove", triggerLoad, { once: true, passive: true });
+
+    if ("requestIdleCallback" in window) {
+      const idleId = window.requestIdleCallback(triggerLoad, { timeout: 1500 });
+      return () => {
+        window.removeEventListener("scroll", triggerLoad);
+        window.removeEventListener("touchstart", triggerLoad);
+        window.removeEventListener("mousemove", triggerLoad);
+        if ("cancelIdleCallback" in window) window.cancelIdleCallback(idleId);
+      };
+    } else {
+      const timer = setTimeout(triggerLoad, 1500);
+      return () => {
+        window.removeEventListener("scroll", triggerLoad);
+        window.removeEventListener("touchstart", triggerLoad);
+        window.removeEventListener("mousemove", triggerLoad);
+        clearTimeout(timer);
+      };
+    }
   }, []);
 
   if (!shouldLoad) return null;

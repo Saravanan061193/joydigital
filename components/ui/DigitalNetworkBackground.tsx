@@ -350,18 +350,18 @@ export default function DigitalNetworkBackground() {
         }
       ` }} />
 
-      {/* GPU-Accelerated Gradient Aurora Blobs (concentrated left/center, low opacity) */}
+      {/* GPU-Accelerated Gradient Aurora Blobs (Desktop only for maximum mobile speed) */}
       {!prefersReducedMotion && (
         <>
-          <div className="absolute top-[8%] left-[6%] w-[55vw] h-[55vw] rounded-full bg-[#7C3AED]/7 blur-[110px] animate-aurora-1 pointer-events-none" />
-          <div className="absolute bottom-[15%] left-[12%] w-[45vw] h-[45vw] rounded-full bg-[#4F46E5]/5 blur-[130px] animate-aurora-2 pointer-events-none" />
-          <div className="absolute top-[25%] left-[25%] w-[35vw] h-[35vw] rounded-full bg-[#A78BFA]/4 blur-[100px] animate-aurora-3 pointer-events-none" />
+          <div className="hidden md:block absolute top-[8%] left-[6%] w-[55vw] h-[55vw] rounded-full bg-[#7C3AED]/7 blur-[110px] animate-aurora-1 pointer-events-none" />
+          <div className="hidden md:block absolute bottom-[15%] left-[12%] w-[45vw] h-[45vw] rounded-full bg-[#4F46E5]/5 blur-[130px] animate-aurora-2 pointer-events-none" />
+          <div className="hidden md:block absolute top-[25%] left-[25%] w-[35vw] h-[35vw] rounded-full bg-[#A78BFA]/4 blur-[100px] animate-aurora-3 pointer-events-none" />
         </>
       )}
 
       {/* Static purple fallback when prefers-reduced-motion is active */}
       {prefersReducedMotion && (
-        <div className="absolute top-[10%] left-[10%] w-[50vw] h-[50vw] rounded-full bg-[#7C3AED]/7 blur-[110px] pointer-events-none" />
+        <div className="hidden md:block absolute top-[10%] left-[10%] w-[50vw] h-[50vw] rounded-full bg-[#7C3AED]/7 blur-[110px] pointer-events-none" />
       )}
 
       {/* Soft Breathing Glow behind Hero Heading (radial opacity 10% to 18%) */}
