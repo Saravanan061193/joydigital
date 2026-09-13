@@ -23,6 +23,10 @@ export async function generateStaticParams() {
     { country: "sg" },
     { country: "mx" },
     { country: "br" },
+    { country: "my" },
+    { country: "za" },
+    { country: "ng" },
+    { country: "ke" },
   ];
 }
 
@@ -55,12 +59,12 @@ const REGIONAL_CONFIGS: Record<string, {
     targetMarket: "United Kingdom",
   },
   ae: {
-    heroTitle: "Lead Generation SEO Services in Dubai & UAE",
-    heroSubtitle: "Scale your customer pipeline across the Gulf. We optimize technical search parameters and regional citation mappings to dominate UAE search engines.",
+    heroTitle: "B2B SEO Services & AI Search Optimization Dubai & UAE",
+    heroSubtitle: "Dominate Google SERPs and AI Search Assistants across the Gulf. We optimize technical search parameters, bilingual schemas, and local citations for high-intent UAE buyers.",
     currency: "AED ",
-    lowPrice: "1,100",
-    medPrice: "2,500",
-    highPrice: "4,800",
+    lowPrice: "1,800",
+    medPrice: "3,800",
+    highPrice: "7,500",
     targetMarket: "United Arab Emirates",
   },
   in: {
@@ -153,6 +157,42 @@ const REGIONAL_CONFIGS: Record<string, {
     highPrice: "6,499",
     targetMarket: "Brazil",
   },
+  my: {
+    heroTitle: "B2B SEO Services & Organic Growth Agency Malaysia",
+    heroSubtitle: "Drive qualified B2B search traffic across Kuala Lumpur and ASEAN trade markets. Technical audits, content clusters, and high-converting keyword placement.",
+    currency: "MYR ",
+    lowPrice: "1,500",
+    medPrice: "3,200",
+    highPrice: "6,500",
+    targetMarket: "Malaysia",
+  },
+  za: {
+    heroTitle: "Results-Driven B2B SEO Services South Africa",
+    heroSubtitle: "Outrank competitors in Johannesburg, Cape Town, and international markets. Technical search audits, high-authority backlink building, and lead tracking.",
+    currency: "R",
+    lowPrice: "4,500",
+    medPrice: "9,500",
+    highPrice: "18,500",
+    targetMarket: "South Africa",
+  },
+  ng: {
+    heroTitle: "B2B Search Engine Optimization Services Nigeria",
+    heroSubtitle: "Capture high-intent search buyers in Lagos, Abuja, and global export hubs. Technical SEO, Google Maps optimization, and commercial keyword placement.",
+    currency: "$",
+    lowPrice: "250",
+    medPrice: "550",
+    highPrice: "1,100",
+    targetMarket: "Nigeria",
+  },
+  ke: {
+    heroTitle: "B2B SEO Services & Search Growth Agency Kenya",
+    heroSubtitle: "Scale organic traffic and inquiries across Nairobi and East Africa. Research-backed SEO campaigns focused on transactional keyword rankings.",
+    currency: "$",
+    lowPrice: "250",
+    medPrice: "550",
+    highPrice: "1,100",
+    targetMarket: "Kenya",
+  },
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -174,6 +214,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     sg: "Singapore",
     mx: "Mexico",
     br: "Brazil",
+    my: "Malaysia",
+    za: "South Africa",
+    ng: "Nigeria",
+    ke: "Kenya",
   };
   const countryName = countryNames[countryLower] || countryLower.toUpperCase();
   const title = `SEO Services in ${countryName} | Drive Organic Growth - Joy Digital`;
@@ -198,6 +242,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         "en-sg": "https://joydigital.in/sg/seo-services",
         "es-mx": "https://joydigital.in/mx/seo-services",
         "pt-br": "https://joydigital.in/br/seo-services",
+        "en-my": "https://joydigital.in/my/seo-services",
+        "en-za": "https://joydigital.in/za/seo-services",
+        "en-ng": "https://joydigital.in/ng/seo-services",
+        "en-ke": "https://joydigital.in/ke/seo-services",
       },
     },
   };

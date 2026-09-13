@@ -23,6 +23,10 @@ export async function generateStaticParams() {
     { country: "sg" },
     { country: "mx" },
     { country: "br" },
+    { country: "my" },
+    { country: "za" },
+    { country: "ng" },
+    { country: "ke" },
   ];
 }
 
@@ -55,12 +59,12 @@ const REGIONAL_CONFIGS: Record<string, {
     targetMarket: "United Kingdom",
   },
   ae: {
-    heroTitle: "E-commerce & Corporate Web Development Dubai & UAE",
-    heroSubtitle: "Accelerate your local business operations. We design responsive corporate portals and high-speed online stores with local payment workflows for the UAE market.",
+    heroTitle: "Enterprise Next.js Web Engineering & B2B Portals Dubai & UAE",
+    heroSubtitle: "Replace legacy web bloat with sub-second Next.js infrastructure built for Dubai's enterprise market. Ultra-fast Core Web Vitals, bank-grade security, and local payment integration.",
     currency: "AED ",
-    lowPrice: "1,800",
-    medPrice: "3,500",
-    highPrice: "7,000",
+    lowPrice: "4,500",
+    medPrice: "8,500",
+    highPrice: "15,000",
     targetMarket: "United Arab Emirates",
   },
   in: {
@@ -153,6 +157,42 @@ const REGIONAL_CONFIGS: Record<string, {
     highPrice: "9,999",
     targetMarket: "Brazil",
   },
+  my: {
+    heroTitle: "High-Performance Next.js Web Development Malaysia & ASEAN",
+    heroSubtitle: "High-performance Next.js engineering delivered at 1/3 of Kuala Lumpur agency rates. Engineered for speed, mobile responsiveness, and high-volume B2B lead generation.",
+    currency: "MYR ",
+    lowPrice: "2,800",
+    medPrice: "5,500",
+    highPrice: "11,000",
+    targetMarket: "Malaysia",
+  },
+  za: {
+    heroTitle: "Ultra-Fast Next.js & React Web Engineering South Africa",
+    heroSubtitle: "Engineered to convert every visitor—even on mobile data networks across Johannesburg & Cape Town. Instant load times, zero layout shifts, and automated WhatsApp lead routing.",
+    currency: "R",
+    lowPrice: "6,500",
+    medPrice: "14,500",
+    highPrice: "28,000",
+    targetMarket: "South Africa",
+  },
+  ng: {
+    heroTitle: "High-Speed Web Development & B2B Applications Nigeria",
+    heroSubtitle: "Fast, low-bandwidth Next.js web portals engineered for Lagos and Abuja businesses. Optimized for mobile 3G/4G networks, Paystack integration, and WhatsApp conversions.",
+    currency: "$",
+    lowPrice: "350",
+    medPrice: "750",
+    highPrice: "1,500",
+    targetMarket: "Nigeria",
+  },
+  ke: {
+    heroTitle: "Scalable Next.js Web Development Agency Kenya",
+    heroSubtitle: "Build ultra-fast, mobile-optimized business portals and web applications in Nairobi. Engineered for Core Web Vitals, security, and lead acquisition.",
+    currency: "$",
+    lowPrice: "350",
+    medPrice: "750",
+    highPrice: "1,500",
+    targetMarket: "Kenya",
+  },
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -174,6 +214,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     sg: "Singapore",
     mx: "Mexico",
     br: "Brazil",
+    my: "Malaysia",
+    za: "South Africa",
+    ng: "Nigeria",
+    ke: "Kenya",
   };
   const countryName = countryNames[countryLower] || countryLower.toUpperCase();
   const title = `Custom Next.js Web Development ${countryName} | Joy Digital`;
@@ -198,6 +242,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         "en-sg": "https://joydigital.in/sg/website-development",
         "es-mx": "https://joydigital.in/mx/website-development",
         "pt-br": "https://joydigital.in/br/website-development",
+        "en-my": "https://joydigital.in/my/website-development",
+        "en-za": "https://joydigital.in/za/website-development",
+        "en-ng": "https://joydigital.in/ng/website-development",
+        "en-ke": "https://joydigital.in/ke/website-development",
       },
     },
   };

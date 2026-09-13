@@ -25,6 +25,10 @@ export async function generateStaticParams() {
     { country: "sg" },
     { country: "mx" },
     { country: "br" },
+    { country: "my" },
+    { country: "za" },
+    { country: "ng" },
+    { country: "ke" },
   ];
 }
 
@@ -38,8 +42,8 @@ const METADATA_MAP: Record<string, { title: string; description: string }> = {
     description: "Convert search traffic into loyal buyers. Joy Digital constructs high-speed corporate sites and executes organic search engine marketing campaigns across the UK.",
   },
   ae: {
-    title: "Web Development & SEO Agency Dubai & UAE | Joy Digital",
-    description: "Dominate Google search. Joy Digital builds speed-optimized corporate portals, e-commerce stores, and Google Map packs for businesses in the UAE.",
+    title: "Next.js Enterprise Web Development Dubai & UAE | Joy Digital",
+    description: "Engineer ultra-fast, sub-second Next.js web applications in Dubai & Abu Dhabi. Scale B2B enquiries with enterprise-grade SEO and AI Search Optimization.",
   },
   in: {
     title: "Top Website Design & SEO Company India | Joy Digital",
@@ -81,6 +85,22 @@ const METADATA_MAP: Record<string, { title: string; description: string }> = {
     title: "Desenvolvimento Web Next.js e Agência de SEO Brasil | Joy Digital",
     description: "Desenvolvimento de sites ultra-rápidos e otimização SEO para empresas no Brasil com a Joy Digital.",
   },
+  my: {
+    title: "Next.js Web Development & B2B SEO Malaysia | Joy Digital",
+    description: "Scale your Kuala Lumpur business with high-performance Next.js web applications and organic SEO. Get 50% faster speeds and higher B2B lead conversion.",
+  },
+  za: {
+    title: "High-Speed Web Development & B2B SEO South Africa | Joy Digital",
+    description: "Build ultra-fast Next.js websites for South African enterprises. Scale B2B leads across Johannesburg, Cape Town, and global export markets.",
+  },
+  ng: {
+    title: "High-Speed Web Applications & B2B Lead Gen Nigeria | Joy Digital",
+    description: "Ultra-fast, low-bandwidth Next.js web apps and B2B SEO engineered for Nigerian businesses in Lagos, Abuja, and West Africa.",
+  },
+  ke: {
+    title: "Next.js Web Engineering & B2B SEO Growth Kenya | Joy Digital",
+    description: "High-converting web development and search engine optimization engineered for Kenyan businesses in Nairobi and East Africa.",
+  },
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -111,6 +131,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         "en-sg": "https://joydigital.in/sg",
         "es-mx": "https://joydigital.in/mx",
         "pt-br": "https://joydigital.in/br",
+        "en-my": "https://joydigital.in/my",
+        "en-za": "https://joydigital.in/za",
+        "en-ng": "https://joydigital.in/ng",
+        "en-ke": "https://joydigital.in/ke",
       },
     },
   };

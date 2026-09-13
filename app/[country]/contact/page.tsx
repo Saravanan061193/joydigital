@@ -26,6 +26,10 @@ export async function generateStaticParams() {
     { country: "sg" },
     { country: "mx" },
     { country: "br" },
+    { country: "my" },
+    { country: "za" },
+    { country: "ng" },
+    { country: "ke" },
   ];
 }
 
@@ -155,6 +159,42 @@ const REGIONAL_CONTACTS: Record<string, {
     showMap: false,
     marketName: "Brazil",
   },
+  my: {
+    title: "Malaysia & ASEAN Business Consultation Desk",
+    description: "Connect with our Next.js web engineering and B2B SEO specialists serving Kuala Lumpur and Southeast Asian enterprises.",
+    phone: "+60321109888",
+    phoneFormatted: "+60 3-2110 9888",
+    address: "ASEAN Client Desk, Kuala Lumpur, Malaysia",
+    showMap: false,
+    marketName: "Malaysia",
+  },
+  za: {
+    title: "South Africa Business Consultation Desk",
+    description: "Connect with our ultra-fast web development and search engine growth team serving Johannesburg, Cape Town, and African hubs.",
+    phone: "+27117800000",
+    phoneFormatted: "+27 11 780 0000",
+    address: "Southern Africa Client Desk, Johannesburg, South Africa",
+    showMap: false,
+    marketName: "South Africa",
+  },
+  ng: {
+    title: "Nigeria Digital Consultation Desk",
+    description: "Connect with our high-speed web application developers and search lead generation specialists serving Lagos and Abuja businesses.",
+    phone: "+23412345678",
+    phoneFormatted: "+234 1 234 5678",
+    address: "West Africa Client Desk, Lagos, Nigeria",
+    showMap: false,
+    marketName: "Nigeria",
+  },
+  ke: {
+    title: "Kenya Digital Consultation Desk",
+    description: "Connect with our custom web portal developers and B2B SEO strategists serving Nairobi and East African growing enterprises.",
+    phone: "+254201234567",
+    phoneFormatted: "+254 20 123 4567",
+    address: "East Africa Client Desk, Nairobi, Kenya",
+    showMap: false,
+    marketName: "Kenya",
+  },
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -176,6 +216,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     sg: "Singapore",
     mx: "Mexico",
     br: "Brazil",
+    my: "Malaysia",
+    za: "South Africa",
+    ng: "Nigeria",
+    ke: "Kenya",
   };
   const countryName = countryNames[countryLower] || countryLower.toUpperCase();
   const title = `Contact Joy Digital ${countryName} | Custom Web & SEO Solutions`;
@@ -200,6 +244,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         "en-sg": "https://joydigital.in/sg/contact",
         "es-mx": "https://joydigital.in/mx/contact",
         "pt-br": "https://joydigital.in/br/contact",
+        "en-my": "https://joydigital.in/my/contact",
+        "en-za": "https://joydigital.in/za/contact",
+        "en-ng": "https://joydigital.in/ng/contact",
+        "en-ke": "https://joydigital.in/ke/contact",
       },
     },
   };
