@@ -119,7 +119,7 @@ export default function RefundPolicyPage() {
                     </p>
                     <p className="text-sm flex items-center gap-2 text-text-secondary">
                       <span className="text-accent"><i className="fa-solid fa-envelope" /></span>
-                      <a href="mailto:info@joydigital.in" className="hover:text-accent font-semibold transition-colors">info@joydigital.in</a>
+                      <a href="mailto:saravanan061193@gmail.com" className="hover:text-accent font-semibold transition-colors">saravanan061193@gmail.com</a>
                     </p>
                   </div>
                 </div>
