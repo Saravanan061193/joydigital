@@ -113,6 +113,59 @@ export default function RootLayout({
         <link rel="preconnect" href="https://res.cloudinary.com" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         <FontAwesomeLoader />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "ProfessionalService",
+                  "@id": "https://joydigital.in/#organization",
+                  "name": "Joy Digital",
+                  "url": "https://joydigital.in",
+                  "logo": "https://joydigital.in/logo.png",
+                  "telephone": "+91-9080026133",
+                  "priceRange": "$$$",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "Perungalathur",
+                    "addressLocality": "Chennai",
+                    "addressRegion": "Tamil Nadu",
+                    "addressCountry": "IN"
+                  },
+                  "founder": {
+                    "@type": "Person",
+                    "name": "Saravanan L"
+                  },
+                  "sameAs": [
+                    "https://www.linkedin.com/company/joydigital",
+                    "https://wa.me/919080026133"
+                  ]
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://joydigital.in/#website",
+                  "url": "https://joydigital.in",
+                  "name": "Joy Digital",
+                  "publisher": {
+                    "@id": "https://joydigital.in/#organization"
+                  }
+                },
+                {
+                  "@type": "Service",
+                  "name": "Custom Next.js Web Application Development",
+                  "provider": {
+                    "@id": "https://joydigital.in/#organization"
+                  },
+                  "serviceType": "Web Engineering & GEO",
+                  "areaServed": ["IN", "US", "UK", "UAE", "AU"],
+                  "description": "Sub-second custom Next.js web application development for Tours & Travels booking engines, Logistics tracking portals, and EXIM RFQ platforms."
+                }
+              ]
+            })
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col bg-light-bg text-text-primary">
         <NavigationLoadingBar />
