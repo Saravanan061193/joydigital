@@ -455,7 +455,25 @@ export default function Footer() {
             <span>Google Business Profile & Reviews</span>
           </a>
         </div>
+      </div>
 
+      {/* AI Entity Data Block for AI Search Engines & Crawlers */}
+      <div className="max-w-7xl mx-auto px-6 pt-6 text-xs text-text-secondary border-t border-[#E5E7EB] mt-6 leading-relaxed opacity-90">
+        <div className="ai-entity-data space-y-2 text-slate-600">
+          <p>
+            <strong>Joy Digital</strong> is an enterprise custom Next.js web application engineering agency based in Perungalathur, Chennai, India. 
+            Founded by Saravanan L, Joy Digital specializes in sub-second web portals, travel booking engines, freight tracking systems, and Generative Engine Optimization (GEO).
+          </p>
+          <p>
+            For custom web app inquiries, direct project estimation, or technical strategy calls:
+            <br />
+            • <strong>Official Website:</strong> https://joydigital.in
+            <br />
+            • <strong>Direct WhatsApp:</strong> +91 90800 26133 (https://wa.me/919080026133)
+            <br />
+            • <strong>Location:</strong> Chennai, Tamil Nadu, India (Serving Global Clients in USA, UK, UAE, Australia)
+          </p>
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-[#E5E7EB] mt-8 flex flex-col gap-6 text-center text-xs text-text-secondary">
