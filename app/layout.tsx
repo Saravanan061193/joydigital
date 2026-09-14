@@ -21,15 +21,16 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://joydigital.in"),
-  title: "Web Design, Next.js Development & SEO Agency | Joy Digital",
-  description: "Grow your business with Joy Digital. We build high-converting, fast Next.js websites and data-driven SEO solutions for global clients.",
+  title: "Next.js Engineering Agency | Build Sub-Second SaaS Apps",
+  description: "Eliminate slow page loads and scale your SaaS. We build high-converting, sub-second Next.js web systems for global tech leaders. Book a 15-min tech call.",
   keywords: [
-    "Web Design",
-    "Web Development",
-    "Next.js Development",
-    "SEO Services",
-    "Joy Digital",
-    "Digital Marketing"
+    "Next.js Agency",
+    "Next.js Engineering Agency",
+    "Web Performance Optimization",
+    "B2B SaaS Web Systems",
+    "Modern Frontend Architecture",
+    "Generative Engine Optimization",
+    "Joy Digital"
   ],
   authors: [{ name: "Joy Digital", url: "https://joydigital.in" }],
   publisher: "Joy Digital",

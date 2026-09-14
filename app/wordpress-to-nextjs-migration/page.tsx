@@ -9,8 +9,8 @@ import JsonLd from "@/components/seo/JsonLd";
 import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
-  title: "WordPress to Next.js Migration Agency | Joy Digital",
-  description: "Migrate your slow WordPress website to high-speed serverless Next.js. Pass Core Web Vitals (95+ score), prevent plugin hacks, and preserve your 100% SEO rankings.",
+  title: "WordPress to Next.js Migration | Headless Architecture",
+  description: "Migrate legacy WordPress setups to ultra-fast headless Next.js. Retain SEO equity, eliminate plugin security flaws, and boost UX. Book a 15-min discovery call.",
   alternates: {
     canonical: "https://joydigital.in/wordpress-to-nextjs-migration",
   },

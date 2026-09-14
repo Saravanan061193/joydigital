@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 
 export const metadata: Metadata = {
-  title: "Custom Web Development Services & Engineering | Joy Digital",
-  description: "Full-stack custom web development services. We engineer Next.js web applications, React front-ends, scalable web apps, and high-performance modern web stacks.",
+  title: "Custom Next.js Development | High-Performance SaaS Apps",
+  description: "Replace legacy web bloat with scalable, serverless Next.js architecture engineered for maximum conversions. Ship enterprise code faster. Audit your site today.",
   keywords: [
     "Custom Web Development Services",
     "Next.js Web Development",
