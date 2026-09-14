@@ -1,5 +1,16 @@
 [
   {
+    "id": "kw-web-agency-01",
+    "keyword": "web development agency",
+    "type": "Primary",
+    "search_intent": "Transactional",
+    "target_audience": "Global Founders, CTOs, & Enterprise Decision Makers",
+    "notes": "High commercial intent global agency keyword.",
+    "status": "Active",
+    "assigned_page_id": "page-web-dev-services",
+    "created_at": "2026-09-14T00:00:00.000Z"
+  },
+  {
     "id": "kw-custom-web-01",
     "keyword": "custom website development services",
     "type": "Primary",

@@ -47,6 +47,7 @@ export async function generatePageSeo(pagePath: string, defaultTitle?: string, d
     ...(primaryKw ? [primaryKw.keyword] : []),
     ...secondaryKws.map(k => k.keyword),
     ...longtailKws.map(k => k.keyword),
+    "Web Development Agency",
     "Joy Digital",
     "Custom Web Development",
     "Next.js Agency"

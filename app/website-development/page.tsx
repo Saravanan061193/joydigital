@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Custom Next.js Development | High-Performance SaaS Apps",
   description: "Replace legacy web bloat with scalable, serverless Next.js architecture engineered for maximum conversions. Ship enterprise code faster. Audit your site today.",
   keywords: [
+    "Web Development Agency",
     "Custom Web Development Services",
     "Next.js Web Development",
     "React Web Development",

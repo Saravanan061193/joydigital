@@ -24,6 +24,7 @@ export const metadata: Metadata = {
   title: "Next.js Engineering Agency | Build Sub-Second SaaS Apps",
   description: "Eliminate slow page loads and scale your SaaS. We build high-converting, sub-second Next.js web systems for global tech leaders. Book a 15-min tech call.",
   keywords: [
+    "Web Development Agency",
     "Next.js Agency",
     "Next.js Engineering Agency",
     "Web Performance Optimization",
