@@ -6,8 +6,8 @@ import { generatePageSeo } from "@/lib/seoEngine";
 export async function generateMetadata(): Promise<Metadata> {
   const seoData = await generatePageSeo(
     "/portfolio-website-development",
-    "Portfolio Website Development, Templates & AI Design | Joy Digital",
-    "Build a custom portfolio website for web developers, executives & agency owners. Explore portfolio website templates, GitHub hosting, and Pinterest design trends."
+    "Portfolio Website Development & AI Design | Joy Digital",
+    "Build custom portfolio websites for web developers, executives, & agencies. Explore portfolio templates, GitHub hosting, and AI design."
   );
   return seoData.metadata;
 }
@@ -15,8 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function PortfolioWebDevPage() {
   const seoData = await generatePageSeo(
     "/portfolio-website-development",
-    "Portfolio Website Development, Templates & AI Design | Joy Digital",
-    "Build a custom portfolio website for web developers, executives & agency owners. Explore portfolio website templates, GitHub hosting, and Pinterest design trends."
+    "Portfolio Website Development & AI Design | Joy Digital",
+    "Build custom portfolio websites for web developers, executives, & agencies. Explore portfolio templates, GitHub hosting, and AI design."
   );
 
   return (

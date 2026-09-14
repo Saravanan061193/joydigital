@@ -6,8 +6,8 @@ import { generatePageSeo } from "@/lib/seoEngine";
 export async function generateMetadata(): Promise<Metadata> {
   const seoData = await generatePageSeo(
     "/static-website-development",
-    "Static Website Development Services, Examples & SSG | Joy Digital",
-    "What is a static website? Explore static website examples, static website generator tech (Next.js), and dynamic website vs static website performance."
+    "Static Website Development Services & SSG | Joy Digital",
+    "Learn what is a static website. Explore static website examples, Next.js generator tech, and dynamic vs static website performance."
   );
   return seoData.metadata;
 }
@@ -15,8 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function StaticWebDevPage() {
   const seoData = await generatePageSeo(
     "/static-website-development",
-    "Static Website Development Services, Examples & SSG | Joy Digital",
-    "What is a static website? Explore static website examples, static website generator tech (Next.js), and dynamic website vs static website performance."
+    "Static Website Development Services & SSG | Joy Digital",
+    "Learn what is a static website. Explore static website examples, Next.js generator tech, and dynamic vs static website performance."
   );
 
   return (
