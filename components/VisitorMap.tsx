@@ -133,11 +133,11 @@ export default function VisitorMap({ markers }: VisitorMapProps) {
       const map = L.map(mapContainerRef.current).setView([centerLat, centerLng], zoom);
       mapInstanceRef.current = map;
 
-      // Add Map Tiles (Light Premium CartoDB tiles match light mode perfectly)
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 20
+      // Add Map Tiles (OpenStreetMap free tile layer - 100% free, zero API key required, zero watermark)
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        subdomains: 'abc',
+        maxZoom: 19
       }).addTo(map);
 
       // Add Markers
