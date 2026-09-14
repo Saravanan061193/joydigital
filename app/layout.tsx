@@ -140,7 +140,10 @@ export default function RootLayout({
                     "name": "Saravanan L"
                   },
                   "sameAs": [
-                    "https://www.linkedin.com/company/joydigital",
+                    "https://share.google/BSniheS2qnzwqUKXU",
+                    "https://www.facebook.com/profile.php?id=61590372457559",
+                    "https://www.youtube.com/@Joydigital2026",
+                    "https://www.linkedin.com/in/saravanan-l-34a861154/",
                     "https://wa.me/919080026133"
                   ]
                 },
