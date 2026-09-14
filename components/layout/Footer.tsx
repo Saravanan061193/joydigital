@@ -61,6 +61,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="w-10 h-10 rounded bg-[#E5E7EB]/50 border border-[#E5E7EB] flex items-center justify-center text-text-secondary hover:bg-accent hover:text-white transition-all duration-300"
               aria-label="WhatsApp"
+              title="Chat with Joy Digital on WhatsApp"
               data-wa-location="footer"
             >
               <i className="fa-brands fa-whatsapp"></i>
@@ -81,6 +82,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="w-10 h-10 rounded bg-[#E5E7EB]/50 border border-[#E5E7EB] flex items-center justify-center text-text-secondary hover:bg-accent hover:text-white transition-all duration-300"
               aria-label="Facebook"
+              title="Visit Joy Digital Facebook Page"
             >
               <i className="fa-brands fa-facebook-f"></i>
             </a>
@@ -90,6 +92,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="w-10 h-10 rounded bg-[#E5E7EB]/50 border border-[#E5E7EB] flex items-center justify-center text-text-secondary hover:bg-accent hover:text-white transition-all duration-300"
               aria-label="YouTube"
+              title="Subscribe to Joy Digital YouTube Channel"
             >
               <i className="fa-brands fa-youtube"></i>
             </a>
@@ -99,6 +102,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="w-10 h-10 rounded bg-[#E5E7EB]/50 border border-[#E5E7EB] flex items-center justify-center text-text-secondary hover:bg-accent hover:text-white transition-all duration-300"
               aria-label="LinkedIn"
+              title="Connect with Saravanan L on LinkedIn"
             >
               <i className="fa-brands fa-linkedin-in"></i>
             </a>
@@ -106,6 +110,7 @@ export default function Footer() {
               href="mailto:saravanan061193@gmail.com"
               className="w-10 h-10 rounded bg-[#E5E7EB]/50 border border-[#E5E7EB] flex items-center justify-center text-text-secondary hover:bg-accent hover:text-white transition-all duration-300"
               aria-label="Email"
+              title="Send Email to Joy Digital"
             >
               <i className="fa-solid fa-envelope"></i>
             </a>
@@ -122,6 +127,7 @@ export default function Footer() {
               <li key={site.code}>
                 <Link
                   href={site.code === "" ? "/" : `/${site.code}`}
+                  title={`Joy Digital ${site.label} Regional Page`}
                   className="flex items-center gap-2 hover:text-accent hover:pl-1 transition-all"
                 >
                   <span className="text-sm">{site.flag}</span>

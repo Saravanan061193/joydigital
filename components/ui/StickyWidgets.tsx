@@ -42,6 +42,8 @@ export default function StickyWidgets() {
           href="https://wa.me/919080026133?text=Hi%20Joy%20Digital,%20I'd%20like%20to%20get%20a%20free%20consultation%20and%20pricing%20quote%20for%20a%20project."
           target="_blank"
           rel="noopener noreferrer"
+          title="Chat with Joy Digital on WhatsApp"
+          aria-label="Chat with Joy Digital on WhatsApp"
           onClick={() => {
             const tracker = (window as any).trackJoyDigitalEvent;
             if (typeof tracker === "function") {
@@ -54,6 +56,8 @@ export default function StickyWidgets() {
         </a>
         <Link
           href="/free-website-audit"
+          title="Request a Free Website Audit and Quote"
+          aria-label="Request a Free Website Audit and Quote"
           onClick={() => {
             const tracker = (window as any).trackJoyDigitalEvent;
             if (typeof tracker === "function") {
@@ -73,6 +77,7 @@ export default function StickyWidgets() {
             onClick={() => setShowTooltip(false)} 
             className="absolute top-2.5 right-2.5 text-text-muted hover:text-primary-dark text-[10px] cursor-pointer"
             aria-label="Close message"
+            title="Close message"
           >
             <i className="fa-solid fa-xmark" />
           </button>
@@ -94,7 +99,7 @@ export default function StickyWidgets() {
         }}
         className="fixed bottom-36 lg:bottom-22 right-6 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl shadow-lg hover:scale-110 transition-all duration-300 z-40"
         aria-label="Call Us Now"
-        title="Call Us Now"
+        title="Call Joy Digital Support Now"
         data-call-location="floating button"
       >
         <span className="absolute top-0 left-0 w-full h-full bg-primary rounded-full -z-1 opacity-70 animate-pulse-ring"></span>
@@ -113,8 +118,8 @@ export default function StickyWidgets() {
           }
         }}
         className={`fixed bottom-20 lg:bottom-6 right-6 w-14 h-14 bg-whatsapp-green text-white rounded-full flex items-center justify-center text-3xl shadow-lg hover:scale-110 hover:rotate-[5deg] transition-all duration-300 z-40 group`}
-        aria-label="Chat on WhatsApp"
-        title="Chat on WhatsApp"
+        aria-label="Chat on WhatsApp with Joy Digital"
+        title="Chat on WhatsApp with Joy Digital"
         data-wa-location="floating button"
       >
         <span className="absolute top-0 left-0 w-full h-full bg-whatsapp-green rounded-full -z-1 opacity-70 animate-pulse-ring"></span>
@@ -130,7 +135,8 @@ export default function StickyWidgets() {
         className={`fixed bottom-52 lg:bottom-38 right-6 w-9 h-9 bg-primary-dark text-white rounded-full flex items-center justify-center text-xs shadow-md hover:bg-accent transition-all duration-300 z-40 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
         }`}
-        aria-label="Scroll to top"
+        aria-label="Scroll to top of page"
+        title="Scroll to top of page"
       >
         <i className="fa-solid fa-arrow-up" />
       </button>
