@@ -6,12 +6,9 @@ export const metadata: Metadata = {
   title: "Custom Ecommerce Website Development Services | Joy Digital",
   description: "Joy Digital delivers custom ecommerce website development. We engineer headless Next.js ecommerce storefronts, B2B e-commerce applications, and high-converting checkouts.",
   keywords: [
-    "Custom Ecommerce Website Development",
-    "Headless Ecommerce Development",
-    "Next.js Ecommerce",
-    "B2B Ecommerce Development",
-    "Headless Storefront Engineering",
-    "Joy Digital"
+    "E-commerce Website Development",
+    "Custom E-commerce Development",
+    "Online Store Development"
   ],
   alternates: {
     canonical: "https://joydigital.in/ecommerce-website-development",
@@ -142,39 +139,40 @@ export default function EcommerceWebDevPage() {
       pricingSubtitle="Select the perfect package for your product inventory scale. No monthly maintenance lock-ins."
       pricingTiers={[
         {
-          name: "Starter E-commerce",
-          price: "₹35,000",
+          name: "Standard E-commerce Plan",
+          price: "Starts from ₹50,000",
           period: "one-time",
-          description: "Perfect for local boutiques, travels, and shops launching their first online catalog.",
+          description: "Perfect for emerging online brands launching their first professional store.",
           features: [
-            "Up to 100 Product Uploads Setup",
-            "100% Mobile Responsive Storefront",
-            "Direct Payment Gateway Integration",
-            "WhatsApp Order Notification Routing",
-            "Basic Product On-Page SEO",
-            "1 Year Server Hosting Setup Support",
+            "Up to 50 Initial Products Uploaded",
+            "Payment Gateway & Shipping Integration",
+            "Mobile-Responsive Custom Design",
+            "Basic On-Page SEO Optimization",
+            "Customer Review System",
+            "1 Month Free Technical Support",
           ],
-          ctaText: "Choose Starter Plan",
+          ctaText: "Start Selling Now",
         },
         {
-          name: "Premium Storefront",
-          price: "₹65,000",
+          name: "Advanced Growth Plan",
+          price: "Starts from ₹75,000",
           period: "one-time",
-          description: "Best for growing brands and retail showrooms needing custom databases and CRM linkages.",
+          description: "Designed for established businesses aiming to scale their online presence and sales.",
           isPopular: true,
           features: [
-            "Up to 1,000 Product Uploads Support",
-            "Headless Next.js Dashboard Architecture",
-            "Product, Offer & Reviews Schema Setup",
-            "Advanced Abandoned Cart Email Alerts",
-            "Google Analytics eCommerce Tracking",
-            "Priority Technical Developer Support",
+            "Up to 500 Products Uploaded",
+            "Advanced Filters & Search Navigation",
+            "Abandoned Cart Recovery Emails",
+            "Inventory & Order Management Dashboard",
+            "Comprehensive SEO Setup",
+            "3 Months Free Technical Support",
           ],
-          ctaText: "Choose Premium Plan",
+          ctaText: "Choose Advanced Plan",
         },
         {
-          name: "Enterprise Custom",
+          name: "Enterprise Multi-Vendor Platform",
           price: "Custom Quote",
+          period: "per project",
           description: "For complex marketplace platforms, multi-currency stores, and warehouse API syncs.",
           features: [
             "Unlimited Product Inventory Database",
@@ -199,9 +197,9 @@ export default function EcommerceWebDevPage() {
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
-        { href: "/website-development-company-chennai", label: "website development in Chennai" },
-        { href: "/website-design-company-in-chennai", label: "Web Design Chennai" },
-        { href: "/seo-services-in-chennai", label: "SEO Services Chennai" },
+        { href: "/website-development", label: "Web Development" },
+        { href: "/web-design-services", label: "Web Design" },
+        { href: "/seo-services", label: "SEO Services" },
       ]}
     />
   );

@@ -7,6 +7,11 @@ import { getPostBySlug } from "@/lib/blog";
 export const metadata: Metadata = {
   title: "Real Estate Website Design & Property Lead SEO | Joy Digital",
   description: "High-converting website design & digital marketing for real estate developers, property brokers, luxury builders, and NRI property consultants. Features property portals, virtual 3D tour embeds, and real estate SEO.",
+  keywords: [
+    "Real Estate Website Development",
+    "Real Estate Web Design",
+    "Real Estate SEO"
+  ],
   alternates: {
     canonical: "https://joydigital.in/website-for-real-estate",
   },
@@ -36,11 +41,11 @@ const pageSchema = {
         "priceRange": "₹₹",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "Old Perungalathur",
-          "addressLocality": "Chennai",
-          "addressRegion": "Tamil Nadu",
-          "postalCode": "600063",
-          "addressCountry": "IN"
+          "streetAddress": "Global Hub",
+          "addressLocality": "Remote",
+          "addressRegion": "Worldwide",
+          "postalCode": "",
+          "addressCountry": "US"
         }
       },
       "description": "Custom web design for real estate developers, property agencies, luxury villa builders, and NRI investment advisories. Features property listing directories, site visit booking forms, RERA disclosures, and search optimization.",
@@ -157,7 +162,7 @@ export default async function RealEstateWebPage() {
         {
           icon: "fa-solid fa-magnifying-glass-location",
           title: "9. Property SEO & Location Keyword Strategy",
-          description: "Target high-intent search terms like '3 BHK luxury apartments in Chennai', 'Villas in Ooty', and 'Commercial office space Madurai'.",
+          description: "Target high-intent search terms like '3 BHK luxury apartments in Dubai', 'Villas in London', and 'Commercial office space in New York'.",
         },
         {
           icon: "fa-solid fa-download",

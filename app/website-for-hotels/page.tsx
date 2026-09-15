@@ -7,6 +7,11 @@ import { getPostBySlug } from "@/lib/blog";
 export const metadata: Metadata = {
   title: "Hotel Website Design & Direct Booking SEO Services | Joy Digital",
   description: "High-converting website design & direct booking engines for luxury hotels, boutique resorts, homestays, and hospitality chains. Eliminate OTA commissions, capture international tourists, and rank on Google.",
+  keywords: [
+    "Hotel Website Design",
+    "Hotel Website Development",
+    "Hotel SEO"
+  ],
   alternates: {
     canonical: "https://joydigital.in/website-for-hotels",
   },
@@ -36,11 +41,11 @@ const pageSchema = {
         "priceRange": "₹₹",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "Old Perungalathur",
-          "addressLocality": "Chennai",
-          "addressRegion": "Tamil Nadu",
-          "postalCode": "600063",
-          "addressCountry": "IN"
+          "streetAddress": "Global Hub",
+          "addressLocality": "Remote",
+          "addressRegion": "Worldwide",
+          "postalCode": "",
+          "addressCountry": "US"
         }
       },
       "description": "Custom web design for hotels, luxury resorts, boutique homestays, and serviced apartments. Includes commission-free direct booking engine integration, room amenity galleries, multi-currency support, and global travel SEO.",
@@ -157,7 +162,7 @@ export default async function HotelWebPage() {
         {
           icon: "fa-solid fa-magnifying-glass-location",
           title: "9. Destination & Hotel SEO Strategy",
-          description: "Target high-intent terms like 'Luxury resort in Ooty', 'Boutique hotel Madurai', and 'Beachfront resort EC R Chennai'.",
+          description: "Target high-intent terms like 'Luxury resort in Maldives', 'Boutique hotel London', and 'Beachfront resort in Miami'.",
         },
         {
           icon: "fa-solid fa-bell-concierge",

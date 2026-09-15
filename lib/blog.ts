@@ -148,7 +148,6 @@ function normalizePostData(slug: string, data: any, content: string): BlogPost {
   };
 }
 
-// Helper to fetch local posts synchronously
 function getLocalPosts(): BlogPost[] {
   if (!fs.existsSync(BLOG_DIR)) {
     return [];
@@ -157,16 +156,23 @@ function getLocalPosts(): BlogPost[] {
   try {
     const files = fs.readdirSync(BLOG_DIR);
 
-    return files
+    const posts = files
       .filter((file) => file.endsWith(".md") || file.endsWith(".mdx"))
       .map((file) => {
-        const slug = file.replace(/\.mdx?$/, "");
-        const filePath = path.join(BLOG_DIR, file);
-        const fileContent = fs.readFileSync(filePath, "utf-8");
-        const { data, content } = matter(fileContent);
+        try {
+          const slug = file.replace(/\.mdx?$/, "");
+          const filePath = path.join(BLOG_DIR, file);
+          const fileContent = fs.readFileSync(filePath, "utf-8");
+          const { data, content } = matter(fileContent);
 
-        return normalizePostData(slug, data, content);
+          return normalizePostData(slug, data, content);
+        } catch (err) {
+          console.error(`Error reading or parsing local post file ${file}:`, err);
+          return null;
+        }
       });
+      
+    return posts.filter((post): post is BlogPost => post !== null);
   } catch (err) {
     console.error("Error reading local post directory:", err);
     return [];

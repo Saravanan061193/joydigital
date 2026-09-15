@@ -66,6 +66,7 @@ interface ServicePageTemplateProps {
   canonicalUrl?: string;
   heroCtaText?: string;
   relatedBlogPosts?: BlogPost[];
+  customLeadForm?: React.ReactNode;
 }
 
 export default function ServicePageTemplate({
@@ -90,6 +91,7 @@ export default function ServicePageTemplate({
   canonicalUrl = "https://joydigital.in",
   heroCtaText,
   relatedBlogPosts,
+  customLeadForm,
 }: ServicePageTemplateProps) {
   const STANDARD_FAQS = [
     {
@@ -236,13 +238,17 @@ export default function ServicePageTemplate({
 
             {/* Hero Form */}
             <div className="lg:col-span-5 flex justify-center lg:justify-end">
-              <LeadForm
-                layout="vertical"
-                title="Claim Free Consultation"
-                subtitle="Fill in the fields below, and our local experts will reach out to you."
-                ctaText={heroCtaText || "Get Free Quote"}
-                source={leadSource}
-              />
+              {customLeadForm ? (
+                customLeadForm
+              ) : (
+                <LeadForm
+                  layout="vertical"
+                  title="Claim Free Consultation"
+                  subtitle="Fill in the fields below, and our local experts will reach out to you."
+                  ctaText={heroCtaText || "Get Free Quote"}
+                  source={leadSource}
+                />
+              )}
             </div>
 
             {/* Scroll Down Option Icon (Middle Bottom of Hero) */}

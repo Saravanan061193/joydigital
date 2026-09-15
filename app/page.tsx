@@ -6,22 +6,13 @@ import { buildPageGraphSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://joydigital.in"),
-  title: "Custom Website Development Company | Joy Digital",
-  description: "Joy Digital is an enterprise custom website development company. We build sub-second Next.js web applications, bespoke web systems, and search engine solutions for global brands.",
+  title: "Premium Web Development Company | Joy Digital",
+  description: "Joy Digital is a global web development company. We build sub-second Next.js web applications, bespoke digital experiences, and scalable search engine solutions for enterprise brands.",
   keywords: [
-    "Custom Website Development Company",
-    "Custom Web Development",
-    "Custom Website Development Services",
-    "Bespoke Website Development",
-    "Business Website Development",
-    "Top Website Development Agency",
-    "Top Website Development Company",
-    "Next.js Web Development",
-    "React Web Development",
-    "Joy Digital",
-    "Digital Marketing",
-    "Web Engineering",
-    "Enterprise SEO"
+    "Web Development Company",
+    "Web Design Agency",
+    "Custom Website Development",
+    "SEO Services"
   ],
   authors: [{ name: "Joy Digital", url: "https://joydigital.in" }],
   publisher: "Joy Digital",
@@ -59,8 +50,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://joydigital.in",
     siteName: "Joy Digital",
-    title: "Custom Website Development Company | Joy Digital",
-    description: "Joy Digital is an enterprise custom website development company. We build sub-second Next.js web applications, bespoke web systems, and search engine solutions for global brands.",
+    title: "Premium Web Development Company | Joy Digital",
+    description: "Joy Digital is a global web development company. We build sub-second Next.js web applications, bespoke digital experiences, and scalable search engine solutions for enterprise brands.",
     images: [
       {
         url: "https://joydigital.in/assets/images/hero-banner.webp",
@@ -72,8 +63,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Custom Website Development Company | Joy Digital",
-    description: "Joy Digital is an enterprise custom website development company. We build sub-second Next.js web applications, bespoke web systems, and search engine solutions for global brands.",
+    title: "Premium Web Development Company | Joy Digital",
+    description: "Joy Digital is a global web development company. We build sub-second Next.js web applications, bespoke digital experiences, and scalable search engine solutions for enterprise brands.",
     images: ["https://joydigital.in/assets/images/hero-banner.webp"],
     creator: "@joydigital",
   },
@@ -82,8 +73,8 @@ export const metadata: Metadata = {
 export default function HomePage() {
   const homeGraph = buildPageGraphSchema({
     url: "https://joydigital.in/",
-    title: "Web Design, Next.js Development & SEO Agency | Joy Digital",
-    description: "Grow your business with Joy Digital. We build high-converting, fast Next.js websites and data-driven SEO solutions for global clients.",
+    title: "Web Development Company & SEO Agency | Joy Digital",
+    description: "Grow your business globally with Joy Digital. We build high-converting, fast Next.js websites and data-driven SEO solutions.",
     isHomepage: true,
     faqs: HOME_FAQS,
   });

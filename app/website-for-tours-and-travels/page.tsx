@@ -7,18 +7,9 @@ export const metadata: Metadata = {
   title: "Tour Operator & Travel Agency Website Development | Joy Digital",
   description: "Joy Digital is a leading tourism website development company. We offer custom website development for tour operators, travel booking website development, and travel agency website redesign.",
   keywords: [
-    "custom website development for tour operators",
-    "travel agency website development",
-    "tour operator website design",
-    "custom travel website development",
-    "tourism website development company",
-    "website development for travel companies",
-    "travel booking website development",
-    "safari tour operator website development",
-    "tour package website development",
-    "travel agency website redesign",
-    "Joy Digital",
-    "Travel Web Engineering"
+    "Travel Agency Website Design",
+    "Travel Website Development",
+    "Tour Operator Website"
   ],
   alternates: {
     canonical: "https://joydigital.in/website-for-tours-and-travels",
@@ -65,19 +56,19 @@ export default async function ToursTravelsWebPage() {
       overviewContent={
         <div className="space-y-6">
           <p>
-            In the competitive travel and hospitality market, partnering with an experienced <strong>tourism website development company</strong> is crucial to capturing direct tourist bookings. As specialists in <strong>website development for travel companies</strong>, Joy Digital delivers full-stack <strong>travel agency website development</strong>, high-converting <strong>tour operator website design</strong>, and modern Next.js web applications.
+            In the competitive travel and hospitality market, partnering with an experienced development agency is crucial to capturing direct tourist bookings. Joy Digital delivers full-stack travel agency website development, high-converting layouts, and modern Next.js web applications tailored for global travel brands.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Custom Website Development for Tour Operators & Safari Organizers</h3>
           <p>
-            Whether you manage domestic package tours or international wildlife expeditions, our <strong>custom website development for tour operators</strong> and specialized <strong>safari tour operator website development</strong> allows you to showcase day-by-day itineraries, high-resolution destination galleries, inclusions, and downloadable travel guides.
+            Whether you manage domestic package tours or international wildlife expeditions, our custom web portals allow you to showcase day-by-day itineraries, high-resolution destination galleries, inclusions, and downloadable travel guides.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Travel Booking Website Development & Tour Package Portals</h3>
           <p>
-            Our <strong>custom travel website development</strong> and <strong>travel booking website development</strong> solutions feature direct WhatsApp click-to-chat links, interactive query forms, and automated itinerary downloads. We build specialized <strong>tour package website development</strong> engines designed to load in under 1.5s on mobile networks.
+            Our travel booking solutions feature direct WhatsApp click-to-chat links, interactive query forms, and automated itinerary downloads. We build specialized engines designed to load in under 1.5s on mobile networks.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Looking for a Professional Travel Agency Website Redesign?</h3>
           <p>
-            If your current travel website is slow, outdated, or failing to convert visitors, our <strong>travel agency website redesign</strong> service transforms slow templates into fast-loading, mobile-responsive Next.js portals that increase direct inquiries and reduce dependency on expensive third-party booking aggregators.
+            If your current travel website is slow, outdated, or failing to convert visitors, our website redesign service transforms slow templates into fast-loading, mobile-responsive portals that increase direct inquiries and reduce dependency on expensive third-party booking aggregators.
           </p>
         </div>
       }
@@ -180,16 +171,16 @@ export default async function ToursTravelsWebPage() {
       ]}
       faqs={[
         {
-          question: "Why choose Joy Digital as your tourism website development company?",
-          answer: "Joy Digital is a specialized tourism website development company. We engineer custom travel agency website development systems, safari tour operator website development platforms, and travel booking website setups built to load under 1.5s.",
+          question: "Why choose Joy Digital for your travel website development?",
+          answer: "Joy Digital is a specialized web engineering agency. We build custom travel agency systems, tour operator platforms, and travel booking setups designed to load under 1.5s globally.",
         },
         {
           question: "Do you offer custom website development for tour operators and safari operators?",
-          answer: "Yes! We specialize in custom website development for tour operators and safari tour operator website development. We design custom package displays, day-wise itineraries, inclusion lists, and direct WhatsApp inquiry buttons.",
+          answer: "Yes! We specialize in custom development for tour operators. We design custom package displays, day-wise itineraries, inclusion lists, and direct WhatsApp inquiry buttons.",
         },
         {
           question: "Can you assist with a travel agency website redesign?",
-          answer: "Absolutely. Our travel agency website redesign service upgrades slow, outdated websites into fast Next.js & React travel portals designed to rank on Google search and capture more package inquiries.",
+          answer: "Absolutely. Our redesign service upgrades slow, outdated websites into fast Next.js & React travel portals designed to rank on Google search and capture more package inquiries.",
         },
         {
           question: "Can guests request custom holiday plans?",

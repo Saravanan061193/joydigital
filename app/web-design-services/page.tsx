@@ -6,14 +6,10 @@ export const metadata: Metadata = {
   title: "Custom Website Design & Professional UI/UX Services | Joy Digital",
   description: "Joy Digital offers custom website design services. We craft responsive web design, conversion-focused UI/UX layouts, and intuitive brand design systems.",
   keywords: [
+    "Web Design Services",
+    "Website Design Agency",
     "Custom Website Design",
-    "Responsive Web Design",
-    "Professional UI/UX Design",
-    "Conversion-Focused Web Design",
-    "User Interface Architecture",
-    "Figma UI UX Design",
-    "Brand Layout Design",
-    "Joy Digital"
+    "Responsive Web Design"
   ],
   alternates: {
     canonical: "https://joydigital.in/web-design-services",
@@ -55,14 +51,14 @@ export default function WebDesignPage() {
             An exceptional website design is more than just a collection of nice graphics. It is a visual communication system that guides your target customer toward taking action&mdash;whether that is booking a consultation call, purchasing a product, or sending an enquiry. Poor navigation layouts, illegible typography, and unbalanced color schemes increase user frustration and lead to high bounce rates, which can hurt your brand&apos;s authority.
           </p>
           <p>
-            At Joy Digital, a top-rated <strong>website design company in chennai</strong>, our design process starts with understanding your customer&apos;s pain points. We deliver full-scope <strong>custom website design services</strong> and specialized <strong>custom website redesign</strong> solutions for brands seeking to modernize outdated websites. We conduct visual research, build wireframe navigation structures, map out user flows, and construct interactive mockups in Figma. This comprehensive approach ensures that every pixel, typography setting, and spacing variable is optimized to drive conversions and generate leads in India.
+            At Joy Digital, a global web design agency, our design process starts with understanding your customer&apos;s pain points. We deliver full-scope custom website design services and specialized custom website redesign solutions for brands seeking to modernize outdated websites. We conduct visual research, build wireframe navigation structures, map out user flows, and construct interactive mockups in Figma. This comprehensive approach ensures that every pixel, typography setting, and spacing variable is optimized to drive conversions and generate leads globally.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Mobile-First UI/UX & Visual Hierarchy</h3>
           <p>
             With more than half of global web traffic originating from mobile devices, desktop-only layouts are no longer sufficient. We design layouts using a mobile-first philosophy. This ensures that headers remain compact, text is readable without zooming, buttons are easy to tap, and sections stack logically on smaller viewports. Our designs adapt to various device viewports, providing a seamless browsing experience.
           </p>
           <p>
-            Additionally, we build clear visual hierarchies. We draw attention to your primary offers using high-contrast colors, open whitespace, and clear headings. Our designs balance aesthetics with performance, ensuring your brand stands out while maintaining fast load speeds. Whether you are a local shop in Chennai or a large corporate entity in India, we deliver designs that convey professional trust.
+            Additionally, we build clear visual hierarchies. We draw attention to your primary offers using high-contrast colors, open whitespace, and clear headings. Our designs balance aesthetics with performance, ensuring your brand stands out while maintaining fast load speeds. We deliver designs that convey professional trust across international markets.
           </p>
           <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">The Importance of User-Centric Design in Digital Branding</h3>
           <p>
@@ -111,7 +107,7 @@ export default function WebDesignPage() {
           step: "1",
           icon: "fa-solid fa-magnifying-glass",
           title: "Research & Blueprint",
-          description: "We analyze competitor layouts, build target user flows, and map out the sitemap paths for your website based on local search trends in Chennai.",
+          description: "We analyze competitor layouts, build target user flows, and map out the sitemap paths for your website based on global search trends.",
         },
         {
           step: "2",
@@ -181,7 +177,7 @@ export default function WebDesignPage() {
       ]}
       faqs={[
         {
-          question: "Do you design websites in Figma in Chennai?",
+          question: "Do you design websites in Figma?",
           answer: "Yes, Figma is our primary UI/UX design tool. It allows us to create interactive, clickable layout mockups that you can test on your phone or desktop before development starts. This ensures alignment on visuals before coding.",
         },
         {
@@ -198,7 +194,7 @@ export default function WebDesignPage() {
         },
         {
           question: "Is custom web design better than using a pre-made theme?",
-          answer: "Pre-made themes are budget-friendly but often bundle bloated layouts, duplicate scripts, and restrict your options. Custom design gives you control over user experience, page speed, and visual appeal, leading to better Google rankings in India.",
+          answer: "Pre-made themes are budget-friendly but often bundle bloated layouts, duplicate scripts, and restrict your options. Custom design gives you control over user experience, page speed, and visual appeal, leading to better Google rankings globally.",
         },
       ]}
       schemaMarkup={pageSchema}

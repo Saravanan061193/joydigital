@@ -1,10 +1,17 @@
 import React from "react";
 import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
+import EnterpriseSeoLeadForm from "@/components/ui/EnterpriseSeoLeadForm";
 
 export const metadata: Metadata = {
-  title: "Professional SEO Services Agency | Joy Digital",
-  description: "Joy Digital is a professional SEO agency. We optimize code, build map pack rankings, and drive organic Google search traffic to scale business leads.",
+  title: "Enterprise B2B SEO Services & GEO Optimization | Joy Digital",
+  description: "Drive organic pipeline growth with Enterprise B2B SEO Services. We engineer Technical SEO Architectures and Generative Engine Optimization (GEO) strategies for global brands.",
+  keywords: [
+    "Enterprise B2B SEO Services",
+    "Generative Engine Optimization",
+    "Technical SEO Architecture",
+    "Global B2B Keyword Strategy"
+  ],
   alternates: {
     canonical: "https://joydigital.in/seo-services",
     languages: {
@@ -20,20 +27,20 @@ export const metadata: Metadata = {
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Professional SEO Services",
-  "serviceType": "Search Engine Optimization Services",
+  "name": "Enterprise B2B SEO Services",
+  "serviceType": "Technical Search Engine Optimization & GEO",
   "provider": {
     "@type": "Organization",
     "name": "Joy Digital",
     "image": "https://joydigital.in/assets/images/logo.webp",
     "telephone": "+919080026133"
   },
-  "description": "Joy Digital is an organic SEO agency that helps businesses rank on top search results, build quality backlinks, and optimize technical page structures.",
+  "description": "Joy Digital builds Organic Pipeline & Revenue-Driven SEO strategies, specializing in Technical SEO Architecture & Site Audits for global B2B and SaaS brands.",
   "offers": {
     "@type": "AggregateOffer",
-    "priceCurrency": "INR",
-    "lowPrice": "15000",
-    "highPrice": "65000",
+    "priceCurrency": "USD",
+    "lowPrice": "500",
+    "highPrice": "1200",
     "offerCount": "3"
   }
 };
@@ -41,171 +48,196 @@ const pageSchema = {
 export default function SEOPage() {
   return (
     <ServicePageTemplate
-      serviceName="SEO Services"
-      heroTitle="Grow Organic Revenue with Expert SEO Services"
-      heroSubtitle="Improve search engine rankings, attract high-intent visitors, and outperform competitors. We deploy research-backed optimization campaigns that generate consistent search visibility and customer inquiries globally."
-      leadSource="SEO Services Landing Page"
-      overviewTitle="Organic Rankings Built on Analytics, Code Optimization & Quality Copy"
+      serviceName="Enterprise B2B SEO"
+      heroTitle="Enterprise B2B SEO & Organic Pipeline Growth for Global Brands"
+      heroSubtitle="Drive qualified B2B leads, capture high-intent search traffic, and dominate AI Search Overviews (GEO). We engineer technical SEO architectures, topic clusters, and authoritative link strategies built for revenue growth."
+      leadSource="Enterprise SEO Landing Page"
+      customLeadForm={<EnterpriseSeoLeadForm />}
+      overviewTitle="Organic Pipeline & Revenue-Driven SEO for Enterprise SaaS"
       overviewContent={
         <div className="space-y-6">
           <p>
-            Paid ads are effective for short-term campaigns, but once you stop your ad budget, your lead generation stops. Search Engine Optimization (SEO) builds a long-term search presence that brings in high-intent visitors and customer queries without recurring ad click fees. Investing in organic ranking strategies helps secure sustainable market share.
+            In the global B2B sector, standard keyword stuffing and low-quality link building no longer drive revenue. Enterprise decision-makers conduct deep, multi-stage research before committing to high-ticket SaaS or industrial purchases. If your brand relies solely on paid ads, you are surrendering highly qualified organic market share to competitors with robust <strong>Technical SEO Architecture & Site Audits</strong>.
           </p>
           <p>
-            At Joy Digital, our expert strategist team avoids shortcuts and outdated link-building schemes that can trigger search engine penalties. We structure our campaigns around technical SEO updates, detailed keyword intent research, readable copywriting, and building trusted authority backlinks. This comprehensive approach ensures your search presence grows steadily across target markets globally.
+            At Joy Digital, we provide premium <strong>Enterprise B2B SEO Services</strong> designed specifically for complex sales cycles. We don't just chase traffic volume; we deploy <strong>Global B2B Keyword Strategy & Content Clusters</strong> to target specific commercial intent, moving C-suite prospects smoothly from top-of-funnel discovery to bottom-of-funnel enterprise conversion.
           </p>
-          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">A Holistic Approach to SEO Performance</h3>
+          
+          <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-sm space-y-4 my-6">
+            <h3 className="text-lg font-bold text-primary-dark">Our Core Enterprise SEO Capabilities</h3>
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-text-secondary">
+              <li className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
+                <span><strong>Technical Code & Core Web Vitals</strong> (Next.js/Headless)</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
+                <span><strong>B2B Intent Keyword Mapping</strong> (Commercial vs Informational)</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
+                <span><strong>AI Search Overviews</strong> (ChatGPT & Google AI Visibility)</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
+                <span><strong>High-Authority Digital PR & Backlink Acquisition</strong></span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
+                <span><strong>WordPress to Next.js SSG SEO Migration</strong></span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
+                <span><strong>Global Multi-Market Scaling & Subdirectory SEO</strong></span>
+              </li>
+            </ul>
+          </div>
+
+          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Pioneering Generative Engine Optimization (GEO)</h3>
           <p>
-            Effective search marketing requires attention to multiple areas. We start with technical audits to check site indexability, fix page speed bottlenecks, and verify redirect structures. Next, we optimize your on-page elements, including your title tags, meta descriptions, semantic headings, image alt tags, and internal linking structure to make it easy for search bots to understand your page relevance.
-          </p>
-          <p>
-            Finally, we implement a content and outreach strategy to build authoritative backlinks. We monitor your search performance using Google Search Console and Google Analytics, providing clear reports on traffic growth, keyword positions, and lead conversions. This data-driven strategy ensures that we are always optimizing for the terms that drive actual commercial value to your brand.
-          </p>
-          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Why Local and National Integration Maximizes ROI</h3>
-          <p>
-            Many agencies focus solely on national terms, missing high-converting local traffic, or vice versa. We bridge the gap. By integrating location-specific search variables with broad industry keywords, we capture users at every stage of the buying funnel. Whether they are looking for immediate local providers or researching national service offerings, your brand will remain visible.
+            The search landscape has evolved beyond ten blue links. With the rise of AI Overviews, ChatGPT search integrations, and Generative Engine Optimization (GEO), global B2B brands must optimize for LLM context, not just traditional web crawlers. We structure your digital assets using advanced semantic HTML, rich schema, and entity-based content models, ensuring your brand is cited authoritatively by leading AI engines.
           </p>
         </div>
       }
-      benefitsTitle="How Search Engine Optimization Drives Long-Term Growth"
-      benefitsSubtitle="We focus on optimizing for search intent to attract visitors who are actively searching for your products and services."
+      benefitsTitle="Why B2B Enterprises Trust Our Organic Strategies"
+      benefitsSubtitle="We align search visibility directly with your sales pipeline and revenue targets."
       benefits={[
         {
-          icon: "fa-solid fa-arrow-up-right-dots",
-          title: "Sustainable Traffic Growth",
-          description: "Unlike paid search campaigns, organic rankings bring in recurring leads and customer inquiries even after our optimization work is done, delivering high ROI.",
-        },
-        {
-          icon: "fa-solid fa-handshake",
-          title: "Establish Industry Trust",
-          description: "Ranking on the first page of Google helps establish your brand's authority, making prospects more comfortable choosing your business over competitors.",
-        },
-        {
           icon: "fa-solid fa-bullseye",
-          title: "Target High-Intent Keywords",
-          description: "We optimize your content for transactional search phrases, attracting visitors who are actively looking to purchase your services in India.",
+          title: "B2B Intent Keyword Mapping",
+          description: "We separate low-converting informational traffic from high-intent commercial queries, focusing entirely on ranking terms that drive pipeline revenue.",
         },
         {
           icon: "fa-solid fa-code-branch",
-          title: "Technical SEO Optimization",
-          description: "We clean up HTML layouts, structure schema JSON-LD scripts, set canonical tags, and implement dynamic sitemaps for clean search crawler indexing.",
+          title: "Technical Code & Core Web Vitals",
+          description: "We resolve indexability bottlenecks, eliminate rendering blocks, and optimize Next.js/Headless structures to achieve 95+ Lighthouse performance.",
         },
         {
-          icon: "fa-solid fa-pen-nib",
-          title: "Content Marketing Support",
-          description: "We write detailed articles and service copy targeting search queries, helping establish your brand as an industry resource and authority.",
+          icon: "fa-solid fa-robot",
+          title: "AI Search Overviews (GEO)",
+          description: "Optimize your entity prominence to dominate generative search answers across Google AI Overviews and ChatGPT enterprise plugins.",
         },
         {
-          icon: "fa-solid fa-chart-line",
-          title: "Measurable Analytics Reports",
-          description: "We track search metrics, keyword positions, page impressions, and lead conversions, providing transparent monthly reports to track progress.",
+          icon: "fa-solid fa-link",
+          title: "High-Authority Digital PR",
+          description: "We secure contextual, high-Domain-Authority (DA) backlinks from respected industry journals, SaaS directories, and technology publications.",
+        },
+        {
+          icon: "fa-solid fa-network-wired",
+          title: "Global Content Clusters",
+          description: "Deploy semantic topic clusters that comprehensively cover your B2B niche, building insurmountable topical authority globally.",
+        },
+        {
+          icon: "fa-solid fa-arrow-right-arrow-left",
+          title: "Next.js SSG SEO Migration Support",
+          description: "We safeguard your organic traffic during complex technical transitions from legacy monoliths (like WordPress) to modern Jamstack architectures.",
         },
       ]}
-      processTitle="Our SEO Optimization Process"
-      processSubtitle="We optimize your search presence systematically, prioritizing technical fixes before launching content campaigns."
+      processTitle="Our B2B Pipeline Growth Framework"
+      processSubtitle="A systemic, data-driven approach to technical optimization and global search scaling."
       processSteps={[
         {
           step: "1",
           icon: "fa-solid fa-list-check",
-          title: "SEO Audit & Competitor Research",
-          description: "We analyze competitor keyword rankings, check backlink profiles, and audit your website's technical performance to map opportunities.",
+          title: "Technical SEO & Log File Audit",
+          description: "We execute deep crawl analyses, audit JavaScript rendering, and resolve complex canonical/pagination issues.",
         },
         {
           step: "2",
           icon: "fa-solid fa-magnifying-glass",
-          title: "Keyword & Intent Mapping",
-          description: "We identify high-value keywords, map them to your service pages, and plan content clusters to target user search queries.",
+          title: "Commercial Intent Mapping",
+          description: "We map high-value B2B keywords directly to product feature pages, use cases, and bottom-of-funnel conversion points.",
         },
         {
           step: "3",
           icon: "fa-solid fa-sliders",
-          title: "On-Page & Technical Edits",
-          description: "We optimize title tags, headers, meta descriptions, image alt tags, internal links, and JSON-LD schema scripts directly on your code.",
+          title: "Semantic Content & GEO Upgrades",
+          description: "We structure your content with advanced JSON-LD schema, optimizing it for both traditional bots and LLM AI extraction.",
         },
         {
           step: "4",
-          icon: "fa-solid fa-link",
-          title: "Outreach & Link Building",
-          description: "We write informative content and secure quality links from trusted directories and industry blogs to grow your search authority.",
+          icon: "fa-solid fa-chart-line",
+          title: "Revenue Tracking & Digital PR",
+          description: "We launch authoritative backlink campaigns and track organic conversions directly to your CRM pipeline metrics.",
         },
       ]}
-      pricingTitle="Transparent Monthly SEO Plans"
-      pricingSubtitle="Choose a monthly package built to match your target search area. Zero lock-in contracts."
+      pricingTitle="Enterprise SEO Growth Retainers (Priced in USD)"
+      pricingSubtitle="Scalable organic pipeline investments for global brands. (Indian partners: ₹ INR equivalent available)."
       pricingTiers={[
         {
-          name: "Local Market SEO",
-          price: "₹15,000",
+          name: "B2B Organic Growth Plan",
+          price: "$500 USD",
           period: "/month",
-          description: "Perfect for local service businesses aiming to rank in their home city and map packs.",
+          description: "Perfect for scaling SaaS startups and specialized B2B service agencies targeting primary global markets.",
           features: [
-            "Up to 15 Target Keywords",
-            "On-Page Title & Tag Optimization",
-            "Google Business Profile Linkage",
-            "Local Citation & Directory Submissions",
-            "Monthly Keyword Ranking Reports",
-            "Technical Site Health Audits",
+            "Up to 25 Commercial B2B Keywords",
+            "Technical SEO Architecture Audits",
+            "B2B Intent Keyword Mapping",
+            "Core Web Vitals Optimization Guidance",
+            "Monthly Pipeline Growth Reporting",
+            "Standard Industry Backlink Acquisition",
           ],
-          ctaText: "Choose Local Plan",
+          ctaText: "Start Growth Plan",
         },
         {
-          name: "National Market Campaign",
-          price: "₹35,000",
+          name: "Global Enterprise & GEO Scale Plan",
+          price: "$1,200 USD",
           period: "/month",
-          description: "Recommended for growing brands targeting competitive industry keywords across the region.",
+          description: "Designed for mid-market and enterprise B2B brands requiring aggressive organic scaling.",
           isPopular: true,
           features: [
-            "Up to 40 Target Keywords",
-            "Comprehensive Content Clusters (2 posts/mo)",
-            "Advanced Technical Schema Configurations",
-            "Quality Backlink Building Campaigns",
-            "Core Web Vitals Audit Checks",
-            "Detailed Conversion Rate Optimization (CRO)",
+            "Up to 80 Target B2B Keywords",
+            "Generative Engine Optimization (GEO)",
+            "Global B2B Content Cluster Strategy",
+            "High-Authority Digital PR & Outreach",
+            "Next.js SSG SEO Migration Support",
+            "Quarterly Competitor Gap Analysis",
           ],
-          ctaText: "Choose National Plan",
+          ctaText: "Scale Globally",
         },
         {
-          name: "Enterprise Growth SEO",
-          price: "₹65,000",
-          period: "/month",
-          description: "Designed for e-commerce platforms and SaaS brands targeting competitive global keyword terms.",
+          name: "Multi-Market B2B Brand",
+          price: "Custom",
+          period: "Retainer",
+          description: "Fully bespoke architecture for international e-commerce and sprawling enterprise SaaS applications.",
           features: [
-            "Unlimited Target Keywords",
-            "Weekly Content Cluster Additions",
-            "International Subdirectory Structure",
-            "Premium Guest Post Link Outreach",
-            "Log File Analysis & Crawl Audits",
-            "Dedicated SEO Strategy Meetings",
+            "Unlimited Keyword & Entity Tracking",
+            "International Hreflang & Subdirectory SEO",
+            "Custom API-Driven Analytics Dashboards",
+            "Premium Forbes/TechCrunch Tier PR (Subject to Approval)",
+            "Log File & Deep JavaScript Rendering Audits",
+            "Dedicated B2B SEO Growth Director",
           ],
-          ctaText: "Choose Enterprise Plan",
+          ctaText: "Request Custom Audit",
         },
       ]}
       faqs={[
         {
-          question: "How long does it take to see results from SEO in Chennai?",
-          answer: "SEO is a long-term marketing channel. Technical fixes and local keyword updates can improve rankings in 30 to 60 days. Broad industry keywords typically require 4 to 6 months of consistent optimization to rank on the first page. We monitor all updates carefully.",
+          question: "How does B2B SEO differ from standard B2C SEO?",
+          answer: "B2B SEO targets decision-makers (CTOs, Procurement Managers) who conduct extensive, multi-touchpoint research. The focus shifts from high-volume, generic keywords to highly specific, long-tail commercial intent keywords. The ultimate goal is driving qualified pipeline revenue, not just vanity traffic metrics.",
         },
         {
-          question: "Do you guarantee #1 rankings on Google?",
-          answer: "No reputable agency can guarantee specific Google rankings, as search algorithms update constantly. We focus on implementing search-compliant practices, improving site health, and writing quality copy to grow your organic traffic and conversion rates.",
+          question: "What is Generative Engine Optimization (GEO)?",
+          answer: "GEO involves structuring your digital content so that it is understood, extracted, and cited by AI models like ChatGPT and Google's AI Overviews. We utilize dense entity mapping, Q&A formatting, and robust JSON-LD schema to make your brand the authoritative answer in generative search interfaces.",
         },
         {
-          question: "What is the difference between On-Page and Off-Page SEO?",
-          answer: "On-Page SEO involves optimizing elements on your own site, like copy, metadata, internal links, page speeds, and schemas. Off-Page SEO focuses on growing your site's authority through external backlinks, directory citations, and brand mentions.",
+          question: "Why do we need Technical SEO Architecture audits?",
+          answer: "Even the best content won't rank if search engines can't crawl and render it efficiently. Modern B2B sites (especially those built on complex JS frameworks like React) often suffer from client-side rendering bottlenecks. We engineer solutions like Next.js SSG to guarantee perfect indexability and sub-second load speeds.",
         },
         {
-          question: "Will you edit my website's code directly?",
-          answer: "Yes, with your permission. We optimize HTML headers, check sitemap files, fix page speeds, and update metadata elements. We can also provide detailed recommendation reports for your developers if you prefer to make changes internally.",
+          question: "Can you help migrate our organic traffic during a platform rewrite?",
+          answer: "Absolutely. Migrating from a legacy monolith (like WordPress) to a Headless/Jamstack architecture carries significant SEO risk if mishandled. We provide end-to-end WordPress to Next.js SSG SEO Migration support, mapping URL redirects, preserving backlink equity, and monitoring log files post-launch.",
         },
         {
-          question: "How do you track the performance of the SEO campaigns in India?",
-          answer: "We connect Google Analytics and Google Search Console to monitor organic traffic growth, impression metrics, keyword positions, and lead conversions, sharing these details in monthly reports so you can see visual progress.",
+          question: "How long does it take to see pipeline growth from Enterprise SEO?",
+          answer: "Technical fixes (like Core Web Vitals optimization) can yield positive ranking shifts within 30-60 days. However, establishing topical authority and acquiring high-DA backlinks for competitive global B2B terms typically takes 4 to 6 months before driving consistent, compounding pipeline revenue.",
         },
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
-        { href: "/local-seo-services", label: "Local SEO" },
-        { href: "/google-business-profile-setup", label: "Google Business Profile" },
-        { href: "/website-development", label: "Web Development" },
+        { href: "/static-website-development", label: "Enterprise Jamstack Development" },
+        { href: "/ai-search-optimization", label: "AI Search Optimization" },
+        { href: "/local-seo-services", label: "Multi-Location Local SEO" },
       ]}
     />
   );

@@ -2,19 +2,20 @@ import React from "react";
 import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
 import Link from "next/link";
+import SolarLeadForm from "@/components/ui/SolarLeadForm";
 
 export const metadata: Metadata = {
-  title: "Solar Company Website Design & Clean Energy B2B SEO | Joy Digital",
-  description: "High-converting website design & digital lead portals for solar installers, EPC contractors, commercial rooftop solar vendors, and clean energy distributors. Rooftop quote forms, solar calculators, and global SEO.",
+  title: "Commercial Solar EPC Web Development & B2B SEO | Joy Digital",
+  description: "High-performance web architecture, C&I lead generation portals, and global SEO for utility-scale solar developers, EPC contractors, and clean energy distributors.",
   alternates: {
     canonical: "https://joydigital.in/website-for-solar-companies",
   },
   openGraph: {
     type: "website",
     url: "https://joydigital.in/website-for-solar-companies",
-    title: "Solar Company Website Design & Lead Generation | Joy Digital",
-    description: "High-performance Next.js website design for residential solar installers, commercial EPC contractors, and global solar equipment vendors. Interactive quote forms, solar savings calculators, and search engine optimization.",
-    images: [{ url: "https://joydigital.in/assets/images/hero-banner.webp", width: 1200, height: 630, alt: "Solar Company Website Design Joy Digital" }],
+    title: "Commercial Solar EPC Web Development | Joy Digital",
+    description: "High-performance web architecture, C&I lead generation portals, and global SEO for utility-scale solar developers, EPC contractors, and clean energy distributors.",
+    images: [{ url: "https://joydigital.in/assets/images/hero-banner.webp", width: 1200, height: 630, alt: "Commercial Solar EPC Web Development Joy Digital" }],
   },
 };
 
@@ -24,15 +25,15 @@ const pageSchema = {
     {
       "@type": "Service",
       "@id": "https://joydigital.in/website-for-solar-companies#service",
-      "name": "Solar Company Website Design & Clean Energy SEO",
-      "serviceType": "Solar Web Development & Clean Energy B2B Marketing",
+      "name": "Commercial Solar EPC Web Development",
+      "serviceType": "B2B Clean Energy SEO Architecture & Web Development",
       "provider": {
         "@type": "LocalBusiness",
         "name": "Joy Digital",
         "image": "https://joydigital.in/assets/images/logo.webp",
         "telephone": "+919080026133",
         "url": "https://joydigital.in",
-        "priceRange": "₹₹",
+        "priceRange": "$$$",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "Old Perungalathur",
@@ -42,12 +43,12 @@ const pageSchema = {
           "addressCountry": "IN"
         }
       },
-      "description": "Custom web design for solar companies, rooftop installers, commercial EPC contractors, and utility-scale solar vendors. Features interactive quote forms, solar capacity estimators, project photo galleries, and search optimization.",
+      "description": "Custom Next.js platforms for Commercial & Industrial solar contractors, featuring Solar PPA & ROI Estimator Widgets and multi-city global SEO.",
       "offers": {
         "@type": "AggregateOffer",
-        "priceCurrency": "INR",
-        "lowPrice": "15000",
-        "highPrice": "35000",
+        "priceCurrency": "USD",
+        "lowPrice": "750",
+        "highPrice": "1600",
         "offerCount": "2"
       }
     }
@@ -57,217 +58,180 @@ const pageSchema = {
 export default function SolarWebPage() {
   return (
     <ServicePageTemplate
-      serviceName="Website for Solar Companies"
-      heroTitle="High-Converting Website Design & SEO for Solar Companies & EPC Contractors"
-      heroSubtitle="Convert rooftop solar interest into direct site survey bookings and qualified inquiry leads. We build fast, search-ready Next.js websites for residential & commercial solar installers, EPC contractors, and solar equipment distributors worldwide."
-      leadSource="Website for Solar Companies Landing Page"
-      heroCtaText="Get Free Solar Web Quote"
-      overviewTitle="Why Most Solar Installer Websites Fail to Generate Inquiries (And How We Fix It)"
+      serviceName="Commercial Solar EPC Web Development"
+      heroTitle="Custom Web Platforms & B2B Lead Engines for Global Solar EPCs"
+      heroSubtitle="Dominate the clean energy sector with Next.js sub-1.5s serverless speed, advanced C&I lead conversion funnels, and global B2B SEO authority built exclusively for Commercial & Industrial solar installers worldwide."
+      leadSource="Global B2B Solar EPC Landing Page"
+      customLeadForm={<SolarLeadForm />}
+      overviewTitle="Why Traditional Solar Websites Fail to Convert Enterprise Buyers"
       overviewContent={
         <div className="space-y-6">
           <p>
-            With electricity tariffs rising and global initiatives boosting clean energy adoption, residential homeowners and industrial businesses are actively searching for reliable local and commercial solar installers. However, most solar websites fail because they act like static brochure sites rather than active lead funnels.
+            As global clean energy adoption accelerates, utility-scale developers and C&I clients aren't looking for basic brochure websites. They require sophisticated digital portals that demonstrate technical expertise, showcase ESG compliance, and validate project ROI instantly.
           </p>
           <p>
-            If your solar website suffers from slow loading speeds, confusing technical jargon, lack of pricing transparency, or missing mobile WhatsApp lead buttons, potential clients will bounce to competing solar vendors in your city or region.
+            If your web presence suffers from slow loading speeds, generic residential messaging, or lacks robust <strong>B2B Clean Energy SEO Architecture</strong>, you are losing high-value commercial contracts to competitors with better digital authority.
           </p>
           <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-sm space-y-4 my-6">
-            <h3 className="text-lg font-bold text-primary-dark">How Joy Digital Builds High-Converting Solar Websites</h3>
+            <h3 className="text-lg font-bold text-primary-dark">How We Engineer C&I Rooftop Solar Lead Generation</h3>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-text-secondary">
               <li className="flex items-center gap-2">
                 <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
-                <span><strong>Instant Quote Lead Forms</strong>: Monthly bill & rooftop area estimation</span>
+                <span><strong>Solar PPA & ROI Estimator Widgets</strong>: Dynamic financial modeling</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
-                <span><strong>Direct WhatsApp Integration</strong>: One-tap chat pre-filled with KW requirement</span>
+                <span><strong>Utility-Scale Solar Project Portals</strong>: High-resolution case study architecture</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
-                <span><strong>Global & Local Solar SEO Strategy</strong>: Rank for high-value installation keywords</span>
+                <span><strong>Enterprise Global SEO</strong>: Dominating search terms for EPC contracts</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
-                <span><strong>Sub-1.5s Load Speeds</strong>: Ultra-fast serverless Next.js architecture</span>
+                <span><strong>Sub-1.5s Load Speeds</strong>: Ultra-fast serverless Next.js rendering</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
-                <span><strong>Tier-1 Brand Catalog</strong>: Mono PERC, TOPCon panels & inverter showcases</span>
+                <span><strong>Tier-1 Equipment Catalogs</strong>: TOPCon & Bifacial module databases</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-emerald-500 font-bold"><i className="fa-solid fa-check-circle" /></span>
-                <span><strong>Government Subsidy Guide</strong>: PM Surya Ghar & net metering approval breakdowns</span>
+                <span><strong>Corporate ESG Integration</strong>: Streamlined global compliance guides</span>
               </li>
             </ul>
           </div>
-          <p>
-            At Joy Digital, we combine expert <Link href="/website-development" className="text-primary font-bold hover:underline">custom web development</Link> with localized & global <Link href="/seo-services" className="text-primary font-bold hover:underline">solar SEO strategies</Link> and <Link href="/google-business-profile-setup" className="text-primary font-bold hover:underline">Google Business Profile citations</Link> to help solar companies establish authority and generate qualified installation leads.
-          </p>
         </div>
       }
-      benefitsTitle="10 Essential Features We Build for Solar Websites"
-      benefitsSubtitle="Every component is engineered to educate homeowners, build technical credibility, and drive site audit requests."
+      benefitsTitle="B2B Capabilities for Utility-Scale & Commercial Solar"
+      benefitsSubtitle="Every component is engineered to build technical credibility, handle complex data, and drive C&I site audit requests."
       benefits={[
         {
-          icon: "fa-solid fa-calculator",
-          title: "1. Solar Savings & Capacity Estimator",
-          description: "Allow visitors to enter their average monthly electricity bill to see estimated system KW size, annual savings, and payback period.",
+          icon: "fa-solid fa-chart-pie",
+          title: "1. Commercial ROI & Payback Calculators",
+          description: "Deploy advanced Solar PPA & ROI Estimator Widgets that allow enterprise clients to calculate megawatt-scale yield, tax incentives, and capital payback periods.",
         },
         {
-          icon: "fa-solid fa-clipboard-check",
-          title: "2. Rooftop Site Audit Booking Form",
-          description: "Simple lead capture form asking for roof type, connection type (Single Phase/3-Phase), city, and preferred inspection time.",
+          icon: "fa-solid fa-industry",
+          title: "2. C&I Rooftop Solar Lead Generation Forms",
+          description: "Multi-step enterprise lead capture forms filtering by project scale (KW/MW), roof type, and industrial power consumption metrics.",
         },
         {
-          icon: "fa-solid fa-house-chimney-solar",
-          title: "3. Residential vs Commercial Solutions",
-          description: "Dedicated landing sections highlighting 3KW to 10KW home solar setups alongside 50KW+ commercial & industrial solar EPC projects.",
+          icon: "fa-solid fa-server",
+          title: "3. Utility-Scale Solar Project Portals",
+          description: "Dedicated database-driven portfolio sections highlighting 1MW+ ground-mounted arrays, financial models, and corporate PPA case studies.",
         },
         {
-          icon: "fa-solid fa-bolt",
-          title: "4. On-Grid, Off-Grid & Hybrid Guides",
-          description: "Clear visual breakdowns comparing net-metering on-grid solar, battery backup off-grid setups, and hybrid solar systems.",
-        },
-        {
-          icon: "fa-solid fa-hand-holding-dollar",
-          title: "5. Solar Subsidy & Government Incentive Guide",
-          description: "Educate prospective buyers on government solar subsidies, DISCOM approval steps, and net metering registration processes.",
-        },
-        {
-          icon: "fa-solid fa-solar-panel",
-          title: "6. Project Installation Portfolio Showcase",
-          description: "High-resolution photo galleries and video walkthroughs of completed rooftop installations with total KW capacity and client feedback.",
-        },
-        {
-          icon: "fa-brands fa-whatsapp",
-          title: "7. One-Tap Solar WhatsApp Routing",
-          description: "Instant button opening WhatsApp with pre-filled text: 'Hi, I need a rooftop solar site survey and quote for my property.'",
+          icon: "fa-solid fa-earth-americas",
+          title: "4. Corporate ESG Compliance Guides",
+          description: "Educate corporate boards on Scope 2 emissions reduction, global net metering standards, and green energy certification processes.",
         },
         {
           icon: "fa-solid fa-microchip",
-          title: "8. Solar Panel & Inverter Brand Catalog",
-          description: "Display Tier-1 solar module brands (Mono PERC / TOPCon) and inverter manufacturers you authorizedly install.",
+          title: "5. Tier-1 Equipment & Tech Catalogs",
+          description: "Dynamic catalogs showcasing Tier-1 components: N-Type TOPCon panels, Bifacial modules, and Central/String inverter specifications.",
         },
         {
-          icon: "fa-solid fa-magnifying-glass-location",
-          title: "9. Global & Local Solar SEO Pages",
-          description: "Target queries like 'Solar panel installers near me' or 'Commercial solar company' with dedicated landing pages.",
-        },
-        {
-          icon: "fa-solid fa-shield-halved",
-          title: "10. Warranty & Maintenance Package Showcase",
-          description: "Highlight 25-year panel performance warranties, 5-year inverter guarantees, and free annual maintenance visits.",
-        },
+          icon: "fa-solid fa-network-wired",
+          title: "6. B2B Clean Energy SEO Architecture",
+          description: "Multi-city, multi-region Next.js SEO architecture ensuring you rank globally for highly lucrative 'Commercial Solar EPC Web Development' search queries.",
+        }
       ]}
-      processTitle="Our 6-Step Solar Website Development Process"
-      processSubtitle="A structured roadmap from initial brand strategy to live Google search indexing."
+      processTitle="Our B2B Solar Digital Engineering Process"
+      processSubtitle="A proven framework to build authority in the global clean energy market."
       processSteps={[
         {
           step: "1",
           icon: "fa-solid fa-list-check",
-          title: "Business & Target Market Audit",
-          description: "We analyze your solar offering, installation capacity, regional target cities, and sales inquiry workflow.",
+          title: "EPC Market Strategy Audit",
+          description: "We analyze your utility-scale capabilities, target C&I verticals, and enterprise sales cycles.",
         },
         {
           step: "2",
           icon: "fa-solid fa-sitemap",
-          title: "Funnel & SEO Keyword Mapping",
-          description: "We structure category layouts, solar system breakdowns, calculator user flows, and targeted local/global SEO terms.",
+          title: "B2B SEO Keyword Architecture",
+          description: "We map high-intent commercial terms like 'Utility-Scale Solar Project Portals' for global search dominance.",
         },
         {
           step: "3",
           icon: "fa-solid fa-pen-ruler",
-          title: "Custom UI/UX Design",
-          description: "We craft modern desktop and mobile layouts, savings estimators, project galleries, and quote forms.",
+          title: "Enterprise UX & Estimators",
+          description: "We design robust ROI calculators, corporate ESG dashboards, and multi-step lead funnels.",
         },
         {
           step: "4",
           icon: "fa-solid fa-code",
           title: "Next.js High-Speed Development",
-          description: "We engineer your website on modern serverless Next.js frameworks for sub-1.5s loading speed and crisp mobile views.",
+          description: "We engineer your platform on modern serverless Next.js frameworks for sub-1.5s load speeds worldwide.",
         },
         {
           step: "5",
           icon: "fa-solid fa-chart-line",
-          title: "SEO & Lead Tracking Setup",
-          description: "We implement Solar Energy Service schema markup, configure GA4 event tracking, and sync WhatsApp lead routing.",
+          title: "B2B Analytics & CRM Sync",
+          description: "We implement advanced B2B tracking, routing high-value C&I leads directly to your enterprise CRM.",
         },
         {
           step: "6",
-          icon: "fa-solid fa-rocket",
-          title: "Launch & Google Indexing",
-          description: "We launch live on your custom domain, submit XML sitemaps to Google Search Console, and train your team.",
+          icon: "fa-solid fa-globe",
+          title: "Global Launch & Indexing",
+          description: "We launch live on a global CDN, submit multi-region sitemaps, and optimize for core web vitals.",
         },
       ]}
-      pricingTitle="Transparent Pricing Packages for Solar Companies"
-      pricingSubtitle="Get a high-converting solar company website with zero hidden costs or platform subscriptions."
+      pricingTitle="Investment Portfolios for Solar EPC Growth"
+      pricingSubtitle="Scalable digital infrastructure priced in USD for global reach. (Indian partners: ₹ INR equivalent available)."
       pricingTiers={[
         {
-          name: "Local Installer Growth Plan",
-          price: "₹15,000",
-          period: "one-time ($750 USD)",
-          description: "Perfect for local solar installers, rooftop vendors, and regional solar service contractors.",
+          name: "Regional Growth Plan",
+          price: "$750 USD",
+          period: "one-time (approx. ₹60,000 INR)",
+          description: "Ideal for growing commercial installers targeting regional C&I rooftop projects.",
           features: [
-            "1-5 Custom Responsive Pages",
-            "Solar Quote Lead Capture Form",
-            "Residential & Commercial System Sections",
-            "WhatsApp Lead Integration",
-            "Completed Project Photo Gallery",
-            "Google Maps Local Citation Setup",
-            "Basic On-Page SEO & Schema Markup",
+            "Up to 8 Custom Next.js Pages",
+            "C&I Rooftop Solar Lead Generation Forms",
+            "Commercial & Industrial System Galleries",
+            "Tier-1 Equipment Showcases",
+            "Local B2B Clean Energy SEO Setup",
             "1 Year Priority Technical Support",
           ],
-          ctaText: "Choose Local Installer Plan",
+          ctaText: "Start Regional Growth",
         },
         {
-          name: "Enterprise Solar & EPC Portal",
-          price: "₹35,000",
-          period: "one-time ($1,600 USD)",
-          description: "Recommended for commercial solar EPC contractors, regional distributors, and utility-scale installers.",
+          name: "Global Commercial EPC & Utility Portal",
+          price: "$1,600 USD",
+          period: "one-time (approx. ₹1,35,000 INR)",
+          description: "The ultimate architecture for utility-scale developers and global EPC contractors.",
           isPopular: true,
           features: [
-            "Up to 15 Advanced Pages & City Landing Pages",
-            "Interactive Solar Savings Calculator Widget",
-            "Government Subsidy & Incentive Guide Pages",
-            "Tier-1 Solar Brand & Component Catalog",
-            "Detailed Case Studies & Wattage Filter",
-            "Full SEO Architecture & Service Schema",
-            "Google Analytics 4 & Search Console Sync",
+            "Unlimited Scalable Page Architecture",
+            "Advanced Solar PPA & ROI Estimator Widgets",
+            "Utility-Scale Solar Project Portals",
+            "Corporate ESG Compliance Integrations",
+            "Global B2B Clean Energy SEO Architecture",
+            "Enterprise CRM & Analytics Synchronization",
             "1 Year Priority Technical Support & Maintenance",
           ],
-          ctaText: "Choose Enterprise Plan",
+          ctaText: "Deploy Global EPC Portal",
         },
       ]}
       faqs={[
         {
-          question: "How much does a website for a solar company cost?",
-          answer: "Our solar website packages start from ₹15,000 ($750 USD) for local rooftop installers up to ₹35,000 ($1,600 USD) for multi-city commercial solar EPC portals.",
+          question: "Why should we target Commercial & Industrial (C&I) clients instead of residential?",
+          answer: "C&I solar projects (50KW - 1MW+) offer significantly higher profit margins, long-term PPA contracts, and lower acquisition costs compared to selling multiple small 3KW residential systems."
         },
         {
-          question: "Can homeowners request solar rooftop site audits through the website?",
-          answer: "Yes! We build interactive site survey request forms where customers enter their roof details, monthly bill amount, and city location sent directly to your email and WhatsApp.",
+          question: "Can you build custom Solar ROI calculators for our website?",
+          answer: "Yes, we specialize in building dynamic Next.js React widgets that allow corporate clients to estimate their tax savings, payback period, and megawatt-scale yield directly on your portal."
         },
         {
-          question: "Will the website help us rank on Google for local and global solar searches?",
-          answer: "Yes. Every solar website we build includes search-optimized URLs, schema markup, sub-1.5s page load speed, and local/global solar keywords to attract buyers.",
-        },
-        {
-          question: "How does the WhatsApp lead button work on solar project pages?",
-          answer: "Clicking the WhatsApp button opens WhatsApp on the prospect's mobile or web with a pre-filled message specifying their KW interest and city, allowing your sales team to respond instantly.",
-        },
-        {
-          question: "Are there any recurring monthly listing or software fees?",
-          answer: "No. You own 100% of your website code and domain. There are zero recurring monthly listing fees or portal commission charges.",
-        },
+          question: "Do you offer global SEO for utility-scale developers?",
+          answer: "Absolutely. We engineer multi-region, multi-language SEO architectures so your firm ranks in top international markets for high-value terms like 'Solar EPC Contractors' or 'Utility-Scale Solar Developers'."
+        }
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
-        { href: "/website-development", label: "Custom Web Development" },
-        { href: "/seo-services", label: "Solar SEO Services" },
-        { href: "/local-seo-services", label: "Local SEO Solutions" },
-        { href: "/google-business-profile-setup", label: "Google Business Profile Setup" },
-        { href: "/case-studies", label: "Case Studies" },
-        { href: "/contact", label: "Contact Sales Team" },
+        { href: "/custom-website-development", label: "Custom B2B Web Systems" },
+        { href: "/seo-services", label: "Global Enterprise SEO" },
+        { href: "/ai-search-optimization", label: "AI Search Optimization (GEO)" }
       ]}
     />
   );

@@ -59,8 +59,8 @@ function CountUpNumber({ target, suffix = "" }: { target: number; suffix?: strin
 
 export const HOME_FAQS = [
   {
-    question: "How much does a website or custom software cost with Joy Digital?",
-    answer: "Our custom web applications and business portals are quoted transparently based on project scope, with starter layouts beginning at $1,200 (₹25,000 for India-based clients). Enterprise platforms and complex SaaS workflows receive bespoke milestone proposals."
+    question: "How much does a custom website or web application cost?",
+    answer: "Our web applications and business portals are quoted transparently based on project scope, starting at $1,200. Enterprise platforms and complex SaaS workflows receive bespoke milestone proposals."
   },
   {
     question: "How long does website development take?",
@@ -68,7 +68,7 @@ export const HOME_FAQS = [
   },
   {
     question: "Do you work with international clients?",
-    answer: "Yes, our target market is global. We support growing companies, startups, and local businesses in India, the US, the UK, the UAE, Australia, and other countries through remote desks."
+    answer: "Yes, our primary focus is global. We support growing companies, startups, and enterprises in the US, the UK, the UAE, Australia, and worldwide through our remote engineering desk."
   },
   {
     question: "Do you provide SEO services?",
@@ -95,36 +95,36 @@ export const HOME_FAQS = [
     answer: "When selecting a custom website development company, look for an agency that delivers custom, high-speed, and search-optimized Next.js/React solutions rather than rigid off-the-shelf templates. At Joy Digital, we act as your dedicated web engineering team, building bespoke web platforms engineered for sub-second speeds, mobile responsiveness, and enterprise Google search visibility."
   },
   {
-    question: "Why should I hire a bespoke custom website development company rather than using rigid templates?",
-    answer: "Partnering with a custom website development company ensures your business website is custom-engineered to achieve 95+ Core Web Vitals scores, maintain 100% code IP ownership, and capture organic leads. We specialize in custom web development, Next.js server-side rendering, and dynamic web application architecture."
+    question: "Why should I hire a bespoke web development team rather than using rigid templates?",
+    answer: "Partnering with a dedicated web engineering team ensures your website is custom-engineered to achieve 95+ Core Web Vitals scores, maintain 100% code IP ownership, and capture organic leads globally."
   },
   {
-    question: "Why is Joy Digital a leading digital marketing company in India and search engine optimization agency?",
-    answer: "Joy Digital stands out among top search engine optimization companies in India and digital marketing firms in India by combining sub-second Next.js web engineering with technical SEO audits, Google Map pack optimization, and high-converting performance marketing. We help Indian startups and global brands scale organic revenue."
+    question: "Why choose Joy Digital as your web development and SEO partner?",
+    answer: "Joy Digital stands out by combining sub-second Next.js web engineering with technical SEO audits and high-converting performance marketing. We help global brands scale organic revenue."
   },
   {
-    question: "What should businesses look for when partnering with digital advertising companies in India?",
-    answer: "When hiring a digital marketing business in India or a digital advertising company in India, prioritize agencies with proven Core Web Vitals performance, transparent GA4 conversion tracking, and custom strategy execution rather than automated templates. Joy Digital provides end-to-end web development, technical search optimization, and lead funnels tailored to your growth goals."
+    question: "What should businesses look for when partnering with a digital agency?",
+    answer: "Prioritize agencies with proven Core Web Vitals performance, transparent conversion tracking, and custom strategy execution. Joy Digital provides end-to-end web development, technical search optimization, and lead funnels tailored to your growth goals."
   },
   {
-    question: "Why is Joy Digital considered a top website development company in India for website development services?",
-    answer: "Joy Digital is a full-service website development company in India specializing in custom Next.js and React website development services. We engineer custom, lightning-fast platforms designed to rank on Google search engines, load under 1.5 seconds, and generate consistent high-intent client inquiries."
+    question: "Why is Joy Digital considered a top choice for web development services?",
+    answer: "We specialize in custom Next.js and React architecture. We engineer lightning-fast platforms designed to rank globally on search engines, load under 1.5 seconds, and generate consistent high-intent client inquiries."
   },
   {
-    question: "What is website design and development, and why website development is important for business growth?",
-    answer: "Website design focuses on the visual layout, typography, UI/UX structure, and brand aesthetics, while website development involves writing clean, semantic code (HTML, CSS, JavaScript, React, Next.js) to turn designs into dynamic, fast-loading platforms. Website development is critical because your site acts as your 24/7 digital storefront, establishing trust, ranking on search engines, and converting visitors into active paying clients."
+    question: "What is the difference between web design and web development?",
+    answer: "Web design focuses on the visual layout, typography, UI/UX structure, and brand aesthetics. Web development involves writing clean, semantic code (Next.js, React) to turn designs into dynamic, fast-loading platforms."
   },
   {
-    question: "What is the cost of website development in India?",
-    answer: "The cost of website development ranges from $1,200 to $5,000+ for global B2B custom web platforms (and ₹25,000 to ₹1,50,000+ in India for local SMBs). At Joy Digital, we provide transparent milestone pricing with zero hidden fees."
+    question: "What is the typical cost of custom web development?",
+    answer: "The cost of bespoke web platforms ranges from $1,200 to $5,000+ for global B2B projects, depending on the complexity of the SaaS or headless e-commerce integration. We provide transparent milestone pricing with zero hidden fees."
   },
   {
-    question: "Which language is best for website development, and which AI is best for website development?",
-    answer: "JavaScript and TypeScript (powered by frameworks like Next.js and React) are widely recognized as the best programming languages for modern web development due to their unmatched speed, SEO capabilities, and scalability. For AI tools, ChatGPT (GPT-4o), Claude 3.5 Sonnet, Cursor AI, and v0.dev are considered the best AI tools for accelerating web development, generating component code, and optimizing SEO metadata."
+    question: "Which languages and frameworks are best for modern web applications?",
+    answer: "JavaScript and TypeScript powered by Next.js and React are currently the best choices due to their unmatched speed, SEO capabilities, and scalability."
   },
   {
-    question: "How to get clients for website development and foreign projects?",
-    answer: "To get clients for website development and secure foreign projects from the US, UK, or UAE, web agencies and developers should combine technical SEO landing pages, targeted LinkedIn cold outreach, Upwork/Fiverr pro listings, and white-label partnerships with foreign marketing agencies. Providing sub-second Next.js site performance is key to retaining international clients."
+    question: "How can businesses capture more global B2B leads?",
+    answer: "To secure B2B projects from the US, UK, or UAE, companies should combine technical SEO landing pages, targeted LinkedIn outreach, and sub-second Next.js site performance to retain international trust."
   },
   {
     question: "How do I start a project with Joy Digital?",

@@ -50,7 +50,7 @@ faqs:
   - question: How much does digital marketing cost in India?
     answer: >-
       The cost depends on the services required, business size, competition, target location, and marketing objectives. A basic local SEO strategy will have different requirements from a nationwide SEO or paid advertising campaign.
-  - question: Which is better: SEO or paid advertising?
+  - question: "Which is better: SEO or paid advertising?"
     answer: >-
       Both can be valuable. Paid advertising can help generate traffic quickly, while SEO can build long-term organic visibility. The right combination depends on your business goals and budget.
   - question: How long does SEO take to show results?

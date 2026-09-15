@@ -91,23 +91,23 @@ export default async function DynamicWebDevPage() {
         pricingSubtitle="Flat-rate custom quotes based on admin controls and database complexity."
         pricingTiers={[
           {
-            name: "Dynamic CMS Setup",
-            price: "₹35,000",
-            period: "starting rate (~$450)",
-            description: "Perfect for businesses requiring an admin control dashboard to edit services & blogs.",
+            name: "Standard Dynamic Platform",
+            price: "Starts from ₹35,000",
+            period: "one-time",
+            description: "Ideal for businesses needing a functional CRM, booking engine, or basic database integration.",
             features: [
-              "Custom Next.js Frontend",
-              "Admin Panel / CMS Dashboard",
-              "PostgreSQL/Supabase Database",
-              "Sub-second Page Load Speed",
-              "Basic SEO & Schema Setup",
+              "Up to 15 Custom Application Pages",
+              "Relational Database Integration",
+              "Secure Admin Control Dashboard",
+              "Basic API Integrations (Payments/SMS)",
+              "Dynamic User Authentication",
             ],
-            ctaText: "Get Started",
+            ctaText: "Start Dynamic Project",
           },
           {
-            name: "Enterprise Dynamic Portal",
+            name: "Enterprise Custom Web App",
             price: "Custom Quote",
-            period: "full scope",
+            period: "per project",
             description: "Complex multi-tenant portals, custom user roles, and advanced API middleware.",
             isPopular: true,
             features: [

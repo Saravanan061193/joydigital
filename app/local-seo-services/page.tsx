@@ -1,10 +1,18 @@
 import React from "react";
 import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/sections/ServicePageTemplate";
+import LocalSeoLeadForm from "@/components/ui/LocalSeoLeadForm";
 
 export const metadata: Metadata = {
-  title: "Local SEO Services & Maps Ranking | Joy Digital",
-  description: "Joy Digital is the premier Local SEO company in Chennai, India. We rank your business in the Google Maps 3-Pack and optimize local citation directories.",
+  title: "Multi-Location Local SEO & Enterprise GBP Optimization | Joy Digital",
+  description: "Enterprise Google Business Profile Management and Multi-Location Local SEO Services for global brands. Dominate the Global Maps 3-Pack with Geo-Grid Rank Tracking.",
+  keywords: [
+    "Multi-Location Local SEO Services",
+    "Enterprise Google Business Profile Management",
+    "Global Maps 3-Pack Optimization",
+    "Franchise Local Search Strategy",
+    "Hyper-Local Geo-Targeted SEO"
+  ],
   alternates: {
     canonical: "https://joydigital.in/local-seo-services",
   },
@@ -13,14 +21,14 @@ export const metadata: Metadata = {
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Local SEO Services",
-  "serviceType": "Local Search Engine Optimization Services",
+  "name": "Multi-Location Local SEO Services",
+  "serviceType": "Enterprise Google Business Profile Management",
   "provider": {
     "@type": "LocalBusiness",
     "name": "Joy Digital",
     "image": "https://joydigital.in/assets/images/logo.webp",
     "telephone": "+919080026133",
-    "priceRange": "₹₹",
+    "priceRange": "$$$",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Old Perungalathur",
@@ -30,12 +38,12 @@ const pageSchema = {
       "addressCountry": "IN"
     }
   },
-  "description": "Joy Digital helps local companies improve their map placements, optimize directory listings, and rank for nearby search queries in Chennai and across India.",
+  "description": "Joy Digital helps global brands and multi-location franchises dominate the Google Maps 3-Pack through Hyper-Local Geo-Targeted SEO and automated review velocity.",
   "offers": {
     "@type": "AggregateOffer",
-    "priceCurrency": "INR",
-    "lowPrice": "10000",
-    "highPrice": "30000",
+    "priceCurrency": "USD",
+    "lowPrice": "350",
+    "highPrice": "650",
     "offerCount": "3"
   }
 };
@@ -43,171 +51,173 @@ const pageSchema = {
 export default function LocalSEOPage() {
   return (
     <ServicePageTemplate
-      serviceName="Local SEO"
-      heroTitle="Dominate Local Search & Rank in the Google Maps 3-Pack"
-      heroSubtitle="Help nearby customers find your business when they search for your services. As a leading local seo company in Chennai, we optimize Google Map profiles, build directory citations, and structure local content to grow your search visibility and drive calls."
-      leadSource="Local SEO Landing Page"
-      overviewTitle="Connecting Local Businesses with High-Intent Nearby Customers"
+      serviceName="Multi-Location Local SEO"
+      heroTitle="Multi-Location Local SEO & Google Business Profile Optimization for Global Brands"
+      heroSubtitle="Dominate the Google Maps 3-Pack across multiple cities, regions, and international locations. We optimize enterprise Google Business Profiles, scale local citations, and drive high-intent local inbound leads."
+      leadSource="Enterprise Local SEO Landing Page"
+      customLeadForm={<LocalSeoLeadForm />}
+      overviewTitle="Scaling Hyper-Local Search Visibility for Franchises & Enterprises"
       overviewContent={
         <div className="space-y-6">
           <p>
-            When customers need local services&mdash;whether they are looking for a clinic, a retail shop, or a local contractor&mdash;they turn to Google Maps or search queries like &ldquo;best services near me&rdquo;. If your business does not show up in the top three map results (the Google Local Pack), you are missing out on high-intent lead opportunities to local competitors.
+            When enterprise customers search for services nearby—whether they are looking for a global consultancy branch, a regional retail franchise, or a distributed clinic network—they rely heavily on localized Google Maps results and AI Overviews. If your multi-location brand fails to rank consistently in the <strong>Global Maps 3-Pack</strong> across different territories, you are yielding high-value local market share to smaller, agile competitors.
           </p>
           <p>
-            At Joy Digital, our specialized <strong>local seo services chennai</strong> focus on helping regional businesses improve their search engine exposure. We handle Google Business Profile setups, correct Name, Address, and Phone (NAP) inconsistencies across web directories, and build localized landing pages. This structured optimization helps your store or clinic appear in map packs and local searches where buying intent is highest.
+            At Joy Digital, our specialized <strong>Multi-Location Local SEO Services</strong> are engineered for global businesses. We streamline <strong>Enterprise Google Business Profile Management</strong>, unifying data across hundreds of listings. By deploying centralized optimization, we ensure your brand captures Hyper-Local Geo-Targeted SEO traffic in every market you operate in—from the US and UK to the UAE and Australia.
           </p>
-          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Why Local Search Presence and Maps Algorithms Matter</h3>
+          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Mastering Franchise Local Search Strategy & AI Ecosystems</h3>
           <p>
-            Local SEO matches search queries with local intent. Google ranks map results based on three main pillars: relevance, distance, and prominence. We help optimize these areas by adding local business schemas to your website, cleaning up directory listings, building local backlinks, and setting up systematic review systems that build credibility.
+            Local SEO for global brands isn't just about NAP (Name, Address, Phone) consistency anymore. Modern algorithms prioritize real-time signals, review velocity, and localized relevance. We implement advanced Store Locator Schema and configure AI Search Optimization (GEO) strategies to ensure your locations are prioritized by Google's latest AI Overviews and Maps algorithms.
           </p>
           <p>
-            We also build location landing pages that target specific zip codes, neighborhoods, and suburbs in Chennai and surrounding Tamil Nadu districts. This architecture allows your business to rank across multiple service areas, generating a steady stream of customer phone calls, driving directions requests, and qualified contact form submissions.
+            Instead of manually managing fragmented profiles, we centralize your <strong>Franchise Local Search Strategy</strong>. We launch dynamic location pages targeting precise global zip codes and regional hubs, enabling your brand to blanket search results organically and drive qualified foot traffic or enterprise inquiries system-wide.
           </p>
-          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">The Role of Citations and Directory Integrity</h3>
+          <h3 className="text-lg font-bold text-primary-dark mt-8 mb-4">Global Authority Platforms & Data Sync</h3>
           <p>
-            Search engines crawl directories like Justdial, Sulekha, YellowPages, and regional portals to verify your business details. Even a minor discrepancy, such as writing &ldquo;Avenue&rdquo; in one place and &ldquo;Ave.&rdquo; in another, can confuse algorithms and lower your prominence scores. We perform exhaustive citation cleanups, ensuring that your NAP info is 100% consistent across all directory platforms.
+            Search engines aggregate data from top-tier global platforms to establish entity prominence. We syndicate your location data directly to authority networks like Apple Maps, Bing Places, Yelp, Yext, and BrightLocal ecosystems. This automated, API-driven data integrity ensures 100% uniformity, protecting your brand from rogue edits and algorithmic downgrades across all international territories.
           </p>
         </div>
       }
-      benefitsTitle="Why Local Search Optimization is Essential"
-      benefitsSubtitle="We help set up and optimize local search signals to improve your rankings on Google Maps and search results."
+      benefitsTitle="Enterprise Capabilities for Global Local Search"
+      benefitsSubtitle="Advanced infrastructure to scale your Maps visibility and reputation across hundreds of locations simultaneously."
       benefits={[
         {
-          icon: "fa-solid fa-map-pin",
-          title: "Dominate the Maps 3-Pack",
-          description: "We optimize your profile to help you rank in the top three Google Maps spots, where over 70% of local search clicks happen, driving traffic.",
-        },
-        {
-          icon: "fa-solid fa-phone-volume",
-          title: "Drive Direct Inquiries",
-          description: "Optimized mobile map listings feature direct buttons for phone calls, website visits, and driving directions, increasing lead capture.",
-        },
-        {
-          icon: "fa-solid fa-folder-open",
-          title: "NAP Directory Consistency",
-          description: "We verify and correct your Business Name, Address, and Phone numbers across directories to build search engine trust and authority.",
-        },
-        {
-          icon: "fa-solid fa-star",
-          title: "Review Acquisition Systems",
-          description: "We set up review shortcuts and templates to help your team earn positive customer feedback, which directly improves map rankings.",
-        },
-        {
-          icon: "fa-solid fa-globe-asia",
-          title: "Local Business Schema",
-          description: "We inject JSON-LD coordinates, address blocks, and opening hours into your HTML, helping search crawlers identify your exact location.",
-        },
-        {
           icon: "fa-solid fa-map-location-dot",
-          title: "Target Service Areas",
-          description: "We create location-specific pages to capture search queries from surrounding towns and zip codes, expanding your market reach.",
+          title: "Global Maps 3-Pack Optimization",
+          description: "We optimize location-specific relevance and prominence signals to push your enterprise branches into the top 3 Maps positions globally.",
+        },
+        {
+          icon: "fa-solid fa-network-wired",
+          title: "Multi-Location Citations & Store Locator Schema",
+          description: "Deploy JSON-LD Store Locator Schema across your corporate domain and sync data to global platforms like Apple Maps and Bing Places.",
+        },
+        {
+          icon: "fa-solid fa-satellite-dish",
+          title: "Geo-Grid Rank Tracking & Heatmap Audits",
+          description: "Visualize exact ranking positions within specific radiuses around your locations. We utilize advanced heatmaps to pinpoint and fix weak zones.",
+        },
+        {
+          icon: "fa-solid fa-star-half-stroke",
+          title: "Automated Review Management & Review Velocity",
+          description: "Implement automated review generation funnels to scale positive review velocity across all franchise locations, signaling strong authority to Google.",
+        },
+        {
+          icon: "fa-solid fa-robot",
+          title: "AI Search Optimization (GEO)",
+          description: "Future-proof your local listings. We optimize location data for Google's AI Overviews and generative maps algorithms to capture next-gen searchers.",
+        },
+        {
+          icon: "fa-solid fa-building-flag",
+          title: "Enterprise Google Business Profile Management",
+          description: "Centralized management of hundreds of GBP assets. We handle bulk verifications, spam fighting, Q&A seeding, and weekly Geotagged post updates.",
         },
       ]}
-      processTitle="Our Local SEO Workflow"
-      processSubtitle="We clean up existing search directory profiles and optimize location assets to improve your maps visibility."
+      processTitle="Our Multi-Location SEO Deployment Framework"
+      processSubtitle="A proven system to consolidate, optimize, and scale local search for international brands."
       processSteps={[
         {
           step: "1",
-          icon: "fa-solid fa-magnifying-glass-location",
-          title: "Profile & Citation Audit",
-          description: "We check duplicate business listings, find incorrect phone numbers, and audit competitor map positions to draft an optimization roadmap.",
+          icon: "fa-solid fa-globe",
+          title: "Global Geo-Grid Audit",
+          description: "We analyze baseline heatmap rankings, identify listing duplicates, and audit competitor Maps authority across your key target cities.",
         },
         {
           step: "2",
-          icon: "fa-solid fa-pen-to-square",
-          title: "Profile Optimization",
-          description: "We optimize categories, add keyword descriptions, upload geotagged photos, and list services on your Google profile for relevance.",
+          icon: "fa-solid fa-sitemap",
+          title: "Centralized GBP Restructure",
+          description: "We claim, verify, and consolidate rogue profiles into a unified enterprise dashboard for streamlined bulk management and optimization.",
         },
         {
           step: "3",
-          icon: "fa-solid fa-list-check",
-          title: "Citation Link Building",
-          description: "We list your business details in trusted regional directories and maps sources to establish search engine validation.",
+          icon: "fa-solid fa-code",
+          title: "Store Locator Schema Injection",
+          description: "We engineer dynamic, SEO-optimized location landing pages on your corporate site, injecting advanced local JSON-LD markup.",
         },
         {
           step: "4",
-          icon: "fa-solid fa-comments",
-          title: "Review & Map Upkeep",
-          description: "We launch review acquisition links, reply to customer feedback, and post profile updates to maintain search engine interest.",
+          icon: "fa-solid fa-bolt",
+          title: "Data Syndication & Velocity",
+          description: "We syndicate your NAP data to Tier-1 networks (Yext/BrightLocal ecosystems) and launch automated review generation workflows.",
         },
       ]}
-      pricingTitle="Economical Local SEO Plans"
-      pricingSubtitle="Select a plan tailored to your service area size and keyword difficulty. Zero setup fees."
+      pricingTitle="Enterprise SEO Portfolios (Priced in USD)"
+      pricingSubtitle="Scalable retainer models designed for ambitious brands seeking true multi-regional dominance."
       pricingTiers={[
         {
-          name: "Single Location Plan",
-          price: "₹10,000",
+          name: "Single Location Accelerator",
+          price: "Starts from ₹1,000",
           period: "/month",
-          description: "Best for local stores, clinics, and service providers targeting their immediate city area.",
+          description: "Best for high-value B2B firms or premium local businesses operating from a single global headquarters.",
           features: [
             "1 Google Business Profile Optimization",
-            "Target Up to 10 Local Keywords",
-            "50+ Local Citation Listing Submissions",
-            "Duplicate Listing Audits & Cleanup",
-            "Review Acquisition Setup & Shortcuts",
-            "Monthly Local Ranking Performance Reports",
+            "Geo-Grid Rank Tracking & Heatmaps",
+            "Tier-1 Global Citation Building (Apple/Bing/Yelp)",
+            "Automated Review Management System",
+            "Local Business JSON-LD Schema",
+            "Monthly Local Ranking Analytics",
           ],
-          ctaText: "Choose Single Plan",
+          ctaText: "Start Single Location Plan",
         },
         {
-          name: "Regional Growth Plan",
-          price: "₹18,000",
+          name: "Regional & Multi-City Growth",
+          price: "Starts from ₹3,500",
           period: "/month",
-          description: "Perfect for businesses serving multiple surrounding towns or districts.",
+          description: "Perfect for brands operating 2-5 branch locations or targeting surrounding metropolitan regions.",
           isPopular: true,
           features: [
-            "Up to 3 Google Business Profiles",
-            "Target Up to 25 Local Keywords",
-            "120+ High-Authority Local Citations",
-            "JSON-LD Schema Markup Integration",
-            "2 Target Location Pages Copywriting",
-            "Competitor Map Placement Audits",
+            "Up to 5 Google Business Profiles",
+            "Advanced Multi-Location Citations",
+            "Dynamic Location Landing Page Copy",
+            "AI Search Optimization (GEO) Updates",
+            "Review Velocity Tracking & Q&A Seeding",
+            "Quarterly Competitor Heatmap Audits",
           ],
           ctaText: "Choose Regional Plan",
         },
         {
-          name: "Multi-Location Enterprise",
-          price: "₹30,000",
-          period: "/month",
-          description: "For franchise businesses and multi-branch companies targeting competitive search terms.",
+          name: "Multi-Location Enterprise Franchise",
+          price: "Custom Quote",
+          period: "Retainer",
+          description: "Fully managed architecture for franchises and international businesses with 6 to 100+ locations.",
           features: [
-            "Unlimited Google Profile Management",
-            "Custom Citation Building Campaigns",
-            "Localized Content & Blog Clusters",
-            "Review Replying & Q&A Management",
-            "Geotagged Image Updates & Posts",
-            "Dedicated Accounts Manager Support",
+            "Unlimited GBP Bulk Management",
+            "API Sync with Global Aggregators (Yext/BrightLocal)",
+            "Enterprise Store Locator Development",
+            "Automated Spam Fighting & Duplicate Removal",
+            "Custom Multi-Region Content Strategies",
+            "Dedicated Global SEO Account Director",
           ],
-          ctaText: "Contact for Proposal",
+          ctaText: "Request Enterprise Audit",
         },
       ]}
       faqs={[
         {
-          question: "What is the difference between SEO and Local SEO in Chennai?",
-          answer: "General SEO focuses on ranking websites for queries without location constraints (like national or global keywords). Local SEO optimizes your search presence to appear for location-specific queries (e.g., 'dentist in Chennai') on Google Maps and localized search results.",
+          question: "How do you manage Local SEO for a brand with 50+ locations?",
+          answer: "We utilize Enterprise Google Business Profile Management tools and bulk verification protocols. We centralize data management, ensuring that global updates (like holiday hours or brand messaging) are deployed instantly across all 50+ locations, while simultaneously hyper-localizing the SEO strategies for each specific market.",
         },
         {
-          question: "How does Google rank local map listings in India?",
-          answer: "Google's local algorithm ranks results based on three main factors: Relevance (how well your profile details match the query), Distance (how close your business is to the searcher), and Prominence (your business authority, reviews, and directory backlinks).",
+          question: "What is Geo-Grid Rank Tracking?",
+          answer: "Unlike standard rank tracking that shows a single position, Geo-Grid tracking maps your ranking across a specific radius (e.g., a 10-mile grid). It reveals exactly where your Maps visibility drops off, allowing us to deploy hyper-targeted local SEO tactics to boost weak zones.",
         },
         {
-          question: "Why is NAP consistency important for Local SEO?",
-          answer: "NAP stands for Name, Address, and Phone number. If search engines find different spelling variations or phone numbers across directories, it reduces their trust in your business location, which can lower your map rankings. We ensure complete standardization.",
+          question: "Why do you use platforms like Apple Maps and Bing Places instead of local directories?",
+          answer: "For global B2B clients and multi-location enterprises, search engines rely on Tier-1 data aggregators (like Apple, Bing, and the Yext network) to validate entity prominence. Hyper-local, low-quality directories hold little weight in enterprise algorithms. We focus on high-authority data syndication that directly moves the needle globally.",
         },
         {
-          question: "Can you help me get customer reviews on Google?",
-          answer: "Yes, we set up review collection templates, write email prompts, and generate clickable review links to make it easier for your customers to share feedback on your profile. Reviews are a crucial ranking factor.",
+          question: "Can you help our franchise locations generate more reviews?",
+          answer: "Yes. Review velocity (the speed and consistency of new reviews) is a critical Maps ranking factor. We implement automated review generation workflows that integrate with your CRM, soliciting feedback from satisfied clients seamlessly across all your international branches.",
         },
         {
-          question: "Do I need a physical office for Local SEO?",
-          answer: "Not necessarily. Service area businesses (like plumbers, electricians, or cleaning services) that travel to clients can hide their physical address on Google Maps while still ranking for their target service locations in Chennai.",
+          question: "How does AI Search Optimization (GEO) impact Local SEO?",
+          answer: "Google's AI Overviews and generative maps increasingly prioritize entities with strong contextual relevance and structured data. We optimize your profiles and location pages with specific schema and Q&A content designed explicitly for AI language models to crawl and recommend.",
         },
       ]}
       schemaMarkup={pageSchema}
       crossLinks={[
         { href: "/google-business-profile-setup", label: "GBP Optimization" },
-        { href: "/seo-services", label: "SEO Services" },
-        { href: "/website-development", label: "Web Development" },
+        { href: "/seo-services", label: "Global Enterprise SEO" },
+        { href: "/ai-search-optimization", label: "AI Search Optimization (GEO)" },
+        { href: "/website-development", label: "Custom B2B Web Systems" },
       ]}
     />
   );
